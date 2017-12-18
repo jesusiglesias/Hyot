@@ -23,6 +23,7 @@
 SETUPFILE="raspberrypi_setup.sh"                # Name of this file
 CWD="$(pwd)"                                    # Current directory
 UTILS="utils.sh"                                # File of utilities
+VERBOSE=false                                   # Verbose mode
 
 ########################################
 #             FUNCTIONS                #
@@ -68,6 +69,56 @@ check_concurrency () {
     done
 }
 
+# Shows the help to the user
+show_help () {
+    
+    help_header "HYOT - HELP FOR THE RASPBERRY PI SETUP"
+    echo
+    help_bold "USAGE: "
+    echo "$0 {--help|--verbose}"
+    echo
+    help_bold "BASIC OPTIONS:"
+    echo
+    echo
+    echo "   -h, --help                 Shows the help"
+    echo "   -v, --verbose              XXXX"
+    echo
+}
+
+# Checks the entered parameters and the quantity
+check_parameters () {
+    
+    # Number of parameters must be 0 or 1
+    if [[ "$1" -gt "1" ]]; then
+        e_error "Invalid parameter number. Please, type the option '-h' or '--help' to show the help." 1>&2
+        exit 1
+    else
+        if [[ "$1" -eq "1" ]]; then
+            case "$2" in
+                -h | --help)        # Shows the help          
+                    show_help
+                    exit 0
+                    ;;
+                -v | --verbose)     # Enables the verbose mode
+                    VERBOSE=true
+                    ;;    
+                *)                  # Unknown option
+                    e_error "Unknown option: $2. Please, type the option '-h' or '--help' to show the help." 1>&2
+                    exit 1 
+                    ;;
+            esac
+        fi
+    fi    
+}
+
+# Outputs the message by console if the verbose mode is enabled
+output () {
+
+    if $VERBOSE ; then
+        printf "$1"
+    fi
+}
+
 # Trap keyboard interrupt (ctrl + c)
 ctrl_c() {
 
@@ -87,3 +138,11 @@ load_utils                          # Loads the 'utils.sh' file
 check_root                          # Checks that the script is executed as a root user
 check_platform                      # Checks that the script is executed in a GNU platform
 check_concurrency $SETUPFILE        # Checks if this script is or not already running
+check_parameters $# $1              # Checks the parameters and the number of them
+
+# Header                               
+e_header "     HYOT - RASPBERRY PI SETUP     "
+e_message_bold "This script perfoms several actions to install the packages and libraries needed to execute the 'xx.py' code. Type the '-v' or 
+'--verbose' option to show the trace."
+
+output "Starting the configuration...\n\n"
