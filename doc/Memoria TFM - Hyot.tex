@@ -1,0 +1,399 @@
+% Document type
+\documentclass[12pt,a4paper, twoside]{report}
+
+% Packages
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{appendix}
+\usepackage{caption} 			% Caption
+\usepackage{color}
+\usepackage{dirtytalk} 			% Quote
+\usepackage{eso-pic}
+\usepackage{eurosym}
+\usepackage{fancyhdr} 			% Header
+\usepackage{float}
+\usepackage{fontspec}
+\usepackage{graphicx} 			% Graphics
+\usepackage{hyperref} 			% References
+\usepackage{listings} 			% Write code
+\usepackage{lmodern}
+\usepackage{longtable}
+\usepackage{multirow, array} 
+\usepackage{pdfcolmk}
+\usepackage[spanish]{babel} 		% Spanish
+\usepackage{slantsc}
+\usepackage{subcaption} 			% Subfigure
+\usepackage[svgnames]{xcolor}
+\usepackage{tikz}
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor,colortbl}
+\usepackage{wrapfig} 			% Position of image
+
+% Colours
+\definecolor{gray96}{gray}{.96}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+
+% Code format
+\lstset{ frame=Ltb,
+framerule=0pt,
+aboveskip=0.5cm,
+framextopmargin=3pt,
+framexbottommargin=3pt,
+framexleftmargin=0cm,
+framesep=0pt,
+rulesep=.4pt,
+backgroundcolor=\color{gray96},
+rulesepcolor=\color{black},
+%
+stringstyle=\ttfamily,
+showstringspaces = false,
+basicstyle=\small\ttfamily,
+commentstyle=\color{gray45},
+keywordstyle=\bfseries,
+%
+numbers=left,
+numbersep=15pt,
+numberstyle=\tiny,
+numberfirstline = false,
+breaklines=true,
+}
+
+% Minimizar fragmentado de listados
+\lstnewenvironment{listing}[1][]
+{
+	\lstset{#1}\pagebreak[0]
+}{
+	\pagebreak[0]
+}
+
+\lstdefinestyle{consola} {
+	basicstyle=\scriptsize\ttfamily,
+	backgroundcolor=\color{gray96},
+}
+
+% Index colour
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
+%\renewcommand\thesection{\arabic{section}}
+
+% Margin
+\usepackage[a4paper, tmargin=2cm, bmargin=4cm, right=1.5cm, left=2cm]{geometry}
+
+% Commands
+\newcommand{\university}{UNIVERSIDAD AUTÓNOMA DE MADRID}
+\newcommand{\faculty}{ESCUELA POLITÉCNICA SUPERIOR}
+\newcommand{\dpto}{DEPARTAMENTO DE INGENIERÍA INFORMÁTICA}
+\newcommand{\master}{Máster Universitario en Ingeniería Informática}
+\newcommand{\tfm}{TRABAJO FIN DE MÁSTER}
+\newcommand{\titleTFM}{DESARROLLO DE UN SISTEMA DE TRAZABILIDAD EN ENTORNOS IOT MEDIANTE HYPERLEDGER}
+\newcommand{\jesus}{IGLESIAS GARCÍA, JESÚS}
+\newcommand{\david}{ARROYO GUARDEÑO, DAVID}
+% Blank page
+\newcommand{\blankpage}{
+				\newpage
+				\thispagestyle{empty}
+				\mbox{}
+				\newpage
+				}
+% List of tables
+\renewcommand{\listtablename}{Índice de tablas}
+% Line spacing
+\renewcommand{\baselinestretch}{1.2}
+% Depth in index (section, subsection, etc.)
+\setcounter{tocdepth}{2}
+% Annexes without number page
+\let\plainappendixpage\appendixpage
+\makeatletter
+\renewcommand{\appendixpage}{%
+  \begingroup
+  \let\ps@plain\ps@empty
+  \plainappendixpage
+  \endgroup}
+
+% DOCUMENT
+\begin{document}
+
+	% Start roman numerals
+	\pagenumbering{roman}
+	
+	% TITLE 
+	\begin{titlepage}
+		\begin{center}
+			\vspace*{0.5in}	
+
+			\Large{\textsc{\textbf{\university}}}\\	
+			\vspace*{0.2in}
+			\large{\textsc{\faculty}}\\
+			\vspace*{0.5in}
+			
+			\begin{figure}[htb]
+				\begin{center}
+					\includegraphics[width=17cm, height=3.5cm]{Imagenes/eps_uam}
+				\end{center}
+			\end{figure}
+			\vspace*{0.6in}
+			\Large{\textsc{\tfm}}\\
+			\vspace*{0.35in}
+			\Large{\textbf{\titleTFM}} \\
+			\vspace*{0.8in}
+			\large{\textsc{\master}}\\
+			\vspace*{0.1in}
+			\rule{100mm}{0.3mm}\\ % Línea horizontal
+			\vspace*{0.5in}
+			\normalsize{\textbf{AUTOR:}} \normalsize{\jesus}  \\
+			\vspace*{0.1in}
+			\normalsize{\textbf{TUTOR:}} \normalsize{\david} \\
+			\vspace*{0.4in}
+			\large{{\color{red}XX} 2018} \\
+		\end{center}
+	\end{titlepage}
+	
+	\blankpage
+	
+	% TITLE 
+	\begin{titlepage}
+		\begin{center}
+			\vspace*{1.5in}	
+			
+			\large{\textbf{\titleTFM}} \\
+			\vspace*{0.8in}
+			\normalsize{AUTOR:} \normalsize{\jesus}  \\
+			\vspace*{0.05in}
+			\normalsize{TUTOR:} \normalsize{\david} \\
+			\vspace*{0.8in}
+			\small{\textsc{\dpto}}\\
+			\vspace*{0.02in}
+			\small{\textsc{\faculty}}\\
+			\vspace*{0.02in}
+			\small{\textsc{\university}}\\	
+			\vspace*{0.02in}
+			\small{{\color{red}XX} 2018} \\
+		\end{center}
+	\end{titlepage}
+	
+	\blankpage
+	
+	% Acknowledgments
+	\chapter*{Agradecimientos}
+	\thispagestyle{empty}
+	\vspace{1cm}
+	\begin{flushright}
+			\textit{Dedicado a mis padres por el gran esfuerzo que han hecho durante toda mi vida para apoyarme durante la consecución de todas las metas propuestas tanto personales como profesionales.} 
+			
+		\vspace{1cm}	
+		
+			\textit{Agradecer en especial a David Arroyo Guardeño, tutor de este Trabajo Fin de Máster, por su gran dedicación y apoyo recibido de forma desinteresada tanto en este trabajo como durante mi paso por la Escuela Politécnica Superior. Sin duda alguna, un gran profesor y mejor persona.}
+			
+		\vspace{1cm}	
+		
+		\textit{Mención también a la Escuela Politécnica Superior por la ayuda proporcionada para la obtención del hardware empleado en el Trabajo Fin de Máster.}
+	\end{flushright}
+	
+	\blankpage
+	
+	% Abstract
+	\chapter*{Resumen}
+	\addcontentsline{toc}{chapter}{Resumen}
+	\thispagestyle{empty}
+	
+	\paragraph{Palabras clave \\}
+					
+	\blankpage
+	
+	% Abstract
+	\chapter*{Abstract}
+	\addcontentsline{toc}{chapter}{Abstract}
+	\thispagestyle{empty}
+	
+	\paragraph{Keywords \\}
+ 	
+	\blankpage
+	
+	% Index
+	\tableofcontents
+	\addcontentsline{toc}{chapter}{Índice general}	
+	\thispagestyle{empty}
+	
+	\listoffigures
+	\addcontentsline{toc}{chapter}{Índice de figuras}
+	\thispagestyle{empty}
+		
+	\pagestyle{empty}
+	\renewcommand{\tablename}{Tabla}
+	\renewcommand\listtablename{Índice de tablas}
+	\listoftables
+	\addcontentsline{toc}{chapter}{\listtablename}
+	\thispagestyle{empty}
+	
+	% Glossary of terms
+	\chapter*{Glosario de términos} \label{glosario}
+	\addcontentsline{toc}{chapter}{Glosario de términos}
+	\thispagestyle{empty}
+
+	\noindent
+
+	\thispagestyle{empty}
+	
+	% Header
+	\pagestyle{fancy}
+	% Right side
+	\fancyhead[L]{}
+	% Center side
+	\fancyhead[C]{\small{\textit{\titleTFM}}}
+	% Right side
+	\fancyhead[R]{}
+	
+	% Header width
+	\setlength{\headwidth}{17.5cm}
+	% Header line thickness
+	\renewcommand{\headrulewidth}{1.3pt}
+	%\renewcommand{\footrulewidth}{0.8pt}
+	%\setlength{\topmargin}{0.1cm}
+	\setlength{\headsep}{1.1cm}
+	%\oddsidemargin = 10pt
+	
+	% Introduction chapter
+	\chapter{Introducción y objetivos} \label{introductionChapter}
+	
+	% Start arabic numerals
+	\pagenumbering{arabic}
+	
+	\textbf{Resumen:} \textit{XXX}
+		
+	% State of the art chapter
+	\chapter{Estado del arte} \label{stateArtChapter}
+	\textbf{Resumen:} \textit{XXX}
+	
+	% Planning chapter
+	\chapter{Planificación del proyecto} \label{planningChapter}
+	\textbf{Resumen:} \textit{XXX}
+		
+	% Analysis chapter
+	\chapter{Análisis} \label{analysisChapter}
+	
+	\textbf{Resumen:} \textit{XXX}
+	
+	% Design chapter
+	\chapter{Diseño} \label{designChapter}
+	
+	\textbf{Resumen:} \textit{XXX}
+	
+	% Implementation chapter
+	\chapter{Implementación} \label{implementationChapter}
+	
+	\textbf{Resumen:} \textit{XXX}
+	
+	% Testing chapter
+	\chapter{Casos de prueba} \label{testingChapter}
+	
+	\textbf{Resumen:} \textit{XXX}
+
+	% Conclusions
+	\chapter*{Conclusiones y trabajo futuro} \label{conclusions}
+	\addcontentsline{toc}{chapter}{Conclusiones y trabajo futuro}
+	
+	{\Large\textbf{Conclusiones}} \\
+			
+	{\Large\textbf{Trabajo futuro}} \\
+			
+	% Bibliography
+	\begin{thebibliography} {x}
+	\addcontentsline{toc}{chapter}{Bibliografía}
+	
+		\pagestyle{empty}
+		\thispagestyle{empty}
+
+		\begingroup % Forcing linespace in url
+		\raggedright 
+		\sloppy
+	
+		\bibitem{tfm1} \textsc{\textbf{Androulaki, Elli; Cachin, Christian; De Caro, Angelo; Kind, Andreas; Osborne, Mike; Schubert, Simon; Sorniotti, Alessandro; Vukolic, Marko; }}\textsc{“Cryptography and Protocols in Hyperledger Fabric”.} Real-World Cryptography Conference 2017.
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+		
+		\bibitem{tfm2} \textsc{\textbf{Bahga, Arshdeep; Masidetti, Vijay; }}\textsc{“Blockchain Platform for Industrial Internet of Things”.} 2016.
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+	
+		\bibitem{tfm3} \textsc{\textbf{Bhowmik, Deepayan; Feng, Tian; }}\textsc{“The Multimedia Blockchain: A Distributed and Tamper - Proof Media Transaction Framework”.} 2017.
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+
+		\bibitem{tfm4} \textsc{\textbf{Cachin, Christian (IBM Research); }}\textsc{“Architecture of the Hyperledger Blockchain Fabric”.} 2016. 
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+		
+		\bibitem{tfm5} \textsc{\textbf{Christidis, Konstantinos; Devetsikiotis, Michael; }}\textsc{“Blockchains and Smart Contracts for the Internet of Things”.} 2016.
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+
+		\bibitem{tfm6} \textsc{\textbf{Conoscenti, Marco; Vetrò, Antonio; De Martin, Juan Carlos; }}\textsc{“Blockchain for the Internet of Things: a Systematic Literature Review”.} 2016.
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+		
+		\bibitem{tfm7} \textsc{\textbf{Dorri, Ali; Kanhere, Salil; Jurdak, Raja; }}\textsc{“Towards an Optimized BlockChain for IoT”.} 2017.
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+		
+		\bibitem{tfm8} \textsc{\textbf{Franco, Pedro; }}\textsc{“Understanding Bitcoin: Cryptography, Engineering and Economics. Wiley Finance Series”.} 2014. 
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.				
+		\bibitem{tfm9} \textsc{\textbf{Ghaffari, Zahra; }}\textsc{“On the Application Areas of Blockchain”.} 2016.
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+		
+		\bibitem{tfm10} \textsc{\textbf{Harz, Dominic; }}\textsc{“Trust and Verifiable Computation for Smart Contracts in Permissionless Blockchains”.} 2017.
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+		
+		\bibitem{tfm11} \textsc{\textbf{Hyperledger; }} \\ 
+		\url{https://www.hyperledger.org/} 
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+		
+		\bibitem{tfm12} \textsc{\textbf{Hyperledger Composer; }} \\ 
+		\url{https://hyperledger.github.io/composer/} 
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+		
+		\bibitem{tfm20} \textsc{\textbf{IBM Cloud; }} \\ 
+		\url{https://www.ibm.com/cloud-computing/es/es/} 
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.	
+		
+		\bibitem{tfm13} \textsc{\textbf{Narayanan, Arvind; Bonneau, Joseph; Felten, Edward; Miller, Andrew; Goldfeder, Steve; }}\textsc{“Bitcoin and Cryptoconcurrency Technologies”.} Princeton University Press, 2016.
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+		
+		\bibitem{tfm14} \textsc{\textbf{Open Timestamps; }} \\ 
+		\url{https://opentimestamps.org/} 
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+		
+		\bibitem{tfm15} \textsc{\textbf{Peters, Gareth; Panayi, Efstathios; Chapelle, Ariane; }}\textsc{“Trends in Crypto-currencies and Blockchain Technologies: A Monetary Theory and Regulation Perspective”.} 2015.
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+		
+		\bibitem{tfm16} \textsc{\textbf{Pilkington, Marc; }}\textsc{“Blockchain Technology: Principles and Applications”.} 2016.
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+		
+		\bibitem{tfm17} \textsc{\textbf{Shafagh, Hossein; Hithnawi, Anwar; }}\textsc{“Towards Blockchain-based Auditable Storage and Sharing of IoT Data”.} 2017.
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+		
+		\bibitem{tfm18} \textsc{\textbf{Vukolić, Marko; }}\textsc{“Hyperledger Fabric - An Open-Source Distributed Operating System for Permissioned Blockchains”.} Swiss Blockchain Summer School Lausann, 2017.
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+		
+		\bibitem{tfm19} \textsc{\textbf{Zhang, Yu; Wen, Jiangtao; }}\textsc{“The IoT electric business model: Using Blockchain Technology for the Internet of Things”.} 2016.
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+																				
+		\bibitem{XXX} \textsc{\textbf{XXX; }}
+		\newline \texttt{\textbf{Fecha última consulta:} XX de XX de 2017}.
+						
+		\endgroup
+	\end{thebibliography}
+	
+	\thispagestyle{empty}
+			% Annexes
+	\renewcommand{\appendixname}{Anexo}
+	\renewcommand{\appendixtocname}{Anexos}
+	\renewcommand{\appendixpagename}{ANEXOS} 
+	\appendix 
+	\addappheadtotoc 
+	\appendixpage 
+	
+	\blankpage
+
+	% Chapter
+	\chapter{Anexo A}\label{AnnexeA}
+
+	% Chapter
+	\chapter{Anexo B}\label{AnnexeB}
+	
+\end{document}
+	
