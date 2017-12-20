@@ -4,3 +4,7 @@
 
 # OS X generated files
 .DS_Store
+
+# Latex files (report)
+report/.texpadtmp
+report/*.pdf
