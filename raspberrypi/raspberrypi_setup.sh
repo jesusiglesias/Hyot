@@ -24,6 +24,7 @@ SETUPFILE="raspberrypi_setup.sh"                # Name of this file
 CWD="$(pwd)"                                    # Current directory
 UTILS="utils.sh"                                # File of utilities
 VERBOSE=false                                   # Verbose mode
+PIDOFCOMMAND="pidof"                            # 'pidof' command
 PACKAGEAPT="apt-get"                            # 'apt-get' package
 
 ########################################
@@ -36,7 +37,7 @@ load_utils () {
     source $CWD/$UTILS
     rc=$?                                       # Captures the return code          
     
-    if [ $rc -ne 0 ]; then                      # Checks the return code of the source command
+    if [ $rc -ne 0 ]; then                      # Checks the return code of the 'source' command
         exit 1
     fi
 }
@@ -50,7 +51,7 @@ check_root () {
     fi
 }
 
-# Checks that the script is executed in a Linux platform
+# Checks that the script is executed on a Linux platform
 check_platform () {
 
     if [[ $OSTYPE != linux* ]]; then
@@ -59,9 +60,16 @@ check_platform () {
     fi
 }
 
-# Checks if this script is or not already running
+# Checks whether this script is or not already running
 check_concurrency () {
 
+    # Checks whether the 'pidof' command is installed
+    if ! [ -x "$(command -v $PIDOFCOMMAND)" ]; then
+        e_error "Command: '$PIDOFCOMMAND' not found. Please, install this command to check and avoid the concurrency." 1>&2
+        exit 1    
+    fi
+
+    # Checks if another instance is run
     for pid in $(pidof -o %PPID -x $1); do
         if [ $pid != $$ ]; then
             e_error "Process: $1 already running with PID $pid." 1>&2
@@ -115,7 +123,7 @@ check_parameters () {
 # Outputs the message by console if the verbose mode is enabled
 output () {
 
-    if $VERBOSE ; then
+    if $VERBOSE; then
         printf "$1"
     fi
 }
