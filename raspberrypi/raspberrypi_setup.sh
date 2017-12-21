@@ -28,6 +28,7 @@ PIDOFCOMMAND="pidof"                            # 'pidof' command
 PACKAGEAPT="apt-get"                            # 'apt-get' package
 RASPICONFIGCOMMAND="raspi-config"               # 'raspi-config' command
 INTERFACES="i2c camera"                         # Interfaces to enable
+REBOOTCOMMAND="reboot"                          # 'reboot' command
 
 ########################################
 #             FUNCTIONS                #
@@ -169,6 +170,22 @@ check_interfaces () {
     done
 }
 
+# Asks to user whether or not to reboot the system
+seek_confirmation() {
+    printf "${bold}$@${reset}"
+    read -p "${bold} (y/n)${reset} " -n 1
+    echo
+}
+
+# Tests whether the result is a confirmation
+is_confirmed() {
+    
+    if [[ "$REPLY" =~ ^[Yy]$ ]]; then 
+        return 0
+    fi
+    return 1
+}
+
 # Trap keyboard interrupt (ctrl + c)
 ctrl_c() {
 
@@ -201,3 +218,23 @@ aptget_is_installed
 
 # Checks whether the 'Camera' and 'I2C' interfaces are enabled
 check_interfaces
+
+e_message_bold "Process has finished succesfully."
+
+# Asks the user whether or not to reboot the system
+seek_confirmation "Do you want to reboot the system? It would be an excellent idea for everything to work correctly!"
+# Reboot the system
+if is_confirmed; then
+
+    # Checks whether the 'reboot' command exists and is executable
+    if ! [ -x "$(command -v $REBOOTCOMMAND)" ]; then
+        echo
+        e_error "Command: '$REBOOTCOMMAND' not found. Please, reboot the system manually." 1>&2
+        exit 1 
+    else  # Reboot
+        e_message_bold "Rebooting the system..."
+        sleep 5
+        reboot 
+    fi
+fi
+
