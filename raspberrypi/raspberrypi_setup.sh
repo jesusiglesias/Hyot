@@ -26,6 +26,7 @@ UTILS="utils.sh"                                # File of utilities
 VERBOSE=false                                   # Verbose mode
 PIDOFCOMMAND="pidof"                            # 'pidof' command
 PACKAGEAPT="apt-get"                            # 'apt-get' package
+INTERFACES="i2c camera"                         # Interfaces to enable
 
 ########################################
 #             FUNCTIONS                #
@@ -137,6 +138,31 @@ aptget_is_installed () {
         exit 1
     fi
 }
+# Checks whether the 'Camera' and 'I2C' interfaces are enabled
+check_interfaces () {
+
+
+    for interface in $INTERFACES; do
+        output "Checking if the '$interface' interface is enabled.\n"
+        
+        # Interface enabled
+        if [ "$(raspi-config nonint get_$interface)" == 0 ]; then
+            e_success "Interface: $interface enabled."
+        else  
+            # Interface disabled
+            if [ "$(raspi-config nonint get_$interface)" == 1 ]; then
+                output "Interface: $interface disabled. Enabling...\n"
+
+                # Command to enable the interface
+                raspi-config nonint do_$interface 0
+
+                e_success "Interface: $interface enabled."
+            fi
+        fi
+        output "\n"
+    done
+}
+
 # Trap keyboard interrupt (ctrl + c)
 ctrl_c() {
 
@@ -167,3 +193,5 @@ output "Starting the configuration...\n\n"
 # Checks whether the 'apt' package manager is installed
 aptget_is_installed
 
+# Checks whether the 'Camera' and 'I2C' interfaces are enabled
+check_interfaces
