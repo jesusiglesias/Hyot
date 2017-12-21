@@ -1,21 +1,21 @@
 #!/bin/bash
-#==========================================================================================================#
-#        PROJECT:           Hyot                                                                           #
-#           FILE:           raspberrypi_setup.sh                                                           #
-#                                                                                                          #
-#          USAGE:           bash raspberrypi_setup.sh [options] || ./raspberrypi_setup.sh [options]        #
-#                                                                                                          #
-#    DESCRIPTION:           This script sets up the Raspberry Pi                                           #
-#                                                                                                          #
-#        OPTIONS:           ---                                                                            #
-#   REQUIREMENTS:           Root user, Linux-GNU platform                                                  #
-#          NOTES:           It must be run on a Raspberry Pi preferably with Raspbian as operating system  #
-#         AUTHOR:           Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                       #
-#   ORGANIZATION:           ---                                                                            #
-#        VERSION:           0.1                                                                            #
-#        CREATED:           12/18/17                                                                       #
-#       REVISION:           ---                                                                            #
-#==========================================================================================================#
+#===========================================================================================================================#
+#        PROJECT:           Hyot                                                                                            #
+#           FILE:           raspberrypi_setup.sh                                                                            #
+#                                                                                                                           #
+#          USAGE:           bash raspberrypi_setup.sh {--help|--verbose} || ./raspberrypi_setup.sh {--help|--verbose}       #
+#                                                                                                                           #
+#    DESCRIPTION:           This script sets up the Raspberry Pi                                                            #
+#                                                                                                                           #
+#        OPTIONS:           ---                                                                                             #
+#   REQUIREMENTS:           Root user, Linux-GNU platform                                                                   #
+#          NOTES:           It must be run on a Raspberry Pi preferably with Raspbian as operating system                   #
+#         AUTHOR:           Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                        #
+#   ORGANIZATION:           ---                                                                                             #
+#        VERSION:           0.1                                                                                             #
+#        CREATED:           12/18/17                                                                                        #
+#       REVISION:           ---                                                                                             #
+#===========================================================================================================================#
 
 ########################################
 #             VARIABLES                #
@@ -24,6 +24,7 @@ SETUPFILE="raspberrypi_setup.sh"                # Name of this file
 CWD="$(pwd)"                                    # Current directory
 UTILS="utils.sh"                                # File of utilities
 VERBOSE=false                                   # Verbose mode
+PACKAGEAPT="apt-get"                            # 'apt-get' package
 
 ########################################
 #             FUNCTIONS                #
@@ -119,6 +120,15 @@ output () {
     fi
 }
 
+# Checks whether the 'apt-get' package manager is installed
+aptget_is_installed () {
+
+    # Checks whether the command exists and is executable
+    if ! [ -x "$(command -v $PACKAGEAPT)" ]; then
+        e_error "Package manager: '$PACKAGEAPT' is not installed in the system. Please, install this package before continuing." 1>&2
+        exit 1
+    fi
+}
 # Trap keyboard interrupt (ctrl + c)
 ctrl_c() {
 
@@ -142,7 +152,10 @@ check_parameters $# $1              # Checks the parameters and the number of th
 
 # Header                               
 e_header "     HYOT - RASPBERRY PI SETUP     "
-e_message_bold "This script perfoms several actions to install the packages and libraries needed to execute the 'xx.py' code. Type the '-v' or 
-'--verbose' option to show the trace."
+e_message_bold "This script perfoms several actions to install the packages and libraries needed to execute the 'xx.py' file. Type the '-v' or '--verbose' option to show the trace."
 
 output "Starting the configuration...\n\n"
+
+# Checks whether the 'apt' package manager is installed
+aptget_is_installed
+
