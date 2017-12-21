@@ -26,6 +26,7 @@ UTILS="utils.sh"                                # File of utilities
 VERBOSE=false                                   # Verbose mode
 PIDOFCOMMAND="pidof"                            # 'pidof' command
 PACKAGEAPT="apt-get"                            # 'apt-get' package
+RASPICONFIGCOMMAND="raspi-config"               # 'raspi-config' command
 INTERFACES="i2c camera"                         # Interfaces to enable
 
 ########################################
@@ -141,6 +142,11 @@ aptget_is_installed () {
 # Checks whether the 'Camera' and 'I2C' interfaces are enabled
 check_interfaces () {
 
+    # Checks whether the 'raspi-config' command exists and is executable
+    if ! [ -x "$(command -v $RASPICONFIGCOMMAND)" ]; then
+        e_error "Command: '$RASPICONFIGCOMMAND' not found. Please, run this script in a Raspberry Pi with Raspbian platform." 1>&2
+        exit 1  
+    fi
 
     for interface in $INTERFACES; do
         output "Checking if the '$interface' interface is enabled.\n"
