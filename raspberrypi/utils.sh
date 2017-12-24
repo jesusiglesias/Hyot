@@ -72,11 +72,6 @@ e_warning () {
     printf "${yellow}! %s${reset}\n" "$@"
 }
 
-# Underlined message
-e_underline () { 
-    printf "${underline}${bold}%s${reset}\n" "$@"
-}
-
 # Header in the 'Help' section
 help_header () { 
     printf "\n${bold}${blue}==========  %s  ==========${reset}\n" "$@" 
@@ -85,9 +80,4 @@ help_header () {
 # Bold and yellow message in the 'Help' section
 help_bold () { 
     printf "${bold}${yellow}%s${reset}" "$@"
-}
-
-# Note TODO
-e_note () { 
-    printf "${underline}${bold}${blue2}Note:${reset}  ${blue2}%s${reset}\n" "$@"
 }
