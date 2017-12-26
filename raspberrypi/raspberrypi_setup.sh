@@ -25,8 +25,8 @@ CWD="$(pwd)"                                            # Current directory
 UTILS="utils.sh"                                        # File of utilities
 VERBOSE=false                                           # Verbose mode
 PIDOFCOMMAND="pidof"                                    # 'pidof' command
-COMMANDLINETOOL="apt-get apt-cache apt"                 # 'apt-get', 'apt' and 'apt-cache' tools
 PACKAGESTOINSTALL="python2.7 python-pip i2c-tools"      # Packages to install
+COMMANDLINETOOL="apt-get apt-cache dpkg"                # 'apt-get', 'apt-cache' and 'dpkg' tools
 RASPICONFIGCOMMAND="raspi-config"                       # 'raspi-config' command
 INTERFACES="i2c camera"                                 # Interfaces to enable
 REBOOTCOMMAND="reboot"                                  # 'reboot' command
@@ -133,6 +133,7 @@ output () {
 }
 
 # Checks whether several command line tools are installed ('apt-get', 'apt' and 'apt-cache')
+# Checks whether several command line tools are installed ('apt-get', 'apt-cache' and 'dpkg')
 commandLineTools_is_installed () {
 
     # Checks whether the command exists and is executable
