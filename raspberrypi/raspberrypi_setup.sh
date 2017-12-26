@@ -262,7 +262,7 @@ check_parameters $# $1              # Checks the parameters and the number of th
 
 # Header                               
 e_header "     HYOT - RASPBERRY PI SETUP     "
-e_header_bold "This script perfoms several actions to install the packages and libraries needed to execute the 'xx.py' file. Type the '-v' or '--verbose' option to show the trace."
+e_header_bold "This script perfoms several actions to install the packages and libraries needed to execute the 'raspberrypi_hyot.py' file. Type the '-v' or '--verbose' option to show the trace."
 
 output "Starting the configuration...\n\n"
 
