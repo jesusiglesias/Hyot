@@ -47,9 +47,14 @@ e_header () {
     printf "\n${bold}${blue}====================     %s     ====================${reset}\n" "$@" 
 }
 
+# Bold header
+e_header_bold () {
+     printf "\n${bold}${black}%s${reset}\n\n" "$@"
+}
+
 # Bold message
 e_message_bold () {
-     printf "\n${bold}${black}%s${reset}\n\n" "$@"
+     printf "${bold}${black}%s${reset}\n\n" "$@"
 }
 
 # Information message
