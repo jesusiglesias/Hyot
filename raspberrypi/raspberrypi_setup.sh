@@ -132,7 +132,14 @@ output () {
     fi
 }
 
-# Checks whether several command line tools are installed ('apt-get', 'apt' and 'apt-cache')
+# Print a line break when 'verbose' mode is disabled
+lineBreak () {
+    
+    if ! $VERBOSE; then
+        printf "\n"
+    fi
+}
+
 # Checks whether several command line tools are installed ('apt-get', 'apt-cache' and 'dpkg')
 commandLineTools_is_installed () {
 
@@ -188,12 +195,13 @@ package_is_installed () {
         else
             output "Package is already updated to the last version.\n"
         fi   
-        e_info "Library: '$1' is installed and updated in the system."
+        e_info "Package: '$1' is installed and updated in the system."
     fi
 }
         e_info "Library: '$1' is installed and updated in the system."
     fi
 }
+
 # Checks whether the 'Camera' and 'I2C' interfaces are enabled
 check_interfaces () {
 
@@ -267,28 +275,28 @@ e_header_bold "This script perfoms several actions to install the packages and l
 
 output "Starting the configuration...\n\n"
 
-# Checks whether several command line tools are installed ('apt-get', 'apt' and 'apt-cache')
+# Checks whether several command line tools are installed ('apt-get', 'apt-cache' and 'dpkg')
 commandLineTools_is_installed
 
 # Checks if each package is installed and updated. If not, it is installed or updated
 for package in $PACKAGESTOINSTALL; do
-    output "Checking if the '$package' package is installed.\n"
+    output "Checking if the '$package' package is installed and updated.\n"
     package_is_installed "$package"
     output "\n"
 done
 
 # Print a line break when 'verbose' mode is disabled
-if ! $VERBOSE; then
-    printf "\n"
-fi
+lineBreak
+
+
+# Print a line break when 'verbose' mode is disabled
+lineBreak
 
 # Checks whether the 'Camera' and 'I2C' interfaces are enabled
 check_interfaces
 
 # Print a line break when 'verbose' mode is disabled
-if ! $VERBOSE; then
-    printf "\n"
-fi
+lineBreak
 
 # Process finished
 e_message_bold "Process has finished succesfully."
@@ -309,4 +317,3 @@ if is_confirmed; then
         reboot 
     fi
 fi
-
