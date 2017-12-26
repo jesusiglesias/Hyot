@@ -25,7 +25,7 @@ CWD="$(pwd)"                                            # Current directory
 UTILS="utils.sh"                                        # File of utilities
 VERBOSE=false                                           # Verbose mode
 PIDOFCOMMAND="pidof"                                    # 'pidof' command
-PACKAGEAPT="apt-get apt"                                # 'apt-get' and 'apt' package managers
+COMMANDLINETOOL="apt-get apt-cache apt"                 # 'apt-get', 'apt' and 'apt-cache' tools
 RASPICONFIGCOMMAND="raspi-config"                       # 'raspi-config' command
 INTERFACES="i2c camera"                                 # Interfaces to enable
 REBOOTCOMMAND="reboot"                                  # 'reboot' command
@@ -131,13 +131,13 @@ output () {
     fi
 }
 
-# Checks whether the 'apt-get' and 'apt' package managers are installed
-aptget_is_installed () {
+# Checks whether several command line tools are installed ('apt-get', 'apt' and 'apt-cache')
+commandLineTools_is_installed () {
 
     # Checks whether the command exists and is executable
-    for package in $PACKAGEAPT; do
-        if ! [ -x "$(command -v $package)" ]; then
-            e_error "Package manager: '$package' is not installed in the system. Please, install this package before continuing." 1>&2
+    for tool in $COMMANDLINETOOL; do
+        if ! [ -x "$(command -v $tool)" ]; then
+            e_error "Command line tool: '$tool' is not installed in the system. Please, install this package before continuing." 1>&2
             exit 1
         fi
     done
@@ -218,8 +218,8 @@ e_header_bold "This script perfoms several actions to install the packages and l
 
 output "Starting the configuration...\n\n"
 
-# Checks whether the 'apt-get' and 'apt' package managers are installed
-aptget_is_installed
+# Checks whether several command line tools are installed ('apt-get', 'apt' and 'apt-cache')
+commandLineTools_is_installed
 
 # Checks whether the 'Camera' and 'I2C' interfaces are enabled
 check_interfaces
