@@ -20,15 +20,15 @@
 ########################################
 #             VARIABLES                #
 ########################################
-SETUPFILE="raspberrypi_setup.sh"                # Name of this file
-CWD="$(pwd)"                                    # Current directory
-UTILS="utils.sh"                                # File of utilities
-VERBOSE=false                                   # Verbose mode
-PIDOFCOMMAND="pidof"                            # 'pidof' command
-PACKAGEAPT="apt-get"                            # 'apt-get' package
-RASPICONFIGCOMMAND="raspi-config"               # 'raspi-config' command
-INTERFACES="i2c camera"                         # Interfaces to enable
-REBOOTCOMMAND="reboot"                          # 'reboot' command
+SETUPFILE="raspberrypi_setup.sh"                        # Name of this file
+CWD="$(pwd)"                                            # Current directory
+UTILS="utils.sh"                                        # File of utilities
+VERBOSE=false                                           # Verbose mode
+PIDOFCOMMAND="pidof"                                    # 'pidof' command
+PACKAGEAPT="apt-get"                                    # 'apt-get' package
+RASPICONFIGCOMMAND="raspi-config"                       # 'raspi-config' command
+INTERFACES="i2c camera"                                 # Interfaces to enable
+REBOOTCOMMAND="reboot"                                  # 'reboot' command
 
 ########################################
 #             FUNCTIONS                #
@@ -38,9 +38,9 @@ REBOOTCOMMAND="reboot"                          # 'reboot' command
 load_utils () {
 
     source $CWD/$UTILS
-    rc=$?                                       # Captures the return code          
+    rc=$?                       # Captures the return code          
     
-    if [ $rc -ne 0 ]; then                      # Checks the return code of the 'source' command
+    if [ $rc -ne 0 ]; then      # Checks the return code of the 'source' command
         exit 1
     fi
 }
@@ -75,7 +75,7 @@ check_concurrency () {
     # Checks if another instance is run
     for pid in $(pidof -o %PPID -x $1); do
         if [ $pid != $$ ]; then
-            e_error "Process: $1 already running with PID $pid." 1>&2
+            e_error "Process: $1 is already running with PID $pid." 1>&2
             exit 1
         fi
     done
@@ -158,7 +158,7 @@ check_interfaces () {
         else  
             # Interface disabled
             if [ "$(raspi-config nonint get_$interface)" == 1 ]; then
-                output "Interface: $interface disabled. Enabling...\n"
+                output "Interface disabled. Enabling...\n"
 
                 # Command to enable the interface
                 raspi-config nonint do_$interface 0
@@ -209,7 +209,7 @@ check_parameters $# $1              # Checks the parameters and the number of th
 
 # Header                               
 e_header "     HYOT - RASPBERRY PI SETUP     "
-e_message_bold "This script perfoms several actions to install the packages and libraries needed to execute the 'xx.py' file. Type the '-v' or '--verbose' option to show the trace."
+e_header_bold "This script perfoms several actions to install the packages and libraries needed to execute the 'xx.py' file. Type the '-v' or '--verbose' option to show the trace."
 
 output "Starting the configuration...\n\n"
 
@@ -219,6 +219,12 @@ aptget_is_installed
 # Checks whether the 'Camera' and 'I2C' interfaces are enabled
 check_interfaces
 
+# Print a line break when 'verbose' mode is disabled
+if ! $VERBOSE; then
+    printf "\n"
+fi
+
+# Process finished
 e_message_bold "Process has finished succesfully."
 
 # Asks the user whether or not to reboot the system
