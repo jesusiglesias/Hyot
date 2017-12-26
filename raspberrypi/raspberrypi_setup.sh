@@ -26,6 +26,7 @@ UTILS="utils.sh"                                        # File of utilities
 VERBOSE=false                                           # Verbose mode
 PIDOFCOMMAND="pidof"                                    # 'pidof' command
 COMMANDLINETOOL="apt-get apt-cache apt"                 # 'apt-get', 'apt' and 'apt-cache' tools
+PACKAGESTOINSTALL="python2.7 python-pip i2c-tools"      # Packages to install
 RASPICONFIGCOMMAND="raspi-config"                       # 'raspi-config' command
 INTERFACES="i2c camera"                                 # Interfaces to enable
 REBOOTCOMMAND="reboot"                                  # 'reboot' command
@@ -143,6 +144,53 @@ commandLineTools_is_installed () {
     done
 }
 
+# Checks whether the packages are installed in the system
+package_is_installed () {
+
+    local checkPackage=null
+
+    case $1 in
+        "python-pip")
+            checkPackage="pip"
+            ;;
+        "i2c-tools")
+            checkPackage="i2cdetect"
+            ;;
+        *)
+            checkPackage="$1"
+            ;;
+        esac
+
+    # Checks whether the command exists and is executable
+    if ! [ -x "$(command -v $checkPackage)" ]; then
+        output "Package is not installed. Searching the package in the repository...\n"
+
+        # Package exists in the repository
+        if [ "$(apt-cache search $1 | grep '^'$1'\s')" ]; then
+            output "Package has been found. Installing...\n"
+
+            # Command to install the package
+            apt-get install $1 -y>/dev/null
+            e_success "Package: '$1' was installed succesfully."
+        else
+            e_error "Package: '$1' not found in the repository. Please, check its name."
+        fi
+    else
+        output "Package is installed. Checking if this one is updated.\n"
+
+        # Library is outdated
+        if [ "$(apt-get -V --assume-no upgrade | grep '\s'$1'\s')" ]; then
+            output "Package should be updated. Updating...\n"
+
+            # Command to update the package
+            apt-get --only-upgrade install $1 -y>/dev/null
+        else
+            output "Package is already updated to the last version.\n"
+        fi   
+        e_info "Library: '$1' is installed and updated in the system."
+    fi
+}
+        e_info "Library: '$1' is installed and updated in the system."
     fi
 }
 # Checks whether the 'Camera' and 'I2C' interfaces are enabled
@@ -220,6 +268,18 @@ output "Starting the configuration...\n\n"
 
 # Checks whether several command line tools are installed ('apt-get', 'apt' and 'apt-cache')
 commandLineTools_is_installed
+
+# Checks if each package is installed and updated. If not, it is installed or updated
+for package in $PACKAGESTOINSTALL; do
+    output "Checking if the '$package' package is installed.\n"
+    package_is_installed "$package"
+    output "\n"
+done
+
+# Print a line break when 'verbose' mode is disabled
+if ! $VERBOSE; then
+    printf "\n"
+fi
 
 # Checks whether the 'Camera' and 'I2C' interfaces are enabled
 check_interfaces
