@@ -93,7 +93,7 @@ show_help () {
     echo
     echo
     echo "   -h, --help                 Shows the help"
-    echo "   -v, --verbose              XXXX"
+    echo "   -v, --verbose              Provides very helpful additional details as to what the code is doing"
     echo
 }
 

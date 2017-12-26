@@ -79,7 +79,7 @@ e_warning () {
 
 # Header in the 'Help' section
 help_header () { 
-    printf "\n${bold}${blue}==========  %s  ==========${reset}\n" "$@" 
+    printf "\n${bold}${blue}====================  %s  ====================${reset}\n" "$@" 
 }
 
 # Bold and yellow message in the 'Help' section
