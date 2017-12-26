@@ -27,6 +27,7 @@ VERBOSE=false                                           # Verbose mode
 PIDOFCOMMAND="pidof"                                    # 'pidof' command
 COMMANDLINETOOL="apt-get apt-cache dpkg"                # 'apt-get', 'apt-cache' and 'dpkg' tools
 PACKAGESTOINSTALL="python2.7 python-pip i2c-tools"      # Packages to install
+LIBRARYTOINSTALL="smbus2 ibmiotf RPLCD picamera"        # Libraries to install
 RASPICONFIGCOMMAND="raspi-config"                       # 'raspi-config' command
 INTERFACES="i2c camera"                                 # Interfaces to enable
 REBOOTCOMMAND="reboot"                                  # 'reboot' command
@@ -152,7 +153,7 @@ commandLineTools_is_installed () {
     done
 }
 
-# Checks whether the packages are installed in the system
+# Checks whether the packages are installed and updated in the system
 package_is_installed () {
 
     # Checks whether the package exists
@@ -185,19 +186,36 @@ package_is_installed () {
     fi
 }
 
-        # Library is outdated
-        if [ "$(apt-get -V --assume-no upgrade | grep '\s'$1'\s')" ]; then
-            output "Package should be updated. Updating...\n"
+# Checks whether the libraries are installed and updated in the system
+library_is_installed () {
 
-            # Command to update the package
-            apt-get --only-upgrade install $1 -y>/dev/null
+    # Checks whether the library is installed
+    if [ "$(pip show $1)" ]; then
+        output "Library is installed. Checking if this one is updated.\n"
+
+        # Library is outdated
+        if [ "$(pip search $1 | grep -B2 'LATEST:')" ]; then 
+            output "Library should be updated. Updating...\n"
+
+            # Command to update the library
+            pip install --upgrade $1>/dev/null
         else
-            output "Package is already updated to the last version.\n"
+            output "Library is already updated to the last version.\n"
         fi   
-        e_info "Package: '$1' is installed and updated in the system."
-    fi
-}
         e_info "Library: '$1' is installed and updated in the system."
+    else
+        output "Library is not installed. Searching the library in the repository...\n"
+
+        # Library exists in the repository
+        if [ "$(pip search $1 | grep '^'$1'\s')" ]; then
+            output "Library has been found. Installing...\n"
+
+            # Command to install the library
+            pip install $1>/dev/null
+            e_success "Library: '$1' was installed succesfully." 
+        else
+            e_error "Library: '$1' not found in the repository. Please, check its name."
+        fi
     fi
 }
 
@@ -287,6 +305,12 @@ done
 # Print a line break when 'verbose' mode is disabled
 lineBreak
 
+# Checks if each library is installed and updated. If not, it is installed or updated
+for library in $LIBRARYTOINSTALL; do
+    output "Checking if the '$library' library is installed and updated.\n"
+    library_is_installed "$library"
+    output "\n"
+done
 
 # Print a line break when 'verbose' mode is disabled
 lineBreak
@@ -311,7 +335,7 @@ if is_confirmed; then
         e_error "Command: '$REBOOTCOMMAND' not found. Please, reboot the system manually." 1>&2
         exit 1 
     else  # Reboot
-        e_message_bold "Rebooting the system..."
+        e_header_bold "Rebooting the system..."
         sleep 5
         reboot 
     fi
