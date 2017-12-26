@@ -25,8 +25,8 @@ CWD="$(pwd)"                                            # Current directory
 UTILS="utils.sh"                                        # File of utilities
 VERBOSE=false                                           # Verbose mode
 PIDOFCOMMAND="pidof"                                    # 'pidof' command
-PACKAGESTOINSTALL="python2.7 python-pip i2c-tools"      # Packages to install
 COMMANDLINETOOL="apt-get apt-cache dpkg"                # 'apt-get', 'apt-cache' and 'dpkg' tools
+PACKAGESTOINSTALL="python2.7 python-pip i2c-tools"      # Packages to install
 RASPICONFIGCOMMAND="raspi-config"                       # 'raspi-config' command
 INTERFACES="i2c camera"                                 # Interfaces to enable
 REBOOTCOMMAND="reboot"                                  # 'reboot' command
@@ -155,22 +155,21 @@ commandLineTools_is_installed () {
 # Checks whether the packages are installed in the system
 package_is_installed () {
 
-    local checkPackage=null
+    # Checks whether the package exists
+    if [ "$(dpkg -l $1 | grep '^'ii'\s')" ]; then
+        output "Package is installed. Checking if this one is updated.\n"
 
-    case $1 in
-        "python-pip")
-            checkPackage="pip"
-            ;;
-        "i2c-tools")
-            checkPackage="i2cdetect"
-            ;;
-        *)
-            checkPackage="$1"
-            ;;
-        esac
+        # Package is outdated
+        if [ "$(apt-get -V --assume-no upgrade | grep '\s'$1'\s')" ]; then
+            output "Package should be updated. Updating...\n"
 
-    # Checks whether the command exists and is executable
-    if ! [ -x "$(command -v $checkPackage)" ]; then
+            # Command to update the package
+            apt-get --only-upgrade install $1 -y>/dev/null
+        else
+            output "Package is already updated to the last version.\n"
+        fi   
+        e_info "Package: '$1' is installed and updated in the system."
+    else
         output "Package is not installed. Searching the package in the repository...\n"
 
         # Package exists in the repository
@@ -182,9 +181,9 @@ package_is_installed () {
             e_success "Package: '$1' was installed succesfully."
         else
             e_error "Package: '$1' not found in the repository. Please, check its name."
-        fi
-    else
-        output "Package is installed. Checking if this one is updated.\n"
+        fi 
+    fi
+}
 
         # Library is outdated
         if [ "$(apt-get -V --assume-no upgrade | grep '\s'$1'\s')" ]; then
