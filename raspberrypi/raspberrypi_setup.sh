@@ -49,6 +49,7 @@ REBOOTCOMMAND="reboot"                                  # 'reboot' command
 load_utils () {
 
     source $CWD/$UTILS
+    # shellcheck source=./utils.sh
     rc=$?                       # Captures the return code          
     
     if [ $rc -ne 0 ]; then      # Checks the return code of the 'source' command
