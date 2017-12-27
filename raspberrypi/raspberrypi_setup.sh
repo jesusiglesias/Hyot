@@ -206,8 +206,8 @@ library_is_installed () {
         output "Library is installed. Checking if this one is updated.\\n"
 
         # Library is outdated
-        if [ "$(pip search $1 | grep -B2 'LATEST:')" ]; then 
-            output "Library should be updated. Updating...\n"
+        if [ "$(pip search "$1" | grep -A2 '^'"$1"'\s' | grep -B2 'LATEST:')" ]; then 
+            output "Library should be updated. Updating...\\n"
 
             # Command to update the library
             pip install --upgrade "$1">/dev/null
