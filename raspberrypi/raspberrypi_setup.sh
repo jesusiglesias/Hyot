@@ -48,8 +48,8 @@ REBOOTCOMMAND="reboot"                                  # 'reboot' command
 # Loads the utilities ('utils.sh' file)
 load_utils () {
 
-    source $CWD/$UTILS
     # shellcheck source=./utils.sh
+    source "$CWD"/"$UTILS"
     rc=$?                       # Captures the return code          
     
     if [ $rc -ne 0 ]; then      # Checks the return code of the 'source' command
@@ -85,8 +85,8 @@ check_concurrency () {
     fi
 
     # Checks if another instance is run
-    for pid in $(pidof -o %PPID -x $1); do
-        if [ $pid != $$ ]; then
+    for pid in $(pidof -o %PPID -x "$1"); do
+        if [ "$pid" != "$$" ]; then
             e_error "Process: $1 is already running with PID $pid." 1>&2
             exit 1
         fi
@@ -139,7 +139,7 @@ check_parameters () {
 output () {
 
     if $VERBOSE; then
-        printf "$1"
+        printf "%b" "$1"
     fi
 }
 
@@ -147,7 +147,7 @@ output () {
 lineBreak () {
     
     if ! $VERBOSE; then
-        printf "\n"
+        printf "\\n"
     fi
 }
 
@@ -156,7 +156,7 @@ commandLineTools_is_installed () {
 
     # Checks whether the command exists and is executable
     for tool in $COMMANDLINETOOL; do
-        if ! [ -x "$(command -v $tool)" ]; then
+        if ! [ -x "$(command -v "$tool")" ]; then
             e_error "Command line tool: '$tool' is not installed in the system. Please, install this package before continuing." 1>&2
             exit 1
         fi
@@ -167,28 +167,28 @@ commandLineTools_is_installed () {
 package_is_installed () {
 
     # Checks whether the package exists
-    if [ "$(dpkg -l $1 | grep '^'ii'\s')" ]; then
-        output "Package is installed. Checking if this one is updated.\n"
+    if [ "$(dpkg -l "$1" | grep '^'"ii"'\s')" ]; then
+        output "Package is installed. Checking if this one is updated.\\n"
 
         # Package is outdated
-        if [ "$(apt-get -V --assume-no upgrade | grep '\s'$1'\s')" ]; then
-            output "Package should be updated. Updating...\n"
+        if [ "$(apt-get -V --assume-no upgrade | grep '\s'"$1"'\s')" ]; then
+            output "Package should be updated. Updating...\\n"
 
             # Command to update the package
-            apt-get --only-upgrade install $1 -y>/dev/null
+            apt-get --only-upgrade install "$1" -y>/dev/null
         else
-            output "Package is already updated to the last version.\n"
+            output "Package is already updated to the last version.\\n"
         fi   
         e_info "Package: '$1' is installed and updated in the system."
     else
-        output "Package is not installed. Searching the package in the repository...\n"
+        output "Package is not installed. Searching the package in the repository...\\n"
 
         # Package exists in the repository
-        if [ "$(apt-cache search $1 | grep '^'$1'\s')" ]; then
-            output "Package has been found. Installing...\n"
+        if [ "$(apt-cache search "$1" | grep '^'"$1"'\s')" ]; then
+            output "Package has been found. Installing...\\n"
 
             # Command to install the package
-            apt-get install $1 -y>/dev/null
+            apt-get install "$1" -y>/dev/null
             e_success "Package: '$1' was installed succesfully."
         else
             e_error "Package: '$1' not found in the repository. Please, check its name."
@@ -200,28 +200,28 @@ package_is_installed () {
 library_is_installed () {
 
     # Checks whether the library is installed
-    if [ "$(pip show $1)" ]; then
-        output "Library is installed. Checking if this one is updated.\n"
+    if [ "$(pip show "$1")" ]; then
+        output "Library is installed. Checking if this one is updated.\\n"
 
         # Library is outdated
         if [ "$(pip search $1 | grep -B2 'LATEST:')" ]; then 
             output "Library should be updated. Updating...\n"
 
             # Command to update the library
-            pip install --upgrade $1>/dev/null
+            pip install --upgrade "$1">/dev/null
         else
-            output "Library is already updated to the last version.\n"
+            output "Library is already updated to the last version.\\n"
         fi   
         e_info "Library: '$1' is installed and updated in the system."
     else
-        output "Library is not installed. Searching the library in the repository...\n"
+        output "Library is not installed. Searching the library in the repository...\\n"
 
         # Library exists in the repository
-        if [ "$(pip search $1 | grep '^'$1'\s')" ]; then
-            output "Library has been found. Installing...\n"
+        if [ "$(pip search "$1" | grep '^'"$1"'\s')" ]; then 
+            output "Library has been found. Installing...\\n"
 
             # Command to install the library
-            pip install $1>/dev/null
+            pip install "$1">/dev/null
             e_success "Library: '$1' was installed succesfully." 
         else
             e_error "Library: '$1' not found in the repository. Please, check its name."
@@ -239,30 +239,31 @@ check_interfaces () {
     fi
 
     for interface in $INTERFACES; do
-        output "Checking if the '$interface' interface is enabled.\n"
+        output "Checking if the '$interface' interface is enabled.\\n"
         
         # Interface enabled
-        if [ "$(raspi-config nonint get_$interface)" == 0 ]; then
+        if [ "$(raspi-config nonint get_"$interface")" == 0 ]; then
             e_success "Interface: $interface enabled."
         else  
             # Interface disabled
-            if [ "$(raspi-config nonint get_$interface)" == 1 ]; then
-                output "Interface disabled. Enabling...\n"
+            if [ "$(raspi-config nonint get_"$interface")" == 1 ]; then
+                output "Interface disabled. Enabling...\\n"
 
                 # Command to enable the interface
-                raspi-config nonint do_$interface 0
+                raspi-config nonint do_"$interface" 0
 
                 e_success "Interface: $interface enabled."
             fi
         fi
-        output "\n"
+        output "\\n"
     done
 }
 
 # Asks to user whether or not to reboot the system
 seek_confirmation() {
-    printf "${bold}$@${reset}"
-    read -p "${bold} (y/n)${reset} " -n 1
+    confirmation_message "$1"
+    # shellcheck disable=SC2162
+    read -p "$(confirmation_message " (y/n) ")" -n 1
     echo
 }
 
@@ -294,22 +295,22 @@ load_utils                          # Loads the 'utils.sh' file
 check_root                          # Checks that the script is executed as a root user
 check_platform                      # Checks that the script is executed in a GNU platform
 check_concurrency $SETUPFILE        # Checks if this script is or not already running
-check_parameters $# $1              # Checks the parameters and the number of them
+check_parameters "$#" "$1"          # Checks the parameters and the number of them
 
 # Header                               
 e_header "     HYOT - RASPBERRY PI SETUP     "
 e_header_bold "This script perfoms several actions to install the packages and libraries needed to execute the 'raspberrypi_hyot.py' file. Type the '-v' or '--verbose' option to show the trace."
 
-output "Starting the configuration...\n\n"
+output "Starting the configuration...\\n\\n"
 
 # Checks whether several command line tools are installed ('apt-get', 'apt-cache' and 'dpkg')
 commandLineTools_is_installed
 
 # Checks if each package is installed and updated. If not, it is installed or updated
 for package in $PACKAGESTOINSTALL; do
-    output "Checking if the '$package' package is installed and updated.\n"
+    output "Checking if the '$package' package is installed and updated.\\n"
     package_is_installed "$package"
-    output "\n"
+    output "\\n"
 done
 
 # Print a line break when 'verbose' mode is disabled
@@ -317,9 +318,9 @@ lineBreak
 
 # Checks if each library is installed and updated. If not, it is installed or updated
 for library in $LIBRARYTOINSTALL; do
-    output "Checking if the '$library' library is installed and updated.\n"
+    output "Checking if the '$library' library is installed and updated.\\n"
     library_is_installed "$library"
-    output "\n"
+    output "\\n"
 done
 
 # Print a line break when 'verbose' mode is disabled
