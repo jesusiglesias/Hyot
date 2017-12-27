@@ -164,6 +164,7 @@ commandLineTools_is_installed () {
 }
 
 # Checks whether the packages are installed and updated in the system
+# shellcheck disable=SC2143
 package_is_installed () {
 
     # Checks whether the package exists
@@ -197,6 +198,7 @@ package_is_installed () {
 }
 
 # Checks whether the libraries are installed and updated in the system
+# shellcheck disable=SC2143
 library_is_installed () {
 
     # Checks whether the library is installed
