@@ -1,21 +1,30 @@
 #!/bin/bash
-#===========================================================================================================================#
-#        PROJECT:           Hyot                                                                                            #
-#           FILE:           raspberrypi_setup.sh                                                                            #
-#                                                                                                                           #
-#          USAGE:           bash raspberrypi_setup.sh {--help|--verbose} || ./raspberrypi_setup.sh {--help|--verbose}       #
-#                                                                                                                           #
-#    DESCRIPTION:           This script sets up the Raspberry Pi                                                            #
-#                                                                                                                           #
-#        OPTIONS:           ---                                                                                             #
-#   REQUIREMENTS:           Root user, Linux-GNU platform                                                                   #
-#          NOTES:           It must be run on a Raspberry Pi preferably with Raspbian as operating system                   #
-#         AUTHOR:           Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                        #
-#   ORGANIZATION:           ---                                                                                             #
-#        VERSION:           0.1                                                                                             #
-#        CREATED:           12/18/17                                                                                        #
-#       REVISION:           ---                                                                                             #
-#===========================================================================================================================#
+#=======================================================================================================================#
+#                                                                                                                       #
+#                                    __    __   ___      ___   ________    __________                                   #
+#                                   |  |  |  |  \  \    /  /  |   __   |  |___    ___|                                  #
+#                                   |  |__|  |   \  \__/  /   |  |  |  |      |  |                                      #
+#                                   |   __   |    \_|  |_/    |  |  |  |      |  |                                      #
+#                                   |  |  |  |      |  |      |  |__|  |      |  |                                      #
+#                                   |__|  |__|      |__|      |________|      |__|                                      #
+#                                                                                                                       #
+#                                                                                                                       #
+#        PROJECT:     Hyot                                                                                              #
+#           FILE:     raspberrypi_setup.sh                                                                              #
+#                                                                                                                       #
+#          USAGE:     bash raspberrypi_setup.sh {--help|--verbose} || ./raspberrypi_setup.sh {--help|--verbose}         #
+#                                                                                                                       #
+#    DESCRIPTION:     This script sets up the Raspberry Pi                                                              #
+#                                                                                                                       #
+#        OPTIONS:     ---                                                                                               #
+#   REQUIREMENTS:     Root user, Linux-GNU platform                                                                     #
+#          NOTES:     It must be run on a Raspberry Pi preferably with Raspbian as operating system                     #
+#         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                          #
+#   ORGANIZATION:     ---                                                                                               #
+#        VERSION:     0.1                                                                                               #
+#        CREATED:     12/18/17                                                                                          #
+#       REVISION:     ---                                                                                               #
+#=======================================================================================================================#
 
 ########################################
 #             VARIABLES                #

@@ -1,20 +1,29 @@
-#==========================================================================================================#
-#        PROJECT:           Hyot                                                                           #
-#           FILE:           utils.sh                                                                       #
-#                                                                                                          #
-#          USAGE:           ---                                                                            #
-#                                                                                                          #
-#    DESCRIPTION:           This script provides several utilities                                         #
-#                                                                                                          #
-#        OPTIONS:           ---                                                                            #
-#   REQUIREMENTS:           ---                                                                            #
-#          NOTES:           It must be loaded in the main script                                           #
-#         AUTHOR:           Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                       #
-#   ORGANIZATION:           ---                                                                            #
-#        VERSION:           0.1                                                                            #
-#        CREATED:           12/18/17                                                                       #
-#       REVISION:           ---                                                                            #
-#==========================================================================================================#
+#=======================================================================================================================#
+#                                                                                                                       #
+#                                    __    __   ___      ___   ________    __________                                   #
+#                                   |  |  |  |  \  \    /  /  |   __   |  |___    ___|                                  #
+#                                   |  |__|  |   \  \__/  /   |  |  |  |      |  |                                      #
+#                                   |   __   |    \_|  |_/    |  |  |  |      |  |                                      #
+#                                   |  |  |  |      |  |      |  |__|  |      |  |                                      #
+#                                   |__|  |__|      |__|      |________|      |__|                                      #
+#                                                                                                                       #
+#                                                                                                                       #
+#        PROJECT:     Hyot                                                                                              #
+#           FILE:     utils.sh                                                                                          #
+#                                                                                                                       #
+#          USAGE:     ---                                                                                               #
+#                                                                                                                       #
+#    DESCRIPTION:     This script provides several utilities                                                            #
+#                                                                                                                       #
+#        OPTIONS:     ---                                                                                               #
+#   REQUIREMENTS:     ---                                                                                               #
+#          NOTES:     It must be loaded in the main script                                                              #
+#         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                          #
+#   ORGANIZATION:     ---                                                                                               #
+#        VERSION:     0.1                                                                                               #
+#        CREATED:     12/18/17                                                                                          #
+#       REVISION:     ---                                                                                               #
+#=======================================================================================================================#
 
 ########################################
 #     COLOR AND MODE CAPABILITIES      #
