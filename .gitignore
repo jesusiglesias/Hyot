@@ -5,6 +5,9 @@
 # OS X generated files
 .DS_Store
 
+# Jetbrains IDE
+.idea/*
+
 # Latex files (report)
 report/.texpadtmp
 report/*.pdf
