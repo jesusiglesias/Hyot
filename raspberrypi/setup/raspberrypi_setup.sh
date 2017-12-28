@@ -52,7 +52,7 @@ load_utils () {
     source "$CWD"/"$UTILS"
     rc=$?                       # Captures the return code          
     
-    if [ $rc -ne 0 ]; then      # Checks the return code of the 'source' command
+    if [ ${rc} -ne 0 ]; then    # Checks the return code of the 'source' command
         exit 1
     fi
 }
@@ -79,7 +79,7 @@ check_platform () {
 check_concurrency () {
 
     # Checks whether the 'pidof' command is installed
-    if ! [ -x "$(command -v $PIDOFCOMMAND)" ]; then
+    if ! [ -x "$(command -v ${PIDOFCOMMAND})" ]; then
         e_error "Command: '$PIDOFCOMMAND' not found. Please, install this command to check and avoid the concurrency." 1>&2
         exit 1    
     fi
@@ -138,7 +138,7 @@ check_parameters () {
 # Outputs the message by console if the verbose mode is enabled
 output () {
 
-    if $VERBOSE; then
+    if ${VERBOSE}; then
         printf "%b" "$1"
     fi
 }
@@ -146,7 +146,7 @@ output () {
 # Print a line break when 'verbose' mode is disabled
 lineBreak () {
     
-    if ! $VERBOSE; then
+    if ! ${VERBOSE}; then
         printf "\\n"
     fi
 }
@@ -155,7 +155,7 @@ lineBreak () {
 commandLineTools_is_installed () {
 
     # Checks whether the command exists and is executable
-    for tool in $COMMANDLINETOOL; do
+    for tool in ${COMMANDLINETOOL}; do
         if ! [ -x "$(command -v "$tool")" ]; then
             e_error "Command line tool: '$tool' is not installed in the system. Please, install this package before continuing." 1>&2
             exit 1
@@ -190,7 +190,7 @@ package_is_installed () {
 
             # Command to install the package
             apt-get install "$1" -y>/dev/null
-            e_success "Package: '$1' was installed succesfully."
+            e_success "Package: '$1' was installed successfully."
         else
             e_error "Package: '$1' not found in the repository. Please, check its name."
         fi 
@@ -224,7 +224,7 @@ library_is_installed () {
 
             # Command to install the library
             pip install "$1">/dev/null
-            e_success "Library: '$1' was installed succesfully." 
+            e_success "Library: '$1' was installed successfully."
         else
             e_error "Library: '$1' not found in the repository. Please, check its name."
         fi
@@ -235,12 +235,12 @@ library_is_installed () {
 check_interfaces () {
 
     # Checks whether the 'raspi-config' command exists and is executable
-    if ! [ -x "$(command -v $RASPICONFIGCOMMAND)" ]; then
+    if ! [ -x "$(command -v ${RASPICONFIGCOMMAND})" ]; then
         e_error "Command: '$RASPICONFIGCOMMAND' not found. Please, run this script in a Raspberry Pi with Raspbian platform." 1>&2
         exit 1  
     fi
 
-    for interface in $INTERFACES; do
+    for interface in ${INTERFACES}; do
         output "Checking if the '$interface' interface is enabled.\\n"
         
         # Interface enabled
@@ -296,12 +296,12 @@ trap ctrl_c SIGINT
 load_utils                          # Loads the 'utils.sh' file
 check_root                          # Checks that the script is executed as a root user
 check_platform                      # Checks that the script is executed in a GNU platform
-check_concurrency $SETUPFILE        # Checks if this script is or not already running
+check_concurrency ${SETUPFILE}      # Checks if this script is or not already running
 check_parameters "$#" "$1"          # Checks the parameters and the number of them
 
 # Header                               
 e_header "     HYOT - RASPBERRY PI SETUP     "
-e_header_bold "This script perfoms several actions to install the packages and libraries needed to execute the 'raspberrypi_hyot.py' file. Type the '-v' or '--verbose' option to show the trace."
+e_header_bold "This script performs several actions to install the packages and libraries needed to execute the 'raspberrypi_hyot.py' file. Type the '-v' or '--verbose' option to show the trace."
 
 output "Starting the configuration...\\n\\n"
 
@@ -309,7 +309,7 @@ output "Starting the configuration...\\n\\n"
 commandLineTools_is_installed
 
 # Checks if each package is installed and updated. If not, it is installed or updated
-for package in $PACKAGESTOINSTALL; do
+for package in ${PACKAGESTOINSTALL}; do
     output "Checking if the '$package' package is installed and updated.\\n"
     package_is_installed "$package"
     output "\\n"
@@ -319,7 +319,7 @@ done
 lineBreak
 
 # Checks if each library is installed and updated. If not, it is installed or updated
-for library in $LIBRARYTOINSTALL; do
+for library in ${LIBRARYTOINSTALL}; do
     output "Checking if the '$library' library is installed and updated.\\n"
     library_is_installed "$library"
     output "\\n"
@@ -335,7 +335,7 @@ check_interfaces
 lineBreak
 
 # Process finished
-e_message_bold "Process has finished succesfully."
+e_message_bold "Process has finished successfully."
 
 # Asks the user whether or not to reboot the system
 seek_confirmation "Do you want to reboot the system? It would be an excellent idea for everything to work correctly!"
@@ -343,7 +343,7 @@ seek_confirmation "Do you want to reboot the system? It would be an excellent id
 if is_confirmed; then
 
     # Checks whether the 'reboot' command exists and is executable
-    if ! [ -x "$(command -v $REBOOTCOMMAND)" ]; then
+    if ! [ -x "$(command -v ${REBOOTCOMMAND})" ]; then
         echo
         e_error "Command: '$REBOOTCOMMAND' not found. Please, reboot the system manually." 1>&2
         exit 1 
