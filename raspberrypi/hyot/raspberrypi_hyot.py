@@ -151,7 +151,8 @@ def main():
     except Exception as error:                          # TODO - Too general exception
         print("Error: " + str(error) + "\r")
     except KeyboardInterrupt:
-        print ("\r")
+        print("\r")
+        print("Exception: KeyboardInterrupt. Please, turn off the system for proper operation.")
     finally:
         LCD.close(clear=True)                           # Close and call the clear function
         LCD.backlight_enabled = False                   # Disable the backlight
