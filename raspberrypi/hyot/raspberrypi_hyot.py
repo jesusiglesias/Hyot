@@ -87,17 +87,25 @@ def main():
         time.sleep(2)
         LCD.clear()
 
+        # DHT11 sensor TODO
+        LCD.write_string("-> DHT11 sensor")
+        time.sleep(2)
+        LCD.clear()
+
         # Loop each 3 seconds, hence, this is the time between measurements
         while True:
 
             # Obtains humidity and temperature from DHT11 sensor
             humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PINDATA)
+            # Obtains the datetime
+            measure_datetime = datetime.datetime.now()
 
             # Checks the values
             if humidity is not None and 0 <= humidity <= 100 and temperature is not None and temperature >= 0:
 
                 # Outputs the data by console
-                print("Datetime of measurement: " + str(datetime.datetime.now()))
+                print("Datetime of measurement: " + str(measure_datetime.strftime("%d-%m-%Y %H:%M:%S %p")))
+
                 print("Temperature: {0:0.1f} °C \nHumidity: {1:0.1f} %".format(temperature, humidity))
 
                 # Outputs the data by display
