@@ -33,10 +33,13 @@
 #               IMPORTS                #
 ########################################
 from __future__ import unicode_literals
+import os
+import sys
 import time
 import datetime
 import Adafruit_DHT                             # DHT11 sensor
 from RPLCD.i2c import CharLCD                   # LCD 16x2
+
 
 ########################################
 #              CONSTANTS               #
@@ -49,8 +52,14 @@ DHT_PINDATA = 21                                                        # DHT11 
 ########################################
 #               FUNCTIONS              #
 ########################################
+def check_root():
+    """ Check that the script is run as a root user"""
 
-# Main function
+    if not os.geteuid() == 0:
+        print("You need to have root privileges to run this script. Please try again, this time using 'sudo'.")
+        sys.exit(1)
+
+
 def main():
     """ Main function"""
 
@@ -59,11 +68,11 @@ def main():
 
         # Initializing
         print("Initializing Raspberry Pi")
-        LCD.write_string("Initializing")            # Write the specified unicode string to the display
-        LCD.crlf()                                  # Write a line feed and a carriage return (\r\n) character
+        LCD.write_string("Initializing")            # Writes the specified unicode string to the display
+        LCD.crlf()                                  # Writes a line feed and a carriage return (\r\n) character
         LCD.write_string("Raspberry Pi...")
         time.sleep(3)                               # Wait time - 3 seconds
-        LCD.clear()                                 # Overwrite display with blank characters and reset cursor position
+        LCD.clear()                                 # Overwrites display with blank characters and reset cursor position
 
         # Reading values
         print("Reading values from sensors")
@@ -76,10 +85,10 @@ def main():
         # Loop each 3 seconds, hence, this is the time between measurements
         while True:
 
-            # Obtain humidity and temperature from DHT11 sensor
+            # Obtains humidity and temperature from DHT11 sensor
             humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PINDATA)
 
-            # Check the values
+            # Checks the values
             if humidity is not None and 0 <= humidity <= 100 and temperature is not None and temperature >= 0:
 
                 # Outputs the data by console
@@ -109,6 +118,7 @@ def main():
 ########################################
 #             MAIN PROGRAM             #
 ########################################
-
 if __name__ == '__main__':
-    main()
+
+    check_root()                # Function to check the user
+    main()                      # Main function
