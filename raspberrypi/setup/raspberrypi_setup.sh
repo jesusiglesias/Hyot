@@ -18,7 +18,7 @@
 #                                                                                                                       #
 #        OPTIONS:     ---                                                                                               #
 #   REQUIREMENTS:     Root user, Linux-GNU platform                                                                     #
-#          NOTES:     It must be run on a Raspberry Pi preferably with Raspbian as operating system                     #
+#          NOTES:     It must be run with root user on a Raspberry Pi preferably with Raspbian as operating system      #
 #         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                          #
 #   ORGANIZATION:     ---                                                                                               #
 #        VERSION:     0.1                                                                                               #
