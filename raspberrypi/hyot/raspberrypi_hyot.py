@@ -44,16 +44,21 @@ from RPLCD.i2c import CharLCD                   # LCD 16x2
 ########################################
 #              CONSTANTS               #
 ########################################
-LCD = CharLCD(i2c_expander='PCF8574', address=0x3f, charmap='A00')      # LCD 16x2 - I2C address
-DHT_SENSOR = Adafruit_DHT.DHT11                                         # DHT11 sensor
-DHT_PINDATA = 21                                                        # DHT11 - Pin GPIO21
+def constants():
+    """Contains all definitions of constants"""
+
+    global LCD, DHT_SENSOR, DHT_PINDATA
+
+    LCD = CharLCD(i2c_expander='PCF8574', address=0x3f, charmap='A00')      # LCD 16x2 - Configurable I2C address
+    DHT_SENSOR = Adafruit_DHT.DHT11                                         # DHT11 sensor
+    DHT_PINDATA = 21                                                        # DHT11 - Pin GPIO21
 
 
 ########################################
 #               FUNCTIONS              #
 ########################################
 def check_root():
-    """ Check that the script is run as a root user"""
+    """Check that the script is run as a root user"""
 
     if not os.geteuid() == 0:
         print("You need to have root privileges to run this script. Please try again, this time using 'sudo'.")
@@ -61,7 +66,7 @@ def check_root():
 
 
 def main():
-    """ Main function"""
+    """Main function"""
 
     # Try-Catch block
     try:
@@ -121,4 +126,5 @@ def main():
 if __name__ == '__main__':
 
     check_root()                # Function to check the user
+    constants()                 # Declares all the constants
     main()                      # Main function
