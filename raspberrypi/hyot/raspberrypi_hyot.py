@@ -32,11 +32,12 @@
 ########################################
 #               IMPORTS                #
 ########################################
-from __future__ import unicode_literals
-import os
-import sys
-import time
-import datetime
+from __future__ import unicode_literals         # Future statement definitions
+import os                                       # OS module
+import sys                                      # System-specific parameters and functions
+import re                                       # Regular expression
+import time                                     # Time access and conversions
+import datetime                                 # Basic date and time types
 import Adafruit_DHT                             # DHT11 sensor
 from RPLCD.i2c import CharLCD                   # LCD 16x2
 
