@@ -32,14 +32,20 @@
 ########################################
 #               IMPORTS                #
 ########################################
-from __future__ import unicode_literals         # Future statement definitions
-import os                                       # OS module
-import sys                                      # System-specific parameters and functions
-import re                                       # Regular expression
-import time                                     # Time access and conversions
-import datetime                                 # Basic date and time types
-import Adafruit_DHT                             # DHT11 sensor
-from RPLCD.i2c import CharLCD                   # LCD 16x2
+from __future__ import unicode_literals             # Future statement definitions
+
+try:
+    import sys                                      # System-specific parameters and functions
+    import os                                       # OS module
+    import re                                       # Regular expression
+    import time                                     # Time access and conversions
+    import datetime                                 # Basic date and time types
+    import Adafruit_DHT                             # DHT11 sensor
+    from RPLCD.i2c import CharLCD                   # LCD 16x2
+
+except ImportError as importError:
+    print("Error to import: " + importError.message.lower())
+    sys.exit(1)
 
 
 ########################################
