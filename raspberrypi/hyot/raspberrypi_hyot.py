@@ -106,8 +106,11 @@ def main():
                 LCD.crlf()
                 LCD.write_string("Humidity: %.1f %%" % humidity)
 
-            else:  # Values are invalid or None
-                print ("Failed to get reading. Some result is invalid or None")
+            elif humidity is None or 0 > humidity > 100:                            # Humidity value invalid or None
+                print ("Failed to get reading. Humidity is invalid or None")
+
+            elif temperature is None or temperature < 0:                            # Temperature value invalid or None
+                print ("Failed to get reading. Temperature is invalid or None")
 
             time.sleep(3)
 
