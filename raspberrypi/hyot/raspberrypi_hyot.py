@@ -33,10 +33,10 @@
 #               IMPORTS                #
 ########################################
 from __future__ import unicode_literals
-from time import sleep
+import time
 import datetime
-from RPLCD.i2c import CharLCD                   # LCD 16x2
 import Adafruit_DHT                             # DHT11 sensor
+from RPLCD.i2c import CharLCD                   # LCD 16x2
 
 ########################################
 #              CONSTANTS               #
@@ -62,7 +62,7 @@ def main():
         LCD.write_string("Initializing")            # Write the specified unicode string to the display
         LCD.crlf()                                  # Write a line feed and a carriage return (\r\n) character
         LCD.write_string("Raspberry Pi...")
-        sleep(3)                                    # Wait time - 3 seconds
+        time.sleep(3)                               # Wait time - 3 seconds
         LCD.clear()                                 # Overwrite display with blank characters and reset cursor position
 
         # Reading values
@@ -70,10 +70,10 @@ def main():
         LCD.write_string("Reading values")
         LCD.crlf()
         LCD.write_string("from sensors")
-        sleep(2)
+        time.sleep(2)
         LCD.clear()
 
-        # Loop
+        # Loop each 3 seconds, hence, this is the time between measurements
         while True:
 
             # Obtain humidity and temperature from DHT11 sensor
@@ -95,7 +95,7 @@ def main():
             else:  # Values are invalid or None
                 print ("Failed to get reading. Some result is invalid or None")
 
-            sleep(3)
+            time.sleep(3)
 
     except Exception as error:                          # TODO - Too general exception
         print ("Error: " + str(error) + "\r")
