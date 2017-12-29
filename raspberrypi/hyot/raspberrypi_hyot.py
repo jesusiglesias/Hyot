@@ -59,10 +59,36 @@ def constants():
 #               FUNCTIONS              #
 ########################################
 def check_root():
-    """Check that the script is run as a root user"""
+    """Checks that the script is run as a root user"""
 
     if not os.geteuid() == 0:
         print("You need to have root privileges to run this script. Please try again, this time using 'sudo'.")
+        sys.exit(1)
+
+
+def check_raspberrypi():
+    """Checks that the script is run in a Raspberry Pi. Opens the '/proc/cpuinfo' file to obtain the 'Hardware'
+    field value. Possible values:
+        - Raspberry Pi 1 (model A, B, B+) and Zero is 2708
+        - Raspberry Pi 2 (model B) is 2709
+        - Raspberry Pi 3 (model B) on 4.9.x kernel is 2835
+        - Anything else is not a Raspberry Pi"""
+
+    try:
+        # Opens the file and searches the field
+        with open('/proc/cpuinfo', 'r') as infile:
+            cpuinfo = infile.read()
+    except IOError:
+        print("No such file or directory: '/proc/cpuinfo'. This script must be run in a Raspberry Pi.")
+        sys.exit(1)
+
+    # Matches a line like 'Hardware   : BCMXXXX'
+    match = re.search('^Hardware\s+:\s+(\w+)$', cpuinfo, flags=re.MULTILINE | re.IGNORECASE)
+
+    # 1. Couldn't find the 'Hardware' field. Assume that it isn't a Raspberry Pi
+    # 2. Find the 'Hardware' field but the value is another one
+    if not match or match.group(1) not in ('BCM2708', 'BCM2709', 'BCM2835'):
+        print("You need to run this script in a Raspberry Pi.")
         sys.exit(1)
 
 
@@ -106,7 +132,6 @@ def main():
 
                 # Outputs the data by console
                 print("Datetime of measurement: " + str(measure_datetime.strftime("%d-%m-%Y %H:%M:%S %p")))
-
                 print("Temperature: {0:0.1f} °C \nHumidity: {1:0.1f} %".format(temperature, humidity))
 
                 # Outputs the data by display
@@ -116,15 +141,15 @@ def main():
                 LCD.write_string("Humidity: %.1f %%" % humidity)
 
             elif humidity is None or 0 > humidity > 100:                            # Humidity value invalid or None
-                print ("Failed to get reading. Humidity is invalid or None")
+                print("Failed to get reading. Humidity is invalid or None")
 
             elif temperature is None or temperature < 0:                            # Temperature value invalid or None
-                print ("Failed to get reading. Temperature is invalid or None")
+                print("Failed to get reading. Temperature is invalid or None")
 
             time.sleep(3)
 
     except Exception as error:                          # TODO - Too general exception
-        print ("Error: " + str(error) + "\r")
+        print("Error: " + str(error) + "\r")
     except KeyboardInterrupt:
         print ("\r")
     finally:
@@ -138,5 +163,6 @@ def main():
 if __name__ == '__main__':
 
     check_root()                # Function to check the user
+    check_raspberrypi()         # Checks if the script is run in a Raspberry Pi
     constants()                 # Declares all the constants
     main()                      # Main function
