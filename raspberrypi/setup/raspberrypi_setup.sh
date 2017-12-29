@@ -319,6 +319,7 @@ trap ctrl_c SIGINT
 load_utils                          # Loads the 'utils.sh' file
 check_root                          # Checks that the script is executed as a root user
 check_platform                      # Checks that the script is executed in a GNU platform
+check_raspberrypi                   # Checks that the script is executed on a Raspberry pi
 check_concurrency ${SETUPFILE}      # Checks if this script is or not already running
 check_parameters "$#" "$1"          # Checks the parameters and the number of them
 
