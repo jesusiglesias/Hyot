@@ -19,7 +19,7 @@
 #                                                                                                                      #
 #        OPTIONS:     ---                                                                                              #
 #   REQUIREMENTS:     Root user, Connected devices: 16x2 LCD (2), DTH11 sensor and HC-SR04 sensor                      #
-#          NOTES:     It must be run on a Raspberry Pi preferably with Raspbian as operating system                    #
+#          NOTES:     It must be run with root user on a Raspberry Pi preferably with Raspbian as operating system     #
 #         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                         #
 #   ORGANIZATION:     ---                                                                                              #
 #        VERSION:     0.1                                                                                              #
