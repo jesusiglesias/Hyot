@@ -86,7 +86,7 @@ check_raspberrypi () {
 
     # '/proc/cpuinfo' file does not exist
     if ! [ -e "/proc/cpuinfo" ]; then
-        e_error "This script must be run in a Raspberry Pi." 1>&2
+        e_error "No such file or directory: '/proc/cpuinfo'. This script must be run in a Raspberry Pi." 1>&2
         exit 1
     else
         hardware="$(cat /proc/cpuinfo | grep 'Hardware' | awk '{print $3}')"
