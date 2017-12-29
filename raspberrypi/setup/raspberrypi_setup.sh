@@ -75,6 +75,29 @@ check_platform () {
     fi
 }
 
+# Checks that the script is executed on a Raspberry pi
+check_raspberrypi () {
+
+    # Checks the '/proc/cpuinfo' file to obtain the 'Hardware' field value. Possible values:
+    #   - Raspberry Pi 1 (model A, B, B+) and Zero is 2708
+    #   - Raspberry Pi 2 (model B) is 2709
+    #   - Raspberry Pi 3 (model B) on 4.9.x kernel is 2835
+    #   - Anything else is not a Raspberry Pi
+
+    # '/proc/cpuinfo' file does not exist
+    if ! [ -e "/proc/cpuinfo" ]; then
+        e_error "This script must be run in a Raspberry Pi." 1>&2
+        exit 1
+    else
+        hardware="$(cat /proc/cpuinfo | grep 'Hardware' | awk '{print $3}')"
+
+        if [[ ${hardware} != "BCM2708" && ${hardware} != "BCM2709" && ${hardware} != "BCM2835" ]]; then
+            e_error "This script must be run in a Raspberry Pi." 1>&2
+            exit 1
+        fi
+    fi
+}
+
 # Checks whether this script is or not already running
 check_concurrency () {
 
