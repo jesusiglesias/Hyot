@@ -56,9 +56,12 @@ def constants():
 
     global LCD, DHT_SENSOR, DHT_PINDATA
 
-    LCD = CharLCD(i2c_expander='PCF8574', address=0x3f, charmap='A00')      # LCD 16x2 - Configurable I2C address
-    DHT_SENSOR = Adafruit_DHT.DHT11                                         # DHT11 sensor
-    DHT_PINDATA = 21                                                        # DHT11 - Pin GPIO21
+    LCD = CharLCD(i2c_expander='PCF8574',                               # LCD 16x2 - Configurable I2C address
+                  address=0x3f,
+                  charmap='A00',
+                  backlight_enabled=False)
+    DHT_SENSOR = Adafruit_DHT.DHT11                                     # DHT11 sensor
+    DHT_PINDATA = 21                                                    # DHT11 - Pin GPIO21
 
 
 ########################################
@@ -72,8 +75,16 @@ def check_root():
         sys.exit(1)
 
 
+def check_platform():
+    """Checks that the script is run on GNU/Linux platform"""
+
+    if not sys.platform.startswith('linux'):
+        print("This script must be run on GNU/Linux platform. For example: Raspbian.")
+        sys.exit(1)
+
+
 def check_raspberrypi():
-    """Checks that the script is run in a Raspberry Pi. Opens the '/proc/cpuinfo' file to obtain the 'Hardware'
+    """Checks that the script is run on Raspberry Pi. Opens the '/proc/cpuinfo' file to obtain the 'Hardware'
     field value. Possible values:
         - Raspberry Pi 1 (model A, B, B+) and Zero is 2708
         - Raspberry Pi 2 (model B) is 2709
@@ -85,7 +96,7 @@ def check_raspberrypi():
         with open('/proc/cpuinfo', 'r') as infile:
             cpuinfo = infile.read()
     except IOError:
-        print("No such file or directory: '/proc/cpuinfo'. This script must be run in a Raspberry Pi.")
+        print("No such file or directory: '/proc/cpuinfo'. This script must be run on a Raspberry Pi.")
         sys.exit(1)
 
     # Matches a line like 'Hardware   : BCMXXXX'
@@ -94,7 +105,7 @@ def check_raspberrypi():
     # 1. Couldn't find the 'Hardware' field. Assume that it isn't a Raspberry Pi
     # 2. Find the 'Hardware' field but the value is another one
     if not match or match.group(1) not in ('BCM2708', 'BCM2709', 'BCM2835'):
-        print("You need to run this script in a Raspberry Pi.")
+        print("You need to run this script on a Raspberry Pi.")
         sys.exit(1)
 
 
@@ -146,10 +157,10 @@ def main():
                 LCD.crlf()
                 LCD.write_string("Humidity: %.1f %%" % humidity)
 
-            elif humidity is None or 0 > humidity > 100:                            # Humidity value invalid or None
+            elif humidity is None or 0 > humidity > 100:                        # Humidity value is invalid or None
                 print("Failed to get reading. Humidity is invalid or None")
 
-            elif temperature is None or temperature < 0:                            # Temperature value invalid or None
+            elif temperature is None or temperature < 0:                        # Temperature value is invalid or None
                 print("Failed to get reading. Temperature is invalid or None")
 
             time.sleep(3)
@@ -160,8 +171,8 @@ def main():
         print("\r")
         print("Exception: KeyboardInterrupt. Please, turn off the system for proper operation.")
     finally:
-        LCD.close(clear=True)                           # Close and call the clear function
-        LCD.backlight_enabled = False                   # Disable the backlight
+        LCD.close(clear=True)                           # Closes and calls the clear function
+        LCD.backlight_enabled = False                   # Disables the backlight
 
 
 ########################################
@@ -170,6 +181,7 @@ def main():
 if __name__ == '__main__':
 
     check_root()                # Function to check the user
-    check_raspberrypi()         # Checks if the script is run in a Raspberry Pi
+    check_platform()            # Checks whether the script is run on GNU/Linux platform
+    check_raspberrypi()         # Checks whether the script is run on a Raspberry Pi
     constants()                 # Declares all the constants
     main()                      # Main function
