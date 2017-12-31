@@ -38,6 +38,7 @@ try:
     import sys                                      # System-specific parameters and functions
     import os                                       # OS module
     import re                                       # Regular expression
+    import uuid                                     # UUID objects according to RFC 4122
     import time                                     # Time access and conversions
     import datetime                                 # Basic date and time types
     import psutil                                   # Python system and process utilities
@@ -139,7 +140,9 @@ def main():
     try:
 
         # Variables
-        count = 0                                   # Measurement counter
+        global uuid_dht11
+        count = 0  # Measurement counter
+        uuid_dht11 = None  # UUID of each DHT11 sensor measurement
 
         # Header
         print(Fore.BLUE + FIGLET.renderText("HYOT") + Fore.RESET)
@@ -193,8 +196,12 @@ def main():
             # Checks the values
             if humidity is not None and 0 <= humidity <= 100 and temperature is not None and temperature >= 0:
 
+                # Generates a random UUID
+                uuid_dht11 = uuid.uuid4()
+
                 # Outputs the data by console
-                print("Datetime of measurement: " + str(measure_datetime.strftime("%d-%m-%Y %H:%M:%S %p")))
+                print(Style.BRIGHT + "UUID: " + Style.RESET_ALL + str(uuid_dht11))
+                print("Datetime: " + str(measure_datetime.strftime("%d-%m-%Y %H:%M:%S %p")))
                 print("Temperature: {0:0.1f} °C \nHumidity: {1:0.1f} %".format(temperature, humidity))
 
                 # Outputs the data by display
