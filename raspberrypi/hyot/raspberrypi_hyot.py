@@ -117,11 +117,14 @@ def main():
 
         # Initializing
         print("Initializing Raspberry Pi")
+        LCD.backlight_enabled = True                # Enables the backlight
+        time.sleep(1)                             # Wait time - 0.5 seconds
         LCD.write_string("Initializing")            # Writes the specified unicode string to the display
         LCD.crlf()                                  # Writes a line feed and a carriage return (\r\n) character
         LCD.write_string("Raspberry Pi...")
         time.sleep(3)                               # Wait time - 3 seconds
         LCD.clear()                                 # Overwrites display with blank characters and reset cursor position
+        time.sleep(1)
 
         # Reading values
         print("Reading values from sensors")
@@ -130,6 +133,7 @@ def main():
         LCD.write_string("from sensors")
         time.sleep(2)
         LCD.clear()
+        time.sleep(1)
 
         # DHT11 sensor TODO
         LCD.write_string("-> DHT11 sensor")
