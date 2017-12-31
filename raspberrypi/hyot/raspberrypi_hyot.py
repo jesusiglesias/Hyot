@@ -41,6 +41,7 @@ try:
     import time                                     # Time access and conversions
     import datetime                                 # Basic date and time types
     import psutil                                   # Python system and process utilities
+    from colorama import Fore, Style                # Cross-platform colored terminal text
     import Adafruit_DHT                             # DHT11 sensor
     from RPLCD.i2c import CharLCD                   # LCD 16x2
 
@@ -72,7 +73,7 @@ def check_root():
     """Checks that the script is run as a root user"""
 
     if not os.geteuid() == 0:
-        print("You need to have root privileges to run this script. Please try again, this time using 'sudo'.")
+        print(Fore.RED + "You need to have root privileges to run this script. Please try it again using 'sudo'." + Fore.RESET)
         sys.exit(1)
 
 
@@ -80,7 +81,7 @@ def check_platform():
     """Checks that the script is run on GNU/Linux platform"""
 
     if not sys.platform.startswith('linux'):
-        print("This script must be run on GNU/Linux platform. For example: Raspbian.")
+        print(Fore.RED + "This script must be run on GNU/Linux platform. For example: Raspbian." + Fore.RESET)
         sys.exit(1)
 
 
@@ -97,7 +98,7 @@ def check_raspberrypi():
         with open('/proc/cpuinfo', 'r') as infile:
             cpuinfo = infile.read()
     except IOError:
-        print("No such file or directory: '/proc/cpuinfo'. This script must be run on a Raspberry Pi.")
+        print(Fore.RED + "No such file or directory: '/proc/cpuinfo'. This script must be run on a Raspberry Pi." + Fore.RESET)
         sys.exit(1)
 
     # Matches a line like 'Hardware   : BCMXXXX'
@@ -106,7 +107,7 @@ def check_raspberrypi():
     # 1. Couldn't find the 'Hardware' field. Assume that it isn't a Raspberry Pi
     # 2. Find the 'Hardware' field but the value is another one
     if not match or match.group(1) not in ('BCM2708', 'BCM2709', 'BCM2835'):
-        print("You need to run this script on a Raspberry Pi.")
+        print(Fore.RED + "You need to run this script on a Raspberry Pi." + Fore.RESET)
         sys.exit(1)
 
 
@@ -123,7 +124,7 @@ def check_concurrency():
         if p.name() == "python" and len(p.cmdline()) > 1 and filename in p.cmdline()[1]:
             # Another instance is running
             if count >= 1:
-                print("Process: %s is already running with PID %s." % (filename, p.pid))
+                print(Fore.RED + "Process: %s is already running with PID %s." % (filename, p.pid) + Fore.RESET)
                 sys.exit(1)
             else:
                 count += 1
@@ -138,11 +139,11 @@ def main():
         # Initializing
         print("Initializing Raspberry Pi")
         LCD.backlight_enabled = True                # Enables the backlight
-        time.sleep(1)                             # Wait time - 0.5 seconds
+        time.sleep(1)                               # Wait time - 1 second
         LCD.write_string("Initializing")            # Writes the specified unicode string to the display
         LCD.crlf()                                  # Writes a line feed and a carriage return (\r\n) character
         LCD.write_string("Raspberry Pi...")
-        time.sleep(3)                               # Wait time - 3 seconds
+        time.sleep(3)
         LCD.clear()                                 # Overwrites display with blank characters and reset cursor position
         time.sleep(1)
 
@@ -190,10 +191,10 @@ def main():
             time.sleep(3)
 
     except Exception as error:                          # TODO - Too general exception
-        print("Error: " + str(error) + "\r")
+        print(Fore.RED + "Error: " + str(error) + Fore.RESET + "\r")
     except KeyboardInterrupt:
-        print("\r")
-        print("Exception: KeyboardInterrupt. Please, turn off the system for proper operation.")
+        print("\r")  # TODO
+        print(Fore.RED + "Exception: KeyboardInterrupt. Please, turn off the system for proper operation." + Fore.RESET)
     finally:
         LCD.close(clear=True)                           # Closes and calls the clear function
         LCD.backlight_enabled = False                   # Disables the backlight
