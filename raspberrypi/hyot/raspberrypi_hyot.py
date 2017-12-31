@@ -40,6 +40,7 @@ try:
     import re                                       # Regular expression
     import time                                     # Time access and conversions
     import datetime                                 # Basic date and time types
+    import psutil                                   # Python system and process utilities
     import Adafruit_DHT                             # DHT11 sensor
     from RPLCD.i2c import CharLCD                   # LCD 16x2
 
@@ -107,6 +108,25 @@ def check_raspberrypi():
     if not match or match.group(1) not in ('BCM2708', 'BCM2709', 'BCM2835'):
         print("You need to run this script on a Raspberry Pi.")
         sys.exit(1)
+
+
+def check_concurrency():
+    """Checks whether this script is or not already running"""
+
+    filename = "raspberrypi_hyot.py"        # Name of the file
+    count = 0                               # Process number counter
+
+    # Obtains all pids
+    for pid in psutil.pids():
+        p = psutil.Process(pid)
+
+        if p.name() == "python" and len(p.cmdline()) > 1 and filename in p.cmdline()[1]:
+            # Another instance is running
+            if count >= 1:
+                print("Process: %s is already running with PID %s." % (filename, p.pid))
+                sys.exit(1)
+            else:
+                count += 1
 
 
 def main():
@@ -187,5 +207,6 @@ if __name__ == '__main__':
     check_root()                # Function to check the user
     check_platform()            # Checks whether the script is run on GNU/Linux platform
     check_raspberrypi()         # Checks whether the script is run on a Raspberry Pi
+    check_concurrency()         # Checks whether the script is or not already running
     constants()                 # Declares all the constants
     main()                      # Main function
