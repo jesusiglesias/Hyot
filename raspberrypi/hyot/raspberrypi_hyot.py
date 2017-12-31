@@ -41,6 +41,7 @@ try:
     import time                                     # Time access and conversions
     import datetime                                 # Basic date and time types
     import psutil                                   # Python system and process utilities
+    from pyfiglet import Figlet                     # Text banners in a variety of typefaces
     from colorama import Fore, Style                # Cross-platform colored terminal text
     import Adafruit_DHT                             # DHT11 sensor
     from RPLCD.i2c import CharLCD                   # LCD 16x2
@@ -56,8 +57,9 @@ except ImportError as importError:
 def constants():
     """Contains all definitions of constants"""
 
-    global LCD, DHT_SENSOR, DHT_PINDATA
+    global FIGLET, LCD, DHT_SENSOR, DHT_PINDATA
 
+    FIGLET = Figlet(font='future_8', justify='center')                  # Figlet
     LCD = CharLCD(i2c_expander='PCF8574',                               # LCD 16x2 - Configurable I2C address
                   address=0x3f,
                   charmap='A00',
@@ -136,10 +138,19 @@ def main():
     # Try-Catch block
     try:
 
+        # Header
+        print(Fore.BLUE + FIGLET.renderText("HYOT") + Fore.RESET)
+        print(
+            Style.BRIGHT + Fore.BLACK + "This script monitors several events -distance, temperature and humidity- from "
+                                        "sensors, outputs by console and sends them to the cloud.\n"
+            + Fore.RESET + Style.RESET_ALL)         # TODO
+
+        time.sleep(2)                               # Wait time - 2 seconds
+
         # Initializing
-        print("Initializing Raspberry Pi")
         LCD.backlight_enabled = True                # Enables the backlight
-        time.sleep(1)                               # Wait time - 1 second
+        time.sleep(1)
+        print("Initializing Raspberry Pi")
         LCD.write_string("Initializing")            # Writes the specified unicode string to the display
         LCD.crlf()                                  # Writes a line feed and a carriage return (\r\n) character
         LCD.write_string("Raspberry Pi...")
