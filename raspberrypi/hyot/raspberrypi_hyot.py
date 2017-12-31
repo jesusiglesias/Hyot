@@ -138,19 +138,22 @@ def main():
     # Try-Catch block
     try:
 
+        # Variables
+        count = 0                                   # Measurement counter
+
         # Header
         print(Fore.BLUE + FIGLET.renderText("HYOT") + Fore.RESET)
         print(
             Style.BRIGHT + Fore.BLACK + "This script monitors several events -distance, temperature and humidity- from "
                                         "sensors, outputs by console and sends them to the cloud.\n"
-            + Fore.RESET + Style.RESET_ALL)         # TODO
+            + Style.RESET_ALL + Fore.RESET)         # TODO
 
         time.sleep(2)                               # Wait time - 2 seconds
 
         # Initializing
         LCD.backlight_enabled = True                # Enables the backlight
         time.sleep(1)
-        print("Initializing Raspberry Pi")
+        print("-> Initializing Raspberry Pi...")
         LCD.write_string("Initializing")            # Writes the specified unicode string to the display
         LCD.crlf()                                  # Writes a line feed and a carriage return (\r\n) character
         LCD.write_string("Raspberry Pi...")
@@ -159,7 +162,7 @@ def main():
         time.sleep(1)
 
         # Reading values
-        print("Reading values from sensors")
+        print("-> Reading values each 3 seconds from sensors\n")
         LCD.write_string("Reading values")
         LCD.crlf()
         LCD.write_string("from sensors")
@@ -168,17 +171,24 @@ def main():
         time.sleep(1)
 
         # DHT11 sensor TODO
-        LCD.write_string("-> DHT11 sensor")
+        LCD.write_string("- DHT11 sensor -")
         time.sleep(2)
         LCD.clear()
 
         # Loop each 3 seconds, hence, this is the time between measurements
         while True:
 
-            # Obtains humidity and temperature from DHT11 sensor
+            # Increment the counter
+            count += 1
+
+            # ############### DHT11 SENSOR ###############
+
+            # Obtains humidity and temperature
             humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PINDATA)
             # Obtains the datetime
             measure_datetime = datetime.datetime.now()
+
+            print(Style.BRIGHT + Fore.CYAN + "DHT11 sensor - Measurement %i" % count + Style.RESET_ALL + Fore.RESET)
 
             # Checks the values
             if humidity is not None and 0 <= humidity <= 100 and temperature is not None and temperature >= 0:
@@ -198,6 +208,8 @@ def main():
 
             elif temperature is None or temperature < 0:                        # Temperature value is invalid or None
                 print("Failed to get reading. Temperature is invalid or None")
+
+            print("-----------------------------")
 
             time.sleep(3)
 
