@@ -36,7 +36,7 @@ VERBOSE=false                                           # Verbose mode
 PIDOFCOMMAND="pidof"                                    # 'pidof' command
 COMMANDLINETOOL="apt-get apt-cache dpkg"                # 'apt-get', 'apt-cache' and 'dpkg' tools
 PACKAGESTOINSTALL="python2.7 build-essential python-dev python-smbus python-pip i2c-tools"      # Packages to install
-LIBRARYTOINSTALL="RPi.GPIO Adafruit_Python_DHT RPLCD ibmiotf picamera"                          # Libraries to install
+LIBRARYTOINSTALL="psutil RPi.GPIO Adafruit_Python_DHT RPLCD ibmiotf picamera"                   # Libraries to install
 RASPICONFIGCOMMAND="raspi-config"                       # 'raspi-config' command
 INTERFACES="i2c camera"                                 # Interfaces to enable
 REBOOTCOMMAND="reboot"                                  # 'reboot' command
@@ -75,7 +75,7 @@ check_platform () {
     fi
 }
 
-# Checks that the script is executed on Raspberry pi
+# Checks that the script is executed on a Raspberry pi
 check_raspberrypi () {
 
     # Checks the '/proc/cpuinfo' file to obtain the 'Hardware' field value. Possible values:
@@ -86,13 +86,13 @@ check_raspberrypi () {
 
     # '/proc/cpuinfo' file does not exist
     if ! [ -e "/proc/cpuinfo" ]; then
-        e_error "No such file or directory: '/proc/cpuinfo'. This script must be run on Raspberry Pi." 1>&2
+        e_error "No such file or directory: '/proc/cpuinfo'. This script must be run on a Raspberry Pi." 1>&2
         exit 1
     else
         hardware="$(cat /proc/cpuinfo | grep 'Hardware' | awk '{print $3}')"
 
         if [[ ${hardware} != "BCM2708" && ${hardware} != "BCM2709" && ${hardware} != "BCM2835" ]]; then
-            e_error "This script must be run on Raspberry Pi." 1>&2
+            e_error "This script must be run on a Raspberry Pi." 1>&2
             exit 1
         fi
     fi
@@ -319,8 +319,8 @@ trap ctrl_c SIGINT
 load_utils                          # Loads the 'utils.sh' file
 check_root                          # Checks that the script is executed as a root user
 check_platform                      # Checks that the script is executed on GNU/Linux platform
-check_raspberrypi                   # Checks that the script is executed on Raspberry pi
-check_concurrency ${SETUPFILE}      # Checks if this script is or not already running
+check_raspberrypi                   # Checks that the script is executed on a Raspberry pi
+check_concurrency ${SETUPFILE}      # Checks whether this script is or not already running
 check_parameters "$#" "$1"          # Checks the parameters and the number of them
 
 # Header                               
