@@ -66,16 +66,16 @@ check_root () {
     fi
 }
 
-# Checks that the script is executed on a Linux platform
+# Checks that the script is executed on GNU/Linux platform
 check_platform () {
 
     if [[ $OSTYPE != linux* ]]; then
-        e_error "This script must be run in a Linux-GNU platform. For example: Raspbian." 1>&2
+        e_error "This script must be run on GNU/Linux platform. For example: Raspbian." 1>&2
         exit 1
     fi
 }
 
-# Checks that the script is executed on a Raspberry pi
+# Checks that the script is executed on Raspberry pi
 check_raspberrypi () {
 
     # Checks the '/proc/cpuinfo' file to obtain the 'Hardware' field value. Possible values:
@@ -86,13 +86,13 @@ check_raspberrypi () {
 
     # '/proc/cpuinfo' file does not exist
     if ! [ -e "/proc/cpuinfo" ]; then
-        e_error "No such file or directory: '/proc/cpuinfo'. This script must be run in a Raspberry Pi." 1>&2
+        e_error "No such file or directory: '/proc/cpuinfo'. This script must be run on Raspberry Pi." 1>&2
         exit 1
     else
         hardware="$(cat /proc/cpuinfo | grep 'Hardware' | awk '{print $3}')"
 
         if [[ ${hardware} != "BCM2708" && ${hardware} != "BCM2709" && ${hardware} != "BCM2835" ]]; then
-            e_error "This script must be run in a Raspberry Pi." 1>&2
+            e_error "This script must be run on Raspberry Pi." 1>&2
             exit 1
         fi
     fi
@@ -318,8 +318,8 @@ trap ctrl_c SIGINT
 
 load_utils                          # Loads the 'utils.sh' file
 check_root                          # Checks that the script is executed as a root user
-check_platform                      # Checks that the script is executed in a GNU platform
-check_raspberrypi                   # Checks that the script is executed on a Raspberry pi
+check_platform                      # Checks that the script is executed on GNU/Linux platform
+check_raspberrypi                   # Checks that the script is executed on Raspberry pi
 check_concurrency ${SETUPFILE}      # Checks if this script is or not already running
 check_parameters "$#" "$1"          # Checks the parameters and the number of them
 
