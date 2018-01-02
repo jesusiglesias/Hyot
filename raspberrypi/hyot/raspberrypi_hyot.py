@@ -48,7 +48,10 @@ try:
     from RPLCD.i2c import CharLCD                   # LCD 16x2
 
 except ImportError as importError:
-    print("Error to import: " + importError.message.lower())
+    print("Error to import: " + importError.message.lower() + ". Main errno:")
+    sys.exit(1)
+except KeyboardInterrupt:
+    print("\nException: KeyboardInterrupt. Please, do not interrupt the execution.")
     sys.exit(1)
 
 
@@ -67,6 +70,28 @@ def constants():
                   backlight_enabled=False)
     DHT_SENSOR = Adafruit_DHT.DHT11                                     # DHT11 sensor
     DHT_PINDATA = 21                                                    # DHT11 - Pin GPIO21
+    try:
+
+        FIGLET = Figlet(font='future_8', justify='center')                  # Figlet
+        DHT_SENSOR = Adafruit_DHT.DHT11                                     # DHT11 sensor
+        DHT_PINDATA = 21                                                    # DHT11 - Pin GPIO21
+        LCD = CharLCD(i2c_expander='PCF8574',                               # LCD 16x2 - Configurable I2C address
+                      address=0x3f,
+                      charmap='A00',
+                      backlight_enabled=False)
+
+    except IOError as ioError:                      # Related to LCD 16x2
+        print(Fore.RED + "IOError in constants() function: " + str(ioError) + "." + "\r")
+        print("- Errno 2: I2C interface is disabled.\r")
+        print("- Errno 22: I2C address is invalid.\r")
+        print("- Errno 121: LCD is not connected.\r")
+        sys.exit(1)
+    except Exception as exception:                  # TODO - Too general exception
+        print(Fore.RED + "Exception in constants() function: " + str(exception) + "." + Fore.RESET + "\r")
+        sys.exit(1)
+    except KeyboardInterrupt:
+        print("\n" + Fore.RED + "Exception: KeyboardInterrupt. Please, do not interrupt the execution." + Fore.RESET)
+        sys.exit(1)
 
 
 ########################################
@@ -234,14 +259,19 @@ def main():
 
             time.sleep(3)
 
-    except Exception as error:                          # TODO - Too general exception
-        print(Fore.RED + "Error: " + str(error) + Fore.RESET + "\r")
+    except IOError as ioError:                      # Related to LCD 16x2
+        print(Fore.RED + "IOError in main() function: " + str(ioError) + ". Main errno:" + "\r")
+        print("- Errno 2: I2C interface is disabled.\r")
+        print("- Errno 22: I2C address is invalid.\r")
+        print("- Errno 121: LCD is not connected.\r")
+    except Exception as exception:                  # TODO - Too general exception
+        print("\n" + Fore.RED + "Exception in main() function: " + str(exception.message.lower()) + "." + "\r")
     except KeyboardInterrupt:
-        print("\r")  # TODO
+        print("\r")                                 # TODO
         print(Fore.RED + "Exception: KeyboardInterrupt. Please, turn off the system for proper operation." + Fore.RESET)
     finally:
-        LCD.close(clear=True)                           # Closes and calls the clear function
-        LCD.backlight_enabled = False                   # Disables the backlight
+        LCD.close(clear=True)                       # Closes and calls the clear function
+        LCD.backlight_enabled = False               # Disables the backlight
 
 
 ########################################
