@@ -213,8 +213,22 @@ def main():
             elif humidity is None or 0 > humidity > 100:                        # Humidity value is invalid or None
                 print("Failed to get reading. Humidity is invalid or None")
 
+                # Shows the output like empty
+                LCD.clear()
+                LCD.cursor_pos = (0, 0)
+                LCD.write_string("Temp: ")
+                LCD.crlf()
+                LCD.write_string("Humidity: ")
+
             elif temperature is None or temperature < 0:                        # Temperature value is invalid or None
                 print("Failed to get reading. Temperature is invalid or None")
+
+                # Shows the output like empty
+                LCD.clear()
+                LCD.cursor_pos = (0, 0)
+                LCD.write_string("Temp: ")
+                LCD.crlf()
+                LCD.write_string("Humidity: ")
 
             print("-----------------------------")
 
