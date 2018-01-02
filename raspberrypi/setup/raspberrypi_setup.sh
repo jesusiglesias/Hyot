@@ -200,6 +200,13 @@ package_is_installed () {
 
             # Command to update the package
             apt-get --only-upgrade install "$1" -y>/dev/null
+            return_value_aptget_update=$?                   # Obtains the result
+
+            # Error to update the package
+            if [ ${return_value_aptget_update} -ne 0 ]; then
+                e_error "Error to update the $1 package." 1>&2
+                exit 1
+            fi
         else
             output "Package is already updated to the last version.\\n"
         fi   
@@ -213,9 +220,17 @@ package_is_installed () {
 
             # Command to install the package
             apt-get install "$1" -y>/dev/null
+            return_value_aptget_install=$?                  # Obtains the result
+
+            # Error to install the package
+            if [ ${return_value_aptget_install} -ne 0 ]; then
+                e_error "Error to install the $1 package." 1>&2
+                exit 1
+            fi
+
             e_success "Package: '$1' was installed successfully."
         else
-            e_error "Package: '$1' not found in the repository. Please, check its name."
+            e_error "Package: '$1' not found in the repository. Please, check its name." 1>&2
         fi 
     fi
 }
@@ -234,6 +249,13 @@ library_is_installed () {
 
             # Command to update the library
             pip install --upgrade "$1">/dev/null
+            return_value_pip_update=$?                          # Obtains the result
+
+            # Error to update the library
+            if [ ${return_value_pip_update} -ne 0 ]; then
+                e_error "Error to update the $1 library." 1>&2
+                exit 1
+            fi
         else
             output "Library is already updated to the last version.\\n"
         fi   
@@ -247,9 +269,17 @@ library_is_installed () {
 
             # Command to install the library
             pip install "$1">/dev/null
+            return_value_pip_install=$?                         # Obtains the result
+
+            # Error to install the library
+            if [ ${return_value_pip_install} -ne 0 ]; then
+                e_error "Error to install the $1 library." 1>&2
+                exit 1
+            fi
+
             e_success "Library: '$1' was installed successfully."
         else
-            e_error "Library: '$1' not found in the repository. Please, check its name."
+            e_error "Library: '$1' not found in the repository. Please, check its name." 1>&2
         fi
     fi
 }
@@ -276,6 +306,13 @@ check_interfaces () {
 
                 # Command to enable the interface
                 raspi-config nonint do_"$interface" 0
+                return_value_raspi_config=$?                    # Obtains the result
+
+                # Error to enable the interface
+                if [ ${return_value_raspi_config} -ne 0 ]; then
+                    e_error "Error to enable the $interface interface." 1>&2
+                    exit 1
+                fi
 
                 e_success "Interface: $interface enabled."
             fi
