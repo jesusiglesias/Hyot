@@ -34,6 +34,7 @@ CWD="$(pwd)"                                            # Current directory
 UTILS="utils.sh"                                        # File of utilities
 VERBOSE=false                                           # Verbose mode
 PIDOFCOMMAND="pidof"                                    # 'pidof' command
+WGETCOMMAND="wget"                                      # 'wget' command
 COMMANDLINETOOL="apt-get apt-cache dpkg"                # 'apt-get', 'apt-cache' and 'dpkg' tools
 PACKAGESTOINSTALL="python2.7 build-essential python-dev python-smbus python-pip i2c-tools"        # Packages to install
 LIBRARYTOINSTALL="psutil pyfiglet colorama RPi.GPIO Adafruit_Python_DHT RPLCD ibmiotf picamera"   # Libraries to install
@@ -98,10 +99,28 @@ check_raspberrypi () {
     fi
 }
 
-# Checks whether this script is or not already running
+# Checks if the Raspberry Pi is connected to the network
+check_network () {
+
+    # Checks if the 'wget' command is installed
+    if ! [ -x "$(command -v ${WGETCOMMAND})" ]; then
+        e_error "Command: 'WGETCOMMAND' not found. Please, install this command to check if the network connection is available." 1>&2
+        exit 1
+    fi
+
+    # Checks if Google can be reached. Some places have a firewall that blocks all traffic except via a web proxy.
+    # For this reason, a ping is not performed
+    wget -q --tries=5 --timeout=20 --spider http://google.com>/dev/null
+    if [[ $? -ne 0 ]]; then
+        e_error "Raspberry Pi is not connected to the network. Please, enable the network to continue the setup." 1>&2
+        exit 1
+    fi
+}
+
+# Checks if this script is or not already running
 check_concurrency () {
 
-    # Checks whether the 'pidof' command is installed
+    # Checks if the 'pidof' command is installed
     if ! [ -x "$(command -v ${PIDOFCOMMAND})" ]; then
         e_error "Command: '$PIDOFCOMMAND' not found. Please, install this command to check and avoid the concurrency." 1>&2
         exit 1    
@@ -174,10 +193,10 @@ lineBreak () {
     fi
 }
 
-# Checks whether several command line tools are installed ('apt-get', 'apt-cache' and 'dpkg')
+# Checks if several command line tools are installed ('apt-get', 'apt-cache' and 'dpkg')
 commandLineTools_is_installed () {
 
-    # Checks whether the command exists and is executable
+    # Checks if the command exists and is executable
     for tool in ${COMMANDLINETOOL}; do
         if ! [ -x "$(command -v "$tool")" ]; then
             e_error "Command line tool: '$tool' is not installed in the system. Please, install this package before continuing." 1>&2
@@ -186,11 +205,11 @@ commandLineTools_is_installed () {
     done
 }
 
-# Checks whether the packages are installed and updated in the system
+# Checks if the packages are installed and updated in the system
 # shellcheck disable=SC2143
 package_is_installed () {
 
-    # Checks whether the package exists
+    # Checks if the package exists
     if [ "$(dpkg -l "$1" | grep '^'"ii"'\s')" ]; then
         output "Package is installed. Checking if this one is updated.\\n"
 
@@ -235,11 +254,11 @@ package_is_installed () {
     fi
 }
 
-# Checks whether the libraries are installed and updated in the system
+# Checks if the libraries are installed and updated in the system
 # shellcheck disable=SC2143
 library_is_installed () {
 
-    # Checks whether the library is installed
+    # Checks if the library is installed
     if [ "$(pip show "$1")" ]; then
         output "Library is installed. Checking if this one is updated.\\n"
 
@@ -284,10 +303,10 @@ library_is_installed () {
     fi
 }
 
-# Checks whether the 'Camera' and 'I2C' interfaces are enabled
+# Checks if the 'Camera' and 'I2C' interfaces are enabled
 check_interfaces () {
 
-    # Checks whether the 'raspi-config' command exists and is executable
+    # Checks if the 'raspi-config' command exists and is executable
     if ! [ -x "$(command -v ${RASPICONFIGCOMMAND})" ]; then
         e_error "Command: '$RASPICONFIGCOMMAND' not found. Please, run this script in a Raspberry Pi with Raspbian platform." 1>&2
         exit 1  
@@ -329,7 +348,7 @@ seek_confirmation() {
     echo
 }
 
-# Tests whether the result is a confirmation
+# Tests if the result is a confirmation
 is_confirmed() {
     
     if [[ "$REPLY" =~ ^[Yy]$ ]]; then 
@@ -357,7 +376,8 @@ load_utils                          # Loads the 'utils.sh' file
 check_root                          # Checks that the script is executed as a root user
 check_platform                      # Checks that the script is executed on GNU/Linux platform
 check_raspberrypi                   # Checks that the script is executed on a Raspberry pi
-check_concurrency ${SETUPFILE}      # Checks whether this script is or not already running
+check_network                       # Checks if the Raspberry Pi is connected to the network
+check_concurrency ${SETUPFILE}      # Checks if this script is or not already running
 check_parameters "$#" "$1"          # Checks the parameters and the number of them
 
 # Header                               
@@ -366,7 +386,7 @@ e_header_bold "This script performs several actions to install the packages and 
 
 output "Starting the configuration...\\n\\n"
 
-# Checks whether several command line tools are installed ('apt-get', 'apt-cache' and 'dpkg')
+# Checks if several command line tools are installed ('apt-get', 'apt-cache' and 'dpkg')
 commandLineTools_is_installed
 
 # Checks if each package is installed and updated. If not, it is installed or updated
@@ -389,7 +409,7 @@ done
 # Print a line break when 'verbose' mode is disabled
 lineBreak
 
-# Checks whether the 'Camera' and 'I2C' interfaces are enabled
+# Checks if the 'Camera' and 'I2C' interfaces are enabled
 check_interfaces
 
 # Print a line break when 'verbose' mode is disabled
@@ -403,7 +423,7 @@ seek_confirmation "Do you want to reboot the system? It would be an excellent id
 # Reboot the system
 if is_confirmed; then
 
-    # Checks whether the 'reboot' command exists and is executable
+    # Checks if the 'reboot' command exists and is executable
     if ! [ -x "$(command -v ${REBOOTCOMMAND})" ]; then
         echo
         e_error "Command: '$REBOOTCOMMAND' not found. Please, reboot the system manually." 1>&2
