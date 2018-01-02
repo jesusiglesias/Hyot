@@ -39,6 +39,7 @@ try:
     import os                                       # OS module
     import re                                       # Regular expression
     import uuid                                     # UUID objects according to RFC 4122
+    import traceback                                # Print or retrieve a stack traceback
     import time                                     # Time access and conversions
     import datetime                                 # Basic date and time types
     import psutil                                   # Python system and process utilities
@@ -80,7 +81,9 @@ def constants():
         print("- Errno 121: LCD is not connected.\r")
         sys.exit(1)
     except Exception as exception:                  # TODO - Too general exception
-        print(Fore.RED + "Exception in constants() function: " + str(exception) + "." + Fore.RESET + "\r")
+        print(Fore.RED + "Exception in constants() function: " + str(exception))
+        traceback.print_exc()                       # Prints the traceback
+        print(Fore.RESET)
         sys.exit(1)
     except KeyboardInterrupt:
         print("\n" + Fore.RED + "Exception: KeyboardInterrupt. Please, do not interrupt the execution." + Fore.RESET)
@@ -259,12 +262,14 @@ def main():
             time.sleep(3)
 
     except IOError as ioError:                      # Related to LCD 16x2
-        print(Fore.RED + "IOError in main() function: " + str(ioError) + ". Main errno:" + "\r")
+        print(Fore.RED + "\nIOError in main() function: " + str(ioError) + ". Main errno:" + "\r")
         print("- Errno 2: I2C interface is disabled.\r")
         print("- Errno 22: I2C address is invalid.\r")
         print("- Errno 121: LCD is not connected.\r")
     except Exception as exception:                  # TODO - Too general exception
-        print("\n" + Fore.RED + "Exception in main() function: " + str(exception.message.lower()) + "." + "\r")
+        print(Fore.RED + "\nException in main() function: " + str(exception.message.lower()) + ".")
+        traceback.print_exc()                       # Prints the traceback
+        print(Fore.RESET)
     except KeyboardInterrupt:
         print("\r")                                 # TODO
         print(Fore.RED + "Exception: KeyboardInterrupt. Please, turn off the system for proper operation." + Fore.RESET)
