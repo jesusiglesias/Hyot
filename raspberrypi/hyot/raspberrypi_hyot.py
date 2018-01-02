@@ -63,13 +63,6 @@ def constants():
 
     global FIGLET, LCD, DHT_SENSOR, DHT_PINDATA
 
-    FIGLET = Figlet(font='future_8', justify='center')                  # Figlet
-    LCD = CharLCD(i2c_expander='PCF8574',                               # LCD 16x2 - Configurable I2C address
-                  address=0x3f,
-                  charmap='A00',
-                  backlight_enabled=False)
-    DHT_SENSOR = Adafruit_DHT.DHT11                                     # DHT11 sensor
-    DHT_PINDATA = 21                                                    # DHT11 - Pin GPIO21
     try:
 
         FIGLET = Figlet(font='future_8', justify='center')                  # Figlet
@@ -158,6 +151,12 @@ def check_concurrency():
                 count += 1
 
 
+def timestamp():
+    """Generates a timestamp string for each measurement and for each image/video taken"""  # TODO
+
+    return datetime.datetime.now()
+
+
 def main():
     """Main function"""
 
@@ -213,8 +212,8 @@ def main():
 
             # Obtains humidity and temperature
             humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PINDATA)
-            # Obtains the datetime
-            measure_datetime = datetime.datetime.now()
+            # Obtains a timestamp (datetime)
+            measure_datetime = timestamp()
 
             print(Style.BRIGHT + Fore.CYAN + "DHT11 sensor - Measurement %i" % count + Style.RESET_ALL + Fore.RESET)
 
