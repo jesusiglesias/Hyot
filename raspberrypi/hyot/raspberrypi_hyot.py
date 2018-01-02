@@ -38,8 +38,9 @@ try:
     import sys                                      # System-specific parameters and functions
     import os                                       # OS module
     import re                                       # Regular expression
-    import uuid                                     # UUID objects according to RFC 4122
     import traceback                                # Print or retrieve a stack traceback
+    import uuid                                     # UUID objects according to RFC 4122
+    import socket                                   # Low-level networking interface
     import time                                     # Time access and conversions
     import datetime                                 # Basic date and time types
     import psutil                                   # Python system and process utilities
@@ -135,9 +136,30 @@ def check_raspberrypi():
         sys.exit(1)
 
 
-def check_concurrency():
-    """Checks whether this script is or not already running"""
+def check_network():
+    """Checks if the Raspberry Pi is connected to the network"""
 
+    # Host: 8.8.8.8 (google-public-dns-a.google.com)
+    # OpenPort: 53/tcp
+    # Service: domain (DNS/TCP)
+
+    # Variables
+    host = "8.8.8.8"
+    port = 53
+    timeout = 5
+
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
+    except socket.error:
+        print(Fore.RED + "Raspberry Pi is not connected to the network. Please, enable the network to continue the execution." + Fore.RESET)
+        sys.exit(1)
+
+
+def check_concurrency():
+    """Checks if this script is or not already running"""
+
+    # Variables
     filename = "raspberrypi_hyot.py"        # Name of the file
     count = 0                               # Process number counter
 
@@ -284,8 +306,9 @@ def main():
 if __name__ == '__main__':
 
     check_root()                # Function to check the user
-    check_platform()            # Checks whether the script is run on GNU/Linux platform
-    check_raspberrypi()         # Checks whether the script is run on a Raspberry Pi
-    check_concurrency()         # Checks whether the script is or not already running
+    check_platform()            # Checks if the script is run on GNU/Linux platform
+    check_raspberrypi()         # Checks if the script is run on a Raspberry Pi
+    check_network()             # Checks if the Raspberry Pi is connected to the network
+    check_concurrency()         # Checks if the script is or not already running
     constants()                 # Declares all the constants
     main()                      # Main function
