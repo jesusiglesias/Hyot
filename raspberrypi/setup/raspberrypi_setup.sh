@@ -9,21 +9,21 @@
 #                                   |__|  |__|      |__|      |________|      |__|                                      #
 #                                                                                                                       #
 #                                                                                                                       #
-#        PROJECT:     Hyot                                                                                              #
-#           FILE:     raspberrypi_setup.sh                                                                              #
+#        PROJECT:   Hyot                                                                                                #
+#           FILE:   raspberrypi_setup.sh                                                                                #
 #                                                                                                                       #
-#          USAGE:     bash raspberrypi_setup.sh {--help|--verbose} || ./raspberrypi_setup.sh {--help|--verbose}         #
+#          USAGE:   sudo bash raspberrypi_setup.sh {--help|--verbose} || sudo ./raspberrypi_setup.sh {--help|--verbose} #
 #                                                                                                                       #
-#    DESCRIPTION:     This script sets up the Raspberry Pi                                                              #
+#    DESCRIPTION:   This script sets up the Raspberry Pi                                                                #
 #                                                                                                                       #
-#        OPTIONS:     ---                                                                                               #
-#   REQUIREMENTS:     Root user, Linux-GNU platform                                                                     #
-#          NOTES:     It must be run with root user on a Raspberry Pi preferably with Raspbian as operating system      #
-#         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                          #
-#   ORGANIZATION:     ---                                                                                               #
-#        VERSION:     0.1                                                                                               #
-#        CREATED:     12/18/17                                                                                          #
-#       REVISION:     ---                                                                                               #
+#        OPTIONS:   ---                                                                                                 #
+#   REQUIREMENTS:   Root user, Linux-GNU platform                                                                       #
+#          NOTES:   It must be run with root user on a Raspberry Pi preferably with Raspbian as operating system        #
+#         AUTHOR:   Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                            #
+#   ORGANIZATION:   ---                                                                                                 #
+#        VERSION:   0.1                                                                                                 #
+#        CREATED:   12/18/17                                                                                            #
+#       REVISION:   01/02/18                                                                                            #
 #=======================================================================================================================#
 
 ########################################
@@ -122,7 +122,7 @@ show_help () {
     help_header "HYOT - HELP FOR THE RASPBERRY PI SETUP"
     echo
     help_bold "USAGE: "
-    echo "$0 {--help|--verbose}"
+    echo "sudo $0 {--help|--verbose}"
     echo
     help_bold "BASIC OPTIONS:"
     echo
