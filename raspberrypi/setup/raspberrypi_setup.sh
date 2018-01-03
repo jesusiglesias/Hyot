@@ -509,7 +509,7 @@ check_interfaces
 lineBreak
 
 # Process finished
-e_message_bold "Process has finished successfully."
+e_message_bold "Process has finished successfully. The following steps to launch Hyot are to get the I2C addresses with the command: 'i2cdetect -y 1' (RPi v.3) and execute the 'raspberrypi_hyot.py' script to monitor the sensors."
 
 # Asks the user whether or not to reboot the system
 seek_confirmation "Do you want to reboot the system? It would be an excellent idea for everything to work correctly!"
