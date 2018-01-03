@@ -13,7 +13,7 @@
 #        PROJECT:     Hyot                                                                                             #
 #           FILE:     raspberrypi_hyot.py                                                                              #
 #                                                                                                                      #
-#          USAGE:     python raspberrypi_hyot.py                                                                       #
+#          USAGE:     sudo python raspberrypi_hyot.py                                                                  #
 #                                                                                                                      #
 #    DESCRIPTION:     This script monitors several events from sensors and sends them to the cloud  TODO               #
 #                                                                                                                      #
@@ -50,7 +50,7 @@ try:
     from RPLCD.i2c import CharLCD                   # LCD 16x2
 
 except ImportError as importError:
-    print("Error to import: " + importError.message.lower() + ". Main errno:")
+    print("Error to import: " + importError.message.lower() + ".")
     sys.exit(1)
 except KeyboardInterrupt:
     print("\nException: KeyboardInterrupt. Please, do not interrupt the execution.")
