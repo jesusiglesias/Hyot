@@ -104,7 +104,7 @@ check_network () {
 
     # Checks if the 'wget' command is installed
     if ! [ -x "$(command -v ${WGETCOMMAND})" ]; then
-        e_error "Command: 'WGETCOMMAND' not found. Please, install this command to check if the network connection is available." 1>&2
+        e_error "Command: '$WGETCOMMAND' not found. Please, install this command to check if the network connection is available." 1>&2
         exit 1
     fi
 
