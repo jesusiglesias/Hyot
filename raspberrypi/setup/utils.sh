@@ -23,7 +23,7 @@
 #   ORGANIZATION:     ---                                                                                               #
 #        VERSION:     0.1                                                                                               #
 #        CREATED:     12/18/17                                                                                          #
-#       REVISION:     ---                                                                                               #
+#       REVISION:     01/03/2018                                                                                        #
 #=======================================================================================================================#
 
 ########################################
@@ -74,6 +74,11 @@ e_success () {
 # Error message
 e_error () { 
     printf "${red}✖ %s${reset}\\n" "$@"
+}
+
+# Error traceback
+e_error_traceback () {
+    printf "${red}%s${reset}\\n" "$@"
 }
 
 # Warning message

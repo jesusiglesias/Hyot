@@ -23,7 +23,7 @@
 #   ORGANIZATION:   ---                                                                                                 #
 #        VERSION:   0.1                                                                                                 #
 #        CREATED:   12/18/17                                                                                            #
-#       REVISION:   01/02/18                                                                                            #
+#       REVISION:   01/03/18                                                                                            #
 #=======================================================================================================================#
 
 ########################################
@@ -35,9 +35,15 @@ UTILS="utils.sh"                                        # File of utilities
 VERBOSE=false                                           # Verbose mode
 PIDOFCOMMAND="pidof"                                    # 'pidof' command
 WGETCOMMAND="wget"                                      # 'wget' command
+CURLCOMMAND="curl"                                      # 'curl' command
+UNZIPCOMMAND="unzip"                                    # 'unzip' command
+PYTHONCOMMAND="python"                                  # 'python' command
 COMMANDLINETOOL="apt-get apt-cache dpkg"                # 'apt-get', 'apt-cache' and 'dpkg' tools
-PACKAGESTOINSTALL="python2.7 build-essential python-dev python-smbus python-pip i2c-tools"        # Packages to install
-LIBRARYTOINSTALL="psutil pyfiglet colorama RPi.GPIO Adafruit_Python_DHT RPLCD ibmiotf picamera"   # Libraries to install
+PACKAGESTOINSTALL="python2.7 build-essential python-dev python-smbus python-pip i2c-tools"      # Packages to install
+LIBRARYTOINSTALL="psutil pyfiglet colorama RPi.GPIO RPLCD ibmiotf picamera"                     # Libraries to install
+LIBRARYDHT="Adafruit_DHT"                               # Adafruit DHT library
+LIBRARYDHTZIP="Adafruit_Python_DHT.zip"                 # File '.zip' of the Adafruit DHT library
+LIBRARYDHTDIR="Adafruit_Python_DHT-master"              # Directory of the Adafruit DHT library
 RASPICONFIGCOMMAND="raspi-config"                       # 'raspi-config' command
 INTERFACES="i2c camera"                                 # Interfaces to enable
 REBOOTCOMMAND="reboot"                                  # 'reboot' command
@@ -303,6 +309,87 @@ library_is_installed () {
     fi
 }
 
+# Installs manually the Adafruit DHT library
+install_manually_AdafruitDHT () {
+
+   # Checks if the 'curl' command is installed
+    if ! [ -x "$(command -v ${CURLCOMMAND})" ]; then
+        e_error "Command: '$CURLCOMMAND' not found. Please, install this command to install the Adafruit DHT library." 1>&2
+        exit 1
+    fi
+
+    # Checks if the 'unzip' command is installed
+    if ! [ -x "$(command -v ${UNZIPCOMMAND})" ]; then
+        e_error "Command: '$UNZIPCOMMAND' not found. Please, install this command to install the Adafruit DHT library." 1>&2
+        exit 1
+    fi
+
+    # Checks if the 'python' command is installed
+    if ! [ -x "$(command -v ${PYTHONCOMMAND})" ]; then
+        e_error "Command: '$PYTHONCOMMAND' not found. Please, install this command to install the Adafruit DHT library." 1>&2
+        exit 1
+    fi
+
+    output "Checking if the '$1' library is installed manually.\\n"
+
+    # Checks if the library is installed
+    if [ "$(pip show "$1")" ]; then
+        output "Library is installed. No action is performed.\\n"
+
+        e_info "Library: '$1' is installed manually in the system."
+    else
+        output "Library is not installed. Proceeding to its manual installation...\\n"
+
+        # Downloads the library from Github
+        output "Downloading the library from Github.\\n"
+        curl -s -o "$LIBRARYDHTZIP" https://codeload.github.com/adafruit/Adafruit_Python_DHT/zip/master>/dev/null
+        if [[ $? -ne 0 ]]; then
+            e_error "The download of the '$1' library has failed. Please, check the URL and try it again." 1>&2
+            exit 1
+        fi
+
+        # Extracts the files
+        output "Unzipping file.\\n"
+        stderr_unzip="$(unzip -oq "$LIBRARYDHTZIP" 2>&1 >/dev/null)"
+        if [[ $? -ne 0 ]]; then
+            e_error "The unzipping of the '$LIBRARYDHTZIP' file has failed. Corrupt or non-existent file." 1>&2
+            e_error_traceback "$stderr_unzip"
+            exit 1
+        fi
+
+        # Installs the library
+        output "Installing the library.\\n"
+        stderr_install="$(cd ${CWD}/${LIBRARYDHTDIR} 2>&1 >/dev/null && python setup.py install 2>&1 >/dev/null)"
+        if [[ $? -ne 0 ]]; then
+            e_error "The installation of the '$1' library has failed." 1>&2
+            e_error_traceback "$stderr_install"
+            exit 1
+        fi
+
+        # Removes the 'Adafruit_Python_DHT.zip' file
+        output "Removing the '$LIBRARYDHTZIP' file.\\n"
+        stderr_rm="$(rm --interactive=never "$LIBRARYDHTZIP" 2>&1 >/dev/null)"
+        if [[ $? -ne 0 ]]; then
+            e_error "The deletion of the '$LIBRARYDHTZIP' file has failed." 1>&2
+            e_error_traceback "$stderr_rm"
+            exit 1
+        fi
+
+        # Removes the unzipped directory
+        output "Removing the '$LIBRARYDHTDIR' directory.\\n"
+        stderr_rmdir="$(rm -R --interactive=never "$LIBRARYDHTDIR" 2>&1 >/dev/null)"
+        if [[ $? -ne 0 ]]; then
+            e_error "The deletion of the '$LIBRARYDHTDIR' directory has failed." 1>&2
+            e_error_traceback "$stderr_rmdir"
+            exit 1
+        fi
+
+        e_success "Library: '$1' was installed manually."
+    fi
+
+    output "\\n"
+}
+
 # Checks if the 'Camera' and 'I2C' interfaces are enabled
 check_interfaces () {
 
@@ -405,6 +492,12 @@ for library in ${LIBRARYTOINSTALL}; do
     library_is_installed "$library"
     output "\\n"
 done
+
+# Print a line break when 'verbose' mode is disabled
+lineBreak
+
+# Installs the Adafruit DHT library in a manual way
+install_manually_AdafruitDHT ${LIBRARYDHT}
 
 # Print a line break when 'verbose' mode is disabled
 lineBreak
