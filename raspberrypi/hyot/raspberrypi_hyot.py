@@ -41,6 +41,7 @@ try:
     import traceback                                # Print or retrieve a stack traceback
     import uuid                                     # UUID objects according to RFC 4122
     import socket                                   # Low-level networking interface
+    import argparse                                 # Python command-line parsing library
     import time                                     # Time access and conversions
     import datetime                                 # Basic date and time types
     import psutil                                   # Python system and process utilities
@@ -60,18 +61,21 @@ except KeyboardInterrupt:
 ########################################
 #              CONSTANTS               #
 ########################################
-def constants():
-    """Contains all definitions of constants"""
+def constants(user_args):
+    """Contains all definitions of constants
+    :param user_args: Values of the options entered by the user
+    """
 
-    global FIGLET, LCD, DHT_SENSOR, DHT_PINDATA
+    global FIGLET, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, LCD
 
     try:
 
-        FIGLET = Figlet(font='future_8', justify='center')                  # Figlet
-        DHT_SENSOR = Adafruit_DHT.DHT11                                     # DHT11 sensor
-        DHT_PINDATA = 21                                                    # DHT11 - Pin GPIO21
-        LCD = CharLCD(i2c_expander='PCF8574',                               # LCD 16x2 - Configurable I2C address
-                      address=0x3f,
+        FIGLET = Figlet(font='future_8', justify='center')      # Figlet
+        TIME_MEASUREMENTS = user_args.WAITTIME_MEASUREMENTS     # Wait time between each measurement. Default 3 seconds
+        DHT_SENSOR = Adafruit_DHT.DHT11                         # DHT11 sensor
+        DHT_PINDATA = user_args.DHT_DATAPIN                     # DHT11 - Data pin. Default 21 (GPIO21)
+        LCD = CharLCD(i2c_expander=user_args.I2C_EXPANDER,      # LCD 16x2. Default 'PCF8574' and 0x3f
+                      address=int(user_args.I2C_ADDRESS, base=16),
                       charmap='A00',
                       backlight_enabled=False)
 
@@ -176,6 +180,82 @@ def check_concurrency():
                 count += 1
 
 
+def menu():
+    """Checks the options entered by the user when running the script
+    :return: Values of the arguments entered by the user in the console
+    """
+
+    try:
+
+        # Creates a parser TODO - Description
+        parser = argparse.ArgumentParser(
+            description=Style.BRIGHT + "HYOT/HELP:" + Style.RESET_ALL + " This script monitors several events -distance, "
+                                       "temperature and humidity- from sensors, outputs by console and sends them to the "
+                                       "cloud." + Fore.RED + " Remember " + Fore.RESET + "to run this script with root "
+                                       "user or sudo and the options are optional. If not given, default values are used.",
+            add_help=False)
+
+        # Groups TODO - Name
+        general_group = parser.add_argument_group('General options')
+        pin_group = parser.add_argument_group('Sensor and device pin')
+        i2c_group = parser.add_argument_group('LCD device - I2C')
+
+        # Help option
+        general_group.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
+                                   help='Shows the help.')
+
+        # Wait time between measurements TODO - Group
+        general_group.add_argument("-wt", "--waittime",
+                                   type=int, default=3, required=False, action="store", dest="WAITTIME_MEASUREMENTS",
+                                   help="Wait time between measurements in the sensors (e.g. 3 seconds). Default: 3.")
+
+        # DHT11 sensor - Data pin
+        pin_group.add_argument("-dd", "--dht11data",
+                               type=int, default=21, required=False, action="store", dest="DHT_DATAPIN",
+                               help="Data pin for DHT11 sensor in Broadcom GPIO pin number (e.g. 21 for Raspberry Pi "
+                                    "GPIO21). Default: 21.")
+
+        # LCD 16x2 - I2C Expander
+        i2c_group.add_argument("-ie", "--i2cexpander",
+                               default="PCF8574", required=False, action="store", dest="I2C_EXPANDER",
+                               help="I2C expander type for LCD 16x2. One of 'PCF8574', 'MCP23008', 'MCP23017'. "
+                                    "Default: PCF8574.")
+
+        # LCD 16x2 - I2C address
+        i2c_group.add_argument("-ia", "--i2caddress",
+                               default="0x3f", required=False, action="store", dest="I2C_ADDRESS",
+                               help="I2C address for LCD 16x2. Type the 'i2cdetect -y 1' (RPi v.3) command to obtain it. "
+                                    "Default: 0x3f.")
+
+        # Parses the arguments returning the data from the options specified
+        args = parser.parse_args()
+
+        # Checks the '--waittime' argument
+        if args.WAITTIME_MEASUREMENTS < 1:
+            print(Fore.RED + "Wait time between measurements invalid. Please, type the '-h/--help' option to show the help "
+                             "or a value in seconds upper than 1. Default value: 3." + Fore.RESET)
+            sys.exit(1)
+
+        # Checks the '--dht11data' argument
+        if args.DHT_DATAPIN < 0 or args.DHT_DATAPIN > 27:
+            print(Fore.RED + "Data pin for DHT11 sensor invalid. Please, type the '-h/--help' option to show the help or "
+                             "the number in Broadcom GPIO format and in the range 0-27. Default value: 21." + Fore.RESET)
+            sys.exit(1)
+
+        # Checks the '--i2cexpander' argument
+        if args.I2C_EXPANDER not in ['PCF8574', 'MCP23008', 'MCP23017']:
+            print(Fore.RED + "I2C expander type invalid. Please, type the '-h/--help' option to show the help or "
+                             "specify one of 'PCF8574', 'MCP23008', 'MCP23017'. Default value: PCF8574.")
+            sys.exit(1)
+
+        return args
+
+    except Exception as argparseError:
+        print(Fore.RED + "\nException in menu() function: " + str(argparseError.message.lower()) + ".")
+        traceback.print_exc()  # Prints the traceback
+        print(Fore.RESET)
+
+
 def timestamp():
     """Generates a timestamp string for each measurement and for each image/video taken"""  # TODO
 
@@ -214,7 +294,7 @@ def main():
         time.sleep(1)
 
         # Reading values
-        print("-> Reading values each 3 seconds from sensors\n")
+        print("-> Reading values each " + str(TIME_MEASUREMENTS) + " seconds from sensors\n")
         LCD.write_string("Reading values")
         LCD.crlf()
         LCD.write_string("from sensors")
@@ -227,7 +307,7 @@ def main():
         time.sleep(2)
         LCD.clear()
 
-        # Loop each 3 seconds, hence, this is the time between measurements
+        # Loop each n seconds, hence, this is the time between measurements
         while True:
 
             # Increment the counter
@@ -237,6 +317,7 @@ def main():
 
             # Obtains humidity and temperature
             humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PINDATA)
+
             # Obtains a timestamp (datetime)
             measure_datetime = timestamp()
 
@@ -281,7 +362,7 @@ def main():
 
             print("-----------------------------")
 
-            time.sleep(3)
+            time.sleep(TIME_MEASUREMENTS)
 
     except IOError as ioError:                      # Related to LCD 16x2
         print(Fore.RED + "\nIOError in main() function: " + str(ioError) + ". Main errno:" + "\r")
@@ -310,5 +391,6 @@ if __name__ == '__main__':
     check_raspberrypi()         # Checks if the script is run on a Raspberry Pi
     check_network()             # Checks if the Raspberry Pi is connected to the network
     check_concurrency()         # Checks if the script is or not already running
-    constants()                 # Declares all the constants
+    arguments = menu()          # Checks the options entered by the user when running the script
+    constants(arguments)        # Declares all the constants
     main()                      # Main function
