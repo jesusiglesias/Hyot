@@ -47,7 +47,7 @@ except ImportError as importError:
     print("Error to import: " + importError.message.lower() + ".")
     sys.exit(1)
 except KeyboardInterrupt:
-    print("\nException: KeyboardInterrupt. Please, do not interrupt the execution.")
+    print("\rException: KeyboardInterrupt. Please, do not interrupt the execution.")
     sys.exit(1)
 
 
@@ -215,3 +215,7 @@ def menu():
         print(Fore.RED + "\nException in menu() function: " + str(argparseError.message.lower()) + ".")
         traceback.print_exc()       # Prints the traceback
         print(Fore.RESET)
+        sys.exit(1)
+    except KeyboardInterrupt:
+        print("\r" + Fore.RED + "Exception: KeyboardInterrupt. Please, do not interrupt the execution." + Fore.RESET)
+        sys.exit(1)
