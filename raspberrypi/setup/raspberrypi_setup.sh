@@ -40,7 +40,7 @@ UNZIPCOMMAND="unzip"                                    # 'unzip' command
 PYTHONCOMMAND="python"                                  # 'python' command
 COMMANDLINETOOL="apt-get apt-cache dpkg"                # 'apt-get', 'apt-cache' and 'dpkg' tools
 PACKAGESTOINSTALL="python2.7 build-essential python-dev python-smbus python-pip i2c-tools"      # Packages to install
-LIBRARYTOINSTALL="psutil pyfiglet colorama RPi.GPIO RPLCD ibmiotf picamera"                     # Libraries to install
+LIBRARYTOINSTALL="psutil pyfiglet colorama RPi.GPIO RPLCD picamera ibmiotf cloudant"            # Libraries to install
 LIBRARYDHT="Adafruit_DHT"                               # Adafruit DHT library
 LIBRARYDHTZIP="Adafruit_Python_DHT.zip"                 # File '.zip' of the Adafruit DHT library
 LIBRARYDHTDIR="Adafruit_Python_DHT-master"              # Directory of the Adafruit DHT library
@@ -509,7 +509,7 @@ check_interfaces
 lineBreak
 
 # Process finished
-e_message_bold "Process has finished successfully. The following steps to launch Hyot are to get the I2C addresses with the command: 'i2cdetect -y 1' (RPi v.3) and execute the 'raspberrypi_hyot.py' script to monitor the sensors."
+e_message_bold "Process has finished successfully. The following steps to launch Hyot are to get the I2C addresses with the command: 'i2cdetect -y 1' (RPi v.3) and run the 'raspberrypi_hyot.py' script to monitor the sensors."
 
 # Asks the user whether or not to reboot the system
 seek_confirmation "Do you want to reboot the system? It would be an excellent idea for everything to work correctly!"
