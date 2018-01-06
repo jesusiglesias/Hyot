@@ -51,7 +51,7 @@ except ImportError as importError:
     print("Error to import: " + importError.message.lower() + ".")
     sys.exit(1)
 except KeyboardInterrupt:
-    print("\nException: KeyboardInterrupt. Please, do not interrupt the execution.")
+    print("\rException: KeyboardInterrupt. Please, do not interrupt the execution.")
     sys.exit(1)
 
 
@@ -77,7 +77,7 @@ def constants(user_args):
                       backlight_enabled=False)
 
     except IOError as ioError:                      # Related to LCD 16x2
-        print(Fore.RED + "IOError in constants() function: " + str(ioError) + "." + "\r")
+        print(Fore.RED + "IOError in constants() function: " + str(ioError) + ". Main errno:" + "\r")
         print("- Errno 2: I2C interface is disabled.\r")
         print("- Errno 22: I2C address is invalid.\r")
         print("- Errno 121: LCD is not connected.\r")
@@ -88,7 +88,7 @@ def constants(user_args):
         print(Fore.RESET)
         sys.exit(1)
     except KeyboardInterrupt:
-        print("\n" + Fore.RED + "Exception: KeyboardInterrupt. Please, do not interrupt the execution." + Fore.RESET)
+        print("\r" + Fore.RED + "Exception: KeyboardInterrupt. Please, do not interrupt the execution." + Fore.RESET)
         sys.exit(1)
 
 
@@ -208,13 +208,16 @@ def main():
         print("- Errno 2: I2C interface is disabled.\r")
         print("- Errno 22: I2C address is invalid.\r")
         print("- Errno 121: LCD is not connected.\r")
+        sys.exit(1)
     except Exception as exception:                  # TODO - Too general exception
         print(Fore.RED + "\nException in main() function: " + str(exception.message.lower()) + ".")
         traceback.print_exc()                       # Prints the traceback
         print(Fore.RESET)
-    except KeyboardInterrupt:
-        print("\r")                                 # TODO
-        print(Fore.RED + "Exception: KeyboardInterrupt. Please, turn off the system for proper operation." + Fore.RESET)
+        sys.exit(1)
+    except KeyboardInterrupt:                       # TODO
+        print("\r" + Fore.RED + "Exception: KeyboardInterrupt. Please, turn off the system for proper operation."
+              + Fore.RESET)
+        sys.exit(1)
     finally:
         LCD.close(clear=True)                       # Closes and calls the clear function
         LCD.backlight_enabled = False               # Disables the backlight
