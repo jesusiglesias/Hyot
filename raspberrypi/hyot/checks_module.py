@@ -141,7 +141,7 @@ def check_concurrency():
 
 def menu():
     """Checks the options entered by the user when running the script
-    :return: Values of the arguments entered by the user in the console
+    :return: args Values of the arguments entered by the user in the console
     """
 
     try:
