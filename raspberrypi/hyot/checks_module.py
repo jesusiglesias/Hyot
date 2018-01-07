@@ -175,17 +175,29 @@ def menu():
                                help="Data pin for DHT11 sensor in Broadcom GPIO pin number (e.g. 21 for Raspberry Pi "
                                     "GPIO21). Default: 21.")
 
-        # LCD 16x2 - I2C Expander
-        i2c_group.add_argument("-ie", "--i2cexpander",
-                               default="PCF8574", required=False, action="store", dest="I2C_EXPANDER",
-                               help="I2C expander type for LCD 16x2. One of 'PCF8574', 'MCP23008', 'MCP23017'. "
-                                    "Default: PCF8574.")
+        # LCD 16x2 - DHT11 I2C Expander
+        i2c_group.add_argument("-die", "--dhti2cexpander",
+                               default="PCF8574", required=False, action="store", dest="DHT_I2CEXPANDER",
+                               help="I2C expander type for LCD 16x2 of the DH11 sensor. One of 'PCF8574', 'MCP23008', "
+                                    "'MCP23017'. Default: PCF8574.")
 
-        # LCD 16x2 - I2C address
-        i2c_group.add_argument("-ia", "--i2caddress",
-                               default="0x3f", required=False, action="store", dest="I2C_ADDRESS",
-                               help="I2C address for LCD 16x2. Type the 'i2cdetect -y 1' (RPi v.3) command to obtain"
-                                    " it. Default: 0x3f.")
+        # LCD 16x2 - DHT11 I2C address
+        i2c_group.add_argument("-dia", "--dhti2caddress",
+                               default="0x3f", required=False, action="store", dest="DHT_I2CADDRESS",
+                               help="I2C address for LCD 16x2 of the DH11 sensor. Type the 'i2cdetect -y 1' (RPi v.3) "
+                                    "command to obtain it. Default: 0x3f.")
+
+        # LCD 16x2 - HC-SR04 I2C Expander
+        i2c_group.add_argument("-hie", "--hcsri2cexpander",
+                               default="PCF8574", required=False, action="store", dest="HCSR_I2CEXPANDER",
+                               help="I2C expander type for LCD 16x2 of the HC-SR04 sensor. One of 'PCF8574', 'MCP23008',"
+                                    " 'MCP23017'. Default: PCF8574.")
+
+        # LCD 16x2 - HC-SR04 I2C address
+        i2c_group.add_argument("-hia", "--hcsri2caddress",
+                               default="0x38", required=False, action="store", dest="HCSR_I2CADDRESS",
+                               help="I2C address for LCD 16x2 of the HC-SR04 sensor. Type the 'i2cdetect -y 1' (RPi v.3)"
+                                    " command to obtain it. Default: 0x38.")
 
         # Parses the arguments returning the data from the options specified
         args = parser.parse_args()
@@ -203,10 +215,18 @@ def menu():
                   + Fore.RESET)
             sys.exit(1)
 
-        # Checks the '--i2cexpander' argument
-        if args.I2C_EXPANDER not in ['PCF8574', 'MCP23008', 'MCP23017']:
-            print(Fore.RED + "I2C expander type invalid. Please, type the '-h/--help' option to show the help or "
-                             "specify one of 'PCF8574', 'MCP23008', 'MCP23017'. Default value: PCF8574.")
+        # Checks the '--dhti2cexpander' argument
+        if args.DHT_I2CEXPANDER not in ['PCF8574', 'MCP23008', 'MCP23017']:
+            print(Fore.RED + "I2C expander type for LCD of the DHT11 sensor invalid. Please, type the '-h/--help' "
+                             "option to show the help or specify one of 'PCF8574', 'MCP23008', 'MCP23017'. "
+                             "Default value: PCF8574.")
+            sys.exit(1)
+
+        # Checks the '--hcsri2cexpander' argument
+        if args.HCSR_I2CEXPANDER not in ['PCF8574', 'MCP23008', 'MCP23017']:
+            print(Fore.RED + "I2C expander type invalid for LCD of the HC-SR04 sensor invalid. Please, type the "
+                             "'-h/--help' option to show the help or specify one of 'PCF8574', 'MCP23008', 'MCP23017'."
+                             " Default value: PCF8574.")
             sys.exit(1)
 
         return args
