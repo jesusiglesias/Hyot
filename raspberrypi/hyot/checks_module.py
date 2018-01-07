@@ -191,9 +191,9 @@ def menu():
         args = parser.parse_args()
 
         # Checks the '--waittime' argument
-        if args.WAITTIME_MEASUREMENTS < 1:
+        if args.WAITTIME_MEASUREMENTS < 2:
             print(Fore.RED + "Wait time between measurements invalid. Please, type the '-h/--help' option to show the "
-                             "help or a value in seconds upper than 1. Default value: 3." + Fore.RESET)
+                             "help or a value in seconds upper than 2. Default value: 3." + Fore.RESET)
             sys.exit(1)
 
         # Checks the '--dht11data' argument
