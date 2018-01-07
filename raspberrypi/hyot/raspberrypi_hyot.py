@@ -64,18 +64,22 @@ def constants(user_args):
     :param user_args: Values of the options entered by the user
     """
 
-    global FIGLET, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, LCD
+    global FIGLET, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT_LCD, HCSR_LCD
 
     try:
 
-        FIGLET = Figlet(font='future_8', justify='center')      # Figlet
-        TIME_MEASUREMENTS = user_args.WAITTIME_MEASUREMENTS     # Wait time between each measurement. Default 3 seconds
-        DHT_SENSOR = Adafruit_DHT.DHT11                         # DHT11 sensor
-        DHT_PINDATA = user_args.DHT_DATAPIN                     # DHT11 - Data pin. Default 21 (GPIO21)
-        LCD = CharLCD(i2c_expander=user_args.I2C_EXPANDER,      # LCD 16x2. Default 'PCF8574' and 0x3f
-                      address=int(user_args.I2C_ADDRESS, base=16),
-                      charmap='A00',
-                      backlight_enabled=False)
+        FIGLET = Figlet(font='future_8', justify='center')           # Figlet
+        TIME_MEASUREMENTS = user_args.WAITTIME_MEASUREMENTS          # Wait time between each measurement. Default 3 seconds
+        DHT_SENSOR = Adafruit_DHT.DHT11                              # DHT11 sensor
+        DHT_PINDATA = user_args.DHT_DATAPIN                          # DHT11 - Data pin. Default 21 (GPIO21)
+        DHT_LCD = CharLCD(i2c_expander=user_args.DHT_I2CEXPANDER,    # LCD for DHT11 sensor. Default 'PCF8574' and 0x3f
+                          address=int(user_args.DHT_I2CADDRESS, base=16),
+                          charmap='A00',
+                          backlight_enabled=False)
+        HCSR_LCD = CharLCD(i2c_expander=user_args.HCSR_I2CEXPANDER,  # LCD for HC-SR04 sensor. Default 'PCF8574' and 0x38
+                           address=int(user_args.HCSR_I2CADDRESS, base=16),
+                           charmap='A00',
+                           backlight_enabled=False)
 
     except IOError as ioError:                      # Related to LCD 16x2
         print(Fore.RED + "IOError in constants() function: " + str(ioError) + ". Main errno:" + "\r")
@@ -130,34 +134,45 @@ def main():
         header()
 
         # ############### Initializing HYOT ###############
-        LCD.backlight_enabled = True                # Enables the backlight
+        DHT_LCD.backlight_enabled = True            # Enables the backlight to the LCD of the DHT11 sensor
+        HCSR_LCD.backlight_enabled = True           # Enables the backlight to the LCD of the HC-SR04 sensor
         time.sleep(1)                               # Wait time - 1 second
         print(Style.BRIGHT + Fore.BLACK + "-- Initializing HYOT..." + Style.RESET_ALL)
-        LCD.write_string("Initializing")            # Writes the specified unicode string to the display
-        LCD.crlf()                                  # Writes a line feed and a carriage return (\r\n) character
-        LCD.write_string("HYOT...")
+        DHT_LCD.write_string("Initializing")        # Writes the specified unicode string to the display
+        DHT_LCD.crlf()                              # Writes a line feed and a carriage return (\r\n) character
+        DHT_LCD.write_string("HYOT...")
+        HCSR_LCD.write_string("Initializing")       # Writes the specified unicode string to the display
+        HCSR_LCD.crlf()                             # Writes a line feed and a carriage return (\r\n) character
+        HCSR_LCD.write_string("HYOT...")
 
         # ############### Initializing databases ###############
         cloudantdb.connect()                        # Creates a Cloudant DB client and establishes a connection
         cloudantdb.init(timestamp())                # Initializes the databases
         time.sleep(2)
-        LCD.clear()                                 # Overwrites display with blank characters and reset cursor position
+        DHT_LCD.clear()                             # Overwrites display with blank characters and reset cursor position
+        HCSR_LCD.clear()
         time.sleep(1)
 
         # ############### Reading values ###############
         print(Style.BRIGHT + Fore.BLACK + "\n-- Reading values each " + str(TIME_MEASUREMENTS) + " seconds from "
                                           "sensors\n" + Style.RESET_ALL)
-        LCD.write_string("Reading values")
-        LCD.crlf()
-        LCD.write_string("from sensors")
+        DHT_LCD.write_string("Reading values")
+        DHT_LCD.crlf()
+        DHT_LCD.write_string("from sensors")
+        HCSR_LCD.write_string("Reading values")
+        HCSR_LCD.crlf()
+        HCSR_LCD.write_string("from sensors")
         time.sleep(2)
-        LCD.clear()
+        DHT_LCD.clear()
+        HCSR_LCD.clear()
         time.sleep(1)
 
-        # DHT11 sensor TODO
-        LCD.write_string("- DHT11 sensor -")
+        # DHT11 and HC-SR04 sensor TODO
+        DHT_LCD.write_string("- DHT11 sensor -")
+        HCSR_LCD.write_string(" HC-SR04 sensor ")
         time.sleep(2)
-        LCD.clear()
+        DHT_LCD.clear()
+        HCSR_LCD.clear()
 
         # Loop each n seconds, hence, this is the time between measurements
         while True:
@@ -187,10 +202,15 @@ def main():
                 print("Temperature: {0:0.1f} °C \nHumidity: {1:0.1f} %".format(temperature, humidity))
 
                 # Outputs the data by display
-                LCD.cursor_pos = (0, 0)
-                LCD.write_string("Temp: %.1f °C" % temperature)
-                LCD.crlf()
-                LCD.write_string("Humidity: %.1f %%" % humidity)
+                DHT_LCD.cursor_pos = (0, 0)
+                DHT_LCD.write_string("Temp: %.1f °C" % temperature)
+                DHT_LCD.crlf()
+                DHT_LCD.write_string("Humidity: %.1f %%" % humidity)
+
+                HCSR_LCD.cursor_pos = (0, 0)
+                HCSR_LCD.write_string("Temp: %.1f °C" % temperature)
+                HCSR_LCD.crlf()
+                HCSR_LCD.write_string("Humidity: %.1f %%" % humidity)
 
                 # Create a JSON document content data
                 dht11_data = {
@@ -207,21 +227,33 @@ def main():
                 print("Failed to get reading. Humidity is invalid or None")
 
                 # Shows the output like empty
-                LCD.clear()
-                LCD.cursor_pos = (0, 0)
-                LCD.write_string("Temp: ")
-                LCD.crlf()
-                LCD.write_string("Humidity: ")
+                DHT_LCD.clear()
+                DHT_LCD.cursor_pos = (0, 0)
+                DHT_LCD.write_string("Temp: ")
+                DHT_LCD.crlf()
+                DHT_LCD.write_string("Humidity: ")
+
+                HCSR_LCD.clear()
+                HCSR_LCD.cursor_pos = (0, 0)
+                HCSR_LCD.write_string("Temp: ")
+                HCSR_LCD.crlf()
+                HCSR_LCD.write_string("Humidity: ")
 
             elif temperature is None or temperature < 0:                        # Temperature value is invalid or None
                 print("Failed to get reading. Temperature is invalid or None")
 
                 # Shows the output like empty
-                LCD.clear()
-                LCD.cursor_pos = (0, 0)
-                LCD.write_string("Temp: ")
-                LCD.crlf()
-                LCD.write_string("Humidity: ")
+                DHT_LCD.clear()
+                DHT_LCD.cursor_pos = (0, 0)
+                DHT_LCD.write_string("Temp: ")
+                DHT_LCD.crlf()
+                DHT_LCD.write_string("Humidity: ")
+
+                HCSR_LCD.clear()
+                HCSR_LCD.cursor_pos = (0, 0)
+                HCSR_LCD.write_string("Temp: ")
+                HCSR_LCD.crlf()
+                HCSR_LCD.write_string("Humidity: ")
 
             print("-----------------------------")
 
@@ -252,13 +284,15 @@ def main():
         print(Style.BRIGHT + Fore.BLACK + "\n-- Ending HYOT..." + Style.RESET_ALL)
         print("        Closing and cleaning LCD")
         try:
-            LCD.close(clear=True)                   # Closes and calls the clear function
-            LCD.backlight_enabled = False           # Disables the backlight
-            cloudantdb.disconnect()                 # Disconnects the Cloudant client
-        except Exception as finallyException:       # TODO - Too general exception
+            DHT_LCD.close(clear=True)                   # Closes and calls the clear function
+            DHT_LCD.backlight_enabled = False           # Disables the backlight
+            HCSR_LCD.close(clear=True)
+            HCSR_LCD.backlight_enabled = False
+            cloudantdb.disconnect()                     # Disconnects the Cloudant client
+        except Exception as finallyException:           # TODO - Too general exception
             print(Fore.RED + "\nException in the finally statement of the main() function: " +
                   str(finallyException.message.lower()) + ".")
-            traceback.print_exc()                   # Prints the traceback
+            traceback.print_exc()                       # Prints the traceback
             print(Fore.RESET)
             sys.exit(1)
 
