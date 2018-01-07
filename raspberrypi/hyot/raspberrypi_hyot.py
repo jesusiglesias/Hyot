@@ -18,7 +18,7 @@
 #    DESCRIPTION:     This script monitors several events from sensors and sends them to the cloud  TODO               #
 #                                                                                                                      #
 #        OPTIONS:     ---                                                                                              #
-#   REQUIREMENTS:     Root user, Connected devices: 16x2 LCD (2), DTH11 sensor and HC-SR04 sensor,                     #
+#   REQUIREMENTS:     Root user, Connected devices: LCD 16x2 (2), DTH11 sensor and HC-SR04 sensor,                     #
 #                     Modules: checks_module.py                                                                        #
 #          NOTES:     It must be run with root user on a Raspberry Pi preferably with Raspbian as operating system     #
 #         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                         #
@@ -42,6 +42,7 @@ try:
     import time                                     # Time access and conversions
     import datetime                                 # Basic date and time types
     import checks_module as checks                  # Module to execute initial checks and to parse the menu
+    import cloudantdb_module as cloudantdb          # Module that contains the logic of the Cloudant NoSQL DB service
     from pyfiglet import Figlet                     # Text banners in a variety of typefaces
     from colorama import Fore, Style                # Cross-platform colored terminal text
     import Adafruit_DHT                             # DHT11 sensor
@@ -136,6 +137,10 @@ def main():
         LCD.crlf()                                  # Writes a line feed and a carriage return (\r\n) character
         LCD.write_string("Raspberry Pi...")
         time.sleep(3)
+        # ############### Initializing databases ###############
+        cloudantdb.connect()                        # Creates a Cloudant DB client and establishes a connection
+        cloudantdb.init(timestamp())                # Initializes the databases
+        time.sleep(2)
         LCD.clear()                                 # Overwrites display with blank characters and reset cursor position
         time.sleep(1)
 
@@ -186,6 +191,17 @@ def main():
                 LCD.crlf()
                 LCD.write_string("Humidity: %.1f %%" % humidity)
 
+                # Create a JSON document content data
+                dht11_data = {
+                    '_id': str(dht11_uuid),
+                    "datetime_field": str(measure_datetime.strftime("%d-%m-%Y %H:%M:%S %p")),
+                    "temperature_field": temperature,
+                    "humidity_field": humidity,
+                }
+
+                # Adds the document to the database of the Cloudant NoSQL service
+                cloudantdb.add_document(dht11_data, cloudantdb.SENSORS[0])
+
             elif humidity is None or 0 > humidity > 100:                        # Humidity value is invalid or None
                 print("Failed to get reading. Humidity is invalid or None")
 
@@ -210,11 +226,16 @@ def main():
 
             time.sleep(TIME_MEASUREMENTS)
 
-    except IOError as ioError:                      # Related to LCD 16x2
-        print(Fore.RED + "\nIOError in the main() function or in the modules: " + str(ioError) + ". Main errno:" + "\r")
-        print("- Errno 2: I2C interface is disabled.\r")
-        print("- Errno 22: I2C address is invalid.\r")
-        print("- Errno 121: LCD is not connected.\r")
+    except IOError as ioError:                      # Related to LCD 16x2 and Cloudant NoSQL DB
+        print(Fore.RED + "\nIOError in the main() function or in the modules: " + str(ioError) + ". Main reasons:")
+        print("\n- Cloudant NoSQL DB service")
+        print("      401 Unauthorized: credentials do not have permission to access to the specified Cloudant instance."
+              "\r")
+        print("      Errno -2: cloudant instance (URL) is wrong or unknown.\r")
+        print("- LCD - I2C protocol")
+        print("      Errno 2: I2C interface is disabled.\r")
+        print("      Errno 22: I2C address is invalid.\r")
+        print("      Errno 121: LCD is not connected.\r")
         sys.exit(1)
     except Exception as exception:                  # TODO - Too general exception
         print(Fore.RED + "\nException in the main() function or in the modules: " + str(exception.message.lower()) +
@@ -232,6 +253,7 @@ def main():
         try:
             LCD.close(clear=True)                   # Closes and calls the clear function
             LCD.backlight_enabled = False           # Disables the backlight
+            cloudantdb.disconnect()                 # Disconnects the Cloudant client
         except Exception as finallyException:       # TODO - Too general exception
             print(Fore.RED + "\nException in the finally statement of the main() function: " +
                   str(finallyException.message.lower()) + ".")
