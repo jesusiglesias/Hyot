@@ -212,7 +212,7 @@ def menu():
         return args
 
     except Exception as argparseError:
-        print(Fore.RED + "\nException in menu() function: " + str(argparseError.message.lower()) + ".")
+        print(Fore.RED + "\nException in the menu() function: " + str(argparseError.message.lower()) + ".")
         traceback.print_exc()       # Prints the traceback
         print(Fore.RESET)
         sys.exit(1)

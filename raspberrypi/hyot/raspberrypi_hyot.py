@@ -211,13 +211,14 @@ def main():
             time.sleep(TIME_MEASUREMENTS)
 
     except IOError as ioError:                      # Related to LCD 16x2
-        print(Fore.RED + "\nIOError in main() function: " + str(ioError) + ". Main errno:" + "\r")
+        print(Fore.RED + "\nIOError in the main() function or in the modules: " + str(ioError) + ". Main errno:" + "\r")
         print("- Errno 2: I2C interface is disabled.\r")
         print("- Errno 22: I2C address is invalid.\r")
         print("- Errno 121: LCD is not connected.\r")
         sys.exit(1)
     except Exception as exception:                  # TODO - Too general exception
-        print(Fore.RED + "\nException in main() function: " + str(exception.message.lower()) + ".")
+        print(Fore.RED + "\nException in the main() function or in the modules: " + str(exception.message.lower()) +
+              ".")
         traceback.print_exc()                       # Prints the traceback
         print(Fore.RESET)
         sys.exit(1)
