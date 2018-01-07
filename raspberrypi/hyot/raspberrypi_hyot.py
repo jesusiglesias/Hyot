@@ -100,7 +100,7 @@ def header():
     """Prints the header in the console"""
 
     # Header
-    print(Fore.BLUE + FIGLET.renderText("HYOT") + Fore.RESET)
+    print(Fore.LIGHTBLUE_EX + FIGLET.renderText("HYOT") + Fore.RESET)
     print(
             Style.BRIGHT + Fore.BLACK + "This script monitors several events -distance, temperature and humidity- from "
                                         "sensors, outputs by console and sends them to the cloud.\n"
@@ -122,21 +122,21 @@ def main():
     try:
 
         # Variables
-        global dht11_uuid
+        global dht11_uuid                           # TODO - Necessary global?
         count = 0                                   # Measurement counter
         dht11_uuid = None                           # UUID of each DHT11 sensor measurement
 
         # Header
         header()
 
-        # Initializing
+        # ############### Initializing HYOT ###############
         LCD.backlight_enabled = True                # Enables the backlight
-        time.sleep(1)
-        print("-> Initializing Raspberry Pi...")
+        time.sleep(1)                               # Wait time - 1 second
+        print(Style.BRIGHT + Fore.BLACK + "-- Initializing HYOT..." + Style.RESET_ALL)
         LCD.write_string("Initializing")            # Writes the specified unicode string to the display
         LCD.crlf()                                  # Writes a line feed and a carriage return (\r\n) character
-        LCD.write_string("Raspberry Pi...")
-        time.sleep(3)
+        LCD.write_string("HYOT...")
+
         # ############### Initializing databases ###############
         cloudantdb.connect()                        # Creates a Cloudant DB client and establishes a connection
         cloudantdb.init(timestamp())                # Initializes the databases
@@ -144,8 +144,9 @@ def main():
         LCD.clear()                                 # Overwrites display with blank characters and reset cursor position
         time.sleep(1)
 
-        # Reading values
-        print("-> Reading values each " + str(TIME_MEASUREMENTS) + " seconds from sensors\n")
+        # ############### Reading values ###############
+        print(Style.BRIGHT + Fore.BLACK + "\n-- Reading values each " + str(TIME_MEASUREMENTS) + " seconds from "
+                                          "sensors\n" + Style.RESET_ALL)
         LCD.write_string("Reading values")
         LCD.crlf()
         LCD.write_string("from sensors")
@@ -172,16 +173,16 @@ def main():
             # Obtains a timestamp (datetime)
             measure_datetime = timestamp()
 
-            print(Style.BRIGHT + Fore.CYAN + "DHT11 sensor - Measurement %i" % count + Style.RESET_ALL + Fore.RESET)
+            print(Style.BRIGHT + Fore.CYAN + "DHT11 sensor - Measurement %i" % count + Style.RESET_ALL)
 
             # Checks the values
             if humidity is not None and 0 <= humidity <= 100 and temperature is not None and temperature >= 0:
 
                 # Generates a random UUID
-                uuid_dht11 = uuid.uuid4()
+                dht11_uuid = uuid.uuid4()
 
                 # Outputs the data by console
-                print(Style.BRIGHT + "UUID: " + Style.RESET_ALL + str(uuid_dht11))
+                print(Style.BRIGHT + "UUID: " + Style.RESET_ALL + str(dht11_uuid))
                 print("Datetime: " + str(measure_datetime.strftime("%d-%m-%Y %H:%M:%S %p")))
                 print("Temperature: {0:0.1f} °C \nHumidity: {1:0.1f} %".format(temperature, humidity))
 
@@ -224,7 +225,7 @@ def main():
 
             print("-----------------------------")
 
-            time.sleep(TIME_MEASUREMENTS)
+            time.sleep(TIME_MEASUREMENTS - 1)
 
     except IOError as ioError:                      # Related to LCD 16x2 and Cloudant NoSQL DB
         print(Fore.RED + "\nIOError in the main() function or in the modules: " + str(ioError) + ". Main reasons:")
@@ -248,8 +249,8 @@ def main():
               + Fore.RESET)
         sys.exit(1)
     finally:
-        LCD.close(clear=True)                       # Closes and calls the clear function
-        LCD.backlight_enabled = False               # Disables the backlight
+        print(Style.BRIGHT + Fore.BLACK + "\n-- Ending HYOT..." + Style.RESET_ALL)
+        print("        Closing and cleaning LCD")
         try:
             LCD.close(clear=True)                   # Closes and calls the clear function
             LCD.backlight_enabled = False           # Disables the backlight
