@@ -95,6 +95,19 @@ def constants(user_args):
 ########################################
 #               FUNCTIONS              #
 ########################################
+def header():
+    """Prints the header in the console"""
+
+    # Header
+    print(Fore.BLUE + FIGLET.renderText("HYOT") + Fore.RESET)
+    print(
+            Style.BRIGHT + Fore.BLACK + "This script monitors several events -distance, temperature and humidity- from "
+                                        "sensors, outputs by console and sends them to the cloud.\n"
+            + Style.RESET_ALL)                      # TODO
+
+    time.sleep(1)                                   # Wait time - 1 second
+
+
 def timestamp():
     """Generates a timestamp string for each measurement and for each image/video taken"""  # TODO
 
@@ -108,18 +121,12 @@ def main():
     try:
 
         # Variables
-        global uuid_dht11
-        count = 0  # Measurement counter
-        uuid_dht11 = None  # UUID of each DHT11 sensor measurement
+        global dht11_uuid
+        count = 0                                   # Measurement counter
+        dht11_uuid = None                           # UUID of each DHT11 sensor measurement
 
         # Header
-        print(Fore.BLUE + FIGLET.renderText("HYOT") + Fore.RESET)
-        print(
-            Style.BRIGHT + Fore.BLACK + "This script monitors several events -distance, temperature and humidity- from "
-                                        "sensors, outputs by console and sends them to the cloud.\n"
-            + Style.RESET_ALL + Fore.RESET)         # TODO
-
-        time.sleep(2)                               # Wait time - 2 seconds
+        header()
 
         # Initializing
         LCD.backlight_enabled = True                # Enables the backlight
