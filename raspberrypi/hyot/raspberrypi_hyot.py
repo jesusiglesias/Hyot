@@ -229,6 +229,15 @@ def main():
     finally:
         LCD.close(clear=True)                       # Closes and calls the clear function
         LCD.backlight_enabled = False               # Disables the backlight
+        try:
+            LCD.close(clear=True)                   # Closes and calls the clear function
+            LCD.backlight_enabled = False           # Disables the backlight
+        except Exception as finallyException:       # TODO - Too general exception
+            print(Fore.RED + "\nException in the finally statement of the main() function: " +
+                  str(finallyException.message.lower()) + ".")
+            traceback.print_exc()                   # Prints the traceback
+            print(Fore.RESET)
+            sys.exit(1)
 
 
 ########################################
