@@ -45,8 +45,9 @@ try:
     import cloudantdb_module as cloudantdb          # Module that contains the logic of the Cloudant NoSQL DB service
     from pyfiglet import Figlet                     # Text banners in a variety of typefaces
     from colorama import Fore, Style                # Cross-platform colored terminal text
-    import Adafruit_DHT                             # DHT11 sensor
     from RPLCD.i2c import CharLCD                   # LCD 16x2
+    import Adafruit_DHT                             # DHT11 sensor
+    import picamera                                 # Interface for the Raspberry Pi camera module
 
 except ImportError as importError:
     print("Error to import: " + importError.message.lower() + ".")
@@ -126,9 +127,9 @@ def main():
     try:
 
         # Variables
-        global dht11_uuid                           # TODO - Necessary global?
+        global uuid_measurement                     # TODO - Necessary global?
         count = 0                                   # Measurement counter
-        dht11_uuid = None                           # UUID of each DHT11 sensor measurement
+        uuid_measurement = None                     # UUID of each measurement for both sensors
 
         # Header
         header()
@@ -177,28 +178,23 @@ def main():
         # Loop each n seconds, hence, this is the time between measurements
         while True:
 
-            # Increment the counter
-            count += 1
+            count += 1                                                  # Increment the counter
+            datetime_measurement = timestamp()                          # Obtains a timestamp (datetime)
+            uuid_measurement = uuid.uuid4()                             # Generates a random UUID
 
             # ############### DHT11 SENSOR ###############
 
             # Obtains humidity and temperature
             humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PINDATA)
 
-            # Obtains a timestamp (datetime)
-            measure_datetime = timestamp()
-
             print(Style.BRIGHT + Fore.CYAN + "DHT11 sensor - Measurement %i" % count + Style.RESET_ALL)
 
             # Checks the values
             if humidity is not None and 0 <= humidity <= 100 and temperature is not None and temperature >= 0:
 
-                # Generates a random UUID
-                dht11_uuid = uuid.uuid4()
-
                 # Outputs the data by console
-                print(Style.BRIGHT + "UUID: " + Style.RESET_ALL + str(dht11_uuid))
-                print("Datetime: " + str(measure_datetime.strftime("%d-%m-%Y %H:%M:%S %p")))
+                print(Style.BRIGHT + "UUID: " + Style.RESET_ALL + str(uuid_measurement))
+                print("Datetime: " + str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")))
                 print("Temperature: {0:0.1f} °C \nHumidity: {1:0.1f} %".format(temperature, humidity))
 
                 # Outputs the data by display
@@ -214,8 +210,8 @@ def main():
 
                 # Create a JSON document content data
                 dht11_data = {
-                    '_id': str(dht11_uuid),
-                    "datetime_field": str(measure_datetime.strftime("%d-%m-%Y %H:%M:%S %p")),
+                    '_id': str(uuid_measurement),
+                    "datetime_field": str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
                     "temperature_field": temperature,
                     "humidity_field": humidity,
                 }
@@ -282,10 +278,11 @@ def main():
         sys.exit(1)
     finally:
         print(Style.BRIGHT + Fore.BLACK + "\n-- Ending HYOT..." + Style.RESET_ALL)
-        print("        Closing and cleaning LCD")
         try:
+            print("        Closing and cleaning LCD of the DHT11 sensor")
             DHT_LCD.close(clear=True)                   # Closes and calls the clear function
             DHT_LCD.backlight_enabled = False           # Disables the backlight
+            print("        Closing and cleaning LCD of the HC-SR04 sensor")
             HCSR_LCD.close(clear=True)
             HCSR_LCD.backlight_enabled = False
             cloudantdb.disconnect()                     # Disconnects the Cloudant client
