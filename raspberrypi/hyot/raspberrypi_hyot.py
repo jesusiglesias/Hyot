@@ -65,11 +65,12 @@ def constants(user_args):
     :param user_args: Values of the options entered by the user
     """
 
-    global FIGLET, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT_LCD, HCSR_LCD
+    global FIGLET, CAMERA, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT_LCD, HCSR_LCD
 
     try:
 
         FIGLET = Figlet(font='future_8', justify='center')           # Figlet
+        CAMERA = picamera.PiCamera()                                 # Camera
         TIME_MEASUREMENTS = user_args.WAITTIME_MEASUREMENTS          # Wait time between each measurement. Default 3 seconds
         DHT_SENSOR = Adafruit_DHT.DHT11                              # DHT11 sensor
         DHT_PINDATA = user_args.DHT_DATAPIN                          # DHT11 - Data pin. Default 21 (GPIO21)
@@ -219,6 +220,18 @@ def main():
                 # Adds the document to the database of the Cloudant NoSQL service
                 cloudantdb.add_document(dht11_data, cloudantdb.SENSORS[0])
 
+                # Alert triggered TODO
+                if temperature > 23:
+                    time.sleep(1)
+                    DHT_LCD.clear()
+                    print("Alert! Taking image")
+                    DHT_LCD.write_string("Alarm is triggered")
+                    DHT_LCD.crlf()
+                    DHT_LCD.write_string("Taking image...")
+                    CAMERA.capture('dht11_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) + '.jpg')
+                    time.sleep(2)
+                    DHT_LCD.clear()
+
             elif humidity is None or 0 > humidity > 100:                        # Humidity value is invalid or None
                 print("Failed to get reading. Humidity is invalid or None")
 
@@ -286,6 +299,7 @@ def main():
             HCSR_LCD.close(clear=True)
             HCSR_LCD.backlight_enabled = False
             cloudantdb.disconnect()                     # Disconnects the Cloudant client
+            CAMERA.close()                              # Closes the Pi camera
         except Exception as finallyException:           # TODO - Too general exception
             print(Fore.RED + "\nException in the finally statement of the main() function: " +
                   str(finallyException.message.lower()) + ".")
