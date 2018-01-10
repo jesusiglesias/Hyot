@@ -43,6 +43,7 @@ try:
     import datetime                                 # Basic date and time types
     import checks_module as checks                  # Module to execute initial checks and to parse the menu
     import cloudantdb_module as cloudantdb          # Module that contains the logic of the Cloudant NoSQL DB service
+    import dropbox_module as dropbox                # Module that contains the logic of the Dropbox service
     from pyfiglet import Figlet                     # Text banners in a variety of typefaces
     from colorama import Fore, Style                # Cross-platform colored terminal text
     from RPLCD.i2c import CharLCD                   # LCD 16x2
@@ -150,6 +151,10 @@ def main():
         # ############### Initializing databases ###############
         cloudantdb.connect()                        # Creates a Cloudant DB client and establishes a connection
         cloudantdb.init(timestamp())                # Initializes the databases
+        # ############### Initializing Dropbox ###############
+        dropbox.connect()                           # Creates a Dropbox client and establishes a connection
+        dropbox.init()                              # Initializes the main directory and the subdirectories
+
         time.sleep(2)
         DHT_LCD.clear()                             # Overwrites display with blank characters and reset cursor position
         HCSR_LCD.clear()
@@ -299,7 +304,7 @@ def main():
             HCSR_LCD.close(clear=True)
             HCSR_LCD.backlight_enabled = False
             cloudantdb.disconnect()                     # Disconnects the Cloudant client
-            CAMERA.close()                              # Closes the Pi camera
+            dropbox.disconnect()                        # Disables the access token used to authenticate the calls
         except Exception as finallyException:           # TODO - Too general exception
             print(Fore.RED + "\nException in the finally statement of the main() function: " +
                   str(finallyException.message.lower()) + ".")
