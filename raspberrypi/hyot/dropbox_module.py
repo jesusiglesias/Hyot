@@ -50,7 +50,19 @@ except KeyboardInterrupt:
 ########################################
 #              CONSTANTS               #
 ########################################
+SENSORS = ["DHT11", "HC-SR04"]                                               # Name of the sensors
+HYOT_DIR = "Hyot"                                                            # Name of the main directory
+DHT11_DIR = "dht11_images"                                                   # Name of the DHT11 sensor subdirectory TODO - Images?
+HCSR04_DIR = "hcsr04_images"                                                 # Name of the HC-SR04 sensor subdirectory TODO - Images?
 TOKEN = "eI5UZqDlaNAAAAAAAAAAJm2xSwyCoMquSwWq7p270YXf5qr3p1vawOu5AzS99Uih"   # Authorisation token
+
+
+########################################
+#           GLOBAL VARIABLES           #
+########################################
+dbx = None                                                                   # Instance of a Dropbox class
+path = None                                                                  # Path where create folders or upload files
+message_dir = None                                                           # Message
 
 
 ########################################
@@ -89,6 +101,82 @@ def connect():
             sys.exit(1)
         else:                                                       # Another error. For example: no write permission
             raise
+
+
+def create_dir(dir_name):
+    """Creates a new directory named Hyot in the root path or a new subdirectory within the Hyot directory
+    :param dir_name: Name of the directory or subdirectory
+    """
+
+    global dbx, path, message_dir
+
+    # Establishes some data
+    if dir_name == HYOT_DIR:
+        path = "/"
+        message_dir = "directory"
+    else:
+        path = "/Hyot/"
+        message_dir = "subdirectory"
+
+    try:
+
+        # Creates the new directory or subdirectory
+        # An error is thrown if the directory or subdirectory already exists, if there is not enough available space
+        # and so on
+        dbx.files_create_folder_v2(path + dir_name, autorename=False)
+
+        print("        Creating the " + message_dir + ": " + dir_name)
+        print(Fore.GREEN + "        " + Style.BRIGHT + dir_name + Style.NORMAL + " " + message_dir + " was created "
+                           "successfully" + Fore.RESET)
+
+    except dropbox.exceptions.ApiError as createError:
+
+        if createError.error.get_path().is_conflict():                # Directory or subdirectory already exists
+            print(Fore.GREEN + "        " + Style.BRIGHT + dir_name + Style.NORMAL + " " + message_dir +
+                  " already exists" + Fore.RESET)
+            pass
+        elif createError.error.get_path().is_insufficient_space():    # Insufficient space
+            print("        Creating the " + message_dir + ": " + dir_name)
+            print(Fore.RED + "        Error to create the " + Style.BRIGHT + dir_name + Style.NORMAL +
+                  " subdirectory. The user does not have enough available space (bytes) to write more data."
+                  + Fore.RESET)
+            sys.exit(1)
+        else:                                                         # Another error. For example: no write permission
+            raise
+
+
+def init():
+    """Initializes the main directory and the subdirectories by checking if these one exist or not"""
+
+    # Variables
+    sensor_subdirs = []                        # Defines a list with the name of the subdirectories of each sensor
+
+    # Asks the user for the subdirectory where the images of an alarm triggered by the DHT11 sensor will be stored TODO - Images?
+    dht_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the images of an alarm "
+                                       "triggered by the DHT11 sensor will be stored. Empty to use the default value: "
+                           + Fore.RESET) or DHT11_DIR
+
+    # Asks the user for the subdirectory where the images of an alarm triggered by the HC-SR04 sensor will be stored TODO - Images?
+    hcsr_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the images of an alarm "
+                                        "triggered by the HC-SR04 sensor will be stored. Empty to use the default "
+                                        "value: " + Fore.RESET) or HCSR04_DIR
+
+    # Adds the name of each subdirectory to the list
+    sensor_subdirs.append(dht_subdir)
+    sensor_subdirs.append(hcsr_subdir)
+
+    # Creates the main directory
+    print("        Checking if the main directory named Hyot exists in the root path of Dropbox")
+    create_dir(HYOT_DIR)
+
+    # Checks if each subdirectory already exists or not
+    for index, sensor_subdir in enumerate(sensor_subdirs):
+        print("        Checking if the subdirectory of the " + SENSORS[index] + " sensor exists within the Hyot "
+              "directory in Dropbox")
+
+        create_dir(sensor_subdir)
+
+        time.sleep(1)
 
 
 def disconnect():
