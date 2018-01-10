@@ -75,7 +75,7 @@ def connect():
 
     global client
 
-    print("        Generating the client of the Cloudant NoSQL DB service")
+    print("      - Generating the client of the Cloudant NoSQL DB service")
 
     # Asks the user for Cloudant credentials
     username = raw_input(Fore.BLUE + "        Enter the Cloudant username or empty to use the default value: "
@@ -101,7 +101,7 @@ def init(timestamp):
     :param timestamp: Datetime when the measurement was taken
     """
 
-    global dbs_instances
+    global client, dbs_instances
 
     dht11_dbinstance = None                                 # Instance for DHT11 sensor database
     hcsr04_dbinstance = None                                # Instance for HC-SR04 sensor database
@@ -151,6 +151,8 @@ def add_document(data, sensor):
     :param sensor: Sensor type
     """
 
+    global dbs_instances
+
     db_instance = None                                      # Instance of a specific database
 
     # Selects the database instance based on sensor type
@@ -173,10 +175,12 @@ def add_document(data, sensor):
 def disconnect():
     """Disconnects the Cloudant client"""
 
+    global client
+
     if not (client is None):
         print("        Disconnecting the Cloudant DB client")
 
         # Ends the client session
         client.disconnect()
 
-        print(Fore.GREEN + "        Client session ends successfully" + Fore.RESET)
+        print(Fore.GREEN + "        Cloudant DB session ends successfully" + Fore.RESET)
