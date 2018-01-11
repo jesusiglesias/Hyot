@@ -50,11 +50,12 @@ except KeyboardInterrupt:
 ########################################
 #              CONSTANTS               #
 ########################################
-SENSORS = ["DHT11", "HC-SR04"]                                               # Name of the sensors
-HYOT_DIR = "Hyot"                                                            # Name of the main directory
-DHT11_DIR = "dht11_images"                                                   # Name of the DHT11 sensor subdirectory TODO - Images?
-HCSR04_DIR = "hcsr04_images"                                                 # Name of the HC-SR04 sensor subdirectory TODO - Images?
-TOKEN = "eI5UZqDlaNAAAAAAAAAAJm2xSwyCoMquSwWq7p270YXf5qr3p1vawOu5AzS99Uih"   # Authorisation token
+SENSORS = ["DHT11", "HC-SR04"]                                              # Name of the sensors
+HYOT_DIR = "Hyot"                                                           # Name of the main directory
+DHT11_DIR = "dht11_images"                                                  # Name of the DHT11 sensor subdirectory TODO - Images?
+HCSR04_DIR = "hcsr04_images"                                                # Name of the HC-SR04 sensor subdirectory TODO - Images?
+TOKEN = "eI5UZqDlaNAAAAAAAAAAJm2xSwyCoMquSwWq7p270YXf5qr3p1vawOu5AzS99Uih"  # Authorisation token
+MIN_SPACE = 524288000                                                       # Recommended available space in the account (500 MB = 524288000 bytes)
 
 
 ########################################
@@ -150,6 +151,18 @@ def init():
 
     # Variables
     sensor_subdirs = []                        # Defines a list with the name of the subdirectories of each sensor
+
+    # Checks if there is a considerable amount of available space in the user account (at least 500MB)
+    allocated_space = dbx.users_get_space_usage().allocation.get_individual().allocated             # Allocated space
+    used_space = dbx.users_get_space_usage().used                                                   # Used space
+    available_space = allocated_space - used_space                                                  # Available space
+
+    # Notifies the user that the space may be insufficient (< 500 MB)
+    if available_space < MIN_SPACE:
+        print("        " + Fore.YELLOW + "Warning!" + Fore.RESET + " The available space may be insufficient (500 MB). "
+              "It is advisable to increase it before continuing the execution due to an error could occur later.")
+
+        time.sleep(2)
 
     # Asks the user for the subdirectory where the images of an alarm triggered by the DHT11 sensor will be stored TODO - Images?
     dht_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the images of an alarm "
