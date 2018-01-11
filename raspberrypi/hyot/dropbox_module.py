@@ -192,6 +192,47 @@ def init():
         time.sleep(1)
 
 
+def upload_file(localfile, sensor):
+    """Uploads the file to Dropbox, in particular to the subdirectory of the sensor that triggered the alarm
+    :param localfile: Local path and name of the file to upload TODO
+    :param sensor: Sensor that triggered the alarm
+    """
+
+    # Variables
+    upload_path = None                                                # Specify upload path
+
+    if sensor == SENSORS[0]:                                          # Upload path of the DHT11 sensor
+        upload_path = '/' + HYOT_DIR + '/' + DHT11_DIR + '/' + 'test.jpg'     # TODO
+
+    elif sensor == SENSORS[1]:                                        # Upload path of the HC-SR04 sensor
+        upload_path = '/' + HYOT_DIR + '/' + HCSR04_DIR + '/' + 'test.jpg'     # TODO
+
+    # Reads the file and uploads it
+    with open(localfile, 'rb') as f:  # TODO
+
+        print("Uploading " + localfile + " to Dropbox as " + upload_path)
+
+        try:
+
+            # Uploads the file. An error is thrown if this one already exists,
+            # if there is not enough available space and so on
+            dbx.files_upload(f.read(), upload_path, autorename=False)
+
+            print(Fore.GREEN + "File uploaded correctly" + Fore.RESET)
+
+        except dropbox.exceptions.ApiError as uploadError:
+
+            print uploadError.error.get_path()
+            if uploadError.error.get_path().reason.is_conflict():              # File already exists
+                print(Fore.YELLOW + "File already exists. It was not uploaded" + Fore.RESET)
+                pass
+            elif uploadError.error.get_path().reason.is_insufficient_space():  # Insufficient space
+                print(Fore.RED + "File not uploaded. The user does not have enough available space" + Fore.RESET)
+                pass    # TODO
+            else:                                                       # Another error. For example: no write permission
+                raise
+
+
 def disconnect():
     """Disconnects the Dropbox client disabling the access token used to authenticate the calls"""
 

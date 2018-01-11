@@ -214,7 +214,10 @@ def main():
                 HCSR_LCD.crlf()
                 HCSR_LCD.write_string("Humidity: %.1f %%" % humidity)
 
-                # Create a JSON document content data
+                # Uploads the file to Dropbox TODO
+                dropbox.upload_file('/home/pi/Desktop/test.jpg', dropbox.SENSORS[0])
+
+                # Creates a JSON document content data
                 dht11_data = {
                     '_id': str(uuid_measurement),
                     "datetime_field": str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
