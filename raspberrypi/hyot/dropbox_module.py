@@ -160,7 +160,7 @@ def create_dir(dir_name):
 def check_space():
     """Checks the amount of available space in the user account"""
 
-    # Checks if there is a considerable amount of available space in the user account (at least 500MB)
+    # Checks if there is a considerable amount of available space in the user account (at least 500MB) TODO
     allocated_space = dbx.users_get_space_usage().allocation.get_individual().allocated             # Allocated space
     used_space = dbx.users_get_space_usage().used                                                   # Used space
     available_space = allocated_space - used_space                                                  # Available space

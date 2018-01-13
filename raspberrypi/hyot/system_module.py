@@ -44,3 +44,16 @@ except ImportError as importError:
 except KeyboardInterrupt:
     print("\rException: KeyboardInterrupt. Please, do not interrupt the execution.")
     sys.exit(1)
+
+
+########################################
+#               FUNCTIONS              #
+########################################
+def check_file(localfile):
+    """Checks if the file exists in the local system
+    :param localfile: Local path and name of the file to upload to Dropbox
+    """
+    # TODO - Exit?
+    if not os.path.exists(localfile):
+        print(Fore.RED + localfile + " file not found in the local system. Alert is not stored" + Fore.RESET)
+        sys.exit(1)
