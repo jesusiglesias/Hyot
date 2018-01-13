@@ -96,12 +96,16 @@ def connect():
 
         time.sleep(1)
 
+    except dropbox.exceptions.BadInputError:
+        print(Fore.RED + "        The given OAuth 2 access token is malformed" + Fore.RESET)
+        sys.exit(1)
+
     except dropbox.exceptions.AuthError as authError:
 
         # Checks if the error is due to an invalid token
         if authError.error.is_invalid_access_token():               # Access token has been revoked
-            print(Fore.RED + "        " + "The introduced access token is invalid because it has been revoked"
-                  + Fore.RESET)
+            print(Fore.RED + "        The introduced access token does not exist or is invalid because it has been "
+                             "revoked" + Fore.RESET)
             sys.exit(1)
         else:                                                       # Another error. For example: no write permission
             raise
