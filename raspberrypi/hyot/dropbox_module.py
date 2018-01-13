@@ -183,12 +183,12 @@ def init():
     # Asks the user for the subdirectory where the images of an alarm triggered by the DHT11 sensor will be stored TODO - Images?
     dht_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the images of an alarm "
                                        "triggered by the DHT11 sensor will be stored. Empty to use the default value ("
-                                       + '/' + HYOT_DIR + '/' + DHT11_DIR + "): " + Fore.RESET) or DHT11_DIR
+                                       + "/" + HYOT_DIR + "/" + DHT11_DIR + "): " + Fore.RESET) or DHT11_DIR
 
     # Asks the user for the subdirectory where the images of an alarm triggered by the HC-SR04 sensor will be stored TODO - Images?
     hcsr_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the images of an alarm "
                                         "triggered by the HC-SR04 sensor will be stored. Empty to use the default "
-                                        "value (" + '/' + HYOT_DIR + '/' + HCSR04_DIR + "): "
+                                        "value (" + "/" + HYOT_DIR + "/" + HCSR04_DIR + "): "
                             + Fore.RESET) or HCSR04_DIR
 
     # Adds the name of each subdirectory to the list
@@ -246,10 +246,10 @@ def upload_file(localfile, sensor):
     upload_path = None                                              # Specify upload path
 
     if sensor == SENSORS[0]:                                        # Upload path of the DHT11 sensor
-        upload_path = '/' + HYOT_DIR + '/' + dht_subdir + '/' + 'test.jpg'     # TODO
+        upload_path = "/" + HYOT_DIR + "/" + dht_subdir + "/" + "test.jpg"     # TODO
 
     elif sensor == SENSORS[1]:                                      # Upload path of the HC-SR04 sensor
-        upload_path = '/' + HYOT_DIR + '/' + hcsr_subdir + '/' + 'test.jpg'     # TODO
+        upload_path = "/" + HYOT_DIR + "/" + hcsr_subdir + "/" + "test.jpg"     # TODO
 
     # Reads the file and uploads it
     with open(localfile, 'rb') as f:  # TODO
