@@ -127,7 +127,7 @@ def init(timestamp):
             print(Fore.GREEN + "        " + Style.BRIGHT + db + Style.NORMAL + " database already exists and was "
                                "opened successfully" + Fore.RESET)
         else:
-            print("        Initializing the database: " + db)
+            print("        Initializing the database")
 
             # Creates the database using the initialized client. The result is a new CloudantDatabase instance
             # based on the client
