@@ -148,6 +148,9 @@ def main():
         HCSR_LCD.crlf()                             # Writes a line feed and a carriage return (\r\n) character
         HCSR_LCD.write_string("HYOT...")
 
+        # ############### Initializing local directory ###############
+        system.create_localdir()                    # Creates a local directory to store the files taken by the Picamera
+
         # ############### Initializing databases ###############
         cloudantdb.connect()                        # Creates a Cloudant DB client and establishes a connection
         cloudantdb.init(timestamp())                # Initializes the databases
