@@ -76,15 +76,19 @@ def connect():
 
     global dbx
 
-    print("\n        ------------------------------------------------------\n")
-    print("      " + Style.BRIGHT + Fore.BLACK + "- Generating the client of the Dropbox service" + Style.RESET_ALL)
+    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Generating the client of the Dropbox service" + Style.RESET_ALL)
 
     # Asks the user for Dropbox token
     token = raw_input(Fore.BLUE + "        Enter the Dropbox token or empty to use the default value: "
                       + Fore.RESET) or TOKEN
 
+    # Checks if the Dropbox token is empty
+    if token.isspace():
+        print(Fore.RED + "        The Dropbox token can not be empty" + Fore.RESET)
+        sys.exit(1)
+
     # Creates an instance of the Dropbox class, which can make requests to API
-    dbx = dropbox.Dropbox(token)
+    dbx = dropbox.Dropbox(token.replace(" ", ""))
 
     try:
 
@@ -190,6 +194,20 @@ def init():
                                         "triggered by the HC-SR04 sensor will be stored. Empty to use the default "
                                         "value (" + "/" + HYOT_DIR + "/" + HCSR04_DIR + "): "
                             + Fore.RESET) or HCSR04_DIR
+
+    # Checks if some name is empty
+    if dht_subdir.isspace() or hcsr_subdir.isspace():
+        print(Fore.RED + "        The names of the sensor directories can not be empty" + Fore.RESET)
+        sys.exit(1)
+
+    # Removes spaces and converts to lowercase
+    dht_subdir = dht_subdir.replace(" ", "").lower()
+    hcsr_subdir = hcsr_subdir.replace(" ", "").lower()
+
+    # Checks if both names are the same
+    if dht_subdir == hcsr_subdir:
+        print(Fore.RED + "        The names of the sensor directories can not be the same" + Fore.RESET)
+        sys.exit(1)
 
     # Adds the name of each subdirectory to the list
     sensor_subdirs.append(dht_subdir)
