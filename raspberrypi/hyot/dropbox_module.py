@@ -139,17 +139,17 @@ def create_dir(dir_name):
 
     except dropbox.exceptions.ApiError as createError:
 
-        if createError.error.get_path().is_conflict():                # Directory or subdirectory already exists
+        if createError.error.get_path().is_conflict():              # Directory or subdirectory already exists
             print(Fore.GREEN + "        " + Style.BRIGHT + dir_name + Style.NORMAL + " " + message_dir +
                   " already exists" + Fore.RESET)
             pass
-        elif createError.error.get_path().is_insufficient_space():    # Insufficient space
+        elif createError.error.get_path().is_insufficient_space():  # Insufficient space
             print("        Creating the " + message_dir)
             print(Fore.RED + "        Error to create the " + Style.BRIGHT + dir_name + Style.NORMAL +
                   " subdirectory. The user does not have enough available space (bytes) to write more data."
                   + Fore.RESET)
             sys.exit(1)
-        else:                                                         # Another error. For example: no write permission
+        else:                                                       # Another error. For example: no write permission
             raise
 
 
@@ -243,12 +243,12 @@ def upload_file(localfile, sensor):
     global dbx, dht_subdir, hcsr_subdir
 
     # Variables
-    upload_path = None                                                # Specify upload path
+    upload_path = None                                              # Specify upload path
 
-    if sensor == SENSORS[0]:                                          # Upload path of the DHT11 sensor
+    if sensor == SENSORS[0]:                                        # Upload path of the DHT11 sensor
         upload_path = '/' + HYOT_DIR + '/' + dht_subdir + '/' + 'test.jpg'     # TODO
 
-    elif sensor == SENSORS[1]:                                        # Upload path of the HC-SR04 sensor
+    elif sensor == SENSORS[1]:                                      # Upload path of the HC-SR04 sensor
         upload_path = '/' + HYOT_DIR + '/' + hcsr_subdir + '/' + 'test.jpg'     # TODO
 
     # Reads the file and uploads it
