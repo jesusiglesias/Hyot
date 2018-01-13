@@ -193,11 +193,38 @@ def init():
         time.sleep(1)
 
 
+def get_shared_link(upload_path):
+    """Creates a shared shortened link of the file. If a shared link already exists for the given path, that link is
+    returned.
+    :param upload_path: Upload path of the current file
+    :return: link Shared link of the uploaded file to Dropbox
+    """
+
+    global dbx
+
+    try:
+
+        link = dbx.sharing_create_shared_link(upload_path, short_url=True, pending_upload=None)
+        return link.url
+
+    except dropbox.exceptions.ApiError as sharedLinkError:
+
+        if sharedLinkError.error.is_path():                         # File in the upload path does not exist
+            print(Fore.RED + "There is no file indicated by the upload path. Please, check the way to get the shared "
+                             "link" + Fore.RESET)
+            sys.exit(1)
+        else:                                                       # Another error
+            raise
+
+
 def upload_file(localfile, sensor):
     """Uploads the file to Dropbox, in particular to the subdirectory of the sensor that triggered the alarm
     :param localfile: Local path and name of the file to upload TODO
     :param sensor: Sensor that triggered the alarm
+    :return: shared_link Shared link of the uploaded file to Dropbox
     """
+
+    global dbx
 
     # Variables
     upload_path = None                                                # Specify upload path
@@ -221,16 +248,19 @@ def upload_file(localfile, sensor):
 
             print(Fore.GREEN + "File uploaded correctly" + Fore.RESET)
 
+            # Returns the shared link of the uploaded file to Dropbox
+            return get_shared_link(upload_path)
+
         except dropbox.exceptions.ApiError as uploadError:
 
-            print uploadError.error.get_path()
-            if uploadError.error.get_path().reason.is_conflict():              # File already exists
-                print(Fore.YELLOW + "File already exists. It was not uploaded" + Fore.RESET)
-                pass
+            if uploadError.error.get_path().reason.is_conflict():              # Conflict with another different file TODO - Images?
+                print(Fore.RED + "Existing conflict with another file with the same name and different content."
+                                 " Please, check the way in which the names of the images are generated" + Fore.RESET)
+                sys.exit(1)
             elif uploadError.error.get_path().reason.is_insufficient_space():  # Insufficient space
                 print(Fore.RED + "File not uploaded. The user does not have enough available space" + Fore.RESET)
                 pass    # TODO
-            else:                                                       # Another error. For example: no write permission
+            else:                                                      # Another error. For example: no write permission
                 raise
 
 
