@@ -56,8 +56,8 @@ PASSWORD_DB = "2d612e9875d92b3a6fd14b8a763ffb05f23bde3a81d9298f2e372245508ce25c"
 URL_DB = "https://ee585910-3df5-46f4-93a6-85400da6734e-bluemix:2d612e9875d92b3a" \
          "6fd14b8a763ffb05f23bde3a81d9298f2e372245508ce25c@ee585910-3df5-46f4-9" \
          "3a6-85400da6734e-bluemix.cloudant.com"                                  # URL in Cloudant NoSQL DB
-DHT11_DB = "dht11_measurements_"                                                  # Name of the DHT11 sensor database
-HCSR04_DB = "hcsr04_measurements_"                                                # Name of the HC-SR04 sensor database
+DHT11_DB = "dht11_measurements"                                                   # Name of the DHT11 sensor database
+HCSR04_DB = "hcsr04_measurements"                                                 # Name of the HC-SR04 sensor database
 
 
 ########################################
@@ -104,18 +104,28 @@ def init(timestamp):
 
     global client, dbs_instances
 
-    dht11_dbinstance = None                                 # Instance for DHT11 sensor database
-    hcsr04_dbinstance = None                                # Instance for HC-SR04 sensor database
-    dbs_instances = [dht11_dbinstance, hcsr04_dbinstance]   # Defines a list with the instances of the databases
-    # Defines a list with the name of the databases where the name includes the current month and year
-    dbs = [DHT11_DB + timestamp.strftime("%Y-%m"),
-           HCSR04_DB + timestamp.strftime("%Y-%m")]
+    dht11_dbinstance = None                                # Instance for the DHT11 sensor database
+    hcsr04_dbinstance = None                               # Instance for the HC-SR04 sensor database
+    dbs_instances = [dht11_dbinstance, hcsr04_dbinstance]  # Defines a list with the instances of the databases
+    sensor_dbs = []                                        # Defines a list with the name of the database of each sensor
+
+    # Asks the user for the name of the DHT11 sensor database
+    dht_database = raw_input(Fore.BLUE + "        Enter the name for the DHT11 sensor database. Empty to use the "
+                                         "default value (" + DHT11_DB + "_(timestamp)): " + Fore.RESET) or DHT11_DB
+
+    # Asks the user for the name of the HC-SR04 sensor database
+    hcsr_database = raw_input(Fore.BLUE + "        Enter the name for the HC-SR04 sensor database. Empty to use the "
+                                          "default value (" + HCSR04_DB + "_(timestamp)): " + Fore.RESET) or HCSR04_DB
+
+    # Adds the name of each database to the list where the name includes the current month and year
+    sensor_dbs.append(dht_database + "_" + str(timestamp.strftime("%Y-%m")))
+    sensor_dbs.append(hcsr_database + "_" + str(timestamp.strftime("%Y-%m")))
 
     # Retrieves the list of all database names for the current client
     all_databases = client.all_dbs()
 
     # Loops in each database to use
-    for index, db in enumerate(dbs):
+    for index, db in enumerate(sensor_dbs):
         print("        Checking if the database of the " + SENSORS[index] + " sensor exists in the Cloudant NoSQL "
               "DB service")
 
@@ -144,6 +154,8 @@ def init(timestamp):
                 sys.exit(1)
 
         time.sleep(1)
+
+    print("\n        ------------------------------------------------------")
 
 
 def add_document(data, sensor):
