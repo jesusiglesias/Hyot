@@ -107,11 +107,9 @@ def header():
     """Prints the header in the console"""
 
     # Header
-    print(Fore.LIGHTBLUE_EX + FIGLET.renderText("HYOT") + Fore.RESET)
-    print(
-            Style.BRIGHT + Fore.BLACK + "This script monitors several events -distance, temperature and humidity- from "
-                                        "sensors, outputs by console and sends them to the cloud.\n"
-            + Style.RESET_ALL)                      # TODO
+    print(Style.BRIGHT + Fore.LIGHTBLUE_EX + FIGLET.renderText("HYOT"))
+    print("This script monitors several events -distance, temperature and humidity- from sensors, outputs by console "
+          "and sends them to the cloud.\n" + Style.RESET_ALL)                      # TODO
 
     time.sleep(1)                                   # Wait time - 1 second
 
@@ -302,6 +300,7 @@ def main():
     finally:
         print(Style.BRIGHT + Fore.BLACK + "\n-- Ending HYOT..." + Style.RESET_ALL)
         try:
+            print("\r")
             print("        Closing and cleaning LCD of the DHT11 sensor")
             DHT_LCD.close(clear=True)                   # Closes and calls the clear function
             DHT_LCD.backlight_enabled = False           # Disables the backlight
@@ -310,6 +309,7 @@ def main():
             HCSR_LCD.backlight_enabled = False
             cloudantdb.disconnect()                     # Disconnects the Cloudant client
             dropbox.disconnect()                        # Disables the access token used to authenticate the calls
+            print("\r")
         except Exception as finallyException:           # TODO - Too general exception
             print(Fore.RED + "\nException in the finally statement of the main() function: " +
                   str(finallyException.message.lower()) + ".")
