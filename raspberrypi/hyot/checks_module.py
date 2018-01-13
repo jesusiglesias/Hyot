@@ -35,7 +35,7 @@
 
 try:
     import sys                                      # System-specific parameters and functions
-    import os                                       # OS module
+    import os                                       # Miscellaneous operating system interfaces
     import re                                       # Regular expression
     import traceback                                # Print or retrieve a stack traceback
     import socket                                   # Low-level networking interface
