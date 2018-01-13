@@ -127,7 +127,7 @@ def create_dir(dir_name):
         # and so on
         dbx.files_create_folder_v2(path + dir_name, autorename=False)
 
-        print("        Creating the " + message_dir + ": " + dir_name)
+        print("        Creating the " + message_dir)
         print(Fore.GREEN + "        " + Style.BRIGHT + dir_name + Style.NORMAL + " " + message_dir + " was created "
                            "successfully" + Fore.RESET)
 
@@ -138,7 +138,7 @@ def create_dir(dir_name):
                   " already exists" + Fore.RESET)
             pass
         elif createError.error.get_path().is_insufficient_space():    # Insufficient space
-            print("        Creating the " + message_dir + ": " + dir_name)
+            print("        Creating the " + message_dir)
             print(Fore.RED + "        Error to create the " + Style.BRIGHT + dir_name + Style.NORMAL +
                   " subdirectory. The user does not have enough available space (bytes) to write more data."
                   + Fore.RESET)
