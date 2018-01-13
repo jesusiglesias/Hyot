@@ -146,11 +146,8 @@ def create_dir(dir_name):
             raise
 
 
-def init():
-    """Initializes the main directory and the subdirectories by checking if these one exist or not"""
-
-    # Variables
-    sensor_subdirs = []                        # Defines a list with the name of the subdirectories of each sensor
+def check_space():
+    """Checks the amount of available space in the user account"""
 
     # Checks if there is a considerable amount of available space in the user account (at least 500MB)
     allocated_space = dbx.users_get_space_usage().allocation.get_individual().allocated             # Allocated space
@@ -163,6 +160,10 @@ def init():
               "It is advisable to increase it before continuing the execution due to an error could occur later.")
 
         time.sleep(2)
+
+
+    # Checks the amount of available space in the user account
+    check_space()
 
     # Asks the user for the subdirectory where the images of an alarm triggered by the DHT11 sensor will be stored TODO - Images?
     dht_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the images of an alarm "
