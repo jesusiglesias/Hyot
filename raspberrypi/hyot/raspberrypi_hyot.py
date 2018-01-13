@@ -129,9 +129,10 @@ def main():
     try:
 
         # Variables
-        global uuid_measurement                     # TODO - Necessary global?
+        global uuid_measurement, link_dropbox       # TODO - Necessary global?
         count = 0                                   # Measurement counter
         uuid_measurement = None                     # UUID of each measurement for both sensors
+        link_dropbox = None                         # Shared link of the uploaded file to Dropbox
 
         # Header
         header()
@@ -215,7 +216,7 @@ def main():
                 HCSR_LCD.write_string("Humidity: %.1f %%" % humidity)
 
                 # Uploads the file to Dropbox TODO
-                dropbox.upload_file('/home/pi/Desktop/test.jpg', dropbox.SENSORS[0])
+                link_dropbox = dropbox.upload_file('/home/pi/Desktop/test.jpg', dropbox.SENSORS[0])
 
                 # Creates a JSON document content data
                 dht11_data = {
@@ -223,6 +224,7 @@ def main():
                     "datetime_field": str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
                     "temperature_field": temperature,
                     "humidity_field": humidity,
+                    "shared_link_Dropbox": str(link_dropbox)
                 }
 
                 # Adds the document to the database of the Cloudant NoSQL service
