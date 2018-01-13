@@ -36,6 +36,7 @@
 try:
     import sys                                      # System-specific parameters and functions
     import os                                       # Miscellaneous operating system interfaces
+    import time                                     # Time access and conversions
     from colorama import Fore, Style                # Cross-platform colored terminal text
 
 except ImportError as importError:
@@ -47,8 +48,49 @@ except KeyboardInterrupt:
 
 
 ########################################
+#              CONSTANTS               #
+########################################
+TEMPFILES_DIR = "tempfiles"                                                    # Name of the temporary directory
+
+
+########################################
 #               FUNCTIONS              #
 ########################################
+def create_localdir():
+    """Creates the local directory where the images taken by the Picamera will be stored"""  # TODO
+
+    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Creating the local directory to store the images taken by the "
+          "Picamera" + Style.RESET_ALL)  # TODO
+
+    # Path that contains the temporary files ([project_path]/hyot/tempfiles)
+    tempfiles_path = os.path.dirname(os.path.abspath(__file__)) + "/" + TEMPFILES_DIR
+
+    # Checks if the directory already exists
+    if not os.path.exists(tempfiles_path):
+
+        os.makedirs(tempfiles_path)             # Creates the directory
+
+        time.sleep(0.5)
+
+        # After creating, checks if it was created
+        if os.path.exists(tempfiles_path):      # Directory was created
+            print(Fore.GREEN + "        " + Style.BRIGHT + tempfiles_path + Style.NORMAL + " directory created "
+                               "successfully" + Fore.RESET)
+
+        else:                                   # Directory was not created
+            print(Fore.RED + "        Error to create the " + Style.BRIGHT + tempfiles_path + Style.NORMAL +
+                  " directory" + Fore.RESET)
+            sys.exit(1)
+
+    else:
+        print(Fore.GREEN + "        " + Style.BRIGHT + tempfiles_path + Style.NORMAL + " directory already exists"
+              + Fore.RESET)
+
+    time.sleep(1)
+
+    print("\n        ------------------------------------------------------")
+
+
 def check_file(localfile):
     """Checks if the file exists in the local system
     :param localfile: Local path and name of the file to upload to Dropbox

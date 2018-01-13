@@ -150,7 +150,7 @@ def create_dir(dir_name):
         elif createError.error.get_path().is_insufficient_space():  # Insufficient space
             print("        Creating the " + message_dir)
             print(Fore.RED + "        Error to create the " + Style.BRIGHT + dir_name + Style.NORMAL +
-                  " subdirectory. The user does not have enough available space (bytes) to write more data."
+                  " subdirectory. The user does not have enough available space (bytes) to write more data"
                   + Fore.RESET)
             sys.exit(1)
         else:                                                       # Another error. For example: no write permission
@@ -168,7 +168,7 @@ def check_space():
     # Notifies the user that the space may be insufficient (< 500 MB)
     if available_space < MIN_SPACE:
         print("        " + Fore.YELLOW + "Warning!" + Fore.RESET + " The available space may be insufficient (500 MB). "
-              "It is advisable to increase it before continuing the execution due to an error could occur later.")
+              "It is advisable to increase it before continuing the execution due to an error could occur later")
 
         time.sleep(2)
 
