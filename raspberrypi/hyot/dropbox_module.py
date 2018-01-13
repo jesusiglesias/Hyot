@@ -61,10 +61,11 @@ MIN_SPACE = 524288000                                                       # Re
 ########################################
 #           GLOBAL VARIABLES           #
 ########################################
-dbx = None                                                                   # Instance of a Dropbox class
-path = None                                                                  # Path where create folders or upload files
-message_dir = None                                                           # Message
-
+dbx = None                  # Instance of a Dropbox class
+path = None                 # Path where create folders or upload files
+message_dir = None          # Message
+dht_subdir = None           # Final name of the DHT11 sensor subdirectory (default value or value entered by the user)
+hcsr_subdir = None          # Final name of the HC-SR04 sensor subdirectory (default value or value entered by the user)
 
 ########################################
 #               FUNCTIONS              #
@@ -162,6 +163,14 @@ def check_space():
         time.sleep(2)
 
 
+def init():
+    """Initializes the main directory and the subdirectories by checking if these one exist or not"""
+
+    global dht_subdir, hcsr_subdir
+
+    # Variables
+    sensor_subdirs = []                        # Defines a list with the name of the subdirectories of each sensor
+
     # Checks the amount of available space in the user account
     check_space()
 
@@ -225,16 +234,16 @@ def upload_file(localfile, sensor):
     :return: shared_link Shared link of the uploaded file to Dropbox
     """
 
-    global dbx
+    global dbx, dht_subdir, hcsr_subdir
 
     # Variables
     upload_path = None                                                # Specify upload path
 
     if sensor == SENSORS[0]:                                          # Upload path of the DHT11 sensor
-        upload_path = '/' + HYOT_DIR + '/' + DHT11_DIR + '/' + 'test.jpg'     # TODO
+        upload_path = '/' + HYOT_DIR + '/' + dht_subdir + '/' + 'test.jpg'     # TODO
 
     elif sensor == SENSORS[1]:                                        # Upload path of the HC-SR04 sensor
-        upload_path = '/' + HYOT_DIR + '/' + HCSR04_DIR + '/' + 'test.jpg'     # TODO
+        upload_path = '/' + HYOT_DIR + '/' + hcsr_subdir + '/' + 'test.jpg'     # TODO
 
     # Reads the file and uploads it
     with open(localfile, 'rb') as f:  # TODO
