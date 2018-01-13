@@ -42,6 +42,7 @@ try:
     import time                                     # Time access and conversions
     import datetime                                 # Basic date and time types
     import checks_module as checks                  # Module to execute initial checks and to parse the menu
+    import system_module as system                  # Module that performs functions in the local operating system
     import cloudantdb_module as cloudantdb          # Module that contains the logic of the Cloudant NoSQL DB service
     import dropbox_module as dropbox                # Module that contains the logic of the Dropbox service
     from pyfiglet import Figlet                     # Text banners in a variety of typefaces
@@ -212,6 +213,9 @@ def main():
                 HCSR_LCD.write_string("Temp: %.1f °C" % temperature)
                 HCSR_LCD.crlf()
                 HCSR_LCD.write_string("Humidity: %.1f %%" % humidity)
+
+                # Checks if the file exists in the local system TODO
+                system.check_file('/home/pi/Desktop/test.jpg')
 
                 # Uploads the file to Dropbox TODO
                 link_dropbox = dropbox.upload_file('/home/pi/Desktop/test.jpg', dropbox.SENSORS[0])
