@@ -75,7 +75,8 @@ def connect():
 
     global client
 
-    print("      - Generating the client of the Cloudant NoSQL DB service")
+    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Generating the client of the Cloudant NoSQL DB service"
+          + Style.RESET_ALL)
 
     # Asks the user for Cloudant credentials
     username = raw_input(Fore.BLUE + "        Enter the Cloudant username or empty to use the default value: "

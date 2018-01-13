@@ -67,6 +67,7 @@ message_dir = None          # Message
 dht_subdir = None           # Final name of the DHT11 sensor subdirectory (default value or value entered by the user)
 hcsr_subdir = None          # Final name of the HC-SR04 sensor subdirectory (default value or value entered by the user)
 
+
 ########################################
 #               FUNCTIONS              #
 ########################################
@@ -75,7 +76,8 @@ def connect():
 
     global dbx
 
-    print("      - Generating the client of the Dropbox service")
+    print("\n        ------------------------------------------------------\n")
+    print("      " + Style.BRIGHT + Fore.BLACK + "- Generating the client of the Dropbox service" + Style.RESET_ALL)
 
     # Asks the user for Dropbox token
     token = raw_input(Fore.BLUE + "        Enter the Dropbox token or empty to use the default value: "
