@@ -310,6 +310,7 @@ def main():
         print(Style.BRIGHT + Fore.BLACK + "\n-- Ending HYOT..." + Style.RESET_ALL)
         try:
             print("\r")
+            system.remove_localdir()                    # Removes the temporary local directory
             print("        Closing and cleaning LCD of the DHT11 sensor")
             DHT_LCD.close(clear=True)                   # Closes and calls the clear function
             DHT_LCD.backlight_enabled = False           # Disables the backlight
