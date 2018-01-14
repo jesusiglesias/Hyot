@@ -139,3 +139,31 @@ def check_file(localfile):
     if not os.path.exists(localfile):
         print(Fore.RED + localfile + " file not found in the local system. Alert is not stored" + Fore.RESET)
         sys.exit(1)
+
+
+def remove_file(localfile):
+    """Removes in the local system the temporary image taken by the Picamera TODO
+    :param localfile: Local path and name of the file to remove
+    """
+
+    print("Removing the temporary local file: " + localfile)
+
+    # Checks if the file exists
+    if os.path.exists(localfile):
+
+        try:
+            # Deletes the file
+            os.remove(localfile)
+
+            # After deletion, checks again if it was removed
+            if not os.path.exists(localfile):                  # File was removed
+                print(Fore.GREEN + "File removed successfully" + Fore.RESET)
+
+            else:                                              # File was not removed
+                print(Fore.RED + "Error to remove the file" + Fore.RESET)
+
+        except OSError:
+            print(Fore.RED + "Error to remove. No such file: " + localfile + Fore.RESET)
+
+    else:
+            print(Fore.CYAN + "File does not exist. Not deleted" + Fore.RESET)
