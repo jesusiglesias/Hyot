@@ -269,12 +269,12 @@ def upload_file(localfile, sensor):
     elif sensor == SENSORS[1]:                                      # Upload path of the HC-SR04 sensor
         upload_path = "/" + HYOT_DIR + "/" + hcsr_subdir + "/" + "test.jpg"     # TODO
 
-    # Reads the file and uploads it
-    with open(localfile, 'rb') as f:  # TODO
+    try:
 
         print("Uploading " + localfile + " to Dropbox as " + upload_path)
 
-        try:
+        # Reads the file and uploads it
+        with open("/home/pi/Desktop/test.jpg", 'rb') as f:  # TODO
 
             # Uploads the file. An error is thrown if this one already exists,
             # if there is not enough available space and so on
@@ -285,17 +285,23 @@ def upload_file(localfile, sensor):
             # Returns the shared link of the uploaded file to Dropbox
             return get_shared_link(upload_path)
 
-        except dropbox.exceptions.ApiError as uploadError:
+    except IOError:                                                        # Error to open the file
 
-            if uploadError.error.get_path().reason.is_conflict():              # Conflict with another different file TODO - Images?
-                print(Fore.RED + "Existing conflict with another file with the same name and different content."
-                                 " Please, check the way in which the names of the images are generated" + Fore.RESET)
-                sys.exit(1)
-            elif uploadError.error.get_path().reason.is_insufficient_space():  # Insufficient space
-                print(Fore.RED + "File not uploaded. The user does not have enough available space" + Fore.RESET)
-                pass    # TODO
-            else:                                                      # Another error. For example: no write permission
-                raise
+        print(Fore.RED + "Could not open the file: /home/pi/Desktop/test.jpg. No such file in the local system or "
+                         "corrupt file" + Fore.RESET)  # TODO
+        sys.exit(1)     # TODO
+
+    except dropbox.exceptions.ApiError as uploadError:
+
+        if uploadError.error.get_path().reason.is_conflict():              # Conflict with another different file TODO - Images?
+            print(Fore.RED + "Existing conflict with another file with the same name and different content."
+                             " Please, check the way in which the names of the images are generated" + Fore.RESET)
+            sys.exit(1)
+        elif uploadError.error.get_path().reason.is_insufficient_space():  # Insufficient space
+            print(Fore.RED + "File not uploaded. The user does not have enough available space" + Fore.RESET)
+            pass    # TODO
+        else:                                                      # Another error. For example: no write permission
+            raise
 
 
 def disconnect():

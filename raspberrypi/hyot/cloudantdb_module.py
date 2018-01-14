@@ -117,11 +117,11 @@ def init(timestamp):
 
     # Asks the user for the name of the DHT11 sensor database
     dht_database = raw_input(Fore.BLUE + "        Enter the name for the DHT11 sensor database. Empty to use the "
-                                         "default value (" + DHT11_DB + "_(timestamp)): " + Fore.RESET) or DHT11_DB
+                                         "default value (" + DHT11_DB + "(_timestamp)): " + Fore.RESET) or DHT11_DB
 
     # Asks the user for the name of the HC-SR04 sensor database
     hcsr_database = raw_input(Fore.BLUE + "        Enter the name for the HC-SR04 sensor database. Empty to use the "
-                                          "default value (" + HCSR04_DB + "_(timestamp)): " + Fore.RESET) or HCSR04_DB
+                                          "default value (" + HCSR04_DB + "(_timestamp)): " + Fore.RESET) or HCSR04_DB
 
     # Checks if some name is empty
     if dht_database.isspace() or hcsr_database.isspace():
