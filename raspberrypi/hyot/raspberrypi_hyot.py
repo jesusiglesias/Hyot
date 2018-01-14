@@ -67,7 +67,7 @@ def constants(user_args):
     :param user_args: Values of the options entered by the user
     """
 
-    global FIGLET, CAMERA, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT_LCD, HCSR_LCD
+    global FIGLET, CAMERA, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT_LCD, HCSR_LCD, TEMP_THRESHOLD, HUM_THRESHOLD
 
     try:
 
@@ -84,6 +84,8 @@ def constants(user_args):
                            address=int(user_args.HCSR_I2CADDRESS, base=16),
                            charmap='A00',
                            backlight_enabled=False)
+        TEMP_THRESHOLD = user_args.TEMPERATURE_THRESHOLD             # Temperature alarm threshold in the DHT11 sensor
+        HUM_THRESHOLD = user_args.HUMIDITY_THRESHOLD                 # Humidity alarm threshold in the DHT11 sensor
 
     except IOError as ioError:                      # Related to LCD 16x2
         print(Fore.RED + "IOError in constants() function: " + str(ioError) + ". Main errno:" + "\r")
@@ -236,7 +238,7 @@ def main():
                 cloudantdb.add_document(dht11_data, cloudantdb.SENSORS[0])
 
                 # Alert triggered TODO
-                if temperature > 23:
+                if temperature > TEMP_THRESHOLD:
                     time.sleep(1)
                     DHT_LCD.clear()
                     print("Alert! Taking image")

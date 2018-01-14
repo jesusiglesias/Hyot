@@ -159,7 +159,9 @@ def menu():
         general_group = parser.add_argument_group('General options')
         pin_group = parser.add_argument_group('Sensor and device pin')
         i2c_group = parser.add_argument_group('LCD device - I2C')
+        threshold_group = parser.add_argument_group('Alarm threshold')
 
+        # ### General group ###
         # Help option
         general_group.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
                                    help='Shows the help.')
@@ -169,12 +171,14 @@ def menu():
                                    type=int, default=3, required=False, action="store", dest="WAITTIME_MEASUREMENTS",
                                    help="Wait time between measurements in the sensors (e.g. 3 seconds). Default: 3.")
 
+        # ### Pin group ###
         # DHT11 sensor - Data pin
         pin_group.add_argument("-dd", "--dht11data",
                                type=int, default=21, required=False, action="store", dest="DHT_DATAPIN",
                                help="Data pin for DHT11 sensor in Broadcom GPIO pin number (e.g. 21 for Raspberry Pi "
                                     "GPIO21). Default: 21.")
 
+        # ### I2C group ###
         # LCD 16x2 - DHT11 I2C Expander
         i2c_group.add_argument("-die", "--dhti2cexpander",
                                default="PCF8574", required=False, action="store", dest="DHT_I2CEXPANDER",
@@ -199,6 +203,17 @@ def menu():
                                help="I2C address for LCD 16x2 of the HC-SR04 sensor. Type the 'i2cdetect -y 1' (RPi v.3)"
                                     " command to obtain it. Default: 0x38.")
 
+        # ### Threshold group ###
+        # DHT11 sensor - Temperature threshold TODO
+        threshold_group.add_argument("-tt", "--tempthreshold",
+                                     type=int, default=30, required=False, action="store", dest="TEMPERATURE_THRESHOLD",
+                                     help="Temperature alarm threshold in the DHT11 sensor (e.g. 30 °C). Default: 30.")
+
+        # DHT11 sensor - Humidity threshold TODO
+        threshold_group.add_argument("-ht", "--humthreshold",
+                                     type=int, default=80, required=False, action="store", dest="HUMIDITY_THRESHOLD",
+                                     help="Humidity alarm threshold in the DHT11 sensor (e.g. 80 %). Default: 80.")
+
         # Parses the arguments returning the data from the options specified
         args = parser.parse_args()
 
@@ -219,14 +234,26 @@ def menu():
         if args.DHT_I2CEXPANDER not in ['PCF8574', 'MCP23008', 'MCP23017']:
             print(Fore.RED + "I2C expander type for LCD of the DHT11 sensor invalid. Please, type the '-h/--help' "
                              "option to show the help or specify one of 'PCF8574', 'MCP23008', 'MCP23017'. "
-                             "Default value: PCF8574.")
+                             "Default value: PCF8574." + Fore.RESET)
             sys.exit(1)
 
         # Checks the '--hcsri2cexpander' argument
         if args.HCSR_I2CEXPANDER not in ['PCF8574', 'MCP23008', 'MCP23017']:
             print(Fore.RED + "I2C expander type invalid for LCD of the HC-SR04 sensor invalid. Please, type the "
                              "'-h/--help' option to show the help or specify one of 'PCF8574', 'MCP23008', 'MCP23017'."
-                             " Default value: PCF8574.")
+                             " Default value: PCF8574." + Fore.RESET)
+            sys.exit(1)
+
+        # Checks the '--tempthreshold' argument
+        if args.TEMPERATURE_THRESHOLD < 0:
+            print(Fore.RED + "Temperature alarm threshold invalid. Please, type the '-h/--help' option to show the help"
+                             " or the value must be upper than 0. Default value: 30." + Fore.RESET)
+            sys.exit(1)
+
+        # Checks the '--humthreshold' argument
+        if args.HUMIDITY_THRESHOLD < 0 or args.HUMIDITY_THRESHOLD > 100:
+            print(Fore.RED + "Humidity alarm threshold invalid. Please, type the '-h/--help' option to show the help"
+                             " or the value must be the 0-100 range. Default value: 80." + Fore.RESET)
             sys.exit(1)
 
         return args
