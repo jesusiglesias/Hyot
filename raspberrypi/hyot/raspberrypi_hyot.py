@@ -321,6 +321,7 @@ def main():
         try:
             print("\r")
             system.remove_localdir()                    # Removes the temporary local directory
+            email.disconnect()                          # Disconnects the mail session
             print("        Closing and cleaning LCD of the DHT11 sensor")
             DHT_LCD.close(clear=True)                   # Closes and calls the clear function
             DHT_LCD.backlight_enabled = False           # Disables the backlight
