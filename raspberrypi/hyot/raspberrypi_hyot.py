@@ -69,13 +69,14 @@ def constants(user_args):
     :param user_args: Values of the options entered by the user
     """
 
-    global FIGLET, CAMERA, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT_LCD, HCSR_LCD, TEMP_THRESHOLD,\
-        HUM_THRESHOLD
+    global FIGLET, SENSORS, CAMERA, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT_LCD, HCSR_LCD, \
+        TEMP_THRESHOLD, HUM_THRESHOLD
 
     try:
 
         CAMERA = picamera.PiCamera()                                 # Camera
         FIGLET = Figlet(font='future_8', justify='center')          # Figlet
+        SENSORS = ["DHT11", "HC-SR04"]                              # Name of the sensors
         MAILTO = user_args.EMAIL                                    # Recipient's email address
         TIME_MEASUREMENTS = user_args.WAITTIME_MEASUREMENTS         # Wait time between each measurement. Default 3 seconds
         DHT_SENSOR = Adafruit_DHT.DHT11                             # DHT11 sensor
@@ -88,8 +89,8 @@ def constants(user_args):
                            address=int(user_args.HCSR_I2CADDRESS, base=16),
                            charmap='A00',
                            backlight_enabled=False)
-        TEMP_THRESHOLD = user_args.TEMPERATURE_THRESHOLD             # Temperature alarm threshold in the DHT11 sensor
-        HUM_THRESHOLD = user_args.HUMIDITY_THRESHOLD                 # Humidity alarm threshold in the DHT11 sensor
+        TEMP_THRESHOLD = user_args.TEMPERATURE_THRESHOLD             # Temperature alert threshold in the DHT11 sensor
+        HUM_THRESHOLD = user_args.HUMIDITY_THRESHOLD                 # Humidity alert threshold in the DHT11 sensor
 
     except IOError as ioError:                      # Related to LCD 16x2
         print(Fore.RED + "IOError in constants() function: " + str(ioError) + ". Main errno:" + "\r")
@@ -156,6 +157,7 @@ def main():
 
         # ############### Initializing local directory ###############
         system.create_localdir()                    # Creates a local directory to store the files taken by the Picamera
+
         # ############### Initializing the mail session ###############
         if not (MAILTO is None):
             email.init()                                # Initializes the mail session
@@ -163,6 +165,7 @@ def main():
         # ############### Initializing databases ###############
         cloudantdb.connect()                        # Creates a Cloudant DB client and establishes a connection
         cloudantdb.init(timestamp())                # Initializes the databases
+
         # ############### Initializing Dropbox ###############
         dropbox.connect()                           # Creates a Dropbox client and establishes a connection
         dropbox.init()                              # Initializes the main directory and the subdirectories
@@ -227,10 +230,10 @@ def main():
                 HCSR_LCD.write_string("Humidity: %.1f %%" % humidity)
 
                 # Checks if the file exists in the local system TODO
-                system.check_file('/home/pi/Desktop/test.jpg')
+                system.check_file("/home/pi/Desktop/test.jpg")
 
                 # Uploads the file to Dropbox TODO
-                link_dropbox = dropbox.upload_file('/home/pi/Desktop/test.jpg', dropbox.SENSORS[0])
+                link_dropbox = dropbox.upload_file('/home/pi/Desktop/test.jpg', SENSORS[0])
 
                 # Removes the temporary file after uploading to Dropbox
                 system.remove_file('/home/pi/Desktop/test.jpg')  # TODO
@@ -245,14 +248,14 @@ def main():
                 }
 
                 # Adds the document to the database of the Cloudant NoSQL service
-                cloudantdb.add_document(dht11_data, cloudantdb.SENSORS[0])
+                cloudantdb.add_document(dht11_data, SENSORS[0])
 
                 # Alert triggered TODO
                 if temperature > TEMP_THRESHOLD:
                     time.sleep(1)
                     DHT_LCD.clear()
                     print("Alert! Taking image")
-                    DHT_LCD.write_string("Alarm is triggered")
+                    DHT_LCD.write_string("Alert is triggered")
                     DHT_LCD.crlf()
                     DHT_LCD.write_string("Taking image...")
                     CAMERA.capture('dht11_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) + '.jpg')
