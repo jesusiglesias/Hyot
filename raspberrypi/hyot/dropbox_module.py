@@ -115,7 +115,7 @@ def connect():
             raise
 
 
-def create_dir(dir_name):
+def __create_dir(dir_name):
     """Creates a new directory named Hyot in the root path or a new subdirectory within the Hyot directory
     :param dir_name: Name of the directory or subdirectory
     """
@@ -157,7 +157,7 @@ def create_dir(dir_name):
             raise
 
 
-def check_space():
+def __check_space():
     """Checks the amount of available space in the user account"""
 
     # Checks if there is a considerable amount of available space in the user account (at least 500MB) TODO
@@ -182,7 +182,7 @@ def init():
     sensor_subdirs = []                        # Defines a list with the name of the subdirectories of each sensor
 
     # Checks the amount of available space in the user account
-    check_space()
+    __check_space()
 
     # Asks the user for the subdirectory where the images of an alarm triggered by the DHT11 sensor will be stored TODO - Images?
     dht_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the images of an alarm "
@@ -215,19 +215,19 @@ def init():
 
     # Creates the main directory
     print("        Checking if the main directory named Hyot exists in the root path of Dropbox")
-    create_dir(HYOT_DIR)
+    __create_dir(HYOT_DIR)
 
     # Checks if each subdirectory already exists or not
     for index, sensor_subdir in enumerate(sensor_subdirs):
         print("        Checking if the subdirectory of the " + SENSORS[index] + " sensor exists within the Hyot "
               "directory in Dropbox")
 
-        create_dir(sensor_subdir)
+        __create_dir(sensor_subdir)
 
         time.sleep(1)
 
 
-def get_shared_link(upload_path):
+def __get_shared_link(upload_path):
     """Creates a shared shortened link of the file. If a shared link already exists for the given path, that link is
     returned.
     :param upload_path: Upload path of the current file
@@ -283,7 +283,7 @@ def upload_file(localfile, sensor):
             print(Fore.GREEN + "File uploaded correctly" + Fore.RESET)
 
             # Returns the shared link of the uploaded file to Dropbox
-            return get_shared_link(upload_path)
+            return __get_shared_link(upload_path)
 
     except IOError:                                                        # Error to open the file
 
