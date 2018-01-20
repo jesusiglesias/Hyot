@@ -38,6 +38,7 @@ try:
     import time                                         # Time access and conversions
     import smtplib                                      # SMTP protocol client
     from colorama import Fore, Style                    # Cross-platform colored terminal text
+    from string import Template                         # Common string operations
     from email.MIMEBase import MIMEBase                 # Email and MIME handling package
     from email.MIMEMultipart import MIMEMultipart       # Create MIME messages that are multipart
     from email.MIMEText import MIMEText                 # Create MIME objects of major type text
@@ -58,6 +59,35 @@ FROM = "hyot.project@gmail.com"                                             # Se
 PASSWORD = "hyot2018"                                                       # Sender's password
 SERVERIP = "smtp.gmail.com"                                                 # Host/IP of the mail server
 SERVERPORT = 587                                                            # Port of the mail server
+# Message template for the email TODO - Event that triggers the alert, meters
+TEMPLATE = Template("""\
+    <html>
+        <head></head>
+        <body>
+            <h3 style="text-align:center">HYOT - ALERT NOTIFICATION</h3>
+            <br>
+            <p>An alert has been triggered by ${SENSOR} sensor at ${DATETIME} with ID: ${ID}. Below is the full 
+            information of the measurement: </p>
+        
+            <ul>
+                <li><b>DHT11 sensor: </b>
+                    <ul>
+                        <li>Temperature: ${TEMPERATURE} &deg;C</li>
+                        <li>Humidity: ${HUMIDITY} &#37;</li>
+                    </ul>
+                </li>
+                <br>
+                <li><b>HC-SR04 sensor: </b>
+                    <ul>
+                        <li>Distance: ${DISTANCE} meters</li>
+                    </ul>
+                </li>
+            </ul>
+        
+            <p>File uploaded to Dropbox: <a href="${LINK}">link</a>.</p>
+        </body>
+    </html>
+  """)
 
 
 ########################################
@@ -96,19 +126,27 @@ def init():
     print("\n        ------------------------------------------------------")
 
 
-def send_email(mailto, filepath, filename):
+def send_email(mailto, filepath, filename, sensor, timestamp, id, temperature, humidity, distance, link_dropbox):
     """Sends an email to the recipient to notify a triggered alert
     :param mailto: Recipient's email address
     :param filepath: Path of the file to attach
     :param filename: Name of the file to attach
+    :param sensor: Sensor that triggers the alert
+    :param timestamp: Datetime of the alert
+    :param id: Value of this parameter in the measurement
+    :param temperature: Value of this parameter in the measurement
+    :param humidity: Value of this parameter in the measurement
+    :param distance: Value of this parameter in the measurement
+    :param link_dropbox: Link to Dropbox where the file is uploaded
     :return: True/False depending on whether the notification was sent
     """
 
     global session
 
     # Variables
-    subject = "Subject"                                         # Subject of the email
-    body = "TEXT YOU WANT TO SEND"                              # Message of the email
+    subject = "HYOT - Alert notification: {0:s} sensor | {1:s}".format(sensor, timestamp)    # Subject of the email
+    # Message of the email in HTML format
+    message = TEMPLATE.substitute(SENSOR=sensor, DATETIME=timestamp, ID=id, TEMPERATURE=temperature, HUMIDITY=humidity, DISTANCE=distance, LINK=link_dropbox)
 
     print("Sending alert notification to the following email address: " + mailto)
 
@@ -120,8 +158,8 @@ def send_email(mailto, filepath, filename):
     email_instance["To"] = mailto                               # Recipient's email address
     email_instance["Subject"] = subject
 
-    # Creates and attaches the message in plain text
-    email_instance.attach(MIMEText(body, 'plain'))
+    # Creates and attaches the message in HTML text
+    email_instance.attach(MIMEText(message, 'html'))
 
     try:
         # Opens the file to attach
