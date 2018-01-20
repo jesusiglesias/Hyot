@@ -92,3 +92,18 @@ def init():
     time.sleep(1)
     print("\n        ------------------------------------------------------")
 
+
+def disconnect():
+    """Disconnects the mail session"""
+
+    global session
+
+    if not (session is None):
+        print("        Disconnecting the mail session")
+
+        # Ends the mail session
+        session.quit()
+
+        print(Fore.GREEN + "        Mail session ends successfully" + Fore.RESET)
+
+
