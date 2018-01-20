@@ -44,6 +44,7 @@ try:
     import datetime                                 # Basic date and time types
     import checks_module as checks                  # Module to execute initial checks and to parse the menu
     import system_module as system                  # Module that performs functions in the local operating system
+    import email_module as email                    # Module to send emails when an alarm is triggered
     import cloudantdb_module as cloudantdb          # Module that contains the logic of the Cloudant NoSQL DB service
     import dropbox_module as dropbox                # Module that contains the logic of the Dropbox service
     from pyfiglet import Figlet                     # Text banners in a variety of typefaces
@@ -68,16 +69,18 @@ def constants(user_args):
     :param user_args: Values of the options entered by the user
     """
 
-    global FIGLET, CAMERA, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT_LCD, HCSR_LCD, TEMP_THRESHOLD, HUM_THRESHOLD
+    global FIGLET, CAMERA, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT_LCD, HCSR_LCD, TEMP_THRESHOLD,\
+        HUM_THRESHOLD
 
     try:
 
-        FIGLET = Figlet(font='future_8', justify='center')           # Figlet
         CAMERA = picamera.PiCamera()                                 # Camera
-        TIME_MEASUREMENTS = user_args.WAITTIME_MEASUREMENTS          # Wait time between each measurement. Default 3 seconds
-        DHT_SENSOR = Adafruit_DHT.DHT11                              # DHT11 sensor
-        DHT_PINDATA = user_args.DHT_DATAPIN                          # DHT11 - Data pin. Default 21 (GPIO21)
-        DHT_LCD = CharLCD(i2c_expander=user_args.DHT_I2CEXPANDER,    # LCD for DHT11 sensor. Default 'PCF8574' and 0x3f
+        FIGLET = Figlet(font='future_8', justify='center')          # Figlet
+        MAILTO = user_args.EMAIL                                    # Recipient's email address
+        TIME_MEASUREMENTS = user_args.WAITTIME_MEASUREMENTS         # Wait time between each measurement. Default 3 seconds
+        DHT_SENSOR = Adafruit_DHT.DHT11                             # DHT11 sensor
+        DHT_PINDATA = user_args.DHT_DATAPIN                         # DHT11 - Data pin. Default 21 (GPIO21)
+        DHT_LCD = CharLCD(i2c_expander=user_args.DHT_I2CEXPANDER,   # LCD for DHT11 sensor. Default 'PCF8574' and 0x3f
                           address=int(user_args.DHT_I2CADDRESS, base=16),
                           charmap='A00',
                           backlight_enabled=False)
@@ -153,6 +156,9 @@ def main():
 
         # ############### Initializing local directory ###############
         system.create_localdir()                    # Creates a local directory to store the files taken by the Picamera
+        # ############### Initializing the mail session ###############
+        if not (MAILTO is None):
+            email.init()                                # Initializes the mail session
 
         # ############### Initializing databases ###############
         cloudantdb.connect()                        # Creates a Cloudant DB client and establishes a connection
