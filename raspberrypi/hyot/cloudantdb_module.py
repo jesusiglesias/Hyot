@@ -18,7 +18,7 @@
 #    DESCRIPTION:     This module contains the logic of the Cloudant NoSQL database (IBM Cloud service)                #
 #                                                                                                                      #
 #        OPTIONS:     ---                                                                                              #
-#   REQUIREMENTS:     ---                                                                                              #
+#   REQUIREMENTS:     Account in the Cloudant NoSQL database service                                                   #
 #          NOTES:     It must be loaded by the main script: raspberrypi_hyot.py                                        #
 #         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                         #
 #   ORGANIZATION:     ---                                                                                              #
