@@ -194,14 +194,14 @@ def menu():
         # LCD 16x2 - HC-SR04 I2C Expander
         i2c_group.add_argument("-hie", "--hcsri2cexpander",
                                default="PCF8574", required=False, action="store", dest="HCSR_I2CEXPANDER",
-                               help="I2C expander type for LCD 16x2 of the HC-SR04 sensor. One of 'PCF8574', 'MCP23008',"
-                                    " 'MCP23017'. Default: PCF8574.")
+                               help="I2C expander type for LCD 16x2 of the HC-SR04 sensor. One of 'PCF8574', "
+                                    "'MCP23008', 'MCP23017'. Default: PCF8574.")
 
         # LCD 16x2 - HC-SR04 I2C address
         i2c_group.add_argument("-hia", "--hcsri2caddress",
                                default="0x38", required=False, action="store", dest="HCSR_I2CADDRESS",
-                               help="I2C address for LCD 16x2 of the HC-SR04 sensor. Type the 'i2cdetect -y 1' (RPi v.3)"
-                                    " command to obtain it. Default: 0x38.")
+                               help="I2C address for LCD 16x2 of the HC-SR04 sensor. Type the 'i2cdetect -y 1' "
+                                    "(RPi v.3) command to obtain it. Default: 0x38.")
 
         # ### Threshold group ###
         # DHT11 sensor - Temperature threshold TODO
@@ -212,7 +212,7 @@ def menu():
         # DHT11 sensor - Humidity threshold TODO
         threshold_group.add_argument("-ht", "--humthreshold",
                                      type=int, default=80, required=False, action="store", dest="HUMIDITY_THRESHOLD",
-                                     help="Humidity alarm threshold in the DHT11 sensor (e.g. 80 %). Default: 80.")
+                                     help="Humidity alarm threshold in the DHT11 sensor (e.g. 80 %%). Default: 80.")
 
         # Parses the arguments returning the data from the options specified
         args = parser.parse_args()
