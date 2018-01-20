@@ -52,10 +52,43 @@ except KeyboardInterrupt:
 #              CONSTANTS               #
 ########################################
 FROM = "hyot.project@gmail.com"                                             # Sender's email address
+PASSWORD = "hyot2018"                                                       # Sender's password
+SERVERIP = "smtp.gmail.com"                                                 # Host/IP of the mail server
+SERVERPORT = 587                                                            # Port of the mail server
 
 
 ########################################
 #           GLOBAL VARIABLES           #
 ########################################
-to = None                                                                   # Recipient's email address
-subject = None                                                              # Subject of the email
+session = None                                                              # Mail session
+
+
+########################################
+#               FUNCTIONS              #
+########################################
+def init():
+    """Initializes the mail session"""
+
+    global session
+
+    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing the mail session with the email address: "
+          + Style.RESET_ALL + FROM)
+
+    try:
+
+        session = smtplib.SMTP(SERVERIP, SERVERPORT)          # Creates a new session of the mail server
+        session.ehlo()                                        # Identifies yourself to an ESMTP server
+        session.starttls()                                    # Security function, needed to connect to the Gmail server
+        session.ehlo()
+        session.login(FROM, PASSWORD)                         # Login
+
+        print(Fore.GREEN + "        Mail session initialized correctly" + Fore.RESET)
+
+    except Exception as mailError:
+        print(Fore.RED + "        Error to initialize the mail session. Check the mail address, the server connection"
+                         " or the network connection. Exception: " + Fore.RESET + str(mailError))
+        sys.exit(1)
+
+    time.sleep(1)
+    print("\n        ------------------------------------------------------")
+
