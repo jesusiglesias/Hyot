@@ -139,6 +139,18 @@ def check_concurrency():
                 count += 1
 
 
+def __is_valid_email(email):
+    """Checks if the email is valid
+    :param email: Email entered
+    :return: True/False based on the validity of the email
+    """
+
+    if re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', str(email)) is not None:
+        return True
+    else:
+        return False
+
+
 def menu():
     """Checks the options entered by the user when running the script
     :return: args Values of the arguments entered by the user in the console
@@ -165,6 +177,11 @@ def menu():
         # Help option
         general_group.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
                                    help='Shows the help.')
+
+        # Email address where to send an alarm notification
+        general_group.add_argument("-e", "--email",
+                                   default=None, required=False, action="store", dest="EMAIL",
+                                   help="Email address where to send an alarm notification. Default: disabled option.")
 
         # Wait time between measurements TODO - Group
         general_group.add_argument("-wt", "--waittime",
@@ -216,6 +233,13 @@ def menu():
 
         # Parses the arguments returning the data from the options specified
         args = parser.parse_args()
+
+        # Checks the '--email' argument
+        if args.EMAIL:
+            if not __is_valid_email(args.EMAIL):
+                print(Fore.RED + "Email address entered is not a valid email. Please, type the '-h/--help' option to "
+                                 "show the help." + Fore.RESET)
+                sys.exit(1)
 
         # Checks the '--waittime' argument
         if args.WAITTIME_MEASUREMENTS < 2:
