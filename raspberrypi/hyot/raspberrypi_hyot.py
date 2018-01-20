@@ -44,7 +44,7 @@ try:
     import datetime                                 # Basic date and time types
     import checks_module as checks                  # Module to execute initial checks and to parse the menu
     import system_module as system                  # Module that performs functions in the local operating system
-    import email_module as email                    # Module to send emails when an alarm is triggered
+    import email_module as email                    # Module to send emails when an alert is triggered
     import cloudantdb_module as cloudantdb          # Module that contains the logic of the Cloudant NoSQL DB service
     import dropbox_module as dropbox                # Module that contains the logic of the Dropbox service
     from pyfiglet import Figlet                     # Text banners in a variety of typefaces
@@ -135,7 +135,7 @@ def main():
     try:
 
         # Variables
-        global uuid_measurement, link_dropbox       # TODO - Necessary global?
+        global uuid_measurement, link_dropbox, sent       # TODO - Necessary global?
         count = 0                                   # Measurement counter
         uuid_measurement = None                     # UUID of each measurement for both sensors
         link_dropbox = None                         # Shared link of the uploaded file to Dropbox
@@ -235,6 +235,12 @@ def main():
                 # Uploads the file to Dropbox TODO
                 link_dropbox = dropbox.upload_file('/home/pi/Desktop/test.jpg', SENSORS[0])
 
+                # Sends an email when an alert is triggered TODO
+                if not (MAILTO is None):
+                    sent = email.send_email(MAILTO, "/home/pi/Desktop/test.jpg", "test.jpg", SENSORS[0],  # TODO - Distance
+                                            str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
+                                            str(uuid_measurement), temperature, humidity, "1", link_dropbox)
+
                 # Removes the temporary file after uploading to Dropbox
                 system.remove_file('/home/pi/Desktop/test.jpg')  # TODO
 
@@ -244,7 +250,10 @@ def main():
                     "datetime_field": str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
                     "temperature_field": temperature,
                     "humidity_field": humidity,
-                    "shared_link_Dropbox": str(link_dropbox)
+                    "alert_triggered": True,  # TODO
+                    "shared_link_Dropbox": str(link_dropbox),
+                    "notification_sent": sent,
+                    "mailto": MAILTO
                 }
 
                 # Adds the document to the database of the Cloudant NoSQL service
