@@ -15,7 +15,7 @@
 #                                                                                                                      #
 #          USAGE:     ---                                                                                              #
 #                                                                                                                      #
-#    DESCRIPTION:     This module contains the logic to send an email like an alarm notification                       #
+#    DESCRIPTION:     This module contains the logic to send an email like an alert notification                       #
 #                                                                                                                      #
 #        OPTIONS:     ---                                                                                              #
 #   REQUIREMENTS:     Network connection                                                                               #
@@ -27,7 +27,7 @@
 #       REVISION:     ---                                                                                              #
 # =====================================================================================================================#
 
-"""This module contains the logic to send an email like an alarm notification"""
+"""This module contains the logic to send an email like an alert notification"""
 
 ########################################
 #               IMPORTS                #
@@ -38,7 +38,10 @@ try:
     import time                                         # Time access and conversions
     import smtplib                                      # SMTP protocol client
     from colorama import Fore, Style                    # Cross-platform colored terminal text
-    from email.mime.text import MIMEText                # Creating email and MIME objects from scratch
+    from email.MIMEBase import MIMEBase                 # Email and MIME handling package
+    from email.MIMEMultipart import MIMEMultipart       # Create MIME messages that are multipart
+    from email.MIMEText import MIMEText                 # Create MIME objects of major type text
+    from email import encoders                          # Encoders
 
 except ImportError as importError:
     print("Error to import: " + importError.message.lower() + ".")
@@ -93,6 +96,65 @@ def init():
     print("\n        ------------------------------------------------------")
 
 
+def send_email(mailto, filepath, filename):
+    """Sends an email to the recipient to notify a triggered alert
+    :param mailto: Recipient's email address
+    :param filepath: Path of the file to attach
+    :param filename: Name of the file to attach
+    :return: True/False depending on whether the notification was sent
+    """
+
+    global session
+
+    # Variables
+    subject = "Subject"                                         # Subject of the email
+    body = "TEXT YOU WANT TO SEND"                              # Message of the email
+
+    print("Sending alert notification to the following email address: " + mailto)
+
+    # Creates an instance of MIMEMultipart
+    email_instance = MIMEMultipart()
+
+    # Constructs the email
+    email_instance["From"] = FROM                               # Sender's email address
+    email_instance["To"] = mailto                               # Recipient's email address
+    email_instance["Subject"] = subject
+
+    # Creates and attaches the message in plain text
+    email_instance.attach(MIMEText(body, 'plain'))
+
+    try:
+        # Opens the file to attach
+        attachment = open(filepath, "rb")
+
+        # Creates an instance of MIMEBase
+        part = MIMEBase('application', 'octet-stream')
+
+        # Steps to convert the file into a Base64
+        part.set_payload(attachment.read())
+        encoders.encode_base64(part)
+        part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+
+        # Closes the open file
+        attachment.close()
+
+        # Attaches the file
+        email_instance.attach(part)
+
+    except IOError:                                              # Error to open the file
+        print(Fore.RED + "Could not open the file: /home/pi/Desktop/test.jpg. File is not attached to the email"
+              + Fore.RESET)
+
+    try:
+        # Send the message via a SMTP server
+        session.sendmail(FROM, mailto, email_instance.as_string())
+        return True
+
+    except Exception as error:
+        print(Fore.RED + "There was an error sending the email. Error:" + str(error) + Fore.RESET)
+        return False
+
+
 def disconnect():
     """Disconnects the mail session"""
 
@@ -103,7 +165,6 @@ def disconnect():
 
         # Ends the mail session
         session.quit()
+        session = None
 
         print(Fore.GREEN + "        Mail session ends successfully" + Fore.RESET)
-
-

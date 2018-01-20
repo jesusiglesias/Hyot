@@ -299,7 +299,7 @@ def upload_file(localfile, sensor):
             sys.exit(1)
         elif uploadError.error.get_path().reason.is_insufficient_space():  # Insufficient space
             print(Fore.RED + "File not uploaded. The user does not have enough available space" + Fore.RESET)
-            pass    # TODO
+            pass    # TODO Return None
         else:                                                      # Another error. For example: no write permission
             raise
 
