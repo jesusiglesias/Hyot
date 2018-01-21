@@ -50,7 +50,6 @@ except KeyboardInterrupt:
 ########################################
 #              CONSTANTS               #
 ########################################
-SENSORS = ["DHT11", "HC-SR04"]                                              # Name of the sensors
 HYOT_DIR = "Hyot"                                                           # Name of the main directory
 DHT11_DIR = "dht11_images"                                                  # Name of the DHT11 sensor subdirectory TODO - Images?
 HCSR04_DIR = "hcsr04_images"                                                # Name of the HC-SR04 sensor subdirectory TODO - Images?
@@ -66,6 +65,7 @@ path = None                 # Path where create folders or upload files
 message_dir = None          # Message
 dht_subdir = None           # Final name of the DHT11 sensor subdirectory (default value or value entered by the user)
 hcsr_subdir = None          # Final name of the HC-SR04 sensor subdirectory (default value or value entered by the user)
+sensors = []                                                                      # Stores the name of all sensors
 
 
 ########################################
@@ -173,13 +173,16 @@ def __check_space():
         time.sleep(2)
 
 
-def init():
-    """Initializes the main directory and the subdirectories by checking if these one exist or not"""
+def init(all_sensors):
+    """Initializes the main directory and the subdirectories by checking if these one exist or not
+    :param all_sensors: Name of the sensors
+    """
 
-    global dht_subdir, hcsr_subdir
+    global dht_subdir, hcsr_subdir, sensors
 
     # Variables
     sensor_subdirs = []                        # Defines a list with the name of the subdirectories of each sensor
+    sensors = all_sensors                      # Name of all sensors
 
     # Checks the amount of available space in the user account
     __check_space()
@@ -219,7 +222,7 @@ def init():
 
     # Checks if each subdirectory already exists or not
     for index, sensor_subdir in enumerate(sensor_subdirs):
-        print("        Checking if the subdirectory of the " + SENSORS[index] + " sensor exists within the Hyot "
+        print("        Checking if the subdirectory of the " + sensors[index] + " sensor exists within the Hyot "
               "directory in Dropbox")
 
         __create_dir(sensor_subdir)
@@ -263,10 +266,10 @@ def upload_file(localfile, sensor):
     # Variables
     upload_path = None                                              # Specify upload path
 
-    if sensor == SENSORS[0]:                                        # Upload path of the DHT11 sensor
+    if sensor == sensors[0]:                                        # Upload path of the DHT11 sensor
         upload_path = "/" + HYOT_DIR + "/" + dht_subdir + "/" + "test.jpg"     # TODO
 
-    elif sensor == SENSORS[1]:                                      # Upload path of the HC-SR04 sensor
+    elif sensor == sensors[1]:                                      # Upload path of the HC-SR04 sensor
         upload_path = "/" + HYOT_DIR + "/" + hcsr_subdir + "/" + "test.jpg"     # TODO
 
     try:

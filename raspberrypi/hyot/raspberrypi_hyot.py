@@ -165,7 +165,7 @@ def main():
 
         # ############### Initializing Dropbox ###############
         dropbox.connect()                           # Creates a Dropbox client and establishes a connection
-        dropbox.init()                              # Initializes the main directory and the subdirectories
+        dropbox.init(SENSORS)                       # Initializes the main directory and the subdirectories
 
         time.sleep(2)
         lcd.clear_lcds()                            # Clears both LCDs
@@ -312,9 +312,9 @@ def main():
         print(Style.BRIGHT + Fore.BLACK + "\n-- Ending HYOT..." + Style.RESET_ALL)
         try:
             print("\r")
+            lcd.disconnect_lcds()                       # Disconnects the LCDs
             system.remove_localdir()                    # Removes the temporary local directory
             email.disconnect()                          # Disconnects the mail session
-            lcd.disconnect_lcds()                       # Disconnects the LCDs
             cloudantdb.disconnect()                     # Disconnects the Cloudant client
             dropbox.disconnect()                        # Disables the access token used to authenticate the calls
             print("\r")

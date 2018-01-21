@@ -53,7 +53,7 @@ except KeyboardInterrupt:
 dht_lcd = None                                          # Instance of the LCD of the DHT11 sensor
 hcsr_lcd = None                                         # Instance of the LCD of the HC-SR04 sensor
 lcds = []                                               # Stores the instances of all sensors
-sensors = []                                            # Stores tne name of all sensors
+sensors = []                                            # Stores the name of all sensors
 
 
 ########################################
