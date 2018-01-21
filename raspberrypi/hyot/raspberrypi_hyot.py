@@ -263,9 +263,6 @@ def main():
                                             str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
                                             str(uuid_measurement), temperature, humidity, "1", link_dropbox)
 
-                # Removes the temporary file after uploading to Dropbox
-                system.remove_file('/home/pi/Desktop/test.jpg')  # TODO
-
                 # Creates a JSON document content data
                 dht11_data = {
                     '_id': str(uuid_measurement),
@@ -280,6 +277,9 @@ def main():
 
                 # Adds the document to the database of the Cloudant NoSQL service
                 cloudantdb.add_document(dht11_data, SENSORS[0])
+
+                # Removes the temporary file after uploading to Dropbox
+                system.remove_file('/home/pi/Desktop/test.jpg')  # TODO
 
                 # Alert triggered TODO
                 if temperature > TEMP_THRESHOLD:
