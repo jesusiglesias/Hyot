@@ -35,6 +35,7 @@
 
 try:
     import sys                                          # System-specific parameters and functions
+    import os                                           # Miscellaneous operating system interfaces
     import time                                         # Time access and conversions
     import smtplib                                      # SMTP protocol client
     from colorama import Fore, Style                    # Cross-platform colored terminal text
@@ -59,6 +60,7 @@ FROM = "hyot.project@gmail.com"                                             # Se
 PASSWORD = "hyot2018"                                                       # Sender's password
 SERVERIP = "smtp.gmail.com"                                                 # Host/IP of the mail server
 SERVERPORT = 587                                                            # Port of the mail server
+TEMPLATEPATH = "template/email_template.html"                               # Path of the template email
 # Message template for the email TODO - Event that triggers the alert, meters
 TEMPLATE = Template("""\
     <html>
@@ -126,14 +128,25 @@ def init():
     print("\n        ------------------------------------------------------")
 
 
-def send_email(mailto, filepath, filename, sensor, timestamp, id, temperature, humidity, distance, link_dropbox):
+def read_template(filename):
+    """Reads the email template and generates a Template instance
+    :param filename: File to read
+    :return: Template instance
+    """
+
+    with open(filename, 'r') as template_file:
+        template_file_content = template_file.read()
+    return Template(template_file_content)
+
+
+def send_email(mailto, filepath, filename, sensor, timestamp, alert_id, temperature, humidity, distance, link_dropbox):
     """Sends an email to the recipient to notify a triggered alert
     :param mailto: Recipient's email address
     :param filepath: Path of the file to attach
     :param filename: Name of the file to attach
     :param sensor: Sensor that triggers the alert
     :param timestamp: Datetime of the alert
-    :param id: Value of this parameter in the measurement
+    :param alert_id: Value of this parameter in the measurement
     :param temperature: Value of this parameter in the measurement
     :param humidity: Value of this parameter in the measurement
     :param distance: Value of this parameter in the measurement
@@ -145,11 +158,25 @@ def send_email(mailto, filepath, filename, sensor, timestamp, id, temperature, h
 
     # Variables
     subject = "HYOT - Alert notification: {0:s} sensor | {1:s}".format(sensor, timestamp)    # Subject of the email
-    # Message of the email in HTML format
-    message = TEMPLATE.substitute(SENSOR=sensor, DATETIME=timestamp, ID=id, TEMPERATURE=temperature, HUMIDITY=humidity, DISTANCE=distance, LINK=link_dropbox)
 
     print(Fore.LIGHTBLACK_EX + "  -- Sending alert notification to the following email address: " + mailto + Fore.RESET),
-    time.sleep(1)
+
+    # Message of the email in HTML format
+    try:
+        message = read_template(os.path.dirname(os.path.abspath(__file__)) + "/" + TEMPLATEPATH).substitute(
+            SENSOR=sensor,
+            DATETIME=timestamp,
+            ID=alert_id,
+            TEMPERATURE=temperature,
+            HUMIDITY=humidity,
+            DISTANCE=distance,
+            LINK=link_dropbox)
+
+    except Exception as templateError:
+        print(Fore.RED + " ✕ Error in the email template. Email not sent. " + str(templateError) + Fore.RESET)
+        return False
+
+    time.sleep(0.5)
 
     # Creates an instance of MIMEMultipart
     email_instance = MIMEMultipart()
