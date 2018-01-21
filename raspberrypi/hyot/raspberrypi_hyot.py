@@ -122,19 +122,80 @@ def header():
     time.sleep(1)                                   # Wait time - 1 second
 
 
+def full_print_lcds(first_row, second_row):
+    """Writes data in the LCDs using both rows
+    :param first_row: Text to write in the first row
+    :param second_row: Text to write in the second row
+    """
+
+    global lcds
+
+    lcds = [DHT_LCD, HCSR_LCD]                      # LCDs
+
+    for index, lcd in enumerate(lcds):
+        lcd.write_string(first_row)                 # Writes the specified unicode string to the LCD
+        lcd.crlf()                                  # Writes a line feed and a carriage return (\r\n) character
+        lcd.write_string(second_row)
+
+
+def print_lcds(dht_data, hcsr_data):
+    """Writes data in the LCDs using the first row
+    :param dht_data: Text to write in the LCD of the DHT11 sensor
+    :param hcsr_data: Text to write in the LCD of the HC-SR04 sensor
+    """
+
+    global lcds
+
+    data = [dht_data, hcsr_data]
+
+    for index, lcd in enumerate(lcds):
+        lcd.write_string(data[index])               # Writes the specified unicode string to the LCD
+
+
+def print_measure_dht(temperature, humidity, error_measure, clear_lcd):
+    """Writes in the LCD of the DHT11 sensor the values of each measure
+    :param temperature: Value of the temperature event
+    :param humidity: Value of the humidity event
+    :param error_measure: Indicates if the current measurement is valid
+    :param clear_lcd: Indicates if the LCD must be cleared
+    """
+
+    if clear_lcd:
+        DHT_LCD.clear()
+
+    DHT_LCD.cursor_pos = (0, 0)
+    if not error_measure:
+        DHT_LCD.write_string("Temp: %.1f °C" % temperature)
+    else:
+        DHT_LCD.write_string("Temp: ")
+    DHT_LCD.crlf()
+    if not error_measure:
+        DHT_LCD.write_string("Humidity: %.1f %%" % humidity)
+    else:
+        DHT_LCD.write_string("Humidity: ")
+
+
+def clear_lcds():
+    """Overwrites both LCDs with blank characters and resets the cursor position"""
+
+    global lcds
+
+    for index, lcd in enumerate(lcds):
+        lcd.clear()
+
+
 def timestamp():
     """Generates a timestamp string for each measurement and for each image/video taken"""  # TODO
 
     return datetime.datetime.now()
 
 
-def disconnect_displays():
+def disconnect_lcds():
     """Closes and cleans the LCDs"""
 
-    # Variables
-    displays = [DHT_LCD, HCSR_LCD]                  # Displays
+    global lcds
 
-    for index, lcd in enumerate(displays):
+    for index, lcd in enumerate(lcds):
 
         print("        Closing and cleaning LCD of the " + SENSORS[index] + " sensor"),
         time.sleep(0.25)
@@ -171,19 +232,14 @@ def main():
         HCSR_LCD.backlight_enabled = True           # Enables the backlight to the LCD of the HC-SR04 sensor
         time.sleep(1)                               # Wait time - 1 second
         print(Style.BRIGHT + Fore.BLACK + "-- Initializing HYOT..." + Style.RESET_ALL)
-        DHT_LCD.write_string("Initializing")        # Writes the specified unicode string to the display
-        DHT_LCD.crlf()                              # Writes a line feed and a carriage return (\r\n) character
-        DHT_LCD.write_string("HYOT...")
-        HCSR_LCD.write_string("Initializing")       # Writes the specified unicode string to the display
-        HCSR_LCD.crlf()                             # Writes a line feed and a carriage return (\r\n) character
-        HCSR_LCD.write_string("HYOT...")
+        full_print_lcds("Initializing", "HYOT...")  # Prints data in the LCDs using both rows
 
         # ############### Initializing local directory ###############
         system.create_localdir()                    # Creates a local directory to store the files taken by the Picamera
 
         # ############### Initializing the mail session ###############
         if not (MAILTO is None):
-            email.init()                                # Initializes the mail session
+            email.init()                            # Initializes the mail session
 
         # ############### Initializing databases ###############
         cloudantdb.connect()                        # Creates a Cloudant DB client and establishes a connection
@@ -194,30 +250,22 @@ def main():
         dropbox.init()                              # Initializes the main directory and the subdirectories
 
         time.sleep(2)
-        DHT_LCD.clear()                             # Overwrites display with blank characters and reset cursor position
-        HCSR_LCD.clear()
+        clear_lcds()                                # Clears both LCDs
         time.sleep(1)
 
         # ############### Reading values ###############
         print(Style.BRIGHT + Fore.BLACK + "\n-- Reading values each " + str(TIME_MEASUREMENTS) + " seconds from "
                                           "sensors\n" + Style.RESET_ALL)
-        DHT_LCD.write_string("Reading values")
-        DHT_LCD.crlf()
-        DHT_LCD.write_string("from sensors")
-        HCSR_LCD.write_string("Reading values")
-        HCSR_LCD.crlf()
-        HCSR_LCD.write_string("from sensors")
+
+        full_print_lcds("Reading values", "from sensors")       # Writes in both LCDS using both rows
         time.sleep(2)
-        DHT_LCD.clear()
-        HCSR_LCD.clear()
+        clear_lcds()
         time.sleep(1)
 
         # DHT11 and HC-SR04 sensor TODO
-        DHT_LCD.write_string("- DHT11 sensor -")
-        HCSR_LCD.write_string(" HC-SR04 sensor ")
+        print_lcds("- DHT11 sensor -", " HC-SR04 sensor ")
         time.sleep(2)
-        DHT_LCD.clear()
-        HCSR_LCD.clear()
+        clear_lcds()
 
         # Loop each n seconds, hence, this is the time between measurements
         while True:
@@ -243,11 +291,8 @@ def main():
                 print("Datetime: " + str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")))
                 print("Temperature: {0:0.1f} °C \nHumidity: {1:0.1f} %".format(temperature, humidity) + Fore.RESET)
 
-                # Outputs the data by display
-                DHT_LCD.cursor_pos = (0, 0)
-                DHT_LCD.write_string("Temp: %.1f °C" % temperature)
-                DHT_LCD.crlf()
-                DHT_LCD.write_string("Humidity: %.1f %%" % humidity)
+                # Outputs the data by LCD
+                print_measure_dht(temperature, humidity, False, False)
 
                 HCSR_LCD.cursor_pos = (0, 0)
                 HCSR_LCD.write_string("Temp: %.1f °C" % temperature)
@@ -300,11 +345,7 @@ def main():
                 print("Failed to get reading. Humidity is invalid or None")
 
                 # Shows the output like empty
-                DHT_LCD.clear()
-                DHT_LCD.cursor_pos = (0, 0)
-                DHT_LCD.write_string("Temp: ")
-                DHT_LCD.crlf()
-                DHT_LCD.write_string("Humidity: ")
+                print_measure_dht(None, None, True, True)
 
                 HCSR_LCD.clear()
                 HCSR_LCD.cursor_pos = (0, 0)
@@ -316,11 +357,7 @@ def main():
                 print("Failed to get reading. Temperature is invalid or None")
 
                 # Shows the output like empty
-                DHT_LCD.clear()
-                DHT_LCD.cursor_pos = (0, 0)
-                DHT_LCD.write_string("Temp: ")
-                DHT_LCD.crlf()
-                DHT_LCD.write_string("Humidity: ")
+                print_measure_dht(None, None, True, True)
 
                 HCSR_LCD.clear()
                 HCSR_LCD.cursor_pos = (0, 0)
@@ -359,7 +396,7 @@ def main():
             print("\r")
             system.remove_localdir()                    # Removes the temporary local directory
             email.disconnect()                          # Disconnects the mail session
-            disconnect_displays()                       # Disconnects the displays
+            disconnect_lcds()                           # Disconnects the LCDs
             cloudantdb.disconnect()                     # Disconnects the Cloudant client
             dropbox.disconnect()                        # Disables the access token used to authenticate the calls
             print("\r")
