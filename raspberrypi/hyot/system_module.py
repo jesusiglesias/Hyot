@@ -107,7 +107,9 @@ def remove_localdir():
 
     if not (tempfiles_path is None):
 
-        print("        Removing the temporary local directory: " + tempfiles_path)
+        print("        Removing the temporary local directory: " + tempfiles_path),
+
+        time.sleep(0.5)
 
         # Checks if the directory exists
         if os.path.exists(tempfiles_path):
@@ -118,17 +120,19 @@ def remove_localdir():
 
                 # After deletion, checks again if it was removed
                 if not os.path.exists(tempfiles_path):                  # Directory was removed
-                    print(Fore.GREEN + "        Directory removed successfully" + Fore.RESET)
+
+                    print(Fore.GREEN + " ✓" + Fore.RESET)
 
                 else:                                                   # Directory was not removed
-                    print(Fore.RED + "        Error to remove the directory" + Fore.RESET)
+                    print(Fore.RED + " ✕ Directory does not removed" + Fore.RESET)
 
             except OSError:
-                print(Fore.RED + "        Error to remove. No such directory: " + tempfiles_path
-                      + Fore.RESET)
+                print(Fore.RED + " ✕ No such directory" + Fore.RESET)
 
         else:
-            print(Fore.CYAN + "        Directory does not exist. Not deleted" + Fore.RESET)
+            print(Fore.CYAN + " ✓ Directory does not exist. Not deleted" + Fore.RESET)
+
+        time.sleep(0.5)
 
 
 def check_file(localfile):

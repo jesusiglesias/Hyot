@@ -310,9 +310,16 @@ def disconnect():
     global dbx
 
     if not (dbx is None):
-        print("        Disconnecting the Dropbox client")
+        print("        Disconnecting the Dropbox client session"),
 
-        # Ends the client session
-        dbx = None
+        time.sleep(0.5)
 
-        print(Fore.GREEN + "        Dropbox session ends successfully" + Fore.RESET)
+        try:
+            # Ends the client session
+            dbx = None
+            print(Fore.GREEN + " ✓" + Fore.RESET)
+        except Exception:
+            print(Fore.RED + " ✕" + Fore.RESET)
+            raise
+
+        time.sleep(0.5)

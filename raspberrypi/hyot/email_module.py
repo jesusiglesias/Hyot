@@ -199,10 +199,17 @@ def disconnect():
     global session
 
     if not (session is None):
-        print("        Disconnecting the mail session")
+        print("        Disconnecting the mail session"),
 
-        # Ends the mail session
-        session.quit()
-        session = None
+        time.sleep(0.5)
 
-        print(Fore.GREEN + "        Mail session ends successfully" + Fore.RESET)
+        try:
+            # Ends the mail session
+            session.quit()
+            session = None
+            print(Fore.GREEN + " ✓" + Fore.RESET)
+        except Exception:
+            print(Fore.RED + " ✕" + Fore.RESET)
+            raise
+
+        time.sleep(0.5)

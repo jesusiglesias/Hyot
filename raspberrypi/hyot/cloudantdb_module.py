@@ -211,9 +211,16 @@ def disconnect():
     global client
 
     if not (client is None):
-        print("        Disconnecting the Cloudant DB client")
+        print("        Disconnecting the Cloudant DB client session"),
 
-        # Ends the client session
-        client.disconnect()
+        time.sleep(0.5)
 
-        print(Fore.GREEN + "        Cloudant DB session ends successfully" + Fore.RESET)
+        try:
+            # Ends the client session
+            client.disconnect()
+            print(Fore.GREEN + " ✓" + Fore.RESET)
+        except Exception:
+            print(Fore.RED + " ✕" + Fore.RESET)
+            raise
+
+        time.sleep(0.5)

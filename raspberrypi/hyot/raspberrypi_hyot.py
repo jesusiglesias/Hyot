@@ -128,6 +128,27 @@ def timestamp():
     return datetime.datetime.now()
 
 
+def disconnect_displays():
+    """Closes and cleans the LCDs"""
+
+    # Variables
+    displays = [DHT_LCD, HCSR_LCD]                  # Displays
+
+    for index, lcd in enumerate(displays):
+
+        print("        Closing and cleaning LCD of the " + SENSORS[index] + " sensor"),
+
+        try:
+            lcd.close(clear=True)                   # Closes and calls the clear function
+            lcd.backlight_enabled = False           # Disables the backlight
+            print(Fore.GREEN + " ✓" + Fore.RESET)
+        except Exception:
+            print(Fore.RED + " ✕" + Fore.RESET)
+            raise
+
+        time.sleep(0.5)
+
+
 def main():
     """Main function"""
 
@@ -214,9 +235,9 @@ def main():
             if humidity is not None and 0 <= humidity <= 100 and temperature is not None and temperature >= 0:
 
                 # Outputs the data by console
-                print(Style.BRIGHT + "UUID: " + Style.RESET_ALL + str(uuid_measurement))
+                print(Style.BRIGHT + "UUID: " + Style.RESET_ALL + Fore.BLACK + str(uuid_measurement))
                 print("Datetime: " + str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")))
-                print("Temperature: {0:0.1f} °C \nHumidity: {1:0.1f} %".format(temperature, humidity))
+                print("Temperature: {0:0.1f} °C \nHumidity: {1:0.1f} %".format(temperature, humidity) + Fore.RESET)
 
                 # Outputs the data by display
                 DHT_LCD.cursor_pos = (0, 0)
@@ -334,12 +355,7 @@ def main():
             print("\r")
             system.remove_localdir()                    # Removes the temporary local directory
             email.disconnect()                          # Disconnects the mail session
-            print("        Closing and cleaning LCD of the DHT11 sensor")
-            DHT_LCD.close(clear=True)                   # Closes and calls the clear function
-            DHT_LCD.backlight_enabled = False           # Disables the backlight
-            print("        Closing and cleaning LCD of the HC-SR04 sensor")
-            HCSR_LCD.close(clear=True)
-            HCSR_LCD.backlight_enabled = False
+            disconnect_displays()                       # Disconnects the displays
             cloudantdb.disconnect()                     # Disconnects the Cloudant client
             dropbox.disconnect()                        # Disables the access token used to authenticate the calls
             print("\r")
