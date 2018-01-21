@@ -161,6 +161,7 @@ def main():
         count = 0                                   # Measurement counter
         uuid_measurement = None                     # UUID of each measurement for both sensors
         link_dropbox = None                         # Shared link of the uploaded file to Dropbox
+        sent = None                                 # Indicates if the email was or not sent
 
         # Header
         header()
@@ -222,6 +223,8 @@ def main():
         while True:
 
             count += 1                                                  # Increment the counter
+            link_dropbox = None                                         # Resets the value
+            sent = None                                                 # Resets the value
             datetime_measurement = timestamp()                          # Obtains a timestamp (datetime)
             uuid_measurement = uuid.uuid4()                             # Generates a random UUID
 
