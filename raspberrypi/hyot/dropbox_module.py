@@ -275,7 +275,7 @@ def upload_file(localfile, sensor):
     try:
 
         print(Fore.LIGHTBLACK_EX + "  -- Uploading " + localfile + " to Dropbox like " + upload_path + Fore.RESET),
-        time.sleep(1)
+        time.sleep(0.5)
 
         # Reads the file and uploads it
         with open("/home/pi/Desktop/test.jpg", 'rb') as f:  # TODO

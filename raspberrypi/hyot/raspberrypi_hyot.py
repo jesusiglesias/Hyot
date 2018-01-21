@@ -176,7 +176,7 @@ def main():
                                           "sensors\n" + Style.RESET_ALL)
 
         lcd.full_print_lcds("Reading values", "from sensors")           # Writes in both LCDS using both rows
-        time.sleep(2)
+        time.sleep(1)
         lcd.clear_lcds()
         time.sleep(1)
 

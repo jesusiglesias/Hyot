@@ -200,7 +200,7 @@ def add_document(data, sensor):
         db_name = sensor_dbs[1]
 
     print(Fore.LIGHTBLACK_EX + "  -- Adding the measurement to the database: " + db_name + Fore.RESET),
-    time.sleep(1)
+    time.sleep(0.5)
 
     # Creates a document using the Database API
     document = db_instance.create_document(data, throw_on_exists=True)
