@@ -40,7 +40,7 @@ try:
     from cloudant.client import Cloudant            # Cloudant NoSQL DB client
 
 except ImportError as importError:
-    print("Error to import: " + importError.message.lower() + ".")
+    print("Error to import in cloudantdb_module: " + importError.message.lower() + ".")
     sys.exit(1)
 except KeyboardInterrupt:
     print("\rException: KeyboardInterrupt. Please, do not interrupt the execution.")

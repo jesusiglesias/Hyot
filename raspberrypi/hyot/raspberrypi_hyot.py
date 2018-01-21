@@ -54,7 +54,7 @@ try:
     import picamera                                 # Interface for the Raspberry Pi camera module
 
 except ImportError as importError:
-    print("Error to import: " + importError.message.lower() + ".")
+    print("Error to import in raspberrypi_hyot: " + importError.message.lower() + ".")
     sys.exit(1)
 except KeyboardInterrupt:
     print("\rException: KeyboardInterrupt. Please, do not interrupt the execution.")

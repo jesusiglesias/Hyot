@@ -40,7 +40,7 @@ try:
     import dropbox                                      # Python SDK for integrating with the Dropbox API v2
 
 except ImportError as importError:
-    print("Error to import: " + importError.message.lower() + ".")
+    print("Error to import in dropbox_module: " + importError.message.lower() + ".")
     sys.exit(1)
 except KeyboardInterrupt:
     print("\rException: KeyboardInterrupt. Please, do not interrupt the execution.")

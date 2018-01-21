@@ -45,7 +45,7 @@ try:
     from email import encoders                          # Encoders
 
 except ImportError as importError:
-    print("Error to import: " + importError.message.lower() + ".")
+    print("Error to import in email_module: " + importError.message.lower() + ".")
     sys.exit(1)
 except KeyboardInterrupt:
     print("\rException: KeyboardInterrupt. Please, do not interrupt the execution.")
