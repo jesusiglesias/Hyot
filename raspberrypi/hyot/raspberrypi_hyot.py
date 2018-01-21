@@ -161,7 +161,7 @@ def main():
 
         # ############### Initializing databases ###############
         cloudantdb.connect()                        # Creates a Cloudant DB client and establishes a connection
-        cloudantdb.init(timestamp())                # Initializes the databases
+        cloudantdb.init(timestamp(), SENSORS)       # Initializes the databases
 
         # ############### Initializing Dropbox ###############
         dropbox.connect()                           # Creates a Dropbox client and establishes a connection

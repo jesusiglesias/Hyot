@@ -50,7 +50,6 @@ except KeyboardInterrupt:
 ########################################
 #              CONSTANTS               #
 ########################################
-SENSORS = ["DHT11", "HC-SR04"]                                                    # Name of the sensors
 USERNAME_DB = "ee585910-3df5-46f4-93a6-85400da6734e-bluemix"                      # User name in Cloudant NoSQL DB
 PASSWORD_DB = "2d612e9875d92b3a6fd14b8a763ffb05f23bde3a81d9298f2e372245508ce25c"  # Password in Cloudant NoSQL DB
 URL_DB = "https://ee585910-3df5-46f4-93a6-85400da6734e-bluemix:2d612e9875d92b3a" \
@@ -65,6 +64,7 @@ HCSR04_DB = "hcsr04_measurements"                                               
 ########################################
 client = None                                                                     # Cloudant NoSQL DB client
 dbs_instances = None                                                              # Instances of all databases
+sensors = []                                                                      # Stores the name of all sensors
 
 
 ########################################
@@ -103,17 +103,19 @@ def connect():
     time.sleep(1)
 
 
-def init(timestamp):
+def init(timestamp, all_sensors):
     """Initializes the DB by checking if these one exist or not
     :param timestamp: Datetime when the measurement was taken
+    :param all_sensors: Name of the sensors
     """
 
-    global client, dbs_instances, sensor_dbs
+    global client, dbs_instances, sensor_dbs, sensors
 
     dht11_dbinstance = None                                # Instance for the DHT11 sensor database
     hcsr04_dbinstance = None                               # Instance for the HC-SR04 sensor database
     dbs_instances = [dht11_dbinstance, hcsr04_dbinstance]  # Defines a list with the instances of the databases
     sensor_dbs = []                                        # Defines a list with the name of the database of each sensor
+    sensors = all_sensors                                  # Name of all sensors
 
     # Asks the user for the name of the DHT11 sensor database
     dht_database = raw_input(Fore.BLUE + "        Enter the name for the DHT11 sensor database. Empty to use the "
@@ -146,7 +148,7 @@ def init(timestamp):
 
     # Loops in each database to use
     for index, db in enumerate(sensor_dbs):
-        print("        Checking if the database of the " + SENSORS[index] + " sensor exists in the Cloudant NoSQL "
+        print("        Checking if the database of the " + sensors[index] + " sensor exists in the Cloudant NoSQL "
               "DB service")
 
         # Checks if the database exists in the Cloudant NoSQL DB service
@@ -190,10 +192,10 @@ def add_document(data, sensor):
     db_name = None                                          # Name of the database
 
     # Selects the database instance based on sensor type
-    if sensor == SENSORS[0]:                                # DHT11 sensor
+    if sensor == sensors[0]:                                # DHT11 sensor
         db_instance = dbs_instances[0]
         db_name = sensor_dbs[0]
-    elif sensor == SENSORS[1]:                              # HC-SR04 sensor
+    elif sensor == sensors[1]:                              # HC-SR04 sensor
         db_instance = dbs_instances[1]
         db_name = sensor_dbs[1]
 
