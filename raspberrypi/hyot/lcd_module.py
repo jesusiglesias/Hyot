@@ -74,6 +74,15 @@ def init(dht, hcsr, all_sensors):
     sensors = all_sensors                           # Name of all sensors
 
 
+def backlight(enabled):
+    """Enables or disabled the backlight of all LCDs
+    :param enabled: Indicates if the backlight must be enabled or disabled
+    """
+
+    for index, lcd in enumerate(lcds):
+        lcd.backlight_enabled = enabled
+
+     
 def full_print_lcds(first_row, second_row):
     """Writes data in the LCDs using both rows
     :param first_row: Text to write in the first row

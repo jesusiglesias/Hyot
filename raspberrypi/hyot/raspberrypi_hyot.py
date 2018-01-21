@@ -147,8 +147,7 @@ def main():
 
         # ############### Initializing HYOT ###############
         lcd.init(DHT_LCD, HCSR_LCD, SENSORS)        # Transfers the LCD instances and the sensors
-        DHT_LCD.backlight_enabled = True            # Enables the backlight to the LCD of the DHT11 sensor
-        HCSR_LCD.backlight_enabled = True           # Enables the backlight to the LCD of the HC-SR04 sensor
+        lcd.backlight(True)                         # Enables the backlight of the LCDs
         time.sleep(1)                               # Wait time - 1 second
         print(Style.BRIGHT + Fore.BLACK + "-- Initializing HYOT..." + Style.RESET_ALL)
         lcd.full_print_lcds("Initializing", "HYOT...")                  # Prints data in the LCDs using both rows
