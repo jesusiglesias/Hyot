@@ -229,7 +229,7 @@ def init():
 
 def __get_shared_link(upload_path):
     """Creates a shared shortened link of the file. If a shared link already exists for the given path, that link is
-    returned.
+    returned
     :param upload_path: Upload path of the current file
     :return: link Shared link of the uploaded file to Dropbox
     """
@@ -271,7 +271,8 @@ def upload_file(localfile, sensor):
 
     try:
 
-        print("Uploading " + localfile + " to Dropbox as " + upload_path)
+        print(Fore.LIGHTBLACK_EX + "  -- Uploading " + localfile + " to Dropbox like " + upload_path + Fore.RESET),
+        time.sleep(1)
 
         # Reads the file and uploads it
         with open("/home/pi/Desktop/test.jpg", 'rb') as f:  # TODO
@@ -280,10 +281,13 @@ def upload_file(localfile, sensor):
             # if there is not enough available space and so on
             dbx.files_upload(f.read(), upload_path, autorename=False)
 
-            print(Fore.GREEN + "File uploaded correctly" + Fore.RESET)
+            # Obtains the shared link of the uploaded file to Dropbox
+            shared_link = __get_shared_link(upload_path)
 
-            # Returns the shared link of the uploaded file to Dropbox
-            return __get_shared_link(upload_path)
+            print(Fore.GREEN + " ✓" + Fore.RESET)
+
+            # Returns the shared link
+            return shared_link
 
     except IOError:                                                        # Error to open the file
 
@@ -312,7 +316,7 @@ def disconnect():
     if not (dbx is None):
         print("        Disconnecting the Dropbox client session"),
 
-        time.sleep(0.5)
+        time.sleep(0.25)
 
         try:
             # Ends the client session
@@ -322,4 +326,4 @@ def disconnect():
             print(Fore.RED + " ✕" + Fore.RESET)
             raise
 
-        time.sleep(0.5)
+        time.sleep(0.25)

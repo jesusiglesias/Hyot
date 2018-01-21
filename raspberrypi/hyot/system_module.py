@@ -109,7 +109,7 @@ def remove_localdir():
 
         print("        Removing the temporary local directory: " + tempfiles_path),
 
-        time.sleep(0.5)
+        time.sleep(0.25)
 
         # Checks if the directory exists
         if os.path.exists(tempfiles_path):
@@ -130,9 +130,9 @@ def remove_localdir():
                 print(Fore.RED + " ✕ No such directory" + Fore.RESET)
 
         else:
-            print(Fore.CYAN + " ✓ Directory does not exist. Not deleted" + Fore.RESET)
+            print(Fore.CYAN + " Directory does not exist. Not deleted" + Fore.GREEN + " ✓" + Fore.RESET)
 
-        time.sleep(0.5)
+        time.sleep(0.25)
 
 
 def check_file(localfile):
@@ -150,7 +150,8 @@ def remove_file(localfile):
     :param localfile: Local path and name of the file to remove
     """
 
-    print("Removing the temporary local file: " + localfile)
+    print(Fore.LIGHTBLACK_EX + "  -- Removing the temporary local file: " + localfile + Fore.RESET),
+    time.sleep(1)
 
     # Checks if the file exists
     if os.path.exists(localfile):
@@ -161,13 +162,11 @@ def remove_file(localfile):
 
             # After deletion, checks again if it was removed
             if not os.path.exists(localfile):                  # File was removed
-                print(Fore.GREEN + "File removed successfully" + Fore.RESET)
-
+                print(Fore.GREEN + " ✓" + Fore.RESET)
             else:                                              # File was not removed
-                print(Fore.RED + "Error to remove the file" + Fore.RESET)
+                print(Fore.RED + " ✕ Error to remove the file" + Fore.RESET)
 
         except OSError:
-            print(Fore.RED + "Error to remove. No such file: " + localfile + Fore.RESET)
-
+            print(Fore.RED + " ✕ No such file" + Fore.RESET)
     else:
-            print(Fore.CYAN + "File does not exist. Not deleted" + Fore.RESET)
+        print(Fore.CYAN + "File does not exist. Not deleted" + Fore.GREEN + " ✓" + Fore.RESET)

@@ -148,7 +148,8 @@ def send_email(mailto, filepath, filename, sensor, timestamp, id, temperature, h
     # Message of the email in HTML format
     message = TEMPLATE.substitute(SENSOR=sensor, DATETIME=timestamp, ID=id, TEMPERATURE=temperature, HUMIDITY=humidity, DISTANCE=distance, LINK=link_dropbox)
 
-    print("Sending alert notification to the following email address: " + mailto)
+    print(Fore.LIGHTBLACK_EX + "  -- Sending alert notification to the following email address: " + mailto + Fore.RESET),
+    time.sleep(1)
 
     # Creates an instance of MIMEMultipart
     email_instance = MIMEMultipart()
@@ -180,16 +181,17 @@ def send_email(mailto, filepath, filename, sensor, timestamp, id, temperature, h
         email_instance.attach(part)
 
     except IOError:                                              # Error to open the file
-        print(Fore.RED + "Could not open the file: /home/pi/Desktop/test.jpg. File is not attached to the email"
-              + Fore.RESET)
+        print(Fore.CYAN + " Could not open the file so it is not attached to the email" + Fore.RESET),
 
     try:
         # Send the message via a SMTP server
         session.sendmail(FROM, mailto, email_instance.as_string())
+
+        print(Fore.GREEN + " ✓" + Fore.RESET)
         return True
 
     except Exception as error:
-        print(Fore.RED + "There was an error sending the email. Error:" + str(error) + Fore.RESET)
+        print(Fore.RED + " ✕ Error sending the email: " + str(error) + Fore.RESET)
         return False
 
 
@@ -201,7 +203,7 @@ def disconnect():
     if not (session is None):
         print("        Disconnecting the mail session"),
 
-        time.sleep(0.5)
+        time.sleep(0.25)
 
         try:
             # Ends the mail session
@@ -212,4 +214,4 @@ def disconnect():
             print(Fore.RED + " ✕" + Fore.RESET)
             raise
 
-        time.sleep(0.5)
+        time.sleep(0.25)

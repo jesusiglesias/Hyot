@@ -137,6 +137,7 @@ def disconnect_displays():
     for index, lcd in enumerate(displays):
 
         print("        Closing and cleaning LCD of the " + SENSORS[index] + " sensor"),
+        time.sleep(0.25)
 
         try:
             lcd.close(clear=True)                   # Closes and calls the clear function
@@ -146,7 +147,7 @@ def disconnect_displays():
             print(Fore.RED + " ✕" + Fore.RESET)
             raise
 
-        time.sleep(0.5)
+        time.sleep(0.25)
 
 
 def main():

@@ -108,7 +108,7 @@ def init(timestamp):
     :param timestamp: Datetime when the measurement was taken
     """
 
-    global client, dbs_instances
+    global client, dbs_instances, sensor_dbs
 
     dht11_dbinstance = None                                # Instance for the DHT11 sensor database
     hcsr04_dbinstance = None                               # Instance for the HC-SR04 sensor database
@@ -184,24 +184,30 @@ def add_document(data, sensor):
     :param sensor: Sensor type
     """
 
-    global dbs_instances
+    global dbs_instances, sensor_dbs
 
     db_instance = None                                      # Instance of a specific database
+    db_name = None                                          # Name of the database
 
     # Selects the database instance based on sensor type
     if sensor == SENSORS[0]:                                # DHT11 sensor
         db_instance = dbs_instances[0]
+        db_name = sensor_dbs[0]
     elif sensor == SENSORS[1]:                              # HC-SR04 sensor
         db_instance = dbs_instances[1]
+        db_name = sensor_dbs[1]
+
+    print(Fore.LIGHTBLACK_EX + "  -- Adding the measurement to the database: " + db_name + Fore.RESET),
+    time.sleep(1)
 
     # Creates a document using the Database API
     document = db_instance.create_document(data, throw_on_exists=True)
 
     # Checks that the document exists in the database
     if document.exists():
-        print(Fore.GREEN + "Measurement added to database successfully" + Fore.RESET)
+        print(Fore.GREEN + " ✓" + Fore.RESET)
     else:
-        print(Fore.RED + "Error to add the measurement. Please, check the Cloudant NoSQL DB service" + Fore.RESET)
+        print(Fore.RED + " ✕ Error to add the measurement. Please, check the Cloudant NoSQL DB service" + Fore.RESET)
         sys.exit(1)
 
 
@@ -213,7 +219,7 @@ def disconnect():
     if not (client is None):
         print("        Disconnecting the Cloudant DB client session"),
 
-        time.sleep(0.5)
+        time.sleep(0.25)
 
         try:
             # Ends the client session
@@ -223,4 +229,4 @@ def disconnect():
             print(Fore.RED + " ✕" + Fore.RESET)
             raise
 
-        time.sleep(0.5)
+        time.sleep(0.25)
