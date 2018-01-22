@@ -61,35 +61,6 @@ PASSWORD = "hyot2018"                                                       # Se
 SERVERIP = "smtp.gmail.com"                                                 # Host/IP of the mail server
 SERVERPORT = 587                                                            # Port of the mail server
 TEMPLATEPATH = "template/email_template.html"                               # Path of the template email
-# Message template for the email TODO - Event that triggers the alert, meters
-TEMPLATE = Template("""\
-    <html>
-        <head></head>
-        <body>
-            <h3 style="text-align:center">HYOT - ALERT NOTIFICATION</h3>
-            <br>
-            <p>An alert has been triggered by ${SENSOR} sensor at ${DATETIME} with ID: ${ID}. Below is the full 
-            information of the measurement: </p>
-        
-            <ul>
-                <li><b>DHT11 sensor: </b>
-                    <ul>
-                        <li>Temperature: ${TEMPERATURE} &deg;C</li>
-                        <li>Humidity: ${HUMIDITY} &#37;</li>
-                    </ul>
-                </li>
-                <br>
-                <li><b>HC-SR04 sensor: </b>
-                    <ul>
-                        <li>Distance: ${DISTANCE} meters</li>
-                    </ul>
-                </li>
-            </ul>
-        
-            <p>File uploaded to Dropbox: <a href="${LINK}">link</a>.</p>
-        </body>
-    </html>
-  """)
 
 
 ########################################
