@@ -133,6 +133,27 @@ def full_print_lcds(first_row, second_row):
         lcd.write_string(second_row)
 
 
+def full_print_lcd(sensor, first_row, second_row):
+    """Writes data in the specified LCD using both rows
+    :param sensor: Indicates the LCD to use based on the sensor
+    :param first_row: Text to write in the first row of the specified LCD
+    :param second_row: Text to write in the second row of the specified LCD
+    """
+
+    global dht_lcd, hcsr_lcd
+
+    sensor_lcd = None                                   # Stores the LCD instance
+
+    if sensor == sensors[0]:
+        sensor_lcd = dht_lcd
+    elif sensor == sensors[1]:
+        sensor_lcd = hcsr_lcd
+
+    sensor_lcd.write_string(first_row)
+    sensor_lcd.crlf()
+    sensor_lcd.write_string(second_row)
+
+
 def print_lcds(dht_data, hcsr_data):
     """Writes data in the LCDs using the first row
     :param dht_data: Text to write in the LCD of the DHT11 sensor
@@ -145,6 +166,24 @@ def print_lcds(dht_data, hcsr_data):
 
     for index, lcd in enumerate(lcds):
         lcd.write_string(data[index])                   # Writes the specified unicode string to the LCD
+
+
+def print_lcd(sensor, data):
+    """Writes data in the specified LCD using the first row
+    :param sensor: Indicates the LCD to use based on the sensor
+    :param data: Text to write in the specified LCD
+    """
+
+    global dht_lcd, hcsr_lcd
+
+    sensor_lcd = None                                   # Stores the LCD instance
+
+    if sensor == sensors[0]:
+        sensor_lcd = dht_lcd
+    elif sensor == sensors[1]:
+        sensor_lcd = hcsr_lcd
+
+    sensor_lcd.write_string(data)
 
 
 def print_measure_dht(temperature, humidity, error_measure, clear_lcd):
@@ -181,6 +220,23 @@ def clear_lcds():
 
     for index, lcd in enumerate(lcds):
         lcd.clear()
+
+
+def clear_lcd(sensor):
+    """Overwrites the LCD of the specified sensor with blank characters and resets the cursor position
+    :param sensor: Indicates the LCD to use based on the sensor
+    """
+
+    global dht_lcd, hcsr_lcd
+
+    sensor_lcd = None  # Stores the LCD instance
+
+    if sensor == sensors[0]:
+        sensor_lcd = dht_lcd
+    elif sensor == sensors[1]:
+        sensor_lcd = hcsr_lcd
+
+    sensor_lcd.clear()
 
 
 def disconnect_lcds():

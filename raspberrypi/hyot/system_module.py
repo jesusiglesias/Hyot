@@ -150,7 +150,7 @@ def remove_file(localfile):
     :param localfile: Local path and name of the file to remove
     """
 
-    print(Fore.LIGHTBLACK_EX + "  -- Removing the temporary local file: " + localfile + Fore.RESET),
+    print(Fore.LIGHTBLACK_EX + "   -- Removing the temporary local file: " + localfile + Fore.RESET),
     time.sleep(1)
 
     # Checks if the file exists

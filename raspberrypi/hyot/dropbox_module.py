@@ -271,7 +271,7 @@ def upload_file(localfile, sensor):
         upload_path = "/" + HYOT_DIR + "/" + hcsr_subdir + "/" + "test.jpg"     # TODO
 
     try:
-        print(Fore.LIGHTBLACK_EX + "  -- Uploading " + localfile + " to Dropbox like " + upload_path + Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "   -- Uploading " + localfile + " to Dropbox like " + upload_path + Fore.RESET),
         time.sleep(0.5)
 
         # Reads the file and uploads it

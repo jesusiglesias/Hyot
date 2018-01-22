@@ -129,7 +129,7 @@ def send_email(mailto, filepath, filename, sensor, timestamp, alert_id, temperat
     # Variables
     subject = "HYOT - Alert notification: {0:s} sensor | {1:s}".format(sensor, timestamp)    # Subject of the email
 
-    print(Fore.LIGHTBLACK_EX + "  -- Sending alert notification to the following email address: " + mailto + Fore.RESET),
+    print(Fore.LIGHTBLACK_EX + "   -- Sending alert notification to the following email address: " + mailto + Fore.RESET),
 
     # Message of the email in HTML format
     try:
