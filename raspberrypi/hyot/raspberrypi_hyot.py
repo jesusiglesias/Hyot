@@ -18,9 +18,9 @@
 #    DESCRIPTION:     This script monitors several events from sensors and sends them to the cloud  TODO               #
 #                                                                                                                      #
 #        OPTIONS:     ---                                                                                              #
-#   REQUIREMENTS:     Root user, Connected devices: LCD 16x2 (2), DTH11 sensor and HC-SR04 sensor,                     #
-#                     Modules: checks_module.py, cloudantdb_module.py, dropbox_module.py, email_module.py,             #
-#                     system_module.py                                                                                 #
+#   REQUIREMENTS:     Root user, Connected devices: LCD 16x2 (2), Picamera, DTH11 sensor and HC-SR04 sensor,           #
+#                     Modules: camera_module.py, checks_module.py, cloudantdb_module.py, dropbox_module.py,            #
+#                     email_module.py, lcd_module.py, system_module.py                                                 #
 #          NOTES:     It must be run with root user on a Raspberry Pi preferably with Raspbian as operating system     #
 #         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                         #
 #   ORGANIZATION:     ---                                                                                              #
