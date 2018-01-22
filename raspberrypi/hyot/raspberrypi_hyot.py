@@ -69,12 +69,14 @@ def constants(user_args):
     :param user_args: Values of the options entered by the user
     """
 
-    global FIGLET, SENSORS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, TEMP_THRESHOLD, HUM_THRESHOLD
+    global FIGLET, SENSORS, DHT11_EVENTS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, TEMP_THRESHOLD, \
+        HUM_THRESHOLD
 
     try:
 
         FIGLET = Figlet(font='future_8', justify='center')          # Figlet
         SENSORS = ["DHT11", "HC-SR04"]                              # Name of the sensors
+        DHT11_EVENTS = ["Temperature", "Humidity"]                  # Name of the events of the DHT11 sensor
         MAILTO = user_args.EMAIL                                    # Recipient's email address
         TIME_MEASUREMENTS = user_args.WAITTIME_MEASUREMENTS         # Wait time between each measurement. Default 3 seconds
         DHT_SENSOR = Adafruit_DHT.DHT11                             # DHT11 sensor
@@ -121,9 +123,12 @@ def main(user_args):
     try:
 
         # Variables
-        global uuid_measurement, link_dropbox, sent       # TODO - Necessary global?
+        global uuid_measurement, alert_triggered, threshold_value, link_dropbox, sent       # TODO - Necessary global?
         count = 0                                   # Measurement counter
         uuid_measurement = None                     # UUID of each measurement for both sensors
+        alert_triggered = None                      # Indicates if an alert has been triggered
+        alert_origin = None                         # Indicates which event triggered the alert
+        threshold_value = None                      # Indicates the value of the event threshold that triggers the alert
         link_dropbox = None                         # Shared link of the uploaded file to Dropbox
         sent = None                                 # Indicates if the email was or not sent
 
@@ -177,6 +182,9 @@ def main(user_args):
         while True:
 
             count += 1                                                  # Increment the counter
+            alert_triggered = False                                     # Resets the value
+            alert_origin = None                                         # Resets the value
+            threshold_value = None                                      # Resets the value
             link_dropbox = None                                         # Resets the value
             sent = None                                                 # Resets the value
             datetime_measurement = timestamp()                          # Obtains a timestamp (datetime)
@@ -205,17 +213,45 @@ def main(user_args):
                 HCSR_LCD.crlf()
                 HCSR_LCD.write_string("Humidity: %.1f %%" % humidity)
 
-                # Checks if the file exists in the local system TODO
-                system.check_file("/home/pi/Desktop/test.jpg")
+                # DHT11 - Alert triggered TODO
+                if temperature > TEMP_THRESHOLD:
 
-                # Uploads the file to Dropbox TODO
-                link_dropbox = dropbox.upload_file('/home/pi/Desktop/test.jpg', SENSORS[0])
+                    alert_triggered = True                               # Marks the alert like triggered
+                    alert_origin = SENSORS[0] + ' - ' + DHT11_EVENTS[0]  # Saves the event which triggers the alert
+                    threshold_value = TEMP_THRESHOLD                     # Stores the threshold value
+                    time.sleep(1)
+                    lcd.clear_lcd(SENSORS[0])                            # Clears only the DHT11 LCD
+                    time.sleep(1)
 
-                # Sends an email when an alert is triggered TODO
-                if not (MAILTO is None):
-                    sent = email.send_email(MAILTO, "/home/pi/Desktop/test.jpg", "test.jpg", SENSORS[0],  # TODO - Distance
-                                            str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
-                                            str(uuid_measurement), temperature, humidity, "1", link_dropbox)
+                    print(Fore.RED + "  ---------- ALERT TRIGGERED ----------  " + Fore.RESET)
+                    lcd.print_lcd(SENSORS[0], "ALERT TRIGGERED!")
+                    time.sleep(3)
+                    lcd.clear_lcd(SENSORS[0])                            # Clears only the DHT11 LCD
+                    print(Fore.BLACK + "  --- Initiating the alert procedure ---  " + Fore.RESET)
+                    lcd.full_print_lcd(SENSORS[0], "Initiating the", "procedure...")
+
+                    time.sleep(2)
+
+                    #CAMERA.capture('dht11_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) + '.jpg')
+                    #time.sleep(1)
+                    time.sleep(5)  # TODO
+
+                    # Checks if the file exists in the local system TODO
+                    system.check_file("/home/pi/Desktop/test.jpg")
+
+                    # Uploads the file to Dropbox TODO
+                    link_dropbox = dropbox.upload_file('/home/pi/Desktop/test.jpg', SENSORS[0])
+
+                    # Sends an email when an alert is triggered TODO
+                    if not (MAILTO is None):
+                        sent = email.send_email(MAILTO, "/home/pi/Desktop/test.jpg", "test.jpg", SENSORS[0],  # TODO - Distance
+                                                str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
+                                                str(uuid_measurement), temperature, humidity, "1", link_dropbox)
+
+                    # Removes the temporary file after uploading to Dropbox
+                    system.remove_file('/home/pi/Desktop/test.jpg')  # TODO
+
+                    lcd.clear_lcd(SENSORS[0])                            # Clears only the DHT11 LCD
 
                 # Creates a JSON document content data
                 dht11_data = {
@@ -223,29 +259,16 @@ def main(user_args):
                     "datetime_field": str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
                     "temperature_field": temperature,
                     "humidity_field": humidity,
-                    "alert_triggered": True,  # TODO
-                    "shared_link_Dropbox": str(link_dropbox),
+                    "alert_triggered": alert_triggered,
+                    "alert_origin": alert_origin,
+                    "threshold_value": threshold_value,
+                    "shared_link_Dropbox": link_dropbox,
                     "notification_sent": sent,
                     "mailto": MAILTO
                 }
 
                 # Adds the document to the database of the Cloudant NoSQL service
                 cloudantdb.add_document(dht11_data, SENSORS[0])
-
-                # Removes the temporary file after uploading to Dropbox
-                system.remove_file('/home/pi/Desktop/test.jpg')  # TODO
-
-                # Alert triggered TODO
-                if temperature > TEMP_THRESHOLD:
-                    time.sleep(1)
-                    DHT_LCD.clear()
-                    print("Alert! Taking image")
-                    DHT_LCD.write_string("Alert is triggered")
-                    DHT_LCD.crlf()
-                    DHT_LCD.write_string("Taking image...")
-                    CAMERA.capture('dht11_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) + '.jpg')
-                    time.sleep(2)
-                    DHT_LCD.clear()
 
             elif humidity is None or 0 > humidity > 100:                        # Humidity value is invalid or None
                 print("Failed to get reading. Humidity is invalid or None")
