@@ -32,7 +32,7 @@
         padding: 0 !important;
         height: 100% !important;
         width: 100% !important;
-        background-color: #555555;
+        background-color: #f6f6f6;
     }
 
     /* Stops email clients resizing small text */
@@ -98,10 +98,42 @@
         border-color: #e4e4e4 !important;
         color: #3967c1 !important;
     }
+
+    /* Media Queries */
+    @media screen and (min-width: 405px) and (max-width: 553px) {
+
+        #eps {
+            width: 195px !important;
+            height: 50px !important;
+        }
+
+        #uam {
+            width: 180px !important;
+            height: 50px !important;
+        }
+    }
+
+    @media screen and (max-width: 409px) {
+
+        #eps {
+            margin-bottom: 20px;
+            width: 195px !important;
+            height: 50px !important;
+        }
+
+        #uam {
+            width: 180px !important;
+            height: 50px !important;
+        }
+
+        #uam_a {
+            margin-left: 0 !important;
+        }
+    }
     </style>
 </head>
 
-<body width="100%" bgcolor="#555555" style="Margin: 0;">
+<body width="100%" bgcolor="#f6f6f6" style="Margin: 0;">
     <table cellpadding="0" cellspacing="0" border="0" height="100%" width="100%" bgcolor="#F6F6F6" style="border-collapse:collapse;"><tr><td valign="top">
         <center style="width: 100%;">
 
@@ -185,10 +217,10 @@
                                 href="http://es.linkedin.com/in/jesusgiglesias"> Jes&uacute;s Iglesias Garc&iacute;a</a></p>
                             <br>
                             <a href="http://www.uam.es/ss/Satellite/EscuelaPolitecnica/es/home.htm" style="text-decoration: none;">
-                                <img src="https://www.dropbox.com/s/nw7tz1sc27ivlnc/eps_uam.png?raw=1" alt="EPS UAM" width="280" height="75"/>
+                                <img src="https://www.dropbox.com/s/nw7tz1sc27ivlnc/eps_uam.png?raw=1" id="eps" alt="EPS UAM" width="270" height="75"/>
                             </a>
-                            <a href="http://www.uam.es/" style="margin-left:10px; text-decoration: none;">
-                                <img src="https://www.dropbox.com/s/d2y6dgud52djh88/uam.png?raw=1" alt="UAM" width="280" height="85"/>
+                            <a href="http://www.uam.es/" id="uam_a" style="margin-left:10px; text-decoration: none;">
+                                <img src="https://www.dropbox.com/s/d2y6dgud52djh88/uam.png?raw=1" id="uam" alt="UAM" width="250" height="85"/>
                             </a>
                         </td>
                     </tr>
