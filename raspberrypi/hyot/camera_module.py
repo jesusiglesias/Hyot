@@ -61,8 +61,7 @@ def init():
 
     global camera
 
-    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing the Picamera "
-          + Style.RESET_ALL)
+    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing the Picamera " + Style.RESET_ALL)
 
     try:
         camera = picamera.PiCamera()                    # Creates an instance of the Picamera

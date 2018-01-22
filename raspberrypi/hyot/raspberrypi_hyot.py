@@ -51,7 +51,6 @@ try:
     import system_module as system                  # Module that performs functions in the local operating system
     from pyfiglet import Figlet                     # Text banners in a variety of typefaces
     from colorama import Fore, Style                # Cross-platform colored terminal text
-    from RPLCD.i2c import CharLCD                   # LCD 16x2
     import Adafruit_DHT                             # DHT11 sensor
 
 except ImportError as importError:
@@ -70,8 +69,7 @@ def constants(user_args):
     :param user_args: Values of the options entered by the user
     """
 
-    global FIGLET, SENSORS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT_LCD, HCSR_LCD, \
-        TEMP_THRESHOLD, HUM_THRESHOLD
+    global FIGLET, SENSORS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, TEMP_THRESHOLD, HUM_THRESHOLD
 
     try:
 
@@ -81,23 +79,9 @@ def constants(user_args):
         TIME_MEASUREMENTS = user_args.WAITTIME_MEASUREMENTS         # Wait time between each measurement. Default 3 seconds
         DHT_SENSOR = Adafruit_DHT.DHT11                             # DHT11 sensor
         DHT_PINDATA = user_args.DHT_DATAPIN                         # DHT11 - Data pin. Default 21 (GPIO21)
-        DHT_LCD = CharLCD(i2c_expander=user_args.DHT_I2CEXPANDER,   # LCD for DHT11 sensor. Default 'PCF8574' and 0x3f
-                          address=int(user_args.DHT_I2CADDRESS, base=16),
-                          charmap='A00',
-                          backlight_enabled=False)
-        HCSR_LCD = CharLCD(i2c_expander=user_args.HCSR_I2CEXPANDER,  # LCD for HC-SR04 sensor. Default 'PCF8574' and 0x38
-                           address=int(user_args.HCSR_I2CADDRESS, base=16),
-                           charmap='A00',
-                           backlight_enabled=False)
         TEMP_THRESHOLD = user_args.TEMPERATURE_THRESHOLD             # Temperature alert threshold in the DHT11 sensor
         HUM_THRESHOLD = user_args.HUMIDITY_THRESHOLD                 # Humidity alert threshold in the DHT11 sensor
 
-    except IOError as ioError:                      # Related to LCD 16x2
-        print(Fore.RED + "IOError in constants() function: " + str(ioError) + ". Main errno:" + "\r")
-        print("- Errno 2: I2C interface is disabled.\r")
-        print("- Errno 22: I2C address is invalid.\r")
-        print("- Errno 121: LCD is not connected.\r")
-        sys.exit(1)
     except Exception as exception:                  # TODO - Too general exception
         print(Fore.RED + "Exception in constants() function: " + str(exception))
         traceback.print_exc()                       # Prints the traceback
@@ -128,8 +112,10 @@ def timestamp():
     return datetime.datetime.now()
 
 
-def main():
-    """Main function"""
+def main(user_args):
+    """Main function
+    :param user_args: Values of the options entered by the user
+    """
 
     # Try-Catch block
     try:
@@ -145,11 +131,11 @@ def main():
         header()
 
         # ############### Initializing HYOT ###############
-        lcd.init(DHT_LCD, HCSR_LCD, SENSORS)        # Transfers the LCD instances and the sensors
-        lcd.backlight(True)                         # Enables the backlight of the LCDs
-        time.sleep(1)                               # Wait time - 1 second
         print(Style.BRIGHT + Fore.BLACK + "-- Initializing HYOT..." + Style.RESET_ALL)
-        lcd.full_print_lcds("Initializing", "HYOT...")                  # Prints data in the LCDs using both rows
+
+        # ############### Initializing LCDs ###############
+        lcd.init(user_args.DHT_I2CEXPANDER, user_args.DHT_I2CADDRESS, user_args.HCSR_I2CEXPANDER,
+                 user_args.HCSR_I2CADDRESS, SENSORS)  # Initializes the LCD instances
 
         # ############### Initializing the Picamera ###############
         picamera.init()                             # Initializes the Picamera
@@ -169,9 +155,9 @@ def main():
         dropbox.connect()                           # Creates a Dropbox client and establishes a connection
         dropbox.init(SENSORS)                       # Initializes the main directory and the subdirectories
 
-        time.sleep(2)
+        time.sleep(2)                               # Wait time - 2 seconds
         lcd.clear_lcds()                            # Clears both LCDs
-        time.sleep(1)
+        time.sleep(1)                               # Wait time - 1 second
 
         # ############### Reading values ###############
         print(Style.BRIGHT + Fore.BLACK + "\n-- Reading values each " + str(TIME_MEASUREMENTS) + " seconds from "
@@ -341,4 +327,4 @@ if __name__ == '__main__':
     checks.check_concurrency()         # Checks if the script is or not already running
     arguments = checks.menu()          # Checks the options entered by the user when running the script
     constants(arguments)               # Declares all the constants
-    main()                             # Main function
+    main(arguments)                    # Main function

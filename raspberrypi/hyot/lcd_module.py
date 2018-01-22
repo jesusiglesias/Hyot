@@ -37,6 +37,7 @@ from __future__ import unicode_literals                 # Future statement defin
 try:
     import sys                                          # System-specific parameters and functions
     import time                                         # Time access and conversions
+    from RPLCD.i2c import CharLCD                       # Character LCD library
     from colorama import Fore, Style                    # Cross-platform colored terminal text
 
 except ImportError as importError:
@@ -59,19 +60,54 @@ sensors = []                                            # Stores the name of all
 ########################################
 #               FUNCTIONS              #
 ########################################
-def init(dht, hcsr, all_sensors):
+def init(dht_i2cexpander, dht_i2caddress, hcsr_i2cexpander, hcsr_i2caddress, all_sensors):
     """Initializes as global variables the instances of the LCDs of the sensors
-    :param dht: Instance of the LCD of the DHT11 sensor
-    :param hcsr: Instance of the LCD of the HC-SR04 sensor
+    :param dht_i2cexpander: I2C expander type for LCD 16x2 of the DH11 sensor
+    :param dht_i2caddress: I2C address for LCD 16x2 of the DH11 sensor
+    :param hcsr_i2cexpander: I2C expander type for LCD 16x2 of the HC-SR04 sensor
+    :param hcsr_i2caddress: I2C address for LCD 16x2 of the HC-SR04 sensor
     :param all_sensors: Name of the sensors
     """
 
     global lcds, dht_lcd, hcsr_lcd, sensors
 
-    dht_lcd = dht                                       # LCD of the DHT11 sensor
-    hcsr_lcd = hcsr                                     # LCD of the HC-SR04 sensor
-    lcds = [dht_lcd, hcsr_lcd]                          # Instance of all LCDs
-    sensors = all_sensors                               # Name of all sensors
+    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing the LCDs " + Style.RESET_ALL)
+
+    try:
+        # LCD for the DHT11 sensor. Default 'PCF8574' and 0x3f
+        dht_lcd = CharLCD(i2c_expander=dht_i2cexpander,
+                          address=int(dht_i2caddress, base=16),
+                          charmap='A00',
+                          backlight_enabled=False)
+
+        # LCD for the HC-SR04 sensor. Default 'PCF8574' and 0x38
+        hcsr_lcd = CharLCD(i2c_expander=hcsr_i2cexpander,
+                           address=int(hcsr_i2caddress, base=16),
+                           charmap='A00',
+                           backlight_enabled=False)
+
+        lcds = [dht_lcd, hcsr_lcd]                      # Instance of all LCDs
+        sensors = all_sensors                           # Name of all sensors
+
+        time.sleep(1)
+        backlight(True)                                 # Enables the backlight of the LCDs
+        time.sleep(2)
+        full_print_lcds("Initializing", "HYOT...")      # Prints data in the LCDs using both rows
+
+        print(Fore.GREEN + "        LCDs initialized correctly" + Fore.RESET)
+
+    except IOError as ioError:
+        print(Fore.RED + "        Error to initialize the LCDs: " + str(ioError) + ". Main errno:" + "\r")
+        print("          - Errno 2: I2C interface is disabled.\r")
+        print("          - Errno 22: I2C address is invalid.\r")
+        print("          - Errno 121: LCD is not connected.\r")
+        sys.exit(1)
+    except Exception as lcdError:
+        print(Fore.RED + "        Error to initialize the LCDs. Exception: " + Fore.RESET + str(lcdError))
+        sys.exit(1)
+
+    time.sleep(2)
+    print("\n        ------------------------------------------------------")
 
 
 def backlight(enabled):
