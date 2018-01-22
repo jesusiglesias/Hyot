@@ -68,10 +68,10 @@ def init(dht, hcsr, all_sensors):
 
     global lcds, dht_lcd, hcsr_lcd, sensors
 
-    dht_lcd = dht                                   # LCD of the DHT11 sensor
-    hcsr_lcd = hcsr                                 # LCD of the HC-SR04 sensor
-    lcds = [dht_lcd, hcsr_lcd]                      # Instance of all LCDs
-    sensors = all_sensors                           # Name of all sensors
+    dht_lcd = dht                                       # LCD of the DHT11 sensor
+    hcsr_lcd = hcsr                                     # LCD of the HC-SR04 sensor
+    lcds = [dht_lcd, hcsr_lcd]                          # Instance of all LCDs
+    sensors = all_sensors                               # Name of all sensors
 
 
 def backlight(enabled):
@@ -92,8 +92,8 @@ def full_print_lcds(first_row, second_row):
     global lcds, dht_lcd, hcsr_lcd
 
     for index, lcd in enumerate(lcds):
-        lcd.write_string(first_row)                 # Writes the specified unicode string to the LCD
-        lcd.crlf()                                  # Writes a line feed and a carriage return (\r\n) character
+        lcd.write_string(first_row)                     # Writes the specified unicode string to the LCD
+        lcd.crlf()                                      # Writes a line feed and a carriage return (\r\n) character
         lcd.write_string(second_row)
 
 
@@ -108,7 +108,7 @@ def print_lcds(dht_data, hcsr_data):
     data = [dht_data, hcsr_data]
 
     for index, lcd in enumerate(lcds):
-        lcd.write_string(data[index])               # Writes the specified unicode string to the LCD
+        lcd.write_string(data[index])                   # Writes the specified unicode string to the LCD
 
 
 def print_measure_dht(temperature, humidity, error_measure, clear_lcd):
@@ -158,8 +158,8 @@ def disconnect_lcds():
         time.sleep(0.25)
 
         try:
-            lcd.close(clear=True)                   # Closes and calls the clear function
-            lcd.backlight_enabled = False           # Disables the backlight
+            lcd.close(clear=True)                       # Closes and calls the clear function
+            lcd.backlight_enabled = False               # Disables the backlight
             print(Fore.GREEN + " ✓" + Fore.RESET)
         except Exception:
             print(Fore.RED + " ✕" + Fore.RESET)

@@ -42,17 +42,17 @@ try:
     import uuid                                     # UUID objects according to RFC 4122
     import time                                     # Time access and conversions
     import datetime                                 # Basic date and time types
+    import camera_module as picamera                # Module to handle the Picamera
     import checks_module as checks                  # Module to execute initial checks and to parse the menu
-    import lcd_module as lcd                        # Module to handle the LCDs
-    import system_module as system                  # Module that performs functions in the local operating system
-    import email_module as email                    # Module to send emails when an alert is triggered
     import cloudantdb_module as cloudantdb          # Module that contains the logic of the Cloudant NoSQL DB service
     import dropbox_module as dropbox                # Module that contains the logic of the Dropbox service
+    import email_module as email                    # Module to send emails when an alert is triggered
+    import lcd_module as lcd                        # Module to handle the LCDs
+    import system_module as system                  # Module that performs functions in the local operating system
     from pyfiglet import Figlet                     # Text banners in a variety of typefaces
     from colorama import Fore, Style                # Cross-platform colored terminal text
     from RPLCD.i2c import CharLCD                   # LCD 16x2
     import Adafruit_DHT                             # DHT11 sensor
-    import picamera                                 # Interface for the Raspberry Pi camera module
 
 except ImportError as importError:
     print("Error to import in raspberrypi_hyot: " + importError.message.lower() + ".")
@@ -70,12 +70,11 @@ def constants(user_args):
     :param user_args: Values of the options entered by the user
     """
 
-    global FIGLET, SENSORS, CAMERA, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT_LCD, HCSR_LCD, \
+    global FIGLET, SENSORS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT_LCD, HCSR_LCD, \
         TEMP_THRESHOLD, HUM_THRESHOLD
 
     try:
 
-        CAMERA = picamera.PiCamera()                                 # Camera
         FIGLET = Figlet(font='future_8', justify='center')          # Figlet
         SENSORS = ["DHT11", "HC-SR04"]                              # Name of the sensors
         MAILTO = user_args.EMAIL                                    # Recipient's email address
@@ -151,6 +150,9 @@ def main():
         time.sleep(1)                               # Wait time - 1 second
         print(Style.BRIGHT + Fore.BLACK + "-- Initializing HYOT..." + Style.RESET_ALL)
         lcd.full_print_lcds("Initializing", "HYOT...")                  # Prints data in the LCDs using both rows
+
+        # ############### Initializing the Picamera ###############
+        picamera.init()                             # Initializes the Picamera
 
         # ############### Initializing local directory ###############
         system.create_localdir()                    # Creates a local directory to store the files taken by the Picamera
@@ -313,6 +315,7 @@ def main():
         try:
             print("\r")
             lcd.disconnect_lcds()                       # Disconnects the LCDs
+            picamera.disconnect()                       # Disconnects the Picamera
             system.remove_localdir()                    # Removes the temporary local directory
             email.disconnect()                          # Disconnects the mail session
             cloudantdb.disconnect()                     # Disconnects the Cloudant client

@@ -45,3 +45,54 @@ except ImportError as importError:
 except KeyboardInterrupt:
     print("\rException: KeyboardInterrupt. Please, do not interrupt the execution.")
     sys.exit(1)
+
+
+########################################
+#           GLOBAL VARIABLES           #
+########################################
+camera = None                                           # Instance of the Picamera
+
+
+########################################
+#               FUNCTIONS              #
+########################################
+def init():
+    """Initializes the Picamera"""
+
+    global camera
+
+    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing the Picamera "
+          + Style.RESET_ALL)
+
+    try:
+        camera = picamera.PiCamera()                    # Creates an instance of the Picamera
+
+        print(Fore.GREEN + "        Picamera initialized correctly" + Fore.RESET)
+
+    except Exception as cameraError:
+        print(Fore.RED + "        Error to initialize the Picamera. Exception: " + Fore.RESET + str(cameraError))
+        sys.exit(1)
+
+    time.sleep(1)
+    print("\n        ------------------------------------------------------")
+
+
+def disconnect():
+    """Disconnects the Picamera"""
+
+    global camera
+
+    if not (camera is None):
+        print("        Disconnecting the Picamera"),
+
+        time.sleep(0.25)
+
+        try:
+            camera.close()                              # Closes the Picamera
+            camera = None
+            print(Fore.GREEN + " ✓" + Fore.RESET)
+        except Exception:
+            print(Fore.RED + " ✕" + Fore.RESET)
+            raise
+
+        time.sleep(0.25)

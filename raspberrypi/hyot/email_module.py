@@ -95,7 +95,7 @@ TEMPLATE = Template("""\
 ########################################
 #           GLOBAL VARIABLES           #
 ########################################
-session = None                                                              # Mail session
+session = None                                                # Mail session
 
 
 ########################################
@@ -110,7 +110,6 @@ def init():
           + Style.RESET_ALL + FROM)
 
     try:
-
         session = smtplib.SMTP(SERVERIP, SERVERPORT)          # Creates a new session of the mail server
         session.ehlo()                                        # Identifies yourself to an ESMTP server
         session.starttls()                                    # Security function, needed to connect to the Gmail server
@@ -182,8 +181,8 @@ def send_email(mailto, filepath, filename, sensor, timestamp, alert_id, temperat
     email_instance = MIMEMultipart()
 
     # Constructs the email
-    email_instance["From"] = FROM                               # Sender's email address
-    email_instance["To"] = mailto                               # Recipient's email address
+    email_instance["From"] = FROM                             # Sender's email address
+    email_instance["To"] = mailto                             # Recipient's email address
     email_instance["Subject"] = subject
 
     # Creates and attaches the message in HTML text
@@ -207,7 +206,7 @@ def send_email(mailto, filepath, filename, sensor, timestamp, alert_id, temperat
         # Attaches the file
         email_instance.attach(part)
 
-    except IOError:                                              # Error to open the file
+    except IOError:                                           # Error to open the file
         print(Fore.CYAN + " Could not open the file so it is not attached to the email" + Fore.RESET),
 
     try:
@@ -233,8 +232,7 @@ def disconnect():
         time.sleep(0.25)
 
         try:
-            # Ends the mail session
-            session.quit()
+            session.quit()                                    # Ends the mail session
             session = None
             print(Fore.GREEN + " ✓" + Fore.RESET)
         except Exception:

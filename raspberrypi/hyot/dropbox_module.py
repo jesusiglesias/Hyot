@@ -65,7 +65,7 @@ path = None                 # Path where create folders or upload files
 message_dir = None          # Message
 dht_subdir = None           # Final name of the DHT11 sensor subdirectory (default value or value entered by the user)
 hcsr_subdir = None          # Final name of the HC-SR04 sensor subdirectory (default value or value entered by the user)
-sensors = []                                                                      # Stores the name of all sensors
+sensors = []                # Stores the name of all sensors
 
 
 ########################################
@@ -91,7 +91,6 @@ def connect():
     dbx = dropbox.Dropbox(token.replace(" ", ""))
 
     try:
-
         # Checks that the access token is valid
         current_user = dbx.users_get_current_account()
 
@@ -131,7 +130,6 @@ def __create_dir(dir_name):
         message_dir = "subdirectory"
 
     try:
-
         # Creates the new directory or subdirectory
         # An error is thrown if the directory or subdirectory already exists, if there is not enough available space
         # and so on
@@ -216,8 +214,9 @@ def init(all_sensors):
     sensor_subdirs.append(dht_subdir)
     sensor_subdirs.append(hcsr_subdir)
 
-    # Creates the main directory
     print("        Checking if the main directory named Hyot exists in the root path of Dropbox")
+
+    # Creates the main directory
     __create_dir(HYOT_DIR)
 
     # Checks if each subdirectory already exists or not
@@ -240,7 +239,6 @@ def __get_shared_link(upload_path):
     global dbx
 
     try:
-
         link = dbx.sharing_create_shared_link(upload_path, short_url=True, pending_upload=None)
         return link.url
 
@@ -273,7 +271,6 @@ def upload_file(localfile, sensor):
         upload_path = "/" + HYOT_DIR + "/" + hcsr_subdir + "/" + "test.jpg"     # TODO
 
     try:
-
         print(Fore.LIGHTBLACK_EX + "  -- Uploading " + localfile + " to Dropbox like " + upload_path + Fore.RESET),
         time.sleep(0.5)
 
