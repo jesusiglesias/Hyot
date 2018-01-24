@@ -123,7 +123,7 @@ def main(user_args):
     try:
 
         # Variables
-        global uuid_measurement, alert_triggered, threshold_value, link_dropbox, sent       # TODO - Necessary global?
+        global uuid_measurement, alert_triggered, alert_origin, threshold_value, link_dropbox, sent       # TODO - Necessary global?
         count = 0                                   # Measurement counter
         uuid_measurement = None                     # UUID of each measurement for both sensors
         alert_triggered = None                      # Indicates if an alert has been triggered
