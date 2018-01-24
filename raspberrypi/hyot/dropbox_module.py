@@ -252,9 +252,10 @@ def __get_shared_link(upload_path):
             raise
 
 
-def upload_file(localfile, sensor):
+def upload_file(localfile, filename, sensor):
     """Uploads the file to Dropbox, in particular to the subdirectory of the sensor that triggered the alarm
     :param localfile: Local path and name of the file to upload TODO
+    :param filename: Name of the file to upload TODO
     :param sensor: Sensor that triggered the alarm
     :return: shared_link Shared link of the uploaded file to Dropbox
     """
@@ -265,17 +266,18 @@ def upload_file(localfile, sensor):
     upload_path = None                                              # Specify upload path
 
     if sensor == sensors[0]:                                        # Upload path of the DHT11 sensor
-        upload_path = "/" + HYOT_DIR + "/" + dht_subdir + "/" + "test.jpg"     # TODO
+        upload_path = "/" + HYOT_DIR + "/" + dht_subdir + "/" + filename
 
     elif sensor == sensors[1]:                                      # Upload path of the HC-SR04 sensor
-        upload_path = "/" + HYOT_DIR + "/" + hcsr_subdir + "/" + "test.jpg"     # TODO
+        upload_path = "/" + HYOT_DIR + "/" + hcsr_subdir + "/" + filename
 
     try:
-        print(Fore.LIGHTBLACK_EX + "   -- Uploading " + localfile + " to Dropbox like " + upload_path + Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "   -- Uploading the recording to Dropbox like " + upload_path +
+              Fore.RESET),
         time.sleep(0.5)
 
         # Reads the file and uploads it
-        with open("/home/pi/Desktop/test.jpg", 'rb') as f:  # TODO
+        with open(localfile, 'rb') as f:
 
             # Uploads the file. An error is thrown if this one already exists,
             # if there is not enough available space and so on
@@ -291,7 +293,7 @@ def upload_file(localfile, sensor):
 
     except IOError:                                                        # Error to open the file
 
-        print(Fore.RED + "Could not open the file: /home/pi/Desktop/test.jpg. No such file in the local system or "
+        print(Fore.RED + "Could not open the file: " + localfile + ". No such file in the local system or "
                          "corrupt file" + Fore.RESET)  # TODO
         sys.exit(1)     # TODO
 
