@@ -251,9 +251,10 @@ def main(user_args):
 
                     # Sends an email when an alert is triggered TODO
                     if not (MAILTO is None):
-                        sent = email.send_email(MAILTO, "/home/pi/Desktop/test.jpg", "test.jpg", SENSORS[0],  # TODO - Distance
+                        sent = email.send_email(MAILTO, "/home/pi/Desktop/test.jpg", "test.jpg",  # TODO - Distance
                                                 str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
-                                                str(uuid_measurement), temperature, humidity, "1", link_dropbox)
+                                                str(uuid_measurement), temperature, humidity, "1", link_dropbox,
+                                                alert_origin, threshold_value)
 
                     # Removes the temporary file after uploading to Dropbox
                     system.remove_file('/home/pi/Desktop/test.jpg')  # TODO

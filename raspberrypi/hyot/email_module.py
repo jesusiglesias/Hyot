@@ -109,33 +109,42 @@ def read_template(filename):
     return Template(template_file_content)
 
 
-def send_email(mailto, filepath, filename, sensor, timestamp, alert_id, temperature, humidity, distance, link_dropbox):
+def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, humidity, distance, link_dropbox,
+               alert_origin, threshold_value):
     """Sends an email to the recipient to notify a triggered alert
     :param mailto: Recipient's email address
     :param filepath: Path of the file to attach
     :param filename: Name of the file to attach
-    :param sensor: Sensor that triggers the alert
     :param timestamp: Datetime of the alert
     :param alert_id: Value of this parameter in the measurement
     :param temperature: Value of this parameter in the measurement
     :param humidity: Value of this parameter in the measurement
     :param distance: Value of this parameter in the measurement
     :param link_dropbox: Link to Dropbox where the file is uploaded
+    :param alert_origin: Contains the sensor and the event that triggers the alert
+    :param threshold_value: Indicates the value of the event threshold that triggers the alert
     :return: True/False depending on whether the notification was sent
     """
 
     global session
 
-    # Variables
-    subject = "HYOT - Alert notification: {0:s} sensor | {1:s}".format(sensor, timestamp)    # Subject of the email
+    # Extracts the sensor and the event
+    sensor, event = alert_origin.split('-')
+    sensor = sensor.strip()
+    event = event.strip()
+
+    # Subject of the email
+    subject = "HYOT - Alert notification: {0:s} | {1:s} | {2:s}".format(sensor, event, timestamp)
 
     print(Fore.LIGHTBLACK_EX + "   -- Sending alert notification to the following email address: " + mailto + Fore.RESET),
 
     # Message of the email in HTML format
     try:
         message = read_template(os.path.dirname(os.path.abspath(__file__)) + "/" + TEMPLATEPATH).substitute(
+            EVENT=event,
             SENSOR=sensor,
             DATETIME=timestamp,
+            THRESHOLD=threshold_value,
             ID=alert_id,
             TEMPERATURE=temperature,
             HUMIDITY=humidity,
