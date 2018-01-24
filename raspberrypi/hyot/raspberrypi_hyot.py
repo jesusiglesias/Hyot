@@ -252,22 +252,21 @@ def main(user_args):
                     # Takes a recording for 10 seconds
                     picamera.record_video(video_filefullpath)
 
+                    # Checks if the file exists in the local system
+                    system.check_file(video_filefullpath)
 
-                    # Checks if the file exists in the local system TODO
-                    system.check_file("/home/pi/Desktop/test.jpg")
+                    # Uploads the file to Dropbox
+                    link_dropbox = dropbox.upload_file(video_filefullpath, video_filename, SENSORS[0])
 
-                    # Uploads the file to Dropbox TODO
-                    link_dropbox = dropbox.upload_file('/home/pi/Desktop/test.jpg', SENSORS[0])
-
-                    # Sends an email when an alert is triggered TODO
+                    # Sends an email when an alert is triggered
                     if not (MAILTO is None):
-                        sent = email.send_email(MAILTO, "/home/pi/Desktop/test.jpg", "test.jpg",  # TODO - Distance
+                        sent = email.send_email(MAILTO, video_filefullpath, video_filename,  # TODO - Distance
                                                 str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
                                                 str(uuid_measurement), temperature, humidity, "1", link_dropbox,
                                                 alert_origin, threshold_value)
 
                     # Removes the temporary file after uploading to Dropbox
-                    system.remove_file('/home/pi/Desktop/test.jpg')  # TODO
+                    system.remove_file(video_filefullpath)
 
                     lcd.clear_lcd(SENSORS[0])                            # Clears only the DHT11 LCD
 
