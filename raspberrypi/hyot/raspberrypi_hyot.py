@@ -81,8 +81,8 @@ def constants(user_args):
         TIME_MEASUREMENTS = user_args.WAITTIME_MEASUREMENTS         # Wait time between each measurement. Default 3 seconds
         DHT_SENSOR = Adafruit_DHT.DHT11                             # DHT11 sensor
         DHT_PINDATA = user_args.DHT_DATAPIN                         # DHT11 - Data pin. Default 21 (GPIO21)
-        TEMP_THRESHOLD = user_args.TEMPERATURE_THRESHOLD             # Temperature alert threshold in the DHT11 sensor
-        HUM_THRESHOLD = user_args.HUMIDITY_THRESHOLD                 # Humidity alert threshold in the DHT11 sensor
+        TEMP_THRESHOLD = user_args.TEMPERATURE_THRESHOLD            # Temperature alert threshold in the DHT11 sensor
+        HUM_THRESHOLD = user_args.HUMIDITY_THRESHOLD                # Humidity alert threshold in the DHT11 sensor
 
     except Exception as exception:                  # TODO - Too general exception
         print(Fore.RED + "Exception in constants() function: " + str(exception))
@@ -169,6 +169,13 @@ def main(user_args):
                                           "sensors\n" + Style.RESET_ALL)
 
         lcd.full_print_lcds("Reading values", "from sensors")           # Writes in both LCDS using both rows
+
+        # Information about the current thresholds
+        print(Fore.BLACK + "      -- Alert thresholds established:")
+        print("        - Sensor: DHT11 - Event: Temperature -> " + str(TEMP_THRESHOLD) + ' °C')
+        print("        - Sensor: DHT11 - Event: Humidity -> " + str(HUM_THRESHOLD) + ' %')
+        print("        - Sensor: HC-SR04 - Event: Distance -> " + ' meters' + '\n')  # TODO
+
         time.sleep(1)
         lcd.clear_lcds()
         time.sleep(1)
@@ -269,6 +276,12 @@ def main(user_args):
 
                 # Adds the document to the database of the Cloudant NoSQL service
                 cloudantdb.add_document(dht11_data, SENSORS[0])
+
+                time.sleep(1)
+                lcd.clear_lcd(SENSORS[0])                                # Clears only the DHT11 LCD
+                time.sleep(1)
+                print(Fore.RED + "  - PROCEDURE FINISHED. CONTINUING... -  " + Fore.RESET)
+                lcd.full_print_lcd(SENSORS[0], "Procedure finished", "Continuing...")
 
             elif humidity is None or 0 > humidity > 100:                        # Humidity value is invalid or None
                 print("Failed to get reading. Humidity is invalid or None")

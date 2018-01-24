@@ -141,7 +141,7 @@ def check_file(localfile):
     """
     # TODO - Exit?
     if not os.path.exists(localfile):
-        print(Fore.RED + localfile + " file not found in the local system. Alert is not stored" + Fore.RESET)
+        print(Fore.RED + '      ' + localfile + " file not found in the local system. Alert is not stored" + Fore.RESET)
         sys.exit(1)
 
 
