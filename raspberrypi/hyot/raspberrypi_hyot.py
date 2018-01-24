@@ -123,9 +123,13 @@ def main(user_args):
     try:
 
         # Variables
-        global uuid_measurement, alert_triggered, alert_origin, threshold_value, link_dropbox, sent       # TODO - Necessary global?
+        global uuid_measurement, video_filename, video_filefullpath, alert_triggered, alert_origin, threshold_value,\
+            link_dropbox, sent       # TODO - Necessary global?
         count = 0                                   # Measurement counter
         uuid_measurement = None                     # UUID of each measurement for both sensors
+        video_filename = None                       # Name of the video file
+        video_filefullpath = None                   # Full path of the recording
+        ext = '.h264'                               # Extension of the video file
         alert_triggered = None                      # Indicates if an alert has been triggered
         alert_origin = None                         # Indicates which event triggered the alert
         threshold_value = None                      # Indicates the value of the event threshold that triggers the alert
@@ -189,6 +193,8 @@ def main(user_args):
         while True:
 
             count += 1                                                  # Increment the counter
+            video_filename = None                                       # Resets the value
+            video_filefullpath = None                                   # Resets the value
             alert_triggered = False                                     # Resets the value
             alert_origin = None                                         # Resets the value
             threshold_value = None                                      # Resets the value
@@ -223,6 +229,12 @@ def main(user_args):
                 # DHT11 - Alert triggered TODO
                 if temperature > TEMP_THRESHOLD:
 
+                    # Name of the video file
+                    video_filename = SENSORS[0].lower() + '_' + DHT11_EVENTS[0].lower() + '_' + \
+                                     str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) + ext
+                    # Full path of the video file
+                    video_filefullpath = system.tempfiles_path + '/' + video_filename
+
                     alert_triggered = True                               # Marks the alert like triggered
                     alert_origin = SENSORS[0] + ' - ' + DHT11_EVENTS[0]  # Saves the event which triggers the alert
                     threshold_value = TEMP_THRESHOLD                     # Stores the threshold value
@@ -237,11 +249,9 @@ def main(user_args):
                     print(Fore.BLACK + "  --- Initiating the alert procedure ---  " + Fore.RESET)
                     lcd.full_print_lcd(SENSORS[0], "Initiating the", "procedure...")
 
-                    time.sleep(2)
+                    # Takes a recording for 10 seconds
+                    picamera.record_video(video_filefullpath)
 
-                    #CAMERA.capture('dht11_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) + '.jpg')
-                    #time.sleep(1)
-                    time.sleep(5)  # TODO
 
                     # Checks if the file exists in the local system TODO
                     system.check_file("/home/pi/Desktop/test.jpg")
@@ -278,11 +288,13 @@ def main(user_args):
                 # Adds the document to the database of the Cloudant NoSQL service
                 cloudantdb.add_document(dht11_data, SENSORS[0])
 
-                time.sleep(1)
-                lcd.clear_lcd(SENSORS[0])                                # Clears only the DHT11 LCD
-                time.sleep(1)
-                print(Fore.RED + "  - PROCEDURE FINISHED. CONTINUING... -  " + Fore.RESET)
-                lcd.full_print_lcd(SENSORS[0], "Procedure finished", "Continuing...")
+                # Only if the alert has been triggered
+                if alert_triggered:
+                    time.sleep(1)
+                    lcd.clear_lcd(SENSORS[0])                                # Clears only the DHT11 LCD
+                    time.sleep(1)
+                    print(Fore.RED + "  - PROCEDURE FINISHED. CONTINUING... -  " + Fore.RESET)
+                    lcd.full_print_lcd(SENSORS[0], "Procedure finished", "Continuing...")
 
             elif humidity is None or 0 > humidity > 100:                        # Humidity value is invalid or None
                 print("Failed to get reading. Humidity is invalid or None")

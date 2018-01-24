@@ -196,8 +196,8 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
         print(Fore.GREEN + " ✓" + Fore.RESET)
         return True
 
-    except Exception as error:
-        print(Fore.RED + " ✕ Error sending the email: " + str(error) + Fore.RESET)
+    except Exception as sendError:
+        print(Fore.RED + " ✕ Error sending the email: " + str(sendError) + Fore.RESET)
         return False
 
 

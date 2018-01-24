@@ -76,6 +76,34 @@ def init():
     print("\n        ------------------------------------------------------")
 
 
+def record_video(path):
+    """Record a video for 10 seconds
+    :param path: Path where the video will be saved
+    """
+
+    global camera
+
+    try:
+        print(Fore.LIGHTBLACK_EX + "   -- Taking a 10-second recording and temporarily storing it in the path: " + path
+              + Fore.RESET),
+
+        time.sleep(1)
+
+        camera.start_recording(path)
+        # Pause the recording (10 seconds) and it continually check for recording errors
+        camera.wait_recording(10)
+        camera.stop_recording()
+
+        print(Fore.GREEN + " ✓" + Fore.RESET)
+
+        time.sleep(1)
+
+    except Exception as recordError:
+
+        print(Fore.RED + " ✕ Error to record the video: " + str(recordError) + Fore.RESET)
+        sys.exit(1)  # TODO
+
+
 def disconnect():
     """Disconnects the Picamera"""
 
