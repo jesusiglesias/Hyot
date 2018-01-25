@@ -51,8 +51,8 @@ except KeyboardInterrupt:
 #              CONSTANTS               #
 ########################################
 HYOT_DIR = "Hyot"                                                           # Name of the main directory
-DHT11_DIR = "dht11_images"                                                  # Name of the DHT11 sensor subdirectory TODO - Images?
-HCSR04_DIR = "hcsr04_images"                                                # Name of the HC-SR04 sensor subdirectory TODO - Images?
+DHT11_DIR = "dht11"                                                         # Name of the DHT11 sensor subdirectory
+HCSR04_DIR = "hcsr04"                                                       # Name of the HC-SR04 sensor subdirectory
 TOKEN = "eI5UZqDlaNAAAAAAAAAAJm2xSwyCoMquSwWq7p270YXf5qr3p1vawOu5AzS99Uih"  # Authorisation token
 MIN_SPACE = 524288000                                                       # Recommended available space in the account (500 MB = 524288000 bytes)
 
