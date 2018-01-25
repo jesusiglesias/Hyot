@@ -95,10 +95,28 @@ def constants(user_args):
 
 
 ########################################
+#           GLOBAL VARIABLES           #
+########################################
+uuid_measurement = None                     # UUID of each measurement for both sensors
+datetime_measurement = None                 # Datetime in which the measurement was taken
+video_filename = None                       # Name of the video file
+video_filefullpath = None                   # Full path of the recording
+ext = '.h264'                               # Extension of the video file
+recording_time = None                       # Time that the recording will take
+alert_triggered = None                      # Indicates if an alert has been triggered
+alert_origin = None                         # Indicates which event triggered the alert
+threshold_value = None                      # Indicates the value of the event threshold that triggers the alert
+link_dropbox = None                         # Shared link of the uploaded file to Dropbox
+sent = None                                 # Indicates if the email was or not sent
+
+
+########################################
 #               FUNCTIONS              #
 ########################################
 def header():
     """Prints the header in the console"""
+
+    global FIGLET
 
     # Header
     print(Style.BRIGHT + Fore.LIGHTBLUE_EX + FIGLET.renderText("HYOT"))
