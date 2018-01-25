@@ -250,7 +250,7 @@ def main(user_args):
                     lcd.full_print_lcd(SENSORS[0], "Initiating the", "procedure...")
 
                     # Takes a recording for 10 seconds
-                    picamera.record_video(video_filefullpath)
+                    picamera.record_video(video_filefullpath, user_args.RECORDING_TIME)
 
                     # Checks if the file exists in the local system
                     system.check_file(video_filefullpath)

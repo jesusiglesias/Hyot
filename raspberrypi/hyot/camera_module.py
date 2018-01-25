@@ -76,22 +76,23 @@ def init():
     print("\n        ------------------------------------------------------")
 
 
-def record_video(path):
-    """Record a video for 10 seconds
+def record_video(path, recording_time):
+    """Record a video for n seconds. Default: 10 seconds
     :param path: Path where the video will be saved
+    :param recording_time: Time that the recording will take
     """
 
     global camera
 
     try:
-        print(Fore.LIGHTBLACK_EX + "   -- Taking a 10-second recording and temporarily storing it in the path: " + path
-              + Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "   -- Taking a recording of " + str(recording_time) + " seconds and temporarily storing"
+                                   " it in the path: " + path + Fore.RESET),
 
         time.sleep(1)
 
         camera.start_recording(path)
-        # Pause the recording (10 seconds) and it continually check for recording errors
-        camera.wait_recording(10)
+        # Pause the recording for n seconds (default value: 10 seconds) and it continually check for recording errors
+        camera.wait_recording(recording_time)
         camera.stop_recording()
 
         print(Fore.GREEN + " ✓" + Fore.RESET)
