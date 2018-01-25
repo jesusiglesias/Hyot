@@ -114,6 +114,23 @@ def timestamp():
     return datetime.datetime.now()
 
 
+def information_values():
+    """Shows the information by console about some values established"""
+
+    print(Style.BRIGHT + Fore.BLACK + "\n-- Information - Values established:" + Style.RESET_ALL)
+    # Information about the current thresholds
+    print(Fore.BLACK + "      -- Alert thresholds:")
+    print("        - Sensor: DHT11 - Event: Temperature -> " + str(TEMP_THRESHOLD) + ' °C')
+    print("        - Sensor: DHT11 - Event: Humidity -> " + str(HUM_THRESHOLD) + ' %')
+    print("        - Sensor: HC-SR04 - Event: Distance -> " + ' meters')  # TODO
+    # Information about the recording time
+    print(Fore.BLACK + "      -- Recording time: " + str(recording_time) + " seconds")
+    # Information about the time between measurements
+    print(Fore.BLACK + "      -- Time between measurements: " + str(TIME_MEASUREMENTS) + " seconds")
+
+    time.sleep(2)
+
+
 def main(user_args):
     """Main function
     :param user_args: Values of the options entered by the user
@@ -123,13 +140,14 @@ def main(user_args):
     try:
 
         # Variables
-        global uuid_measurement, video_filename, video_filefullpath, alert_triggered, alert_origin, threshold_value,\
-            link_dropbox, sent       # TODO - Necessary global?
+        global uuid_measurement, video_filename, video_filefullpath, recording_time, alert_triggered, alert_origin, \
+            threshold_value, link_dropbox, sent       # TODO - Necessary global?
         count = 0                                   # Measurement counter
         uuid_measurement = None                     # UUID of each measurement for both sensors
         video_filename = None                       # Name of the video file
         video_filefullpath = None                   # Full path of the recording
         ext = '.h264'                               # Extension of the video file
+        recording_time = user_args.RECORDING_TIME   # Time that the recording will take
         alert_triggered = None                      # Indicates if an alert has been triggered
         alert_origin = None                         # Indicates which event triggered the alert
         threshold_value = None                      # Indicates the value of the event threshold that triggers the alert
@@ -168,18 +186,14 @@ def main(user_args):
         lcd.clear_lcds()                            # Clears both LCDs
         time.sleep(1)                               # Wait time - 1 second
 
+        # ############### Information - Values established ###############
+        information_values()
+
         # ############### Reading values ###############
         print(Style.BRIGHT + Fore.BLACK + "\n-- Reading values each " + str(TIME_MEASUREMENTS) + " seconds from "
                                           "sensors\n" + Style.RESET_ALL)
 
         lcd.full_print_lcds("Reading values", "from sensors")           # Writes in both LCDS using both rows
-
-        # Information about the current thresholds
-        print(Fore.BLACK + "      -- Alert thresholds established:")
-        print("        - Sensor: DHT11 - Event: Temperature -> " + str(TEMP_THRESHOLD) + ' °C')
-        print("        - Sensor: DHT11 - Event: Humidity -> " + str(HUM_THRESHOLD) + ' %')
-        print("        - Sensor: HC-SR04 - Event: Distance -> " + ' meters' + '\n')  # TODO
-
         time.sleep(1)
         lcd.clear_lcds()
         time.sleep(1)
@@ -250,7 +264,7 @@ def main(user_args):
                     lcd.full_print_lcd(SENSORS[0], "Initiating the", "procedure...")
 
                     # Takes a recording for 10 seconds
-                    picamera.record_video(video_filefullpath, user_args.RECORDING_TIME)
+                    picamera.record_video(video_filefullpath, recording_time)
 
                     # Checks if the file exists in the local system
                     system.check_file(video_filefullpath)
