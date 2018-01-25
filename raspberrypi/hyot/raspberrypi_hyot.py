@@ -149,6 +149,19 @@ def information_values():
     time.sleep(2)
 
 
+def reset_values():
+    """Resets the values"""
+
+    global video_filename, video_filefullpath, alert_triggered, alert_origin, threshold_value, link_dropbox, sent
+
+    video_filename = None
+    video_filefullpath = None
+    alert_triggered = False
+    alert_origin = None
+    threshold_value = None
+    link_dropbox = None
+    sent = None
+
 def main(user_args):
     """Main function
     :param user_args: Values of the options entered by the user
@@ -158,19 +171,11 @@ def main(user_args):
     try:
 
         # Variables
-        global uuid_measurement, video_filename, video_filefullpath, recording_time, alert_triggered, alert_origin, \
-            threshold_value, link_dropbox, sent       # TODO - Necessary global?
+        global uuid_measurement, datetime_measurement, recording_time, threshold_value, SENSORS, MAILTO, \
+            TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT11_EVENTS, TEMP_THRESHOLD, HUM_THRESHOLD
+
         count = 0                                   # Measurement counter
-        uuid_measurement = None                     # UUID of each measurement for both sensors
-        video_filename = None                       # Name of the video file
-        video_filefullpath = None                   # Full path of the recording
-        ext = '.h264'                               # Extension of the video file
         recording_time = user_args.RECORDING_TIME   # Time that the recording will take
-        alert_triggered = None                      # Indicates if an alert has been triggered
-        alert_origin = None                         # Indicates which event triggered the alert
-        threshold_value = None                      # Indicates the value of the event threshold that triggers the alert
-        link_dropbox = None                         # Shared link of the uploaded file to Dropbox
-        sent = None                                 # Indicates if the email was or not sent
 
         # Header
         header()
@@ -225,15 +230,9 @@ def main(user_args):
         while True:
 
             count += 1                                                  # Increment the counter
-            video_filename = None                                       # Resets the value
-            video_filefullpath = None                                   # Resets the value
-            alert_triggered = False                                     # Resets the value
-            alert_origin = None                                         # Resets the value
-            threshold_value = None                                      # Resets the value
-            link_dropbox = None                                         # Resets the value
-            sent = None                                                 # Resets the value
             datetime_measurement = timestamp()                          # Obtains a timestamp (datetime)
             uuid_measurement = uuid.uuid4()                             # Generates a random UUID
+            reset_values()                                              # Resets the values
 
             # ############### DHT11 SENSOR ###############
 
