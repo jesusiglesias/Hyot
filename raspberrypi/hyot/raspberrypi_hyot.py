@@ -135,6 +135,8 @@ def timestamp():
 def information_values():
     """Shows the information by console about some values established"""
 
+    global TEMP_THRESHOLD, HUM_THRESHOLD, TIME_MEASUREMENTS, recording_time
+
     print(Style.BRIGHT + Fore.BLACK + "\n-- Information - Values established:" + Style.RESET_ALL)
     # Information about the current thresholds
     print(Fore.BLACK + "      -- Alert thresholds:")
@@ -161,6 +163,96 @@ def reset_values():
     threshold_value = None
     link_dropbox = None
     sent = None
+
+
+def add_cloudant(sensor, temperature, humidity):
+    """Adds the data to the Cloudant NoSQL database
+    :param sensor: Indicates the sensor that triggered the alert
+    :param temperature: Indicates the value of temperature measured
+    :param humidity: Indicates the value of humidity measured
+    """
+
+    global uuid_measurement, datetime_measurement, alert_triggered, alert_origin, threshold_value, link_dropbox, sent,\
+        MAILTO
+
+    # Creates a JSON document content data
+    data = {
+        '_id': str(uuid_measurement),
+        "datetime_field": str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
+        "temperature_field": temperature,
+        "humidity_field": humidity,
+        "alert_triggered": alert_triggered,
+        "alert_origin": alert_origin,
+        "threshold_value": threshold_value,
+        "shared_link_Dropbox": link_dropbox,
+        "notification_sent": sent,
+        "mailto": MAILTO
+    }
+
+    # Adds the document to the database of the Cloudant NoSQL service
+    cloudantdb.add_document(data, sensor)
+
+
+def alert_procedure(sensor, event, temperature, humidity):
+    """Initiates the alert procedure
+    :param sensor: Indicates the sensor that triggered the alert
+    :param event: Indicates the event that triggered the alert
+    :param temperature: Indicates the value of temperature measured
+    :param humidity: Indicates the value of humidity measured
+    """
+
+    global uuid_measurement, datetime_measurement, video_filename, video_filefullpath, ext, recording_time, \
+        alert_triggered, alert_origin, threshold_value, link_dropbox, sent, MAILTO
+
+    # Name of the video file
+    video_filename = sensor.lower() + '_' + event.lower() + '_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) + ext
+
+    # Full path of the video file
+    video_filefullpath = system.tempfiles_path + '/' + video_filename
+
+    alert_triggered = True                                              # Marks the alert like triggered
+    alert_origin = sensor + ' - ' + event                               # Saves the event which triggers the alert
+    time.sleep(1)
+    lcd.clear_lcd(sensor)                                               # Clears the LCD
+    time.sleep(1)
+
+    print(Fore.RED + "  ---------- ALERT TRIGGERED | " + sensor + " | " + event + " ----------  " + Fore.RESET)
+    lcd.full_print_lcd(sensor, "ALERT TRIGGERED!", event)
+    time.sleep(3)
+    lcd.clear_lcd(sensor)                                               # Clears the LCD
+    print(Fore.BLACK + "  ----------- Initiating the alert procedure ------------  " + Fore.RESET)
+    lcd.full_print_lcd(sensor, "Initiating the", "procedure...")
+
+    # Takes a recording for 10 seconds
+    picamera.record_video(video_filefullpath, recording_time)
+
+    # Checks if the file exists in the local system
+    system.check_file(video_filefullpath)
+
+    # Uploads the file to Dropbox
+    link_dropbox = dropbox.upload_file(video_filefullpath, video_filename, sensor)
+
+    # Sends an email when an alert is triggered
+    if not (MAILTO is None):
+        sent = email.send_email(MAILTO, video_filefullpath, video_filename,  # TODO - Distance
+                                str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
+                                str(uuid_measurement), temperature, humidity, "1", link_dropbox,
+                                alert_origin, threshold_value)
+
+    # Removes the temporary file after uploading to Dropbox
+    system.remove_file(video_filefullpath)
+
+    # Adds the measurement to the database
+    add_cloudant(sensor, temperature, humidity)
+
+    # Only if the alert has been triggered
+    if alert_triggered:
+        time.sleep(1)
+        lcd.clear_lcd(sensor)                                       # Clears the LCD
+        time.sleep(1)
+        print(Fore.RED + "  ----------- PROCEDURE FINISHED. CONTINUING... ----------  " + Fore.RESET)
+        lcd.full_print_lcd(sensor, "Procedure", "finished...")
+
 
 def main(user_args):
     """Main function
@@ -252,79 +344,19 @@ def main(user_args):
                 # Outputs the data by LCD
                 lcd.print_measure_dht(temperature, humidity, False, False)
 
-                HCSR_LCD.cursor_pos = (0, 0)
-                HCSR_LCD.write_string("Temp: %.1f °C" % temperature)
-                HCSR_LCD.crlf()
-                HCSR_LCD.write_string("Humidity: %.1f %%" % humidity)
-
-                # DHT11 - Alert triggered TODO
+                # Alert - DHT11 | Temperature TODO - Pass events - Distance
                 if temperature > TEMP_THRESHOLD:
+                    threshold_value = TEMP_THRESHOLD
+                    alert_procedure(SENSORS[0], DHT11_EVENTS[0], temperature, humidity)
 
-                    # Name of the video file
-                    video_filename = SENSORS[0].lower() + '_' + DHT11_EVENTS[0].lower() + '_' + \
-                                     str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) + ext
-                    # Full path of the video file
-                    video_filefullpath = system.tempfiles_path + '/' + video_filename
+                # Alert - DHT11 | Humidity
+                elif humidity > HUM_THRESHOLD:
+                    threshold_value = HUM_THRESHOLD
+                    alert_procedure(SENSORS[0], DHT11_EVENTS[1], temperature, humidity)
 
-                    alert_triggered = True                               # Marks the alert like triggered
-                    alert_origin = SENSORS[0] + ' - ' + DHT11_EVENTS[0]  # Saves the event which triggers the alert
-                    threshold_value = TEMP_THRESHOLD                     # Stores the threshold value
-                    time.sleep(1)
-                    lcd.clear_lcd(SENSORS[0])                            # Clears only the DHT11 LCD
-                    time.sleep(1)
-
-                    print(Fore.RED + "  ---------- ALERT TRIGGERED ----------  " + Fore.RESET)
-                    lcd.print_lcd(SENSORS[0], "ALERT TRIGGERED!")
-                    time.sleep(3)
-                    lcd.clear_lcd(SENSORS[0])                            # Clears only the DHT11 LCD
-                    print(Fore.BLACK + "  --- Initiating the alert procedure ---  " + Fore.RESET)
-                    lcd.full_print_lcd(SENSORS[0], "Initiating the", "procedure...")
-
-                    # Takes a recording for 10 seconds
-                    picamera.record_video(video_filefullpath, recording_time)
-
-                    # Checks if the file exists in the local system
-                    system.check_file(video_filefullpath)
-
-                    # Uploads the file to Dropbox
-                    link_dropbox = dropbox.upload_file(video_filefullpath, video_filename, SENSORS[0])
-
-                    # Sends an email when an alert is triggered
-                    if not (MAILTO is None):
-                        sent = email.send_email(MAILTO, video_filefullpath, video_filename,  # TODO - Distance
-                                                str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
-                                                str(uuid_measurement), temperature, humidity, "1", link_dropbox,
-                                                alert_origin, threshold_value)
-
-                    # Removes the temporary file after uploading to Dropbox
-                    system.remove_file(video_filefullpath)
-
-                    lcd.clear_lcd(SENSORS[0])                            # Clears only the DHT11 LCD
-
-                # Creates a JSON document content data
-                dht11_data = {
-                    '_id': str(uuid_measurement),
-                    "datetime_field": str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
-                    "temperature_field": temperature,
-                    "humidity_field": humidity,
-                    "alert_triggered": alert_triggered,
-                    "alert_origin": alert_origin,
-                    "threshold_value": threshold_value,
-                    "shared_link_Dropbox": link_dropbox,
-                    "notification_sent": sent,
-                    "mailto": MAILTO
-                }
-
-                # Adds the document to the database of the Cloudant NoSQL service
-                cloudantdb.add_document(dht11_data, SENSORS[0])
-
-                # Only if the alert has been triggered
-                if alert_triggered:
-                    time.sleep(1)
-                    lcd.clear_lcd(SENSORS[0])                                # Clears only the DHT11 LCD
-                    time.sleep(1)
-                    print(Fore.RED + "  - PROCEDURE FINISHED. CONTINUING... -  " + Fore.RESET)
-                    lcd.full_print_lcd(SENSORS[0], "Procedure finished", "Continuing...")
+                # No alert
+                else:
+                    add_cloudant(SENSORS[0], temperature, humidity)
 
             elif humidity is None or 0 > humidity > 100:                        # Humidity value is invalid or None
                 print("Failed to get reading. Humidity is invalid or None")
@@ -332,23 +364,11 @@ def main(user_args):
                 # Shows the output like empty
                 lcd.print_measure_dht(None, None, True, True)
 
-                HCSR_LCD.clear()
-                HCSR_LCD.cursor_pos = (0, 0)
-                HCSR_LCD.write_string("Temp: ")
-                HCSR_LCD.crlf()
-                HCSR_LCD.write_string("Humidity: ")
-
             elif temperature is None or temperature < 0:                        # Temperature value is invalid or None
                 print("Failed to get reading. Temperature is invalid or None")
 
                 # Shows the output like empty
                 lcd.print_measure_dht(None, None, True, True)
-
-                HCSR_LCD.clear()
-                HCSR_LCD.cursor_pos = (0, 0)
-                HCSR_LCD.write_string("Temp: ")
-                HCSR_LCD.crlf()
-                HCSR_LCD.write_string("Humidity: ")
 
             print("-----------------------------")
 
