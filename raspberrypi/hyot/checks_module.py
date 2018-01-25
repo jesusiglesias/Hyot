@@ -171,17 +171,23 @@ def menu():
         general_group = parser.add_argument_group('General options')
         pin_group = parser.add_argument_group('Sensor and device pin')
         i2c_group = parser.add_argument_group('LCD device - I2C')
-        threshold_group = parser.add_argument_group('Alarm threshold')
+        threshold_group = parser.add_argument_group('Alert threshold')
 
         # ### General group ###
         # Help option
         general_group.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
                                    help='Shows the help.')
 
-        # Email address where to send an alarm notification
+        # Email address where to send an alert notification
         general_group.add_argument("-e", "--email",
                                    default=None, required=False, action="store", dest="EMAIL",
-                                   help="Email address where to send an alarm notification. Default: disabled option.")
+                                   help="Email address where to send an alert notification. Default: disabled option.")
+
+        # Time that the recording will take when an alert is triggered
+        general_group.add_argument("-r", "--recordingtime",
+                                   type=int, default=10, required=False, action="store", dest="RECORDING_TIME",
+                                   help="Time that the recording will take when an alert is triggered (e.g. 10 seconds)"
+                                        ". Default: 10.")
 
         # Wait time between measurements TODO - Group
         general_group.add_argument("-wt", "--waittime",
@@ -224,12 +230,12 @@ def menu():
         # DHT11 sensor - Temperature threshold TODO
         threshold_group.add_argument("-tt", "--tempthreshold",
                                      type=int, default=30, required=False, action="store", dest="TEMPERATURE_THRESHOLD",
-                                     help="Temperature alarm threshold in the DHT11 sensor (e.g. 30 °C). Default: 30.")
+                                     help="Temperature alert threshold in the DHT11 sensor (e.g. 30 °C). Default: 30.")
 
         # DHT11 sensor - Humidity threshold TODO
         threshold_group.add_argument("-ht", "--humthreshold",
                                      type=int, default=80, required=False, action="store", dest="HUMIDITY_THRESHOLD",
-                                     help="Humidity alarm threshold in the DHT11 sensor (e.g. 80 %%). Default: 80.")
+                                     help="Humidity alert threshold in the DHT11 sensor (e.g. 80 %%). Default: 80.")
 
         # Parses the arguments returning the data from the options specified
         args = parser.parse_args()
@@ -240,6 +246,12 @@ def menu():
                 print(Fore.RED + "Email address entered is not a valid email. Please, type the '-h/--help' option to "
                                  "show the help." + Fore.RESET)
                 sys.exit(1)
+
+        # Checks the '--recordingtime' argument
+        if args.RECORDING_TIME < 1:
+            print(Fore.RED + "Recording time invalid. Please, type the '-h/--help' option to show the help"
+                             " or the value must be upper than 0. Default value: 10." + Fore.RESET)
+            sys.exit(1)
 
         # Checks the '--waittime' argument
         if args.WAITTIME_MEASUREMENTS < 2:
@@ -270,13 +282,13 @@ def menu():
 
         # Checks the '--tempthreshold' argument
         if args.TEMPERATURE_THRESHOLD < 0:
-            print(Fore.RED + "Temperature alarm threshold invalid. Please, type the '-h/--help' option to show the help"
+            print(Fore.RED + "Temperature alert threshold invalid. Please, type the '-h/--help' option to show the help"
                              " or the value must be upper than 0. Default value: 30." + Fore.RESET)
             sys.exit(1)
 
         # Checks the '--humthreshold' argument
         if args.HUMIDITY_THRESHOLD < 0 or args.HUMIDITY_THRESHOLD > 100:
-            print(Fore.RED + "Humidity alarm threshold invalid. Please, type the '-h/--help' option to show the help"
+            print(Fore.RED + "Humidity alert threshold invalid. Please, type the '-h/--help' option to show the help"
                              " or the value must be the 0-100 range. Default value: 80." + Fore.RESET)
             sys.exit(1)
 
