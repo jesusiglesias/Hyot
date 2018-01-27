@@ -245,13 +245,11 @@ def alert_procedure(sensor, event, temperature, humidity):
     # Adds the measurement to the database
     add_cloudant(sensor, temperature, humidity)
 
-    # Only if the alert has been triggered
-    if alert_triggered:
-        time.sleep(1)
-        lcd.clear_lcd(sensor)                                       # Clears the LCD
-        time.sleep(1)
-        print(Fore.RED + "  ----------- PROCEDURE FINISHED. CONTINUING... ----------  " + Fore.RESET)
-        lcd.full_print_lcd(sensor, "Procedure", "finished...")
+    time.sleep(1)
+    lcd.clear_lcd(sensor)                                       # Clears the LCD
+    time.sleep(1)
+    print(Fore.RED + "  ----------- PROCEDURE FINISHED. CONTINUING... ----------  " + Fore.RESET)
+    lcd.full_print_lcd(sensor, "Procedure", "finished...")
 
 
 def main(user_args):
