@@ -201,6 +201,12 @@ def menu():
                                help="Data pin for DHT11 sensor in Broadcom GPIO pin number (e.g. 21 for Raspberry Pi "
                                     "GPIO21). Default: 21.")
 
+        # Red led - Pin
+        pin_group.add_argument("-lp", "--ledpin",
+                               type=int, default=13, required=False, action="store", dest="LED_PIN",
+                               help="Pin for LED in Broadcom GPIO pin number (e.g. 13 for Raspberry Pi "
+                                    "GPIO13). Default: 13.")
+
         # ### I2C group ###
         # LCD 16x2 - DHT11 I2C Expander
         i2c_group.add_argument("-die", "--dhti2cexpander",
@@ -263,6 +269,13 @@ def menu():
         if args.DHT_DATAPIN < 0 or args.DHT_DATAPIN > 27:
             print(Fore.RED + "Data pin for DHT11 sensor invalid. Please, type the '-h/--help' option to show the help"
                              " or the number in Broadcom GPIO format and in the range 0-27. Default value: 21."
+                  + Fore.RESET)
+            sys.exit(1)
+
+        # Checks the '--ledpin' argument
+        if args.LED_PIN < 0 or args.LED_PIN > 27:
+            print(Fore.RED + "Pin for led invalid. Please, type the '-h/--help' option to show the help"
+                             " or the number in Broadcom GPIO format and in the range 0-27. Default value: 13."
                   + Fore.RESET)
             sys.exit(1)
 
