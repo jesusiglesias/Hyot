@@ -51,6 +51,7 @@ try:
     import system_module as system                  # Module that performs functions in the local operating system
     from pyfiglet import Figlet                     # Text banners in a variety of typefaces
     from colorama import Fore, Style                # Cross-platform colored terminal text
+    from gpiozero import LED                        # Simple interface to GPIO devices
     import Adafruit_DHT                             # DHT11 sensor
 
 except ImportError as importError:
@@ -70,7 +71,7 @@ def constants(user_args):
     """
 
     global FIGLET, SENSORS, DHT11_EVENTS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, TEMP_THRESHOLD, \
-        HUM_THRESHOLD
+        HUM_THRESHOLD, ALERT_LED
 
     try:
 
@@ -83,6 +84,7 @@ def constants(user_args):
         DHT_PINDATA = user_args.DHT_DATAPIN                         # DHT11 - Data pin. Default 21 (GPIO21)
         TEMP_THRESHOLD = user_args.TEMPERATURE_THRESHOLD            # Temperature alert threshold in the DHT11 sensor
         HUM_THRESHOLD = user_args.HUMIDITY_THRESHOLD                # Humidity alert threshold in the DHT11 sensor
+        ALERT_LED = LED(user_args.LED_PIN)                          # Led pin. Default 13 (GPIO13)
 
     except Exception as exception:                  # TODO - Too general exception
         print(Fore.RED + "Exception in constants() function: " + str(exception))
@@ -202,7 +204,7 @@ def alert_procedure(sensor, event, temperature, humidity):
     """
 
     global uuid_measurement, datetime_measurement, video_filename, video_filefullpath, ext, recording_time, \
-        alert_triggered, alert_origin, threshold_value, link_dropbox, sent, MAILTO
+        alert_triggered, alert_origin, threshold_value, link_dropbox, sent, MAILTO, ALERT_LED
 
     # Name of the video file
     video_filename = sensor.lower() + '_' + event.lower() + '_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) + ext
@@ -218,7 +220,9 @@ def alert_procedure(sensor, event, temperature, humidity):
 
     print(Fore.RED + "  ---------- ALERT TRIGGERED | " + sensor + " | " + event + " ----------  " + Fore.RESET)
     lcd.full_print_lcd(sensor, "ALERT TRIGGERED!", event)
+    ALERT_LED.on()                                                      # Turns on the red led
     time.sleep(3)
+
     lcd.clear_lcd(sensor)                                               # Clears the LCD
     print(Fore.BLACK + "  ----------- Initiating the alert procedure ------------  " + Fore.RESET)
     lcd.full_print_lcd(sensor, "Initiating the", "procedure...")
@@ -247,6 +251,7 @@ def alert_procedure(sensor, event, temperature, humidity):
 
     time.sleep(1)
     lcd.clear_lcd(sensor)                                       # Clears the LCD
+    ALERT_LED.off()                                             # Turns off the red led
     time.sleep(1)
     print(Fore.RED + "  ----------- PROCEDURE FINISHED. CONTINUING... ----------  " + Fore.RESET)
     lcd.full_print_lcd(sensor, "Procedure", "finished...")
