@@ -247,6 +247,9 @@ def alert_procedure(sensor, event, temperature, humidity):
     # Removes the temporary file after uploading to Dropbox
     system.remove_file(video_filefullpath)
 
+    # Publishes the event in the IoT platform
+    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity)
+
     # Adds the measurement to the database
     add_cloudant(sensor, temperature, humidity)
 
@@ -363,6 +366,10 @@ def main(user_args):
 
                 # No alert
                 else:
+                    # Publishes the event in the IoT platform
+                    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity)
+
+                    # Adds the measurement to the database
                     add_cloudant(SENSORS[0], temperature, humidity)
 
             elif humidity is None or 0 > humidity > 100:                        # Humidity value is invalid or None

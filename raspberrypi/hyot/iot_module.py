@@ -119,12 +119,37 @@ def connect():
 
         print(Fore.GREEN + "        IoT platform client connected" + Fore.RESET)
 
-    except Exception as iotError:  # except ibmiotf.ConnectionException as e
+    except Exception as iotError:
         print(Fore.RED + "        Error to initialize the IoT client. Exception: " + Fore.RESET + str(iotError))
         sys.exit(1)
 
     time.sleep(1)
     print("\n        ------------------------------------------------------")
+
+
+def publish_event(timestamp, temperature, humidity):
+    """Sends the event to the IoT platform TODO - More events
+    :param timestamp: Date and time when the measurement was taken
+    :param temperature: Value of this event in the current measurement
+    :param humidity: Value of this event in the current measurement
+    """
+
+    global client
+
+    # Data to send to the IoT platform
+    data = {'d': {'Datetime': timestamp, 'Temperature': temperature, 'Humidity': humidity}}
+
+    try:
+        print(Fore.LIGHTBLACK_EX + "   -- Publishing the event to the IoT platform" + Fore.RESET),
+        time.sleep(0.5)
+
+        # Sends the data to the Watson IoT Platform
+        client.publishEvent('event', 'json', data)
+
+        print(Fore.GREEN + " ✓" + Fore.RESET)
+
+    except Exception as publishError:
+        print(Fore.RED + " ✕ Error publishing the event: " + str(publishError) + Fore.RESET)
 
 
 def disconnect():
