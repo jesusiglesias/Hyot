@@ -226,6 +226,7 @@ def disconnect():
         try:
             # Ends the client session
             client.disconnect()
+            client = None
             print(Fore.GREEN + " ✓" + Fore.RESET)
         except Exception:
             print(Fore.RED + " ✕" + Fore.RESET)

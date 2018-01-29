@@ -44,6 +44,7 @@ try:
     import datetime                                 # Basic date and time types
     import camera_module as picamera                # Module to handle the Picamera
     import checks_module as checks                  # Module to execute initial checks and to parse the menu
+    import iot_module as iot                        # Module that contains the logic of the IoT platform
     import cloudantdb_module as cloudantdb          # Module that contains the logic of the Cloudant NoSQL DB service
     import dropbox_module as dropbox                # Module that contains the logic of the Dropbox service
     import email_module as email                    # Module to send emails when an alert is triggered
@@ -292,7 +293,10 @@ def main(user_args):
         if not (MAILTO is None):
             email.init()                            # Initializes the mail session
 
-        # ############### Initializing databases ###############
+        # ############### Initializing IoT Platform ###############
+        iot.connect()                               # Creates the IoT client and establishes a connection
+
+        # ############### Initializing databases (Cloudant NoSQL DB) ###############
         cloudantdb.connect()                        # Creates a Cloudant DB client and establishes a connection
         cloudantdb.init(timestamp(), SENSORS)       # Initializes the databases
 
@@ -406,6 +410,7 @@ def main(user_args):
             picamera.disconnect()                       # Disconnects the Picamera
             system.remove_localdir()                    # Removes the temporary local directory
             email.disconnect()                          # Disconnects the mail session
+            iot.disconnect()                            # Disconnects the IoT client
             cloudantdb.disconnect()                     # Disconnects the Cloudant client
             dropbox.disconnect()                        # Disables the access token used to authenticate the calls
             print("\r")
