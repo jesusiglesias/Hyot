@@ -39,8 +39,8 @@ CURLCOMMAND="curl"                                      # 'curl' command
 UNZIPCOMMAND="unzip"                                    # 'unzip' command
 PYTHONCOMMAND="python"                                  # 'python' command
 COMMANDLINETOOL="apt-get apt-cache dpkg"                # 'apt-get', 'apt-cache' and 'dpkg' tools
-PACKAGESTOINSTALL="python2.7 build-essential python-dev python-smbus python-pip i2c-tools"              # Packages to install
-LIBRARYTOINSTALL="psutil pyfiglet colorama RPi.GPIO gpiozero RPLCD picamera ibmiotf cloudant dropbox"   # Libraries to install
+PACKAGESTOINSTALL="python2.7 build-essential python-dev python-smbus python-pip gnupg i2c-tools"                     # Packages to install
+LIBRARYTOINSTALL="psutil pyfiglet colorama RPi.GPIO gpiozero RPLCD python-gnupg picamera ibmiotf cloudant dropbox"   # Libraries to install
 LIBRARYDHT="Adafruit_DHT"                               # Adafruit DHT library
 LIBRARYDHTZIP="Adafruit_Python_DHT.zip"                 # File '.zip' of the Adafruit DHT library
 LIBRARYDHTDIR="Adafruit_Python_DHT-master"              # Directory of the Adafruit DHT library
@@ -471,10 +471,13 @@ check_parameters "$#" "$1"          # Checks the parameters and the number of th
 e_header "     HYOT - RASPBERRY PI SETUP     "
 e_header_bold "This script performs several actions to install the packages and libraries needed to execute the 'raspberrypi_hyot.py' file. Type the '-v' or '--verbose' option to show the trace."
 
-output "Starting the configuration...\\n\\n"
+e_message_bold "Starting the configuration..."
 
 # Checks if several command line tools are installed ('apt-get', 'apt-cache' and 'dpkg')
 commandLineTools_is_installed
+
+e_title_bold "Packages"
+e_message_bold "---------------------------------------------------------------------"
 
 # Checks if each package is installed and updated. If not, it is installed or updated
 for package in ${PACKAGESTOINSTALL}; do
@@ -485,6 +488,9 @@ done
 
 # Print a line break when 'verbose' mode is disabled
 lineBreak
+
+e_title_bold "Python libraries"
+e_message_bold "---------------------------------------------------------------------"
 
 # Checks if each library is installed and updated. If not, it is installed or updated
 for library in ${LIBRARYTOINSTALL}; do
@@ -501,6 +507,9 @@ install_manually_AdafruitDHT ${LIBRARYDHT}
 
 # Print a line break when 'verbose' mode is disabled
 lineBreak
+
+e_title_bold "Interfaces"
+e_message_bold "---------------------------------------------------------------------"
 
 # Checks if the 'Camera' and 'I2C' interfaces are enabled
 check_interfaces

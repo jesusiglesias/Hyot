@@ -53,7 +53,12 @@ e_header () {
 
 # Bold header
 e_header_bold () {
-     printf "\\n${bold}${black}%s${reset}\\n\\n" "$@"
+     printf "\\n${bold}${blue}%s${reset}\\n\\n" "$@"
+}
+
+# Bold title
+e_title_bold () {
+     printf "${bold}${black}%s${reset}\\n" "$@"
 }
 
 # Bold message
