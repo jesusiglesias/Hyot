@@ -406,7 +406,7 @@ def main(user_args):
         print(Fore.RESET)
         sys.exit(1)
     except KeyboardInterrupt:                       # TODO
-        print("\r" + Fore.RED + "Exception: KeyboardInterrupt. Please, turn off the system for proper operation."
+        print("\n" + Fore.RED + "Exception: KeyboardInterrupt. Please, turn off the system for proper operation."
               + Fore.RESET)
         sys.exit(1)
     finally:

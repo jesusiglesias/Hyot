@@ -64,12 +64,12 @@ tempfiles_path = None                               # Full path of the temporary
 #               FUNCTIONS              #
 ########################################
 def create_localdir():
-    """Creates the temporary local directory where the images taken by the Picamera will be stored"""  # TODO
+    """Creates the temporary local directory where the videos taken by the Picamera will be stored"""
 
     global tempfiles_path, TEMPFILES_DIR
 
-    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Creating the temporary local directory to store the images taken "
-          "by the Picamera" + Style.RESET_ALL)  # TODO
+    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing the temporary local directory to store the videos "
+          "taken by the Picamera" + Style.RESET_ALL)
 
     # Path that contains the temporary files ([project_path]/hyot/tempfiles)
     tempfiles_path = os.path.dirname(os.path.abspath(__file__)) + "/" + TEMPFILES_DIR
@@ -146,7 +146,7 @@ def check_file(localfile):
 
 
 def remove_file(localfile):
-    """Removes in the local system the temporary image taken by the Picamera TODO
+    """Removes in the local system the temporary video taken by the Picamera
     :param localfile: Local path and name of the file to remove
     """
 
