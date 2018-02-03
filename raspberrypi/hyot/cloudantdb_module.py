@@ -73,7 +73,7 @@ sensors = []                                                                    
 def connect():
     """Creates a Cloudant DB client and establishes a connection"""
 
-    global client
+    global client, USERNAME_DB, PASSWORD_DB, URL_DB
 
     print("\n      " + Style.BRIGHT + Fore.BLACK + "- Generating the client of the Cloudant NoSQL DB service"
           + Style.RESET_ALL)
@@ -109,7 +109,7 @@ def init(timestamp, all_sensors):
     :param all_sensors: Name of the sensors
     """
 
-    global client, dbs_instances, sensor_dbs, sensors
+    global client, dbs_instances, sensor_dbs, sensors, DHT11_DB, HCSR04_DB
 
     dht11_dbinstance = None                                # Instance for the DHT11 sensor database
     hcsr04_dbinstance = None                               # Instance for the HC-SR04 sensor database

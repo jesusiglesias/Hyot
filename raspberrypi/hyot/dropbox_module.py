@@ -74,7 +74,7 @@ sensors = []                # Stores the name of all sensors
 def connect():
     """Creates an instance of the Dropbox class and establishes a connection"""
 
-    global dbx
+    global dbx, TOKEN
 
     print("\n      " + Style.BRIGHT + Fore.BLACK + "- Generating the client of the Dropbox service" + Style.RESET_ALL)
 
@@ -119,7 +119,7 @@ def __create_dir(dir_name):
     :param dir_name: Name of the directory or subdirectory
     """
 
-    global dbx, path, message_dir
+    global dbx, path, message_dir, HYOT_DIR
 
     # Establishes some data
     if dir_name == HYOT_DIR:
@@ -158,7 +158,9 @@ def __create_dir(dir_name):
 def __check_space():
     """Checks the amount of available space in the user account"""
 
-    # Checks if there is a considerable amount of available space in the user account (at least 500MB) TODO
+    global dbx, MIN_SPACE
+
+    # Checks if there is a considerable amount of available space in the user account (at least 500MB)
     allocated_space = dbx.users_get_space_usage().allocation.get_individual().allocated             # Allocated space
     used_space = dbx.users_get_space_usage().used                                                   # Used space
     available_space = allocated_space - used_space                                                  # Available space
@@ -176,7 +178,7 @@ def init(all_sensors):
     :param all_sensors: Name of the sensors
     """
 
-    global dht_subdir, hcsr_subdir, sensors
+    global dht_subdir, hcsr_subdir, sensors, DHT11_DIR, HCSR04_DIR, HYOT_DIR
 
     # Variables
     sensor_subdirs = []                        # Defines a list with the name of the subdirectories of each sensor
@@ -260,7 +262,7 @@ def upload_file(localfile, filename, sensor):
     :return: shared_link Shared link of the uploaded file to Dropbox
     """
 
-    global dbx, dht_subdir, hcsr_subdir
+    global dbx, dht_subdir, hcsr_subdir, HYOT_DIR
 
     # Variables
     upload_path = None                                              # Specify upload path

@@ -75,7 +75,7 @@ session = None                                                # Mail session
 def init():
     """Initializes the mail session"""
 
-    global session
+    global session, FROM, PASSWORD, SERVERIP, SERVERPORT
 
     print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing the mail session with the email address: "
           + Style.RESET_ALL + FROM)
@@ -126,7 +126,7 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
     :return: True/False depending on whether the notification was sent
     """
 
-    global session
+    global session, TEMPLATEPATH, FROM
 
     # Extracts the sensor and the event
     sensor, event = alert_origin.split('-')

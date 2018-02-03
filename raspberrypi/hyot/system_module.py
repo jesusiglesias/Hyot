@@ -66,7 +66,7 @@ tempfiles_path = None                               # Full path of the temporary
 def create_localdir():
     """Creates the temporary local directory where the images taken by the Picamera will be stored"""  # TODO
 
-    global tempfiles_path
+    global tempfiles_path, TEMPFILES_DIR
 
     print("\n      " + Style.BRIGHT + Fore.BLACK + "- Creating the temporary local directory to store the images taken "
           "by the Picamera" + Style.RESET_ALL)  # TODO

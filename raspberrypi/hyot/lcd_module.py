@@ -115,6 +115,8 @@ def backlight(enabled):
     :param enabled: Indicates if the backlight must be enabled or disabled
     """
 
+    global lcds
+
     for index, lcd in enumerate(lcds):
         lcd.backlight_enabled = enabled
 
@@ -125,7 +127,7 @@ def full_print_lcds(first_row, second_row):
     :param second_row: Text to write in the second row
     """
 
-    global lcds, dht_lcd, hcsr_lcd
+    global lcds
 
     for index, lcd in enumerate(lcds):
         lcd.write_string(first_row)                     # Writes the specified unicode string to the LCD
@@ -140,7 +142,7 @@ def full_print_lcd(sensor, first_row, second_row):
     :param second_row: Text to write in the second row of the specified LCD
     """
 
-    global dht_lcd, hcsr_lcd
+    global dht_lcd, hcsr_lcd, sensors
 
     sensor_lcd = None                                   # Stores the LCD instance
 
@@ -160,7 +162,7 @@ def print_lcds(dht_data, hcsr_data):
     :param hcsr_data: Text to write in the LCD of the HC-SR04 sensor
     """
 
-    global lcds, dht_lcd, hcsr_lcd
+    global lcds
 
     data = [dht_data, hcsr_data]
 
@@ -174,7 +176,7 @@ def print_lcd(sensor, data):
     :param data: Text to write in the specified LCD
     """
 
-    global dht_lcd, hcsr_lcd
+    global dht_lcd, hcsr_lcd, sensors
 
     sensor_lcd = None                                   # Stores the LCD instance
 
@@ -227,7 +229,7 @@ def clear_lcd(sensor):
     :param sensor: Indicates the LCD to use based on the sensor
     """
 
-    global dht_lcd, hcsr_lcd
+    global dht_lcd, hcsr_lcd, sensors
 
     sensor_lcd = None  # Stores the LCD instance
 
@@ -242,7 +244,7 @@ def clear_lcd(sensor):
 def disconnect_lcds():
     """Closes and cleans the LCDs"""
 
-    global lcds
+    global lcds, sensors
 
     for index, lcd in enumerate(lcds):
 
