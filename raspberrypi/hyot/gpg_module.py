@@ -73,7 +73,7 @@ gpg_dir = None                                                          # GPG di
 #               FUNCTIONS              #
 ########################################
 def generate_keys():
-    """"""
+    """Creates the GPG key and exports the public and private keys"""
 
     global gpg, gpg_dir, KEYSFILE, NAME, EMAIL, PASS
 
@@ -151,9 +151,6 @@ def init():
         generate_keys()
 
         time.sleep(1)
-
-        print gpg.list_keys(False)
-        print gpg.list_keys(True)
 
     except Exception as initGPGError:
         print(Fore.RED + "        Error to initialize the GPG module: " + str(initGPGError) + Fore.RESET)
