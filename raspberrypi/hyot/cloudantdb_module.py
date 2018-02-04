@@ -36,6 +36,7 @@
 try:
     import sys                                      # System-specific parameters and functions
     import time                                     # Time access and conversions
+    import getpass                                  # Portable password input
     from colorama import Fore, Style                # Cross-platform colored terminal text
     from cloudant.client import Cloudant            # Cloudant NoSQL DB client
 
@@ -81,8 +82,8 @@ def connect():
     # Asks the user for Cloudant credentials
     username = raw_input(Fore.BLUE + "        Enter the Cloudant username or empty to use the default value: "
                          + Fore.RESET) or USERNAME_DB
-    password = raw_input(Fore.BLUE + "        Enter the Cloudant password or empty to use the default value: "
-                         + Fore.RESET) or PASSWORD_DB
+    password = getpass.getpass(Fore.BLUE + "        Enter the Cloudant password or empty to use the default value: "
+                               + Fore.RESET) or PASSWORD_DB
     url = raw_input(Fore.BLUE + "        Enter the Cloudant URL or empty to use the default value: "
                     + Fore.RESET) or URL_DB
 
