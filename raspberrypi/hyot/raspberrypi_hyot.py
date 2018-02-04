@@ -46,6 +46,7 @@ try:
     import checks_module as checks                  # Module to execute initial checks and to parse the menu
     import iot_module as iot                        # Module that contains the logic of the IoT platform
     import cloudantdb_module as cloudantdb          # Module that contains the logic of the Cloudant NoSQL DB service
+    import gpg_module as gpg                        # Module that contains the logic of the functionality of GPG
     import dropbox_module as dropbox                # Module that contains the logic of the Dropbox service
     import email_module as email                    # Module to send emails when an alert is triggered
     import lcd_module as lcd                        # Module to handle the LCDs
@@ -292,6 +293,9 @@ def main(user_args):
         # ############### Initializing local directory ###############
         system.create_localdir()                    # Creates a local directory to store the files taken by the Picamera
 
+        # ############### Initializing GPG ###############
+        gpg.init()                                  # Creates the GPG instance and the public and private keys
+
         # ############### Initializing the mail session ###############
         if not (MAILTO is None):
             email.init()                            # Initializes the mail session
@@ -416,6 +420,7 @@ def main(user_args):
             lcd.disconnect_lcds()                       # Disconnects the LCDs
             picamera.disconnect()                       # Disconnects the Picamera
             system.remove_localdir()                    # Removes the temporary local directory
+            gpg.clean()                                 # Cleans the GPG instance
             email.disconnect()                          # Disconnects the mail session
             iot.disconnect()                            # Disconnects the IoT client
             cloudantdb.disconnect()                     # Disconnects the Cloudant client
