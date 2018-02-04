@@ -187,13 +187,13 @@ def init(all_sensors):
     # Checks the amount of available space in the user account
     __check_space()
 
-    # Asks the user for the subdirectory where the images of an alarm triggered by the DHT11 sensor will be stored TODO - Images?
-    dht_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the images of an alarm "
+    # Asks the user for the subdirectory where the videos of an alarm triggered by the DHT11 sensor will be stored
+    dht_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the videos of an alarm "
                                        "triggered by the DHT11 sensor will be stored. Empty to use the default value ("
                                        + "/" + HYOT_DIR + "/" + DHT11_DIR + "): " + Fore.RESET) or DHT11_DIR
 
-    # Asks the user for the subdirectory where the images of an alarm triggered by the HC-SR04 sensor will be stored TODO - Images?
-    hcsr_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the images of an alarm "
+    # Asks the user for the subdirectory where the videos of an alarm triggered by the HC-SR04 sensor will be stored
+    hcsr_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the videos of an alarm "
                                         "triggered by the HC-SR04 sensor will be stored. Empty to use the default "
                                         "value (" + "/" + HYOT_DIR + "/" + HCSR04_DIR + "): "
                             + Fore.RESET) or HCSR04_DIR
@@ -256,8 +256,8 @@ def __get_shared_link(upload_path):
 
 def upload_file(localfile, filename, sensor):
     """Uploads the file to Dropbox, in particular to the subdirectory of the sensor that triggered the alarm
-    :param localfile: Local path and name of the file to upload TODO
-    :param filename: Name of the file to upload TODO
+    :param localfile: Local path and name of the file to upload
+    :param filename: Name of the file to upload
     :param sensor: Sensor that triggered the alarm
     :return: shared_link Shared link of the uploaded file to Dropbox
     """
@@ -301,9 +301,9 @@ def upload_file(localfile, filename, sensor):
 
     except dropbox.exceptions.ApiError as uploadError:
 
-        if uploadError.error.get_path().reason.is_conflict():              # Conflict with another different file TODO - Images?
+        if uploadError.error.get_path().reason.is_conflict():              # Conflict with another different file
             print(Fore.RED + "Existing conflict with another file with the same name and different content."
-                             " Please, check the way in which the names of the images are generated" + Fore.RESET)
+                             " Please, check the way in which the names of the videos are generated" + Fore.RESET)
             sys.exit(1)
         elif uploadError.error.get_path().reason.is_insufficient_space():  # Insufficient space
             print(Fore.RED + "File not uploaded. The user does not have enough available space" + Fore.RESET)
