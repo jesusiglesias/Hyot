@@ -76,32 +76,39 @@ def init():
 
     global gpg, HOMEDIR, PUBKEY, SECKEY, KEYS, NAME, EMAIL, PASS
 
-    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing GPG" + Style.RESET_ALL)
+    try:
 
-    # Creates the GPG instance
-    gpg = gnupg.GPG(gnupghome=HOMEDIR, keyring=PUBKEY, secret_keyring=SECKEY)
+        print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing GPG" + Style.RESET_ALL)
 
-    print(Fore.GREEN + "        Key rings and trust database were created in: " + Style.BRIGHT
-          + HOMEDIR + Style.RESET_ALL)
+        # Creates the GPG instance
+        gpg = gnupg.GPG(gnupghome=HOMEDIR, keyring=PUBKEY, secret_keyring=SECKEY)
 
-    # Establishes the input data
-    input_data = gpg.gen_key_input(name_real=NAME, name_email=EMAIL, passphrase=PASS)
-    key = gpg.gen_key(input_data)                                       # Creates the keys
-    keyid = str(key.fingerprint)                                        # Obtains the fingerprint
-    public_key = gpg.export_keys(keyid)                                 # Exports the fingerprint (public key)
-    private_key = gpg.export_keys(keyid, True, passphrase=PASS)         # Exports the fingerprint (private key)
+        print(Fore.GREEN + "        Key rings and trust database were created in: " + Style.BRIGHT
+              + HOMEDIR + Style.RESET_ALL)
 
-    # Stores the keys in a file
-    if public_key and private_key:
-        with open(KEYS, 'w') as f:
-                f.write(public_key)
-                f.write(private_key)
+        # Establishes the input data
+        input_data = gpg.gen_key_input(name_real=NAME, name_email=EMAIL, passphrase=PASS)
+        key = gpg.gen_key(input_data)                                       # Creates the keys
+        keyid = str(key.fingerprint)                                        # Obtains the fingerprint
+        public_key = gpg.export_keys(keyid)                                 # Exports the fingerprint (public key)
+        private_key = gpg.export_keys(keyid, True, passphrase=PASS)         # Exports the fingerprint (private key)
 
-        print(Fore.GREEN + "        Public and private keys were stored in: " + Style.BRIGHT + KEYS + Style.RESET_ALL)
-    else:
-        print("Can't find key with fingerprint {}!".format(keyid))
+        # Stores the keys in a file
+        if public_key and private_key:
+            with open(KEYS, 'w') as f:
+                    f.write(public_key)
+                    f.write(private_key)
 
-    time.sleep(1)
+            print(Fore.GREEN + "        Public and private keys were stored in: " + Style.BRIGHT + KEYS + Style.RESET_ALL)
+        else:
+            print(Fore.RED + "        Error to write the keys. Can't find key with fingerprint: " + keyid + Fore.RESET)
+            sys.exit(1)
+
+        time.sleep(1)
+
+    except Exception as initGPGError:
+        print(Fore.RED + "        Error to initialize the GPG module: " + str(initGPGError) + Fore.RESET)
+        sys.exit(1)
 
     print("\n        ------------------------------------------------------")
 
