@@ -39,6 +39,7 @@ try:
     import os                                       # Miscellaneous operating system interfaces
     import time                                     # Time access and conversions
     import gnupg                                    # GnuPG’s key management, encryption and signature functionality
+    import getpass                                  # Portable password input
     from colorama import Fore, Style                # Cross-platform colored terminal text
 
 except ImportError as importError:
@@ -78,8 +79,8 @@ def generate_keys():
     global gpg, gpg_dir, KEYSFILE, NAME, EMAIL, PASS
 
     # Asks the user for the password of the private key
-    private_key_pass = raw_input(Fore.BLUE + "        Enter the password for the private key. Empty to use the default "
-                                             "value: " + Fore.RESET) or PASS
+    private_key_pass = getpass.getpass(Fore.BLUE + "        Enter the password for the private key. Empty to use the "
+                                                   "default value: " + Fore.RESET) or PASS
 
     # Checks if the password is empty
     if private_key_pass.isspace():
