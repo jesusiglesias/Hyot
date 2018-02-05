@@ -254,10 +254,9 @@ def __get_shared_link(upload_path):
             raise
 
 
-def upload_file(localfile, filename, sensor):
+def upload_file(localfile, sensor):
     """Uploads the file to Dropbox, in particular to the subdirectory of the sensor that triggered the alarm
     :param localfile: Local path and name of the file to upload
-    :param filename: Name of the file to upload
     :param sensor: Sensor that triggered the alarm
     :return: shared_link Shared link of the uploaded file to Dropbox
     """
@@ -266,12 +265,13 @@ def upload_file(localfile, filename, sensor):
 
     # Variables
     upload_path = None                                              # Specify upload path
+    name = str(localfile.split("/")[-1])                            # Name of the file to upload
 
     if sensor == sensors[0]:                                        # Upload path of the DHT11 sensor
-        upload_path = "/" + HYOT_DIR + "/" + dht_subdir + "/" + filename
+        upload_path = "/" + HYOT_DIR + "/" + dht_subdir + "/" + name
 
     elif sensor == sensors[1]:                                      # Upload path of the HC-SR04 sensor
-        upload_path = "/" + HYOT_DIR + "/" + hcsr_subdir + "/" + filename
+        upload_path = "/" + HYOT_DIR + "/" + hcsr_subdir + "/" + name
 
     try:
         print(Fore.LIGHTBLACK_EX + "   -- Uploading the recording to Dropbox like " + upload_path +

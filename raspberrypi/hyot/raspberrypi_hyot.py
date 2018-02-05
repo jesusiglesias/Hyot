@@ -232,21 +232,32 @@ def alert_procedure(sensor, event, temperature, humidity):
     # Takes a recording for 10 seconds
     picamera.record_video(video_filefullpath, recording_time)
 
-    # Checks if the file exists in the local system
+    # Checks if the original file exists in the local system
     system.check_file(video_filefullpath)
 
+    # Encrypts the file
+    final_path = gpg.encrypt_file(video_filefullpath)
+
+    # Checks if the final file (normally encrypted file) exists in the local system
+    system.check_file(final_path)
+
     # Uploads the file to Dropbox
-    link_dropbox = dropbox.upload_file(video_filefullpath, video_filename, sensor)
+    link_dropbox = dropbox.upload_file(final_path, sensor)
 
     # Sends an email when an alert is triggered
     if not (MAILTO is None):
-        sent = email.send_email(MAILTO, video_filefullpath, video_filename,  # TODO - Distance
+        sent = email.send_email(MAILTO, final_path, video_filename,  # TODO - Distance
                                 str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
                                 str(uuid_measurement), temperature, humidity, "1", link_dropbox,
                                 alert_origin, threshold_value)
 
-    # Removes the temporary file after uploading to Dropbox
-    system.remove_file(video_filefullpath)
+    # Removes the temporary file (original video)
+    system.remove_file(video_filefullpath, False)
+
+    # Encryption had success
+    if video_filefullpath != final_path:
+        # Removes the temporary file (encrypted video) after uploading to Dropbox
+        system.remove_file(final_path, True)
 
     # Publishes the event in the IoT platform
     iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity)

@@ -61,6 +61,7 @@ KEYSFILE = "hyot_keys.asc"                                              # File w
 NAME = "Hyot"                                                           # Name
 EMAIL = "hyot.project@gmail.com"                                        # Email id
 PASS = "h7y1ot13"                                                       # Passphrase of private key
+GPGEXT = "gpg"                                                          # Extension of the encrypted file
 
 
 ########################################
@@ -189,6 +190,36 @@ def init():
         sys.exit(1)
 
     print("\n        ------------------------------------------------------")
+
+
+def encrypt_file(video):
+    """Encrypts the file to upload to Dropbox
+    :param video: File to encrypt with its full path
+    """
+
+    global gpg, keyid, GPGEXT
+
+    try:
+        # Path of the encrypted file
+        encrypted_file = ".".join([video, GPGEXT])
+
+        print(Fore.LIGHTBLACK_EX + "   -- Encrypting the video " + Fore.RESET),
+
+        time.sleep(0.5)
+
+        with open(video, 'rb') as f:
+            status = gpg.encrypt_file(f, recipients=keyid, output=encrypted_file)
+
+        if status.ok:
+            print(Fore.GREEN + " ✓" + Fore.RESET)
+            return encrypted_file
+        else:
+            print(Fore.RED + "✕ File not encrypted. The file will be stored in Dropbox without encrypting" + Fore.RESET)
+            return video
+
+    except Exception:
+        print(Fore.RED + "✕ File not encrypted. The file will be stored in Dropbox without encrypting" + Fore.RESET)
+        return video
 
 
 def clean():
