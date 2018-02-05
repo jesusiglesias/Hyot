@@ -66,17 +66,44 @@ PASS = "h7y1ot13"                                                       # Passph
 ########################################
 #           GLOBAL VARIABLES           #
 ########################################
-gpg = None                                                              # GPG instance
-gpg_dir = None                                                          # GPG directory
+gpg = None                                                       # GPG instance
+keyid = None                                                     # Fingerprint of the GPG key
+gpg_dir = None                                                   # GPG directory
+keys_path = None                                                 # Path where the public and private key will be stored
 
 
 ########################################
 #               FUNCTIONS              #
 ########################################
+def check_and_rename(filepath, count=0):
+    """Checks if the file exists in the path and if so it renames it adding the rule: [_number]
+    :param filepath: Path of the file that will store the public and private key
+    :param count: Number to add to the name
+    """
+
+    global keys_path
+
+    # Saves the original path of the file
+    original_filepath = filepath
+
+    # Builds the new name
+    if count != 0:
+        split = filepath.split(".")
+        name = split[0] + "_" + str(count)
+        filepath = ".".join([name, split[1]])
+
+    # Checks if a file exists with the same name
+    if not os.path.isfile(filepath):
+        keys_path = filepath
+        return
+    else:
+        check_and_rename(original_filepath, count + 1)
+
+
 def generate_keys():
     """Creates the GPG key and exports the public and private keys"""
 
-    global gpg, gpg_dir, KEYSFILE, NAME, EMAIL, PASS
+    global gpg, gpg_dir, keyid, keys_path, KEYSFILE, NAME, EMAIL, PASS
 
     # Asks the user for the password of the private key
     private_key_pass = getpass.getpass(Fore.BLUE + "        Enter the password for the private key. Empty to use the "
@@ -104,7 +131,11 @@ def generate_keys():
     # Stores the keys in a file
     if public_key and private_key:
 
-        keys_path = gpg_dir + "/" + KEYSFILE                                   # Path where the keys file will be stored
+        # Initial path where the keys will be stored
+        keys_initial_path = gpg_dir + "/" + KEYSFILE
+
+        # Checks if the file exists in the path and if so it renames it adding the rule: [_number]
+        check_and_rename(keys_initial_path)
 
         with open(keys_path, 'w') as f:
             f.write(public_key)
@@ -121,7 +152,7 @@ def generate_keys():
 def init():
     """Creates the GPG instance and the public and private keys"""
 
-    global gpg, gpg_dir, GPGDIRDEFAULT, PUBKEY, SECKEY, KEYSFILE
+    global gpg, gpg_dir, GPGDIRDEFAULT, PUBKEY, SECKEY
 
     try:
         print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing GPG" + Style.RESET_ALL)
