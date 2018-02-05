@@ -145,12 +145,17 @@ def check_file(localfile):
         sys.exit(1)
 
 
-def remove_file(localfile):
+def remove_file(localfile, encrypted):
     """Removes in the local system the temporary video taken by the Picamera
     :param localfile: Local path and name of the file to remove
+    :param encrypted: True, to indicate that the encrypted file will be removed. False, to indicate the original video
     """
 
-    print(Fore.LIGHTBLACK_EX + "   -- Removing the temporary local file: " + localfile + Fore.RESET),
+    if encrypted:
+        print(Fore.LIGHTBLACK_EX + "   -- Removing the encrypted file: " + localfile + Fore.RESET),
+    else:
+        print(Fore.LIGHTBLACK_EX + "   -- Removing the temporary local file: " + localfile + Fore.RESET),
+
     time.sleep(1)
 
     # Checks if the file exists
