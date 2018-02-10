@@ -54,8 +54,8 @@ except KeyboardInterrupt:
 ########################################
 # Path where GPG will store the public and private keyring files and a trust database
 GPGDIRDEFAULT = os.path.dirname(os.path.abspath(__file__)) + "/gpg"
-PUBKEY = "pub_hyot.gpg"                                                 # Public key
-SECKEY = "sec_hyot.gpg"                                                 # Secret key
+PUBKEYRING = "pub_hyot.gpg"                                             # Public key ring
+SECKEYRING = "sec_hyot.gpg"                                             # Secret key ring
 KEYSFILE = "hyot_keys.asc"                                              # File with the public and private keys
 NAME = "Hyot"                                                           # Name
 EMAIL = "hyot.project@gmail.com"                                        # Email id
@@ -142,8 +142,8 @@ def generate_keys():
             f.write(private_key)
 
         print(Fore.GREEN + "        Public and private keys were stored in: " + Style.BRIGHT + keys_path
-              + Style.RESET_ALL)
-
+              + Style.NORMAL + Fore.YELLOW + "\n        It's important that you remember the fingerprint and keep this "
+                                             "file to decrypt later" + Style.RESET_ALL)
     else:
         print(Fore.RED + "        Error to write the keys. Can't find key with fingerprint: " + keyid + Fore.RESET)
         sys.exit(1)
@@ -152,7 +152,7 @@ def generate_keys():
 def init():
     """Creates the GPG instance and the public and private keys"""
 
-    global gpg, gpg_dir, GPGDIRDEFAULT, PUBKEY, SECKEY
+    global gpg, gpg_dir, GPGDIRDEFAULT, PUBKEYRING, SECKEYRING
 
     try:
         print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing GPG" + Style.RESET_ALL)
@@ -174,7 +174,7 @@ def init():
             os.chmod(gpg_dir, 0700)
 
         # Creates the GPG instance
-        gpg = gnupg.GPG(gnupghome=gpg_dir, keyring=PUBKEY, secret_keyring=SECKEY)
+        gpg = gnupg.GPG(gnupghome=gpg_dir, keyring=PUBKEYRING, secret_keyring=SECKEYRING)
 
         print(Fore.GREEN + "        Key rings and trust database were created in: " + Style.BRIGHT + gpg_dir
               + Style.RESET_ALL)
