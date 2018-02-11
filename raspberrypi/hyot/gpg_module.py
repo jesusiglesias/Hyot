@@ -59,7 +59,6 @@ SECKEYRING = "sec_hyot.gpg"                                             # Secret
 KEYSFILE = "hyot_keys.asc"                                              # File with the public and private keys
 NAME = "Hyot"                                                           # Name
 EMAIL = "hyot.project@gmail.com"                                        # Email id
-PASS = "h7y1ot13"                                                       # Passphrase of private key
 GPGEXT = "gpg"                                                          # Extension of the encrypted file
 
 
@@ -104,14 +103,14 @@ def check_and_rename(filepath, count=0):
 def generate_keys():
     """Creates the GPG key and exports the public and private keys"""
 
-    global gpg, gpg_dir, keyid, keys_path, KEYSFILE, NAME, EMAIL, PASS
+    global gpg, gpg_dir, keyid, keys_path, KEYSFILE, NAME, EMAIL
 
     # Asks the user for the password of the private key
-    private_key_pass = getpass.getpass(Fore.BLUE + "        Enter the password for the private key. Empty to use the "
-                                                   "default value: " + Fore.RESET) or PASS
+    private_key_pass = getpass.getpass(Fore.BLUE + "        Enter the password for the private key: "
+                                       + Fore.RESET) or None
 
     # Checks if the password is empty
-    if private_key_pass.isspace():
+    if private_key_pass is None or private_key_pass.isspace():
         print(Fore.RED + "        The password can not be empty" + Fore.RESET)
         sys.exit(0)
 
