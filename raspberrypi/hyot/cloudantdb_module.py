@@ -89,7 +89,7 @@ def connect():
     # Checks if some Cloudant DB credential is empty
     if username.isspace() or password.isspace() or url.isspace():
         print(Fore.RED + "        The Cloudant DB credentials can not be empty" + Fore.RESET)
-        sys.exit(1)
+        sys.exit(0)
 
     # Creates the client using auto_renew to automatically renew expired cookie auth
     client = Cloudant(username.replace(" ", ""), password.replace(" ", ""), url=url.replace(" ", ""),
@@ -128,7 +128,7 @@ def init(timestamp, all_sensors):
     # Checks if some name is empty
     if dht_database.isspace() or hcsr_database.isspace():
         print(Fore.RED + "        The names of the sensor databases can not be empty" + Fore.RESET)
-        sys.exit(1)
+        sys.exit(0)
 
     # Removes spaces and converts to lowercase
     dht_database = dht_database.replace(" ", "").lower()
@@ -137,7 +137,7 @@ def init(timestamp, all_sensors):
     # Checks if both names are the same
     if dht_database == hcsr_database:
         print(Fore.RED + "        The names of the sensor databases can not be the same" + Fore.RESET)
-        sys.exit(1)
+        sys.exit(0)
 
     # Adds the name of each database to the list where the name includes the current month and year
     sensor_dbs.append(dht_database + "_" + str(timestamp.strftime("%Y-%m")))
@@ -173,7 +173,7 @@ def init(timestamp, all_sensors):
             else:
                 print(Fore.RED + "        Error to create the " + Style.BRIGHT + db + Style.NORMAL + " database. "
                                  "Please, check the Cloudant NoSQL DB service" + Fore.RESET)
-                sys.exit(1)
+                sys.exit(0)
 
         time.sleep(1)
 
@@ -210,7 +210,7 @@ def add_document(data, sensor):
         print(Fore.GREEN + " ✓" + Fore.RESET)
     else:
         print(Fore.RED + " ✕ Error to add the measurement. Please, check the Cloudant NoSQL DB service" + Fore.RESET)
-        sys.exit(1)
+        sys.exit(0)
 
 
 def disconnect():

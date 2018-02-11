@@ -89,7 +89,7 @@ def connect():
     # Checks if some field is empty
     if organization_id.isspace() or device_type.isspace() or device_id.isspace() or auth_token.isspace():
         print(Fore.RED + "        The IoT platform credentials can not be empty" + Fore.RESET)
-        sys.exit(1)
+        sys.exit(0)
 
     try:
         # Debugger - Threshold: ERROR level

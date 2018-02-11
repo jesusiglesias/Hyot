@@ -84,7 +84,7 @@ def connect():
     # Checks if the Dropbox token is empty
     if token.isspace():
         print(Fore.RED + "        The Dropbox token can not be empty" + Fore.RESET)
-        sys.exit(1)
+        sys.exit(0)
 
     # Creates an instance of the Dropbox class, which can make requests to API
     dbx = dropbox.Dropbox(token.replace(" ", ""))
@@ -200,7 +200,7 @@ def init(all_sensors):
     # Checks if some name is empty
     if dht_subdir.isspace() or hcsr_subdir.isspace():
         print(Fore.RED + "        The names of the sensor directories can not be empty" + Fore.RESET)
-        sys.exit(1)
+        sys.exit(0)
 
     # Removes spaces and converts to lowercase
     dht_subdir = dht_subdir.replace(" ", "").lower()
@@ -209,7 +209,7 @@ def init(all_sensors):
     # Checks if both names are the same
     if dht_subdir == hcsr_subdir:
         print(Fore.RED + "        The names of the sensor directories can not be the same" + Fore.RESET)
-        sys.exit(1)
+        sys.exit(0)
 
     # Adds the name of each subdirectory to the list
     sensor_subdirs.append(dht_subdir)

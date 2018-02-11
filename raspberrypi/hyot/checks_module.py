@@ -59,7 +59,7 @@ def check_root():
     if not os.geteuid() == 0:
         print(Fore.RED + "You need to have root privileges to run this script. Please try it again using "
                          "'sudo'." + Fore.RESET)
-        sys.exit(1)
+        sys.exit(0)
 
 
 def check_platform():
@@ -67,7 +67,7 @@ def check_platform():
 
     if not sys.platform.startswith('linux'):
         print(Fore.RED + "This script must be run on GNU/Linux platform. For example: Raspbian." + Fore.RESET)
-        sys.exit(1)
+        sys.exit(0)
 
 
 def check_raspberrypi():
@@ -94,7 +94,7 @@ def check_raspberrypi():
     # 2. Find the 'Hardware' field but the value is another one
     if not match or match.group(1) not in ('BCM2708', 'BCM2709', 'BCM2835'):
         print(Fore.RED + "You need to run this script on a Raspberry Pi." + Fore.RESET)
-        sys.exit(1)
+        sys.exit(0)
 
 
 def check_network():
@@ -133,7 +133,7 @@ def check_concurrency():
             # Another instance is running
             if count >= 1:
                 print(Fore.RED + "Process: %s is already running with PID %s." % (filename, p.pid) + Fore.RESET)
-                sys.exit(1)
+                sys.exit(0)
             else:
                 count += 1
 
@@ -250,59 +250,59 @@ def menu():
             if not __is_valid_email(args.EMAIL):
                 print(Fore.RED + "Email address entered is not a valid email. Please, type the '-h/--help' option to "
                                  "show the help." + Fore.RESET)
-                sys.exit(1)
+                sys.exit(0)
 
         # Checks the '--recordingtime' argument
         if args.RECORDING_TIME < 1:
             print(Fore.RED + "Recording time invalid. Please, type the '-h/--help' option to show the help"
                              " or the value must be upper than 0. Default value: 10." + Fore.RESET)
-            sys.exit(1)
+            sys.exit(0)
 
         # Checks the '--waittime' argument
         if args.WAITTIME_MEASUREMENTS < 2:
             print(Fore.RED + "Wait time between measurements invalid. Please, type the '-h/--help' option to show the "
                              "help or a value in seconds upper than 2. Default value: 3." + Fore.RESET)
-            sys.exit(1)
+            sys.exit(0)
 
         # Checks the '--dht11data' argument
         if args.DHT_DATAPIN < 0 or args.DHT_DATAPIN > 27:
             print(Fore.RED + "Data pin for DHT11 sensor invalid. Please, type the '-h/--help' option to show the help"
                              " or the number in Broadcom GPIO format and in the range 0-27. Default value: 21."
                   + Fore.RESET)
-            sys.exit(1)
+            sys.exit(0)
 
         # Checks the '--ledpin' argument
         if args.LED_PIN < 0 or args.LED_PIN > 27:
             print(Fore.RED + "Pin for led invalid. Please, type the '-h/--help' option to show the help"
                              " or the number in Broadcom GPIO format and in the range 0-27. Default value: 13."
                   + Fore.RESET)
-            sys.exit(1)
+            sys.exit(0)
 
         # Checks the '--dhti2cexpander' argument
         if args.DHT_I2CEXPANDER not in ['PCF8574', 'MCP23008', 'MCP23017']:
             print(Fore.RED + "I2C expander type for LCD of the DHT11 sensor invalid. Please, type the '-h/--help' "
                              "option to show the help or specify one of 'PCF8574', 'MCP23008', 'MCP23017'. "
                              "Default value: PCF8574." + Fore.RESET)
-            sys.exit(1)
+            sys.exit(0)
 
         # Checks the '--hcsri2cexpander' argument
         if args.HCSR_I2CEXPANDER not in ['PCF8574', 'MCP23008', 'MCP23017']:
             print(Fore.RED + "I2C expander type invalid for LCD of the HC-SR04 sensor invalid. Please, type the "
                              "'-h/--help' option to show the help or specify one of 'PCF8574', 'MCP23008', 'MCP23017'."
                              " Default value: PCF8574." + Fore.RESET)
-            sys.exit(1)
+            sys.exit(0)
 
         # Checks the '--tempthreshold' argument
         if args.TEMPERATURE_THRESHOLD < 0:
             print(Fore.RED + "Temperature alert threshold invalid. Please, type the '-h/--help' option to show the help"
                              " or the value must be upper than 0. Default value: 30." + Fore.RESET)
-            sys.exit(1)
+            sys.exit(0)
 
         # Checks the '--humthreshold' argument
         if args.HUMIDITY_THRESHOLD < 0 or args.HUMIDITY_THRESHOLD > 100:
             print(Fore.RED + "Humidity alert threshold invalid. Please, type the '-h/--help' option to show the help"
                              " or the value must be the 0-100 range. Default value: 80." + Fore.RESET)
-            sys.exit(1)
+            sys.exit(0)
 
         return args
 

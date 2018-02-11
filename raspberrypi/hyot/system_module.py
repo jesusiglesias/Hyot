@@ -88,7 +88,7 @@ def create_localdir():
         else:                                       # Directory was not created
             print(Fore.RED + "        Error to create the " + Style.BRIGHT + tempfiles_path + Style.NORMAL +
                   " directory" + Fore.RESET)
-            sys.exit(1)
+            sys.exit(0)
 
     else:
         print(Fore.GREEN + "        " + Style.BRIGHT + tempfiles_path + Style.NORMAL + " directory already exists"
@@ -141,7 +141,7 @@ def check_file(localfile):
     # TODO - Exit?
     if not os.path.exists(localfile):
         print(Fore.RED + '      ' + localfile + " file not found in the local system. Alert is not stored" + Fore.RESET)
-        sys.exit(1)
+        sys.exit(0)
 
 
 def remove_file(localfile, encrypted):

@@ -112,7 +112,7 @@ def generate_keys():
     # Checks if the password is empty
     if private_key_pass.isspace():
         print(Fore.RED + "        The password can not be empty" + Fore.RESET)
-        sys.exit(1)
+        sys.exit(0)
 
     # Removes the spaces
     private_key_pass = private_key_pass.replace(" ", "")
@@ -146,7 +146,7 @@ def generate_keys():
                                              "file to decrypt later" + Style.RESET_ALL)
     else:
         print(Fore.RED + "        Error to write the keys. Can't find key with fingerprint: " + keyid + Fore.RESET)
-        sys.exit(1)
+        sys.exit(0)
 
 
 def init():
@@ -164,7 +164,7 @@ def init():
         # Checks if the path of the GPG directory is empty
         if gpg_dir.isspace():
             print(Fore.RED + "        The path of the GPG directory can not be empty" + Fore.RESET)
-            sys.exit(1)
+            sys.exit(0)
 
         # Removes the spaces
         gpg_dir = gpg_dir.replace(" ", "")
