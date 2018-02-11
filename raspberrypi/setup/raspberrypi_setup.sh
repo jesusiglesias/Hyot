@@ -69,7 +69,7 @@ check_root () {
 
     if (( EUID != 0 )); then
         e_error "This script must be run as root." 1>&2
-        exit 1
+        exit 0
     fi
 }
 
@@ -78,7 +78,7 @@ check_platform () {
 
     if [[ $OSTYPE != linux* ]]; then
         e_error "This script must be run on GNU/Linux platform. For example: Raspbian." 1>&2
-        exit 1
+        exit 0
     fi
 }
 
@@ -94,13 +94,13 @@ check_raspberrypi () {
     # '/proc/cpuinfo' file does not exist
     if ! [ -e "/proc/cpuinfo" ]; then
         e_error "No such file or directory: '/proc/cpuinfo'. This script must be run on a Raspberry Pi." 1>&2
-        exit 1
+        exit 0
     else
         hardware="$(cat /proc/cpuinfo | grep 'Hardware' | awk '{print $3}')"
 
         if [[ ${hardware} != "BCM2708" && ${hardware} != "BCM2709" && ${hardware} != "BCM2835" ]]; then
             e_error "This script must be run on a Raspberry Pi." 1>&2
-            exit 1
+            exit 0
         fi
     fi
 }
@@ -119,7 +119,7 @@ check_network () {
     wget -q --tries=5 --timeout=20 --spider http://google.com>/dev/null
     if [[ $? -ne 0 ]]; then
         e_error "Raspberry Pi is not connected to the network. Please, enable the network to continue the setup." 1>&2
-        exit 1
+        exit 0
     fi
 }
 
@@ -129,14 +129,14 @@ check_concurrency () {
     # Checks if the 'pidof' command is installed
     if ! [ -x "$(command -v ${PIDOFCOMMAND})" ]; then
         e_error "Command: '$PIDOFCOMMAND' not found. Please, install this command to check and avoid the concurrency." 1>&2
-        exit 1    
+        exit 1
     fi
 
     # Checks if another instance is run
     for pid in $(pidof -o %PPID -x "$1"); do
         if [ "$pid" != "$$" ]; then
             e_error "Process: $1 is already running with PID $pid." 1>&2
-            exit 1
+            exit 0
         fi
     done
 }
@@ -206,7 +206,7 @@ commandLineTools_is_installed () {
     for tool in ${COMMANDLINETOOL}; do
         if ! [ -x "$(command -v "$tool")" ]; then
             e_error "Command line tool: '$tool' is not installed in the system. Please, install this package before continuing." 1>&2
-            exit 1
+            exit 0
         fi
     done
 }
