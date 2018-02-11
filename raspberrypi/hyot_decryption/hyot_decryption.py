@@ -209,7 +209,11 @@ def import_keys():
 
     keys_data = open(keys, 'rb').read()
     import_result = gpg.import_keys(keys_data)
-    print import_result.results
+
+    if import_result.count != 2:
+        print(Fore.RED + "   The entered key file does not contain two keys (public and private key). Please, use the "
+                         "generated file during encryption." + Fore.RESET)
+        sys.exit(0)
 
 
 def main(user_args):
