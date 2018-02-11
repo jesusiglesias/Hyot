@@ -70,6 +70,7 @@ gpg = None                                                       # GPG instance
 keyid = None                                                     # Fingerprint of the GPG key
 gpg_dir = None                                                   # GPG directory
 keys_path = None                                                 # Path where the public and private key will be stored
+fingerprint_array = []                                           # Array to store the existing fingerprints
 
 
 ########################################
@@ -149,6 +150,58 @@ def generate_keys():
         sys.exit(0)
 
 
+def check_keys():
+    """Checks if in the entered GPG directory some key already exists"""
+
+    global gpg, keyid, fingerprint_array
+
+    # Obtains the public keys
+    public_keys = gpg.list_keys(False)
+
+    # Obtains the private keys
+    private_keys = gpg.list_keys(True)
+
+    time.sleep(0.5)
+
+    # Checks if the GPG directory has public and private keys
+    if len(public_keys) == 0 and len(private_keys) == 0:
+        print(Fore.BLACK + "        The GPG directory does not contain any GPG key. Generating a GPG key." + Fore.RESET)
+
+        time.sleep(0.5)
+
+        # Generates the key
+        generate_keys()
+    else:
+        print(Fore.BLACK + "        The GPG directory already contains some GPG key." + Fore.RESET)
+
+        time.sleep(0.5)
+
+        key_input = raw_input(Fore.BLUE + "        Please, enter the fingerprint the key to use or empty to create"
+                                          " a new one: " + Fore.RESET) or None
+
+        # Checks if the user entered a fingerprint
+        if key_input is None or key_input.isspace():
+            print(Fore.BLACK + "        Generating a GPG key." + Fore.RESET)
+
+            # Generates the key
+            generate_keys()
+        else:
+            # Removes the spaces
+            key_input = key_input.replace(" ", "")
+
+            # Obtains the fingerprint of each private key
+            for key in private_keys:
+                fingerprint_array.append(key['fingerprint'])
+
+            # Checks if the entered fingerprint exists in the key ring
+            if key_input not in fingerprint_array:
+                print(Fore.RED + "        The entered fingerprint does not exist in the indicated GPG directory."
+                      + Fore.RESET)
+                sys.exit(0)
+            else:
+                keyid = key_input
+
+
 def init():
     """Creates the GPG instance and the public and private keys"""
 
@@ -179,8 +232,8 @@ def init():
         print(Fore.GREEN + "        Key rings and trust database were created in: " + Style.BRIGHT + gpg_dir
               + Style.RESET_ALL)
 
-        # Generates the key
-        generate_keys()
+        # Checks if in the entered GPG directory some key already exists
+        check_keys()
 
         time.sleep(1)
 
