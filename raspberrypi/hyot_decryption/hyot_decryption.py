@@ -194,12 +194,12 @@ def decrypt_file():
         status = gpg.decrypt_file(f, passphrase=password, output=output_file)
 
         if not status.ok:
-            print(Fore.RED + "   The decryption failed. Main reasons: " + Fore.RESET)
+            print(Fore.RED + "\n   The decryption has failed. Main reasons: " + Fore.RESET)
             print(Fore.RED + "     - File was encrypted with another RSA key. " + Fore.RESET)
             print(Fore.RED + "     - Bad passphrase to unlock the GPG secret key. " + Fore.RESET)
             print(Fore.RED + "     - Output is a directory. " + Fore.RESET)
         else:
-            print(Fore.GREEN + "   File decrypts successfully in the path: " + output_file + "." + Fore.RESET)
+            print(Fore.GREEN + "\n   File decrypts successfully in the path: " + output_file + "." + Fore.RESET)
 
 
 def import_keys():
