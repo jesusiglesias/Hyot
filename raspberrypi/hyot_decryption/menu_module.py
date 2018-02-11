@@ -91,7 +91,7 @@ def check_menu():
                                    help="Path of the encrypted file with GPG.")
 
         # Directory where the decrypted file will be store
-        general_group.add_argument("-d", "--decryptedfilehome",
+        general_group.add_argument("-d", "--decryptedhome",
                                    required=False, action="store", dest="DECRYPTEDHOME",
                                    help="Directory where the decrypted file will be store (optional). Default: same "
                                         "directory that the encrypted file.")
