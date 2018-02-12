@@ -36,6 +36,7 @@ try:
     import sys                                      # System-specific parameters and functions
     import time                                     # Time access and conversions
     import getpass                                  # Portable password input
+    import yaml                                     # YAML parser and emitter for Python
     from colorama import Fore, Style                # Cross-platform colored terminal text
     from cloudant.client import Cloudant            # Cloudant NoSQL DB client
 
@@ -48,23 +49,43 @@ except KeyboardInterrupt:
 
 
 ########################################
+#       LOAD YAML CONFIGURATION        #
+########################################
+conf = None
+try:
+    conf = yaml.load(open('conf/hyot.yml'))
+
+except IOError as ioERROR:
+    print(Fore.RED + "Please, place the configuration file (hyot.yml) inside a directory called conf in the root "
+                     "path (conf/hyot.yml)." + Fore.RESET)
+    sys.exit(1)
+except yaml.YAMLError as yamlError:
+    print(Fore.RED + "The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
+    sys.exit(1)
+
+
+########################################
 #              CONSTANTS               #
 ########################################
-USERNAME_DB = "ee585910-3df5-46f4-93a6-85400da6734e-bluemix"                      # User name in Cloudant NoSQL DB
-PASSWORD_DB = "2d612e9875d92b3a6fd14b8a763ffb05f23bde3a81d9298f2e372245508ce25c"  # Password in Cloudant NoSQL DB
-URL_DB = "https://ee585910-3df5-46f4-93a6-85400da6734e-bluemix:2d612e9875d92b3a" \
-         "6fd14b8a763ffb05f23bde3a81d9298f2e372245508ce25c@ee585910-3df5-46f4-9" \
-         "3a6-85400da6734e-bluemix.cloudant.com"                                  # URL in Cloudant NoSQL DB
-DHT11_DB = "dht11_measurements"                                                   # Name of the DHT11 sensor database
-HCSR04_DB = "hcsr04_measurements"                                                 # Name of the HC-SR04 sensor database
+try:
+    USERNAME_DB = conf['cloudant']['username']      # User name in Cloudant NoSQL DB
+    PASSWORD_DB = conf['cloudant']['password']      # Password in Cloudant NoSQL DB
+    URL_DB = conf['cloudant']['url']                # URL in Cloudant NoSQL DB
+except (KeyError, TypeError) as keyError:
+    print(Fore.RED + "Please, make sure that the keys: [cloudant|username], [cloudant|password] and [cloudant|url] "
+                     "exist in the configuration file (conf/hyot.yml)." + Fore.RESET)
+    sys.exit(1)
+
+DHT11_DB = "dht11_measurements"                     # Name of the DHT11 sensor database
+HCSR04_DB = "hcsr04_measurements"                   # Name of the HC-SR04 sensor database
 
 
 ########################################
 #           GLOBAL VARIABLES           #
 ########################################
-client = None                                                                     # Cloudant NoSQL DB client
-dbs_instances = None                                                              # Instances of all databases
-sensors = []                                                                      # Stores the name of all sensors
+client = None                                       # Cloudant NoSQL DB client
+dbs_instances = None                                # Instances of all databases
+sensors = []                                        # Stores the name of all sensors
 
 
 ########################################

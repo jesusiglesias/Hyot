@@ -35,6 +35,7 @@
 try:
     import sys                                          # System-specific parameters and functions
     import time                                         # Time access and conversions
+    import yaml                                         # YAML parser and emitter for Python
     from colorama import Fore, Style                    # Cross-platform colored terminal text
     import dropbox                                      # Python SDK for integrating with the Dropbox API v2
 
@@ -47,14 +48,35 @@ except KeyboardInterrupt:
 
 
 ########################################
+#       LOAD YAML CONFIGURATION        #
+########################################
+conf = None
+try:
+    conf = yaml.load(open('conf/hyot.yml'))
+
+except IOError as ioERROR:
+    print(Fore.RED + "Please, place the configuration file (hyot.yml) inside a directory called conf in the root "
+                     "path (conf/hyot.yml)." + Fore.RESET)
+    sys.exit(1)
+except yaml.YAMLError as yamlError:
+    print(Fore.RED + "The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
+    sys.exit(1)
+
+
+########################################
 #              CONSTANTS               #
 ########################################
-HYOT_DIR = "Hyot"                                                           # Name of the main directory
-DHT11_DIR = "dht11"                                                         # Name of the DHT11 sensor subdirectory
-HCSR04_DIR = "hcsr04"                                                       # Name of the HC-SR04 sensor subdirectory
-TOKEN = "eI5UZqDlaNAAAAAAAAAAJm2xSwyCoMquSwWq7p270YXf5qr3p1vawOu5AzS99Uih"  # Authorisation token
-MIN_SPACE = 524288000                                                       # Recommended available space in the account (500 MB = 524288000 bytes)
+HYOT_DIR = "Hyot"                       # Name of the main directory
+DHT11_DIR = "dht11"                     # Name of the DHT11 sensor subdirectory
+HCSR04_DIR = "hcsr04"                   # Name of the HC-SR04 sensor subdirectory
+MIN_SPACE = 524288000                   # Recommended available space in the account (500 MB = 524288000 bytes)
 
+try:
+    TOKEN = conf['dropbox']['token']     # Authorization token
+except (KeyError, TypeError) as keyError:
+    print(Fore.RED + "Please, make sure that the key: [dropbox|token] exists in the configuration file (conf/hyot.yml)."
+          + Fore.RESET)
+    sys.exit(1)
 
 ########################################
 #           GLOBAL VARIABLES           #

@@ -8,6 +8,9 @@
 # Jetbrains IDE
 .idea/*
 
+# YAML file
+raspberrypi/hyot/conf/*.yml
+
 # Latex files (report)
 report/.texpadtmp
 report/*.pdf

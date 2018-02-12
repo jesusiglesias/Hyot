@@ -37,6 +37,7 @@ try:
     import os                                           # Miscellaneous operating system interfaces
     import time                                         # Time access and conversions
     import smtplib                                      # SMTP protocol client
+    import yaml                                         # YAML parser and emitter for Python
     from colorama import Fore, Style                    # Cross-platform colored terminal text
     from string import Template                         # Common string operations
     from email.MIMEBase import MIMEBase                 # Email and MIME handling package
@@ -53,26 +54,48 @@ except KeyboardInterrupt:
 
 
 ########################################
+#       LOAD YAML CONFIGURATION        #
+########################################
+conf = None
+try:
+    conf = yaml.load(open('conf/hyot.yml'))
+
+except IOError as ioERROR:
+    print(Fore.RED + "Please, place the configuration file (hyot.yml) inside a directory called conf in the root "
+                     "path (conf/hyot.yml)." + Fore.RESET)
+    sys.exit(1)
+except yaml.YAMLError as yamlError:
+    print(Fore.RED + "The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
+    sys.exit(1)
+
+
+########################################
 #              CONSTANTS               #
 ########################################
-FROM = "hyot.project@gmail.com"                                             # Sender's email address
-PASSWORD = "hyot2018"                                                       # Sender's password
-SERVERIP = "smtp.gmail.com"                                                 # Host/IP of the mail server
-SERVERPORT = 587                                                            # Port of the mail server
-TEMPLATEPATH = "template/email_template.html"                               # Path of the template email
+try:
+    FROM = conf['email']['from']                        # Sender's email address
+    PASSWORD = conf['email']['password']                # Sender's password
+except (KeyError, TypeError) as keyError:
+    print(Fore.RED + "Please, make sure that the keys: [email|from] and [email|password] exist in the configuration "
+                     "file (conf/hyot.yml)." + Fore.RESET)
+    sys.exit(1)
+
+SERVERIP = "smtp.gmail.com"                             # Host/IP of the mail server
+SERVERPORT = 587                                        # Port of the mail server
+TEMPLATEPATH = "template/email_template.html"           # Path of the template email
 
 
 ########################################
 #           GLOBAL VARIABLES           #
 ########################################
-session = None                                                # Mail session
+session = None                                          # Mail session
 
 
 ########################################
 #               FUNCTIONS              #
 ########################################
 def init():
-    """Initializes the mail session"""
+    """Initializes the mail session with a Gmail account"""
 
     global session, FROM, PASSWORD, SERVERIP, SERVERPORT
 

@@ -37,6 +37,7 @@ try:
     import sys                                      # System-specific parameters and functions
     import os                                       # Miscellaneous operating system interfaces
     import time                                     # Time access and conversions
+    import yaml                                     # YAML parser and emitter for Python
     import gnupg                                    # GnuPG’s key management, encryption and signature functionality
     import getpass                                  # Portable password input
     from colorama import Fore, Style                # Cross-platform colored terminal text
@@ -50,6 +51,22 @@ except KeyboardInterrupt:
 
 
 ########################################
+#       LOAD YAML CONFIGURATION        #
+########################################
+conf = None
+try:
+    conf = yaml.load(open('conf/hyot.yml'))
+
+except IOError as ioERROR:
+    print(Fore.RED + "Please, place the configuration file (hyot.yml) inside a directory called conf in the root "
+                     "path (conf/hyot.yml)." + Fore.RESET)
+    sys.exit(1)
+except yaml.YAMLError as yamlError:
+    print(Fore.RED + "The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
+    sys.exit(1)
+
+
+########################################
 #              CONSTANTS               #
 ########################################
 # Path where GPG will store the public and private keyring files and a trust database
@@ -57,9 +74,15 @@ GPGDIRDEFAULT = os.path.dirname(os.path.abspath(__file__)) + "/gpg"
 PUBKEYRING = "pub_hyot.gpg"                                             # Public key ring
 SECKEYRING = "sec_hyot.gpg"                                             # Secret key ring
 KEYSFILE = "hyot_keys.asc"                                              # File with the public and private keys
-NAME = "Hyot"                                                           # Name
-EMAIL = "hyot.project@gmail.com"                                        # Email id
 GPGEXT = "gpg"                                                          # Extension of the encrypted file
+
+try:
+    NAME = conf['gpg']['name']                                          # Name
+    EMAIL = conf['gpg']['email']                                        # Email id
+except (KeyError, TypeError) as keyError:
+    print(Fore.RED + "Please, make sure that the keys: [gpg|name] and [gpg|email] exist in the configuration file "
+                     "(conf/hyot.yml)." + Fore.RESET)
+    sys.exit(1)
 
 
 ########################################

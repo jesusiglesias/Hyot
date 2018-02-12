@@ -37,6 +37,7 @@ try:
     import sys                                    # System-specific parameters and functions
     import time                                   # Time access and conversions
     import logging                                # Logging facility for Python
+    import yaml                                   # YAML parser and emitter for Python
     from colorama import Fore, Style              # Cross-platform colored terminal text
     import ibmiotf.device                         # Module for interacting with the IBM Cloud IoT Platform
 
@@ -49,13 +50,34 @@ except KeyboardInterrupt:
 
 
 ########################################
+#       LOAD YAML CONFIGURATION        #
+########################################
+conf = None
+try:
+    conf = yaml.load(open('conf/hyot.yml'))
+
+except IOError as ioERROR:
+    print(Fore.RED + "Please, place the configuration file (hyot.yml) inside a directory called conf in the root "
+                     "path (conf/hyot.yml)." + Fore.RESET)
+    sys.exit(1)
+except yaml.YAMLError as yamlError:
+    print(Fore.RED + "The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
+    sys.exit(1)
+
+
+########################################
 #              CONSTANTS               #
 ########################################
-ORGID = 'yigd2f'                                  # Identifier of the organization
-DEVICETYPE = 'RaspberryPi3'                       # Type of device. It is a grouping for devices that perform a task
-DEVICEID = 'b827eb9b035c'                         # Unique identifier of the device (normally the MAC address)
-AUTHMETHOD = 'token'                              # Method of authentication
-AUTHTOKEN = '(IAVThk9Vj)TI5E9b7'                  # Authentication token to securely connect the device to the platform
+try:
+    ORGID = conf['iot']['orgid']                  # Identifier of the organization
+    DEVICETYPE = conf['iot']['devicetype']        # Type of device. It is a grouping for devices that perform a task
+    DEVICEID = conf['iot']['deviceid']            # Unique identifier of the device (normally the MAC address)
+    AUTHMETHOD = conf['iot']['authmethod']        # Method of authentication
+    AUTHTOKEN = conf['iot']['authtoken']          # Authentication token to securely connect the device to the platform
+except (KeyError, TypeError) as keyError:
+    print(Fore.RED + "Please, make sure that the keys: [iot|orgid], [iot|devicetype], [iot|deviceid], [iot|authmethod] "
+                     "and [iot|authtoken] exist in the configuration file (conf/hyot.yml)." + Fore.RESET)
+    sys.exit(1)
 
 
 ########################################
