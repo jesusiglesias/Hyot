@@ -75,6 +75,64 @@ fingerprint_array = []                                           # Array to stor
 ########################################
 #               FUNCTIONS              #
 ########################################
+def request_validate_password():
+    """Asks the user for the password for the private key and validates it based on a set of rules"""
+
+    # Variables
+    min_length = 8                                               # Minimum length allowed for the password
+    counter = 0                                                  # Counter of attempts
+
+    while True:
+
+        # Asks the user for the password of the private key
+        key_pass = getpass.getpass(Fore.BLUE + "        Enter the password for the private key: " + Fore.RESET) or None
+
+        # Checks if the password is empty
+        if key_pass is None or key_pass.isspace():
+            print(Fore.RED + "        The password can not be empty." + Fore.RESET)
+            sys.exit(0)
+
+        # Removes the spaces
+        key_pass = key_pass.replace(" ", "")
+
+        if len(key_pass) < min_length:                           # Checks for min length
+            print(Fore.YELLOW + "        Password must be at least " + str(min_length) + " characters long."
+                  + Fore.RESET)
+
+        elif sum(c.isdigit() for c in key_pass) < 1:             # Checks for digit
+            print(Fore.YELLOW + "        Password must contain at least 1 number." + Fore.RESET)
+
+        elif not any(c.isupper() for c in key_pass):             # Checks for uppercase letter
+            print(Fore.YELLOW + "        Password must contain at least 1 uppercase letter." + Fore.RESET)
+
+        elif not any(c.islower() for c in key_pass):             # Checks for lowercase letter
+            print(Fore.YELLOW + "        Password must contain at least 1 lowercase letter." + Fore.RESET)
+
+        else:
+            break
+
+    while True:
+
+        # Asks again the user for the password of the private key
+        confirm_pass = getpass.getpass(Fore.BLUE + "        Confirm the password for the private key: "
+                                       + Fore.RESET) or None
+
+        # Removes the spaces
+        if not (confirm_pass is None):
+            confirm_pass = confirm_pass.replace(" ", "")
+
+        # Compares both passwords
+        if key_pass != confirm_pass:
+            if counter < 2:
+                print(Fore.YELLOW + "        Passwords must match. Please, try it again." + Fore.RESET)
+                counter = counter + 1
+            else:
+                print(Fore.RED + "        Number of attempts spent. Please, run again the code." + Fore.RESET)
+                sys.exit(0)
+        else:
+            return key_pass
+
+
 def check_and_rename(filepath, count=0):
     """Checks if the file exists in the path and if so it renames it adding the rule: [_number]
     :param filepath: Path of the file that will store the public and private key
@@ -105,17 +163,8 @@ def generate_keys():
 
     global gpg, gpg_dir, keyid, keys_path, KEYSFILE, NAME, EMAIL
 
-    # Asks the user for the password of the private key
-    private_key_pass = getpass.getpass(Fore.BLUE + "        Enter the password for the private key: "
-                                       + Fore.RESET) or None
-
-    # Checks if the password is empty
-    if private_key_pass is None or private_key_pass.isspace():
-        print(Fore.RED + "        The password can not be empty" + Fore.RESET)
-        sys.exit(0)
-
-    # Removes the spaces
-    private_key_pass = private_key_pass.replace(" ", "")
+    # Asks the user for the password of the private key and validates it later
+    private_key_pass = request_validate_password()
 
     # Establishes the input data
     input_data = gpg.gen_key_input(name_real=NAME, name_email=EMAIL, passphrase=private_key_pass)
@@ -143,7 +192,7 @@ def generate_keys():
 
         print(Fore.GREEN + "        Public and private keys were stored in: " + Style.BRIGHT + keys_path
               + Style.NORMAL + Fore.YELLOW + "\n        It's important that you remember the fingerprint and keep this "
-                                             "file to decrypt later" + Style.RESET_ALL)
+                                             "file to decrypt later." + Style.RESET_ALL)
     else:
         print(Fore.RED + "        Error to write the keys. Can't find key with fingerprint: " + keyid + Fore.RESET)
         sys.exit(0)
@@ -265,11 +314,11 @@ def encrypt_file(video):
             print(Fore.GREEN + " ✓" + Fore.RESET)
             return encrypted_file
         else:
-            print(Fore.RED + "✕ File not encrypted. The file will be stored in Dropbox without encrypting" + Fore.RESET)
+            print(Fore.RED + "✕ File not encrypted. The file will be stored in Dropbox without encrypting." + Fore.RESET)
             return video
 
     except Exception:
-        print(Fore.RED + "✕ File not encrypted. The file will be stored in Dropbox without encrypting" + Fore.RESET)
+        print(Fore.RED + "✕ File not encrypted. The file will be stored in Dropbox without encrypting." + Fore.RESET)
         return video
 
 
