@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "autoreload": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,9 @@
   "dependencies": {
     "express": "4.15.x",
     "cfenv": "1.0.x"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.12"
   },
   "private": true
 }
