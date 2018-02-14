@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "autoreload": "nodemon app.js"
+    "autoreload": "nodemon app.js",
+    "deploy": "bx cf push"
   },
   "repository": {
     "type": "git",
