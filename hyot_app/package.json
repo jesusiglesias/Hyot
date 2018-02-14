@@ -23,7 +23,7 @@
   },
   "homepage": "https://hyot.eu-gb.mybluemix.net/",
   "dependencies": {
-    "express": "4.15.x",
+    "express": "4.16.x",
     "cfenv": "1.0.x"
   },
   "devDependencies": {
