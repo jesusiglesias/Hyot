@@ -1,0 +1,28 @@
+{
+  "name": "Hyot",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jesusiglesias/Hyot.git"
+  },
+  "keywords": [
+    "Blockchain",
+    "Hyperledger",
+    "Internet of Things"
+  ],
+  "author": "Jesús Iglesias García <jesus.iglesiasg@estudiante.uam.es>",
+  "bugs": {
+    "url": "https://github.com/jesusiglesias/Hyot/issues"
+  },
+  "homepage": "https://hyot.eu-gb.mybluemix.net/",
+  "dependencies": {
+    "express": "4.15.x",
+    "cfenv": "1.0.x"
+  },
+  "private": true
+}
