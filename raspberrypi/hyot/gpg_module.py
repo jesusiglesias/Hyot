@@ -40,6 +40,7 @@ try:
     import yaml                                     # YAML parser and emitter for Python
     import gnupg                                    # GnuPG’s key management, encryption and signature functionality
     import getpass                                  # Portable password input
+    import qrcode                                   # Pure python QR Code generator
     from colorama import Fore, Style                # Cross-platform colored terminal text
 
 except ImportError as importError:
@@ -74,6 +75,7 @@ GPGDIRDEFAULT = os.path.dirname(os.path.abspath(__file__)) + "/gpg"
 PUBKEYRING = "pub_hyot.gpg"                                             # Public key ring
 SECKEYRING = "sec_hyot.gpg"                                             # Secret key ring
 KEYSFILE = "hyot_keys.asc"                                              # File with the public and private keys
+QRIMAGE = "hyot_qr.png"                                                 # QR image
 GPGEXT = "gpg"                                                          # Extension of the encrypted file
 
 try:
@@ -91,7 +93,8 @@ except (KeyError, TypeError) as keyError:
 gpg = None                                                       # GPG instance
 keyid = None                                                     # Fingerprint of the GPG key
 gpg_dir = None                                                   # GPG directory
-keys_path = None                                                 # Path where the public and private key will be stored
+keys_finalpath = None                                            # Path where the public and private key will be stored
+qr_finalpath = None                                              # Path where the QR image will be stored
 fingerprint_array = []                                           # Array to store the existing fingerprints
 
 
@@ -156,13 +159,14 @@ def request_validate_password():
             return key_pass
 
 
-def check_and_rename(filepath, count=0):
+def check_and_rename(filepath, qr, count=0):
     """Checks if the file exists in the path and if so it renames it adding the rule: [_number]
     :param filepath: Path of the file that will store the public and private key
+    :param qr: True, to indicate that the file belongs to the QR image. False, to indicate that belongs to the keys file
     :param count: Number to add to the name
     """
 
-    global keys_path
+    global keys_finalpath, qr_finalpath
 
     # Saves the original path of the file
     original_filepath = filepath
@@ -175,16 +179,46 @@ def check_and_rename(filepath, count=0):
 
     # Checks if a file exists with the same name
     if not os.path.isfile(filepath):
-        keys_path = filepath
+        if qr:
+            qr_finalpath = filepath
+        else:
+            keys_finalpath = filepath
+
         return
     else:
-        check_and_rename(original_filepath, count + 1)
+        check_and_rename(original_filepath, qr, count + 1)
+
+
+def generate_qrcode():
+    """Generates a QR code of the fingerprint of the GPG key"""
+
+    global gpg_dir, keyid, qr_finalpath, QRIMAGE
+
+    try:
+        # Creates an image from the QR Code instance
+        qr_image = qrcode.make(keyid)
+
+        # Path where the QR image will be stored
+        qr_initialpath = gpg_dir + "/" + QRIMAGE
+
+        # Checks if the file exists in the path and if so it renames it adding the rule: [_number]
+        check_and_rename(qr_initialpath, True)
+
+        # Stores the QR image
+        qr_image.save(qr_finalpath)
+
+        print(Fore.GREEN + "          - QR image of the fingerprint: " + Style.BRIGHT
+              + qr_finalpath.split("/")[-1] + Style.RESET_ALL)
+
+    except Exception as qrError:
+        print(Fore.RED + "        Error to generate the QR image." + str(qrError) + Fore.RESET)
+        pass
 
 
 def generate_keys():
     """Creates the GPG key and exports the public and private keys"""
 
-    global gpg, gpg_dir, keyid, keys_path, KEYSFILE, NAME, EMAIL
+    global gpg, gpg_dir, keyid, keys_finalpath, KEYSFILE, NAME, EMAIL
 
     # Asks the user for the password of the private key and validates it later
     private_key_pass = request_validate_password()
@@ -197,6 +231,11 @@ def generate_keys():
     print(Fore.GREEN + "        GPG key created successfully with fingerprint: " + Style.BRIGHT + keyid
           + Style.RESET_ALL)
 
+    print(Fore.GREEN + "        Files generated and stored in: " + Style.BRIGHT + gpg_dir + Style.RESET_ALL)
+
+    # Generates a QR code of the fingerprint
+    generate_qrcode()
+
     public_key = gpg.export_keys(keyid)                                        # Exports the fingerprint (public key)
     private_key = gpg.export_keys(keyid, True, passphrase=private_key_pass)    # Exports the fingerprint (private key)
 
@@ -204,18 +243,20 @@ def generate_keys():
     if public_key and private_key:
 
         # Initial path where the keys will be stored
-        keys_initial_path = gpg_dir + "/" + KEYSFILE
+        keys_initialpath = gpg_dir + "/" + KEYSFILE
 
         # Checks if the file exists in the path and if so it renames it adding the rule: [_number]
-        check_and_rename(keys_initial_path)
+        check_and_rename(keys_initialpath, False)
 
-        with open(keys_path, 'w') as f:
+        with open(keys_finalpath, 'w') as f:
             f.write(public_key)
             f.write(private_key)
 
-        print(Fore.GREEN + "        Public and private keys were stored in: " + Style.BRIGHT + keys_path
-              + Style.NORMAL + Fore.YELLOW + "\n        It's important that you remember the fingerprint and keep this "
-                                             "file to decrypt later." + Style.RESET_ALL)
+        print(Fore.GREEN + "          - Public and private keys: " + Style.BRIGHT + keys_finalpath.split("/")[-1]
+              + '\n' + Style.NORMAL)
+
+        print(Fore.YELLOW + "        It's important that you remember the fingerprint and keep these files to decrypt "
+                            "later." + Style.RESET_ALL)
     else:
         print(Fore.RED + "        Error to write the keys. Can't find key with fingerprint: " + keyid + Fore.RESET)
         sys.exit(0)
