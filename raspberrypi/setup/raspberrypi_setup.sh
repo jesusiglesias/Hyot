@@ -41,7 +41,7 @@ PYTHONCOMMAND="python"                                  # 'python' command
 COMMANDLINETOOL="apt-get apt-cache dpkg"                # 'apt-get', 'apt-cache' and 'dpkg' tools
 PACKAGESTOINSTALL="python2.7 build-essential python-dev python-smbus python-pip gnupg
 rng-tools i2c-tools"                                    # Packages to install
-LIBRARYTOINSTALL="PyYAML psutil pyfiglet colorama RPi.GPIO gpiozero RPLCD pysha3 python-gnupg picamera
+LIBRARYTOINSTALL="PyYAML psutil pyfiglet colorama RPi.GPIO gpiozero RPLCD pysha3 python-gnupg qrcode picamera
 ibmiotf cloudant dropbox"                               # Libraries to install
 LIBRARYDHT="Adafruit_DHT"                               # Adafruit DHT library
 LIBRARYDHTZIP="Adafruit_Python_DHT.zip"                 # File '.zip' of the Adafruit DHT library
