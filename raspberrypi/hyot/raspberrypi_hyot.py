@@ -47,6 +47,7 @@ try:
     import iot_module as iot                        # Module that contains the logic of the IoT platform
     import cloudantdb_module as cloudantdb          # Module that contains the logic of the Cloudant NoSQL DB service
     import gpg_module as gpg                        # Module that contains the logic of the functionality of GPG
+    import hyperledgerFabric_module as hyperledger  # Module that contains the logic to use Hyperledger Fabric
     import dropbox_module as dropbox                # Module that contains the logic of the Dropbox service
     import email_module as email                    # Module to send emails when an alert is triggered
     import lcd_module as lcd                        # Module to handle the LCDs
@@ -88,7 +89,7 @@ def constants(user_args):
         HUM_THRESHOLD = user_args.HUMIDITY_THRESHOLD                # Humidity alert threshold in the DHT11 sensor
         ALERT_LED = LED(user_args.LED_PIN)                          # Led pin. Default 13 (GPIO13)
 
-    except Exception as exception:                  # TODO - Too general exception
+    except Exception as exception:
         print(Fore.RED + "Exception in constants() function: " + str(exception))
         traceback.print_exc()                       # Prints the traceback
         print(Fore.RESET)
@@ -131,7 +132,7 @@ def header():
 
 
 def timestamp():
-    """Generates a timestamp string for each measurement and for each image/video taken"""  # TODO
+    """Generates a timestamp string for each measurement and for each video taken"""
 
     return datetime.datetime.now()
 
@@ -234,6 +235,9 @@ def alert_procedure(sensor, event, temperature, humidity):
 
     # Checks if the original file exists in the local system
     system.check_file(video_filefullpath)
+
+    # Applies a hash function to the content of the file TODO
+    hyperledger.file_hash(video_filefullpath)
 
     # Encrypts the file
     final_path = gpg.encrypt_file(video_filefullpath)
@@ -414,7 +418,7 @@ def main(user_args):
         print("      Errno 22: I2C address is invalid.\r")
         print("      Errno 121: LCD is not connected.\r")
         sys.exit(1)
-    except Exception as exception:                  # TODO - Too general exception
+    except Exception as exception:
         print(Fore.RED + "\nException in the main() function or in the modules: " + str(exception.message.lower()) +
               ".")
         traceback.print_exc()                       # Prints the traceback
@@ -437,7 +441,7 @@ def main(user_args):
             cloudantdb.disconnect()                     # Disconnects the Cloudant client
             dropbox.disconnect()                        # Disables the access token used to authenticate the calls
             print("\r")
-        except Exception as finallyException:           # TODO - Too general exception
+        except Exception as finallyException:
             print(Fore.RED + "\nException in the finally statement of the main() function: " +
                   str(finallyException.message.lower()) + ".")
             traceback.print_exc()                       # Prints the traceback
