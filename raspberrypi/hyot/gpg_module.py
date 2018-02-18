@@ -72,8 +72,8 @@ except yaml.YAMLError as yamlError:
 ########################################
 # Path where GPG will store the public and private keyring files and a trust database
 GPGDIRDEFAULT = os.path.dirname(os.path.abspath(__file__)) + "/gpg"
-PUBKEYRING = "pub_hyot.gpg"                                             # Public key ring
-SECKEYRING = "sec_hyot.gpg"                                             # Secret key ring
+PUBKEYRING = "pub_hyot.gpg"                                             # Public keyring
+SECKEYRING = "sec_hyot.gpg"                                             # Secret keyring
 KEYSFILE = "hyot_keys.asc"                                              # File with the public and private keys
 QRIMAGE = "hyot_qr.png"                                                 # QR image
 GPGEXT = "gpg"                                                          # Extension of the encrypted file
@@ -288,8 +288,8 @@ def check_keys():
 
         time.sleep(0.5)
 
-        key_input = raw_input(Fore.BLUE + "        Please, enter the fingerprint the key to use or empty to create"
-                                          " a new one: " + Fore.RESET) or None
+        key_input = raw_input(Fore.BLUE + "        Please, enter the fingerprint the key or keys (separated by commas)"
+                                          " to use or empty to create a new one: " + Fore.RESET) or None
 
         # Checks if the user entered a fingerprint
         if key_input is None or key_input.isspace():
@@ -301,17 +301,22 @@ def check_keys():
             # Removes the spaces
             key_input = key_input.replace(" ", "")
 
-            # Obtains the fingerprint of each private key
+            # Splits each entered fingerprint
+            key_input = key_input.split(",")
+
+            # Obtains the fingerprint of each private key stored in the keyring
             for key in private_keys:
                 fingerprint_array.append(key['fingerprint'])
 
-            # Checks if the entered fingerprint exists in the key ring
-            if key_input not in fingerprint_array:
-                print(Fore.RED + "        The entered fingerprint does not exist in the indicated GPG directory."
-                      + Fore.RESET)
-                sys.exit(0)
-            else:
-                keyid = key_input
+            # Checks if some entered fingerprint does not exist in the keyring
+            for fingerprint in key_input:
+                if fingerprint not in fingerprint_array:
+                    print(Fore.RED + "        The fingerprint: " + fingerprint + " does not exist in the indicated GPG "
+                                                                                 "directory." + Fore.RESET)
+                    sys.exit(0)
+
+            # All fingerprints exist
+            keyid = key_input
 
 
 def init():
@@ -341,7 +346,7 @@ def init():
         # Creates the GPG instance
         gpg = gnupg.GPG(gnupghome=gpg_dir, keyring=PUBKEYRING, secret_keyring=SECKEYRING)
 
-        print(Fore.GREEN + "        Key rings and trust database were created in: " + Style.BRIGHT + gpg_dir
+        print(Fore.GREEN + "        Keyrings and trust database were created in: " + Style.BRIGHT + gpg_dir
               + Style.RESET_ALL)
 
         # Checks if in the entered GPG directory some key already exists
