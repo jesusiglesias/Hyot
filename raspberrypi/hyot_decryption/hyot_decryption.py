@@ -195,9 +195,10 @@ def decrypt_file():
 
         if not status.ok:
             print(Fore.RED + "\n   The decryption has failed. Main reasons: " + Fore.RESET)
-            print(Fore.RED + "     - File was encrypted with another RSA key. " + Fore.RESET)
-            print(Fore.RED + "     - Bad passphrase to unlock the GPG secret key. " + Fore.RESET)
-            print(Fore.RED + "     - Output is a directory. " + Fore.RESET)
+            print(Fore.RED + "     - File was encrypted with another RSA key." + Fore.RESET)
+            print(Fore.RED + "     - Bad passphrase to unlock the GPG secret key." + Fore.RESET)
+            print(Fore.RED + "     - No valid OpenPGP data found." + Fore.RESET)
+            print(Fore.RED + "     - Output is a directory." + Fore.RESET)
         else:
             print(Fore.GREEN + "\n   File decrypts successfully in the path: " + output_file + "." + Fore.RESET)
 
