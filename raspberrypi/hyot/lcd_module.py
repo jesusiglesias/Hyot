@@ -188,17 +188,17 @@ def print_lcd(sensor, data):
     sensor_lcd.write_string(data)
 
 
-def print_measure_dht(temperature, humidity, error_measure, clear_lcd):
+def print_measure_dht(temperature, humidity, error_measure, clean_lcd):
     """Writes in the LCD of the DHT11 sensor the values of each measure
     :param temperature: Value of the temperature event
     :param humidity: Value of the humidity event
     :param error_measure: Indicates if the current measurement is valid
-    :param clear_lcd: Indicates if the LCD must be cleared
+    :param clean_lcd: Indicates if the LCD must be cleared
     """
 
     global dht_lcd
 
-    if clear_lcd:
+    if clean_lcd:
         dht_lcd.clear()                                         # Clears the LCD
 
     dht_lcd.cursor_pos = (0, 0)                                 # Establishes the cursor in the initial position
@@ -213,6 +213,27 @@ def print_measure_dht(temperature, humidity, error_measure, clear_lcd):
         dht_lcd.write_string("Humidity: %.1f %%" % humidity)
     else:
         dht_lcd.write_string("Humidity: ")
+
+
+def print_measure_hcsr(distance, error_measure, clean_lcd):
+    """Writes in the LCD of the DHT11 sensor the values of each measure
+    :param distance: Value of the distance event
+    :param error_measure: Indicates if the current measurement is valid
+    :param clean_lcd: Indicates if the LCD must be cleared
+    """
+
+    global hcsr_lcd
+
+    if clean_lcd:
+        hcsr_lcd.clear()                                        # Clears the LCD
+
+    hcsr_lcd.cursor_pos = (0, 0)                                # Establishes the cursor in the initial position
+
+    hcsr_lcd.write_string("Distance:")                          # Writes the specified unicode string to the LCD
+
+    if not error_measure:
+        hcsr_lcd.crlf()                                         # Writes a line feed and a carriage return character
+        hcsr_lcd.write_string("%.3f cm" % distance)             # Writes the specified unicode string to the LCD
 
 
 def clear_lcds():
