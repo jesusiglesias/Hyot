@@ -215,20 +215,16 @@ def print_measure_dht(temperature, humidity, error_measure, clean_lcd):
         dht_lcd.write_string("Humidity: ")
 
 
-def print_measure_hcsr(distance, error_measure, clean_lcd):
+def print_measure_hcsr(distance, error_measure):
     """Writes in the LCD of the DHT11 sensor the values of each measure
     :param distance: Value of the distance event
     :param error_measure: Indicates if the current measurement is valid
-    :param clean_lcd: Indicates if the LCD must be cleared
     """
 
     global hcsr_lcd
 
-    if clean_lcd:
-        hcsr_lcd.clear()                                        # Clears the LCD
-
+    hcsr_lcd.clear()                                            # Clears the LCD
     hcsr_lcd.cursor_pos = (0, 0)                                # Establishes the cursor in the initial position
-
     hcsr_lcd.write_string("Distance:")                          # Writes the specified unicode string to the LCD
 
     if not error_measure:

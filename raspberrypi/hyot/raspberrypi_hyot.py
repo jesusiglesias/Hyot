@@ -387,7 +387,7 @@ def main(user_args):
 
                 # Shows the LCDs as empty
                 lcd.print_measure_dht(None, None, True, True)
-                lcd.print_measure_hcsr(None, True, True)
+                lcd.print_measure_hcsr(None, True)
 
             # Humidity and temperature values are invalid or None
             elif (humidity is None or 0 > humidity > 100) and (temperature is None or temperature < 0) and \
@@ -409,7 +409,7 @@ def main(user_args):
                 print("Distance: {0:0.3f} cm \n".format(distance) + Fore.RESET)
 
                 # Outputs the data by LCD
-                lcd.print_measure_hcsr(distance, False, False)
+                lcd.print_measure_hcsr(distance, False)
 
                 # Alert - HC-SR04 | Distance
                 if distance < DISTANCE_THRESHOLD:
@@ -443,7 +443,7 @@ def main(user_args):
                 print("Distance: {0:0.3f} cm \n".format(distance) + Fore.RESET)
 
                 # Outputs the data by LCD
-                lcd.print_measure_hcsr(distance, False, False)
+                lcd.print_measure_hcsr(distance, False)
 
                 # Alert - HC-SR04 | Distance
                 if distance < DISTANCE_THRESHOLD:
@@ -477,7 +477,7 @@ def main(user_args):
                 print("Distance: {0:0.3f} cm \n".format(distance) + Fore.RESET)
 
                 # Outputs the data by LCD
-                lcd.print_measure_hcsr(distance, False, False)
+                lcd.print_measure_hcsr(distance, False)
 
                 # Alert - HC-SR04 | Distance
                 if distance < DISTANCE_THRESHOLD:
@@ -510,7 +510,7 @@ def main(user_args):
 
                 print(Style.BRIGHT + Fore.BLACK + "HC-SR04 sensor" + Style.RESET_ALL)
                 print("Failed to get reading. Distance is invalid, None or upper than the maximum distance")
-                lcd.print_measure_hcsr(None, True, True)
+                lcd.print_measure_hcsr(None, True)
 
                 # Alert - DHT11 | Temperature
                 if temperature > TEMP_THRESHOLD:
@@ -546,7 +546,7 @@ def main(user_args):
                 print("Distance: {0:0.3f} cm \n".format(distance) + Fore.RESET)
 
                 # Outputs the data by LCD
-                lcd.print_measure_hcsr(distance, False, False)
+                lcd.print_measure_hcsr(distance, False)
 
                 # Alert - DHT11 | Temperature
                 if temperature > TEMP_THRESHOLD:
