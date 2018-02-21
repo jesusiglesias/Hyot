@@ -157,6 +157,9 @@ def menu():
 
     try:
 
+        # Maximum distance in meters to be measured by the HC-SR04 sensor
+        default_max_distance = 1.5
+
         # Creates a parser TODO - Description
         parser = argparse.ArgumentParser(
             description=Style.BRIGHT + "HYOT/HELP:" + Style.RESET_ALL + " This script monitors several events "
@@ -166,7 +169,7 @@ def menu():
                                        " default values are used.",
             add_help=False)
 
-        # Groups TODO - Name
+        # Groups
         general_group = parser.add_argument_group('General options')
         pin_group = parser.add_argument_group('Sensor and device pin')
         i2c_group = parser.add_argument_group('LCD device - I2C')
@@ -188,59 +191,83 @@ def menu():
                                    help="Time that the recording will take when an alert is triggered (e.g. 10 seconds)"
                                         ". Default: 10.")
 
-        # Wait time between measurements TODO - Group
+        # Wait time between measurements
         general_group.add_argument("-wt", "--waittime",
                                    type=int, default=3, required=False, action="store", dest="WAITTIME_MEASUREMENTS",
                                    help="Wait time between measurements in the sensors (e.g. 3 seconds). Default: 3.")
+
+        # Maximum distance to be measured by the HC-SR04 sensor
+        general_group.add_argument("-m", "--maxdistancehcsr",
+                                   type=float, default=default_max_distance, required=False, action="store",
+                                   dest="HCSR_MAXDISTANCE",
+                                   help="Maximum distance to be measured by the HC-SR04 sensor (e.g. 1.5 meters). "
+                                        "Default: 1.5.")
 
         # ### Pin group ###
         # DHT11 sensor - Data pin
         pin_group.add_argument("-dd", "--dht11data",
                                type=int, default=21, required=False, action="store", dest="DHT_DATAPIN",
-                               help="Data pin for DHT11 sensor in Broadcom GPIO pin number (e.g. 21 for Raspberry Pi "
-                                    "GPIO21). Default: 21.")
+                               help="Data pin for the DHT11 sensor in Broadcom GPIO pin number (e.g. 21 for Raspberry "
+                                    "Pi GPIO21). Default: 21.")
+
+        # HC-SR04 sensor - Echo pin
+        pin_group.add_argument("-hce", "--hcsrecho",
+                               type=int, default=19, required=False, action="store", dest="HCSR_ECHOPIN",
+                               help="Echo pin for the HC-SR04 sensor in Broadcom GPIO pin number (e.g. 19 for Raspberry"
+                                    " Pi GPIO19). Default: 19.")
+
+        # HC-SR04 sensor - Trigger pin
+        pin_group.add_argument("-hct", "--hcsrtrigger",
+                               type=int, default=26, required=False, action="store", dest="HCSR_TRIGPIN",
+                               help="Trigger pin for the HC-SR04 sensor in Broadcom GPIO pin number (e.g. 26 for "
+                                    "Raspberry Pi GPIO26). Default: 26.")
 
         # Red led - Pin
         pin_group.add_argument("-lp", "--ledpin",
                                type=int, default=13, required=False, action="store", dest="LED_PIN",
-                               help="Pin for LED in Broadcom GPIO pin number (e.g. 13 for Raspberry Pi "
+                               help="Pin for the LED in Broadcom GPIO pin number (e.g. 13 for Raspberry Pi "
                                     "GPIO13). Default: 13.")
 
         # ### I2C group ###
         # LCD 16x2 - DHT11 I2C Expander
         i2c_group.add_argument("-die", "--dhti2cexpander",
                                default="PCF8574", required=False, action="store", dest="DHT_I2CEXPANDER",
-                               help="I2C expander type for LCD 16x2 of the DH11 sensor. One of 'PCF8574', 'MCP23008', "
-                                    "'MCP23017'. Default: PCF8574.")
+                               help="I2C expander type for the LCD 16x2 of the DH11 sensor. One of 'PCF8574', "
+                                    "'MCP23008', 'MCP23017'. Default: PCF8574.")
 
         # LCD 16x2 - DHT11 I2C address
         i2c_group.add_argument("-dia", "--dhti2caddress",
                                default="0x3f", required=False, action="store", dest="DHT_I2CADDRESS",
-                               help="I2C address for LCD 16x2 of the DH11 sensor. Type the 'i2cdetect -y 1' (RPi v.3) "
-                                    "command to obtain it. Default: 0x3f.")
+                               help="I2C address for the LCD 16x2 of the DH11 sensor. Type the 'i2cdetect -y 1' "
+                                    "(RPi v.3) command to obtain it. Default: 0x3f.")
 
         # LCD 16x2 - HC-SR04 I2C Expander
         i2c_group.add_argument("-hie", "--hcsri2cexpander",
                                default="PCF8574", required=False, action="store", dest="HCSR_I2CEXPANDER",
-                               help="I2C expander type for LCD 16x2 of the HC-SR04 sensor. One of 'PCF8574', "
+                               help="I2C expander type for the LCD 16x2 of the HC-SR04 sensor. One of 'PCF8574', "
                                     "'MCP23008', 'MCP23017'. Default: PCF8574.")
 
         # LCD 16x2 - HC-SR04 I2C address
         i2c_group.add_argument("-hia", "--hcsri2caddress",
                                default="0x38", required=False, action="store", dest="HCSR_I2CADDRESS",
-                               help="I2C address for LCD 16x2 of the HC-SR04 sensor. Type the 'i2cdetect -y 1' "
+                               help="I2C address for the LCD 16x2 of the HC-SR04 sensor. Type the 'i2cdetect -y 1' "
                                     "(RPi v.3) command to obtain it. Default: 0x38.")
 
         # ### Threshold group ###
-        # DHT11 sensor - Temperature threshold TODO
+        # DHT11 sensor - Temperature threshold
         threshold_group.add_argument("-tt", "--tempthreshold",
                                      type=int, default=30, required=False, action="store", dest="TEMPERATURE_THRESHOLD",
                                      help="Temperature alert threshold in the DHT11 sensor (e.g. 30 °C). Default: 30.")
 
-        # DHT11 sensor - Humidity threshold TODO
+        # DHT11 sensor - Humidity threshold
         threshold_group.add_argument("-ht", "--humthreshold",
                                      type=int, default=80, required=False, action="store", dest="HUMIDITY_THRESHOLD",
                                      help="Humidity alert threshold in the DHT11 sensor (e.g. 80 %%). Default: 80.")
+
+        # HC-SR04 sensor - Distance threshold
+        threshold_group.add_argument("-dt", "--distancethreshold",
+                                     type=int, default=50, required=False, action="store", dest="DISTANCE_THRESHOLD",
+                                     help="Distance alert threshold in the HC-SR04 sensor (e.g. 50 cm). Default: 50.")
 
         # Parses the arguments returning the data from the options specified
         args = parser.parse_args()
@@ -254,54 +281,88 @@ def menu():
 
         # Checks the '--recordingtime' argument
         if args.RECORDING_TIME < 1:
-            print(Fore.RED + "Recording time invalid. Please, type the '-h/--help' option to show the help"
+            print(Fore.RED + "Invalid recording time. Please, type the '-h/--help' option to show the help"
                              " or the value must be upper than 0. Default value: 10." + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--waittime' argument
         if args.WAITTIME_MEASUREMENTS < 2:
-            print(Fore.RED + "Wait time between measurements invalid. Please, type the '-h/--help' option to show the "
+            print(Fore.RED + "Invalid wait time between measurements. Please, type the '-h/--help' option to show the "
                              "help or a value in seconds upper than 2. Default value: 3." + Fore.RESET)
+            sys.exit(0)
+
+        # Checks the '--maxdistancehcsr' argument
+        if args.HCSR_MAXDISTANCE <= 0.3:
+            print(Fore.RED + "Invalid maximum distance to be measured by the HC-SR04 sensor. Please, type the "
+                             "'-h/--help' option to show the help or a value in meters upper than 0.3. Default value: "
+                             "1.5." + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--dht11data' argument
         if args.DHT_DATAPIN < 0 or args.DHT_DATAPIN > 27:
-            print(Fore.RED + "Data pin for DHT11 sensor invalid. Please, type the '-h/--help' option to show the help"
-                             " or the number in Broadcom GPIO format and in the range 0-27. Default value: 21."
+            print(Fore.RED + "Invalid data pin for the DHT11 sensor. Please, type the '-h/--help' option to show the "
+                             "help or the number in Broadcom GPIO format and in the range 0-27. Default value: 21."
+                  + Fore.RESET)
+            sys.exit(0)
+
+        # Checks the '--hcsrecho' argument
+        if args.HCSR_ECHOPIN < 0 or args.HCSR_ECHOPIN > 27:
+            print(Fore.RED + "Invalid echo pin for the HC-SR04 sensor. Please, type the '-h/--help' option to show the "
+                             "help or the number in Broadcom GPIO format and in the range 0-27. Default value: 19."
+                  + Fore.RESET)
+            sys.exit(0)
+
+        # Checks the '--hcsrtrigger' argument
+        if args.HCSR_TRIGPIN < 0 or args.HCSR_TRIGPIN > 27:
+            print(Fore.RED + "Invalid trigger pin for the HC-SR04 sensor. Please, type the '-h/--help' option to show "
+                             "the help or the number in Broadcom GPIO format and in the range 0-27. Default value: 26."
                   + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--ledpin' argument
         if args.LED_PIN < 0 or args.LED_PIN > 27:
-            print(Fore.RED + "Pin for led invalid. Please, type the '-h/--help' option to show the help"
+            print(Fore.RED + "Invalid pin for led. Please, type the '-h/--help' option to show the help"
                              " or the number in Broadcom GPIO format and in the range 0-27. Default value: 13."
                   + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--dhti2cexpander' argument
         if args.DHT_I2CEXPANDER not in ['PCF8574', 'MCP23008', 'MCP23017']:
-            print(Fore.RED + "I2C expander type for LCD of the DHT11 sensor invalid. Please, type the '-h/--help' "
+            print(Fore.RED + "Invalid I2C expander type for the LCD of the DHT11 sensor. Please, type the '-h/--help' "
                              "option to show the help or specify one of 'PCF8574', 'MCP23008', 'MCP23017'. "
                              "Default value: PCF8574." + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--hcsri2cexpander' argument
         if args.HCSR_I2CEXPANDER not in ['PCF8574', 'MCP23008', 'MCP23017']:
-            print(Fore.RED + "I2C expander type invalid for LCD of the HC-SR04 sensor invalid. Please, type the "
+            print(Fore.RED + "Invalid I2C expander type for the LCD of the HC-SR04 sensor invalid. Please, type the "
                              "'-h/--help' option to show the help or specify one of 'PCF8574', 'MCP23008', 'MCP23017'."
                              " Default value: PCF8574." + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--tempthreshold' argument
         if args.TEMPERATURE_THRESHOLD < 0:
-            print(Fore.RED + "Temperature alert threshold invalid. Please, type the '-h/--help' option to show the help"
+            print(Fore.RED + "Invalid temperature alert threshold. Please, type the '-h/--help' option to show the help"
                              " or the value must be upper than 0. Default value: 30." + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--humthreshold' argument
         if args.HUMIDITY_THRESHOLD < 0 or args.HUMIDITY_THRESHOLD > 100:
-            print(Fore.RED + "Humidity alert threshold invalid. Please, type the '-h/--help' option to show the help"
-                             " or the value must be the 0-100 range. Default value: 80." + Fore.RESET)
+            print(Fore.RED + "Invalid humidity alert threshold. Please, type the '-h/--help' option to show the help"
+                             " or the value must be in the range 0-100. Default value: 80." + Fore.RESET)
+            sys.exit(0)
+
+        # Calculates the maximum distance
+        if not args.HCSR_MAXDISTANCE:
+            max_distance = default_max_distance * 100
+        else:
+            max_distance = args.HCSR_MAXDISTANCE * 100
+
+        # Checks the '--distancethreshold' argument
+        if args.DISTANCE_THRESHOLD < 0 or args.DISTANCE_THRESHOLD > args.HCSR_MAXDISTANCE * 100:
+            print(Fore.RED + "Invalid distance alert threshold. Please, type the '-h/--help' option to show the help"
+                             " or the value must be in the range 0-" + str(int(max_distance)) + ". Default value: 50."
+                  + Fore.RESET)
             sys.exit(0)
 
         return args

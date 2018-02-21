@@ -54,7 +54,7 @@ try:
     import system_module as system                  # Module that performs functions in the local operating system
     from pyfiglet import Figlet                     # Text banners in a variety of typefaces
     from colorama import Fore, Style                # Cross-platform colored terminal text
-    from gpiozero import LED                        # Simple interface to GPIO devices
+    from gpiozero import LED, DistanceSensor        # Simple interface to GPIO devices
     import Adafruit_DHT                             # DHT11 sensor
 
 except ImportError as importError:
@@ -74,7 +74,7 @@ def constants(user_args):
     """
 
     global FIGLET, SENSORS, DHT11_EVENTS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, TEMP_THRESHOLD, \
-        HUM_THRESHOLD, ALERT_LED
+        HUM_THRESHOLD, ALERT_LED, HCSR_SENSOR, HCSR_MAXDISTANCE, DISTANCE_THRESHOLD
 
     try:
 
@@ -88,10 +88,16 @@ def constants(user_args):
         TEMP_THRESHOLD = user_args.TEMPERATURE_THRESHOLD            # Temperature alert threshold in the DHT11 sensor
         HUM_THRESHOLD = user_args.HUMIDITY_THRESHOLD                # Humidity alert threshold in the DHT11 sensor
         ALERT_LED = LED(user_args.LED_PIN)                          # Led pin. Default 13 (GPIO13)
+        # HC-SR04 sensor. Default pins: echo GPIO19, trigger GPIO26. Default maximum distance to be measured: 1.5 meters
+        HCSR_SENSOR = DistanceSensor(echo=user_args.HCSR_ECHOPIN,
+                                     trigger=user_args.HCSR_TRIGPIN,
+                                     max_distance=user_args.HCSR_MAXDISTANCE)
+        HCSR_MAXDISTANCE = user_args.HCSR_MAXDISTANCE               # Maximum distance to be measured (HC-SR04 sensor)
+        DISTANCE_THRESHOLD = user_args.DISTANCE_THRESHOLD           # Distance alert threshold in the HC-SR04 sensor
 
     except Exception as exception:
         print(Fore.RED + "Exception in constants() function: " + str(exception))
-        traceback.print_exc()                       # Prints the traceback
+        traceback.print_exc()                                       # Prints the traceback
         print(Fore.RESET)
         sys.exit(1)
     except KeyboardInterrupt:
@@ -140,18 +146,20 @@ def timestamp():
 def information_values():
     """Shows the information by console about some values established"""
 
-    global TEMP_THRESHOLD, HUM_THRESHOLD, TIME_MEASUREMENTS, recording_time
+    global TEMP_THRESHOLD, HUM_THRESHOLD, DISTANCE_THRESHOLD, TIME_MEASUREMENTS, HCSR_MAXDISTANCE, recording_time
 
     print(Style.BRIGHT + Fore.BLACK + "\n-- Information - Values established:" + Style.RESET_ALL)
     # Information about the current thresholds
     print(Fore.BLACK + "      -- Alert thresholds:")
-    print("        - Sensor: DHT11 - Event: Temperature -> " + str(TEMP_THRESHOLD) + ' °C')
-    print("        - Sensor: DHT11 - Event: Humidity -> " + str(HUM_THRESHOLD) + ' %')
-    print("        - Sensor: HC-SR04 - Event: Distance -> " + ' meters')  # TODO
+    print("        - Sensor: DHT11   | Event: Temperature | > " + str(TEMP_THRESHOLD) + " °C")
+    print("        - Sensor: DHT11   | Event: Humidity    | > " + str(HUM_THRESHOLD) + " %")
+    print("        - Sensor: HC-SR04 | Event: Distance    | < " + str(DISTANCE_THRESHOLD) + " cm")
     # Information about the recording time
     print(Fore.BLACK + "      -- Recording time: " + str(recording_time) + " seconds")
     # Information about the time between measurements
     print(Fore.BLACK + "      -- Time between measurements: " + str(TIME_MEASUREMENTS) + " seconds")
+    # Information about the maximum distance to be measured by the HC-SR04 sensor
+    print(Fore.BLACK + "      -- Maximum distance to be measured (HC-SR04): " + str(HCSR_MAXDISTANCE) + " meters")
 
     time.sleep(2)
 
@@ -342,7 +350,7 @@ def main(user_args):
         lcd.clear_lcds()
         time.sleep(1)
 
-        # DHT11 and HC-SR04 sensor TODO
+        # DHT11 and HC-SR04 sensor
         lcd.print_lcds("- DHT11 sensor -", " HC-SR04 sensor ")
         time.sleep(2)
         lcd.clear_lcds()
