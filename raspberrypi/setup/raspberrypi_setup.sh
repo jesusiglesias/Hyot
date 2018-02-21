@@ -271,7 +271,7 @@ library_is_installed () {
         output "Library is installed. Checking if this one is updated.\\n"
 
         # Library is outdated
-        if [ "$(pip search "$1" | grep -A2 '^'"$1"'\s' | grep -B2 'LATEST:')" ]; then 
+        if [ "$(pip search "$1" | grep -A2 '^'"$1" | grep -B2 'LATEST:')" ]; then
             output "Library should be updated. Updating...\\n"
 
             # Command to update the library
@@ -291,7 +291,7 @@ library_is_installed () {
         output "Library is not installed. Searching the library in the repository...\\n"
 
         # Library exists in the repository
-        if [ "$(pip search "$1" | grep '^'"$1"'\s')" ]; then 
+        if [ "$(pip search "$1" | grep '^'"$1")" ]; then
             output "Library has been found. Installing...\\n"
 
             # Command to install the library
