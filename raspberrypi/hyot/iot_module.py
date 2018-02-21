@@ -148,17 +148,18 @@ def connect():
     print("\n        ------------------------------------------------------")
 
 
-def publish_event(timestamp, temperature, humidity):
-    """Sends the event to the IoT platform TODO - More events
+def publish_event(timestamp, temperature, humidity, distance):
+    """Sends the event to the IoT platform
     :param timestamp: Date and time when the measurement was taken
     :param temperature: Value of this event in the current measurement
     :param humidity: Value of this event in the current measurement
+    :param distance: Value of this event in the current measurement
     """
 
     global client
 
     # Data to send to the IoT platform
-    data = {'d': {'Datetime': timestamp, 'Temperature': temperature, 'Humidity': humidity}}
+    data = {'d': {'Datetime': timestamp, 'Temperature': temperature, 'Humidity': humidity, 'Distance': distance}}
 
     try:
         print(Fore.LIGHTBLACK_EX + "   -- Publishing the event to the IoT platform" + Fore.RESET),
