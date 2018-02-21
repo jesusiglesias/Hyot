@@ -73,14 +73,15 @@ def constants(user_args):
     :param user_args: Values of the options entered by the user
     """
 
-    global FIGLET, SENSORS, DHT11_EVENTS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, TEMP_THRESHOLD, \
-        HUM_THRESHOLD, ALERT_LED, HCSR_SENSOR, HCSR_MAXDISTANCE, DISTANCE_THRESHOLD
+    global FIGLET, SENSORS, DHT11_EVENTS, HCSR_EVENTS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, \
+        TEMP_THRESHOLD, HUM_THRESHOLD, ALERT_LED, HCSR_SENSOR, HCSR_MAXDISTANCE, DISTANCE_THRESHOLD
 
     try:
 
         FIGLET = Figlet(font='future_8', justify='center')          # Figlet
-        SENSORS = ["DHT11", "HC-SR04"]                              # Name of the sensors
+        SENSORS = ["DHT11", "HCSR04"]                               # Name of the sensors
         DHT11_EVENTS = ["Temperature", "Humidity"]                  # Name of the events of the DHT11 sensor
+        HCSR_EVENTS = ["Distance"]                                  # Name of the events of the HC-SR04 sensor
         MAILTO = user_args.EMAIL                                    # Recipient's email address
         TIME_MEASUREMENTS = user_args.WAITTIME_MEASUREMENTS         # Wait time between each measurement. Default 3 seconds
         DHT_SENSOR = Adafruit_DHT.DHT11                             # DHT11 sensor
@@ -178,11 +179,12 @@ def reset_values():
     sent = None
 
 
-def add_cloudant(sensor, temperature, humidity):
+def add_cloudant(sensor, temperature, humidity, distance):
     """Adds the data to the Cloudant NoSQL database
     :param sensor: Indicates the sensor that triggered the alert
-    :param temperature: Indicates the value of temperature measured
-    :param humidity: Indicates the value of humidity measured
+    :param temperature: Indicates the value of measured temperature
+    :param humidity: Indicates the value of measured humidity
+    :param distance: Indicates the value of measured distance
     """
 
     global uuid_measurement, datetime_measurement, alert_triggered, alert_origin, threshold_value, link_dropbox, sent,\
@@ -194,6 +196,7 @@ def add_cloudant(sensor, temperature, humidity):
         "datetime_field": str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
         "temperature_field": temperature,
         "humidity_field": humidity,
+        "distance_field": distance,
         "alert_triggered": alert_triggered,
         "alert_origin": alert_origin,
         "threshold_value": threshold_value,
@@ -206,12 +209,13 @@ def add_cloudant(sensor, temperature, humidity):
     cloudantdb.add_document(data, sensor)
 
 
-def alert_procedure(sensor, event, temperature, humidity):
+def alert_procedure(sensor, event, temperature, humidity, distance):
     """Initiates the alert procedure
     :param sensor: Indicates the sensor that triggered the alert
     :param event: Indicates the event that triggered the alert
-    :param temperature: Indicates the value of temperature measured
-    :param humidity: Indicates the value of humidity measured
+    :param temperature: Indicates the value of measured temperature
+    :param humidity: Indicates the value of measured humidity
+    :param distance: Indicates the value of measured distance
     """
 
     global uuid_measurement, datetime_measurement, video_filename, video_filefullpath, ext, recording_time, \
@@ -232,7 +236,7 @@ def alert_procedure(sensor, event, temperature, humidity):
     print(Fore.RED + "  ---------- ALERT TRIGGERED | " + sensor + " | " + event + " ----------  " + Fore.RESET)
     lcd.full_print_lcd(sensor, "ALERT TRIGGERED!", event)
     ALERT_LED.on()                                                      # Turns on the red led
-    time.sleep(3)
+    time.sleep(5)
 
     lcd.clear_lcd(sensor)                                               # Clears the LCD
     print(Fore.BLACK + "  ----------- Initiating the alert procedure ------------  " + Fore.RESET)
@@ -258,9 +262,9 @@ def alert_procedure(sensor, event, temperature, humidity):
 
     # Sends an email when an alert is triggered
     if not (MAILTO is None):
-        sent = email.send_email(MAILTO, final_path, video_filename,  # TODO - Distance
+        sent = email.send_email(MAILTO, final_path, video_filename,
                                 str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
-                                str(uuid_measurement), temperature, humidity, "1", link_dropbox,
+                                str(uuid_measurement), temperature, humidity, distance, link_dropbox,
                                 alert_origin, threshold_value)
 
     # Removes the temporary file (original video)
@@ -272,10 +276,10 @@ def alert_procedure(sensor, event, temperature, humidity):
         system.remove_file(final_path, True)
 
     # Publishes the event in the IoT platform
-    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity)
+    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance)
 
     # Adds the measurement to the database
-    add_cloudant(sensor, temperature, humidity)
+    add_cloudant(sensor, temperature, humidity, distance)
 
     time.sleep(1)
     lcd.clear_lcd(sensor)                                       # Clears the LCD
@@ -295,7 +299,8 @@ def main(user_args):
 
         # Variables
         global uuid_measurement, datetime_measurement, recording_time, threshold_value, SENSORS, MAILTO, \
-            TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT11_EVENTS, TEMP_THRESHOLD, HUM_THRESHOLD
+            TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT11_EVENTS, TEMP_THRESHOLD, HUM_THRESHOLD, \
+            HCSR_SENSOR, HCSR_EVENTS, HCSR_MAXDISTANCE, DISTANCE_THRESHOLD
 
         count = 0                                   # Measurement counter
         recording_time = user_args.RECORDING_TIME   # Time that the recording will take
@@ -350,7 +355,7 @@ def main(user_args):
         lcd.clear_lcds()
         time.sleep(1)
 
-        # DHT11 and HC-SR04 sensor
+        # DHT11 and HC-SR04 sensors
         lcd.print_lcds("- DHT11 sensor -", " HC-SR04 sensor ")
         time.sleep(2)
         lcd.clear_lcds()
@@ -358,58 +363,213 @@ def main(user_args):
         # Loop each n seconds, hence, this is the time between measurements
         while True:
 
+            # If an alert has been triggered, the LCD are cleared
+            if alert_triggered:
+                lcd.clear_lcds()
+
             count += 1                                                  # Increment the counter
             datetime_measurement = timestamp()                          # Obtains a timestamp (datetime)
             uuid_measurement = uuid.uuid4()                             # Generates a random UUID
             reset_values()                                              # Resets the values
 
-            # ############### DHT11 SENSOR ###############
+            print(Style.BRIGHT + Fore.CYAN + "Measurement %i" % count + Style.RESET_ALL)
 
-            # Obtains humidity and temperature
+            # Obtains the humidity and temperature
             humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PINDATA)
+            # Obtains the distance (3 decimals)
+            distance = round(HCSR_SENSOR.distance * 100, 3)
 
-            print(Style.BRIGHT + Fore.CYAN + "DHT11 sensor - Measurement %i" % count + Style.RESET_ALL)
+            # All events are invalid
+            if (humidity is None or 0 > humidity > 100) and (temperature is None or temperature < 0) and \
+               (distance is None or distance < 0 or distance > HCSR_MAXDISTANCE * 100):
 
-            # Checks the values
-            if humidity is not None and 0 <= humidity <= 100 and temperature is not None and temperature >= 0:
+                print("Failed to get reading. All events have invalid values")
 
-                # Outputs the data by console
-                print(Style.BRIGHT + "UUID: " + Style.RESET_ALL + Fore.BLACK + str(uuid_measurement))
+                # Shows the LCDs as empty
+                lcd.print_measure_dht(None, None, True, True)
+                lcd.print_measure_hcsr(None, True, True)
+
+            # Humidity and temperature values are invalid or None
+            elif (humidity is None or 0 > humidity > 100) and (temperature is None or temperature < 0) and \
+                    (distance is not None and 0 <= distance <= HCSR_MAXDISTANCE * 100):
+
+                humidity = None
+                temperature = None
+
+                print(Style.BRIGHT + "UUID: " + Style.RESET_ALL + str(uuid_measurement))
                 print("Datetime: " + str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")))
+
+                print(Style.BRIGHT + Fore.BLACK + "DHT11 sensor" + Style.RESET_ALL)
+                print("Failed to get reading. Humidity and temperature are invalid or None")
+
+                # Shows the LCD as empty - DHT11 sensor
+                lcd.print_measure_dht(None, None, True, True)
+
+                print(Style.BRIGHT + Fore.BLACK + "HC-SR04 sensor" + Style.RESET_ALL)
+                print("Distance: {0:0.3f} cm \n".format(distance) + Fore.RESET)
+
+                # Outputs the data by LCD
+                lcd.print_measure_hcsr(distance, False, False)
+
+                # Alert - HC-SR04 | Distance
+                if distance < DISTANCE_THRESHOLD:
+                    threshold_value = DISTANCE_THRESHOLD
+                    alert_procedure(SENSORS[1], HCSR_EVENTS[0], temperature, humidity, distance)
+                # No alert
+                else:
+                    # Publishes the event in the IoT platform
+                    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity,
+                                      distance)
+                    # Adds the measurement to the database
+                    add_cloudant(SENSORS[1], temperature, humidity, distance)
+
+            # Humidity value is invalid or None
+            elif (humidity is None or 0 > humidity > 100) and (temperature is not None and temperature >= 0 and
+                                                               distance is not None and
+                                                               0 <= distance <= HCSR_MAXDISTANCE * 100):
+
+                humidity = None
+
+                print(Style.BRIGHT + "UUID: " + Style.RESET_ALL + str(uuid_measurement))
+                print("Datetime: " + str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")))
+
+                print(Style.BRIGHT + Fore.BLACK + "DHT11 sensor" + Style.RESET_ALL)
+                print("Failed to get reading. Humidity is invalid or None")
+
+                # Shows the LCD as empty - DHT11 sensor
+                lcd.print_measure_dht(None, None, True, True)
+
+                print(Style.BRIGHT + Fore.BLACK + "HC-SR04 sensor" + Style.RESET_ALL)
+                print("Distance: {0:0.3f} cm \n".format(distance) + Fore.RESET)
+
+                # Outputs the data by LCD
+                lcd.print_measure_hcsr(distance, False, False)
+
+                # Alert - HC-SR04 | Distance
+                if distance < DISTANCE_THRESHOLD:
+                    threshold_value = DISTANCE_THRESHOLD
+                    alert_procedure(SENSORS[1], HCSR_EVENTS[0], temperature, humidity, distance)
+                # No alert
+                else:
+                    # Publishes the event in the IoT platform
+                    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity,
+                                      distance)
+                    # Adds the measurement to the database
+                    add_cloudant(SENSORS[1], temperature, humidity, distance)
+
+            # Temperature value is invalid or None
+            elif (temperature is None or temperature < 0) and (humidity is not None and 0 <= humidity <= 100 and
+                                                               distance is not None and
+                                                               0 <= distance <= HCSR_MAXDISTANCE * 100):
+
+                temperature = None
+
+                print(Style.BRIGHT + "UUID: " + Style.RESET_ALL + str(uuid_measurement))
+                print("Datetime: " + str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")))
+
+                print(Style.BRIGHT + Fore.BLACK + "DHT11 sensor" + Style.RESET_ALL)
+                print("Failed to get reading. Temperature is invalid or None")
+
+                # Shows the output as empty - DHT11 sensor
+                lcd.print_measure_dht(None, None, True, True)
+
+                print(Style.BRIGHT + Fore.BLACK + "HC-SR04 sensor" + Style.RESET_ALL)
+                print("Distance: {0:0.3f} cm \n".format(distance) + Fore.RESET)
+
+                # Outputs the data by LCD
+                lcd.print_measure_hcsr(distance, False, False)
+
+                # Alert - HC-SR04 | Distance
+                if distance < DISTANCE_THRESHOLD:
+                    threshold_value = DISTANCE_THRESHOLD
+                    alert_procedure(SENSORS[1], HCSR_EVENTS[0], temperature, humidity, distance)
+                # No alert
+                else:
+                    # Publishes the event in the IoT platform
+                    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity,
+                                      distance)
+                    # Adds the measurement to the database
+                    add_cloudant(SENSORS[1], temperature, humidity, distance)
+
+            # Distance value is invalid, None or upper than maximum distance
+            elif (distance is None or distance < 0 or distance > HCSR_MAXDISTANCE * 100) and (humidity is not None and
+                                                                                              0 <= humidity <= 100 and
+                                                                                              temperature is not None
+                                                                                              and temperature >= 0):
+
+                distance = None
+
+                print(Style.BRIGHT + "UUID: " + Style.RESET_ALL + str(uuid_measurement))
+                print("Datetime: " + str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")))
+
+                print(Style.BRIGHT + Fore.BLACK + "DHT11 sensor" + Style.RESET_ALL)
                 print("Temperature: {0:0.1f} °C \nHumidity: {1:0.1f} %".format(temperature, humidity) + Fore.RESET)
 
                 # Outputs the data by LCD
                 lcd.print_measure_dht(temperature, humidity, False, False)
 
-                # Alert - DHT11 | Temperature TODO - Pass events - Distance
+                print(Style.BRIGHT + Fore.BLACK + "HC-SR04 sensor" + Style.RESET_ALL)
+                print("Failed to get reading. Distance is invalid, None or upper than the maximum distance")
+                lcd.print_measure_hcsr(None, True, True)
+
+                # Alert - DHT11 | Temperature
                 if temperature > TEMP_THRESHOLD:
                     threshold_value = TEMP_THRESHOLD
-                    alert_procedure(SENSORS[0], DHT11_EVENTS[0], temperature, humidity)
+                    alert_procedure(SENSORS[0], DHT11_EVENTS[0], temperature, humidity, distance)
 
                 # Alert - DHT11 | Humidity
                 elif humidity > HUM_THRESHOLD:
                     threshold_value = HUM_THRESHOLD
-                    alert_procedure(SENSORS[0], DHT11_EVENTS[1], temperature, humidity)
+                    alert_procedure(SENSORS[0], DHT11_EVENTS[1], temperature, humidity, distance)
 
                 # No alert
                 else:
                     # Publishes the event in the IoT platform
-                    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity)
-
+                    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity,
+                                      distance)
                     # Adds the measurement to the database
-                    add_cloudant(SENSORS[0], temperature, humidity)
+                    add_cloudant(SENSORS[0], temperature, humidity, distance)
 
-            elif humidity is None or 0 > humidity > 100:                        # Humidity value is invalid or None
-                print("Failed to get reading. Humidity is invalid or None")
+            # All values are valid
+            else:
 
-                # Shows the output like empty
-                lcd.print_measure_dht(None, None, True, True)
+                print(Style.BRIGHT + "UUID: " + Style.RESET_ALL + str(uuid_measurement))
+                print("Datetime: " + str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")))
 
-            elif temperature is None or temperature < 0:                        # Temperature value is invalid or None
-                print("Failed to get reading. Temperature is invalid or None")
+                print(Style.BRIGHT + Fore.BLACK + "DHT11 sensor" + Style.RESET_ALL)
+                print("Temperature: {0:0.1f} °C \nHumidity: {1:0.1f} %".format(temperature, humidity) + Fore.RESET)
 
-                # Shows the output like empty
-                lcd.print_measure_dht(None, None, True, True)
+                # Outputs the data by LCD
+                lcd.print_measure_dht(temperature, humidity, False, False)
+
+                print(Style.BRIGHT + Fore.BLACK + "HC-SR04 sensor" + Style.RESET_ALL)
+                print("Distance: {0:0.3f} cm \n".format(distance) + Fore.RESET)
+
+                # Outputs the data by LCD
+                lcd.print_measure_hcsr(distance, False, False)
+
+                # Alert - DHT11 | Temperature
+                if temperature > TEMP_THRESHOLD:
+                    threshold_value = TEMP_THRESHOLD
+                    alert_procedure(SENSORS[0], DHT11_EVENTS[0], temperature, humidity, distance)
+
+                # Alert - DHT11 | Humidity
+                elif humidity > HUM_THRESHOLD:
+                    threshold_value = HUM_THRESHOLD
+                    alert_procedure(SENSORS[0], DHT11_EVENTS[1], temperature, humidity, distance)
+
+                # Alert - HC-SR04 | Distance
+                elif distance < DISTANCE_THRESHOLD:
+                    threshold_value = DISTANCE_THRESHOLD
+                    alert_procedure(SENSORS[1], HCSR_EVENTS[0], temperature, humidity, distance)
+
+                # No alert
+                else:
+                    # Publishes the event in the IoT platform
+                    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity,
+                                      distance)
+                    # Adds the measurement to the database
+                    add_cloudant(SENSORS[0], temperature, humidity, distance)
 
             print("-----------------------------")
 
