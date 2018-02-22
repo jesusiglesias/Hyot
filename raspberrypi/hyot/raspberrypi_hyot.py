@@ -179,9 +179,8 @@ def reset_values():
     sent = None
 
 
-def add_cloudant(sensor, temperature, humidity, distance):
+def add_cloudant(temperature, humidity, distance):
     """Adds the data to the Cloudant NoSQL database
-    :param sensor: Indicates the sensor that triggered the alert
     :param temperature: Indicates the value of measured temperature
     :param humidity: Indicates the value of measured humidity
     :param distance: Indicates the value of measured distance
@@ -206,7 +205,7 @@ def add_cloudant(sensor, temperature, humidity, distance):
     }
 
     # Adds the document to the database of the Cloudant NoSQL service
-    cloudantdb.add_document(data, sensor)
+    cloudantdb.add_document(data)
 
 
 def alert_procedure(sensor, event, temperature, humidity, distance):
@@ -279,7 +278,7 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance)
 
     # Adds the measurement to the database
-    add_cloudant(sensor, temperature, humidity, distance)
+    add_cloudant(temperature, humidity, distance)
 
     time.sleep(1)
     lcd.clear_lcd(sensor)                                       # Clears the LCD
@@ -333,7 +332,7 @@ def main(user_args):
 
         # ############### Initializing databases (Cloudant NoSQL DB) ###############
         cloudantdb.connect()                        # Creates a Cloudant DB client and establishes a connection
-        cloudantdb.init(timestamp(), SENSORS)       # Initializes the databases
+        cloudantdb.init(timestamp())                # Initializes the database
 
         # ############### Initializing Dropbox ###############
         dropbox.connect()                           # Creates a Dropbox client and establishes a connection
@@ -421,7 +420,7 @@ def main(user_args):
                     iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity,
                                       distance)
                     # Adds the measurement to the database
-                    add_cloudant(SENSORS[1], temperature, humidity, distance)
+                    add_cloudant(temperature, humidity, distance)
 
             # Humidity value is invalid or None
             elif (humidity is None or 0 > humidity > 100) and (temperature is not None and temperature >= 0 and
@@ -455,7 +454,7 @@ def main(user_args):
                     iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity,
                                       distance)
                     # Adds the measurement to the database
-                    add_cloudant(SENSORS[1], temperature, humidity, distance)
+                    add_cloudant(temperature, humidity, distance)
 
             # Temperature value is invalid or None
             elif (temperature is None or temperature < 0) and (humidity is not None and 0 <= humidity <= 100 and
@@ -489,7 +488,7 @@ def main(user_args):
                     iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity,
                                       distance)
                     # Adds the measurement to the database
-                    add_cloudant(SENSORS[1], temperature, humidity, distance)
+                    add_cloudant(temperature, humidity, distance)
 
             # Distance value is invalid, None or upper than maximum distance
             elif (distance is None or distance < 0 or distance > HCSR_MAXDISTANCE * 100) and (humidity is not None and
@@ -528,7 +527,7 @@ def main(user_args):
                     iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity,
                                       distance)
                     # Adds the measurement to the database
-                    add_cloudant(SENSORS[0], temperature, humidity, distance)
+                    add_cloudant(temperature, humidity, distance)
 
             # All values are valid
             else:
@@ -569,7 +568,7 @@ def main(user_args):
                     iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity,
                                       distance)
                     # Adds the measurement to the database
-                    add_cloudant(SENSORS[0], temperature, humidity, distance)
+                    add_cloudant(temperature, humidity, distance)
 
             print("-----------------------------")
 

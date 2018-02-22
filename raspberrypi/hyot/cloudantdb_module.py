@@ -76,16 +76,15 @@ except (KeyError, TypeError) as keyError:
                      "exist in the configuration file (conf/hyot.yml)." + Fore.RESET)
     sys.exit(1)
 
-DHT11_DB = "dht11_measurements"                     # Name of the DHT11 sensor database
-HCSR04_DB = "hcsr04_measurements"                   # Name of the HC-SR04 sensor database
+SENSOR_DB = "sensors_measurements"                  # Name of the database that will stores the values of the sensors
 
 
 ########################################
 #           GLOBAL VARIABLES           #
 ########################################
 client = None                                       # Cloudant NoSQL DB client
-dbs_instances = None                                # Instances of all databases
-sensors = []                                        # Stores the name of all sensors
+db_instance = None                                  # Instance of the database
+db_name = None                                      # Name of the database
 
 
 ########################################
@@ -124,101 +123,70 @@ def connect():
     time.sleep(1)
 
 
-def init(timestamp, all_sensors):
+def init(timestamp):
     """Initializes the DB by checking if these one exist or not
     :param timestamp: Datetime when the measurement was taken
-    :param all_sensors: Name of the sensors
     """
 
-    global client, dbs_instances, sensor_dbs, sensors, DHT11_DB, HCSR04_DB
+    global client, db_name, db_instance, SENSOR_DB
 
-    dht11_dbinstance = None                                # Instance for the DHT11 sensor database
-    hcsr04_dbinstance = None                               # Instance for the HC-SR04 sensor database
-    dbs_instances = [dht11_dbinstance, hcsr04_dbinstance]  # Defines a list with the instances of the databases
-    sensor_dbs = []                                        # Defines a list with the name of the database of each sensor
-    sensors = all_sensors                                  # Name of all sensors
+    db_instance = None                              # Instance for the database
 
-    # Asks the user for the name of the DHT11 sensor database
-    dht_database = raw_input(Fore.BLUE + "        Enter the name for the DHT11 sensor database. Empty to use the "
-                                         "default value (" + DHT11_DB + "(_timestamp)): " + Fore.RESET) or DHT11_DB
+    # Asks the user for the name of the database of the sensors
+    db_name = raw_input(Fore.BLUE + "        Enter the name for the database of the sensors. Empty to use the "
+                                    "default value (" + SENSOR_DB + "(_timestamp)): " + Fore.RESET) or SENSOR_DB
 
-    # Asks the user for the name of the HC-SR04 sensor database
-    hcsr_database = raw_input(Fore.BLUE + "        Enter the name for the HC-SR04 sensor database. Empty to use the "
-                                          "default value (" + HCSR04_DB + "(_timestamp)): " + Fore.RESET) or HCSR04_DB
-
-    # Checks if some name is empty
-    if dht_database.isspace() or hcsr_database.isspace():
-        print(Fore.RED + "        The names of the sensor databases can not be empty" + Fore.RESET)
+    # Checks if the name is empty
+    if db_name.isspace():
+        print(Fore.RED + "        The name of the database can not be empty" + Fore.RESET)
         sys.exit(0)
 
-    # Removes spaces and converts to lowercase
-    dht_database = dht_database.replace(" ", "").lower()
-    hcsr_database = hcsr_database.replace(" ", "").lower()
+    # Removes the spaces and converts to lowercase
+    db_name = db_name.replace(" ", "").lower()
 
-    # Checks if both names are the same
-    if dht_database == hcsr_database:
-        print(Fore.RED + "        The names of the sensor databases can not be the same" + Fore.RESET)
-        sys.exit(0)
-
-    # Adds the name of each database to the list where the name includes the current month and year
-    sensor_dbs.append(dht_database + "_" + str(timestamp.strftime("%Y-%m")))
-    sensor_dbs.append(hcsr_database + "_" + str(timestamp.strftime("%Y-%m")))
+    # Adds the current month and year to the name of the database
+    db_name = db_name + "_" + str(timestamp.strftime("%Y-%m"))
 
     # Retrieves the list of all database names for the current client
     all_databases = client.all_dbs()
 
-    # Loops in each database to use
-    for index, db in enumerate(sensor_dbs):
-        print("        Checking if the database of the " + sensors[index] + " sensor exists in the Cloudant NoSQL "
-              "DB service")
+    print("        Checking if the database already exists in the Cloudant NoSQL DB service")
 
-        # Checks if the database exists in the Cloudant NoSQL DB service
-        if db in all_databases:
+    # Checks if the database exists in the Cloudant NoSQL DB service
+    if db_name in all_databases:
 
-            # Opens the existing database of the DHT11 sensor
-            dbs_instances[index] = client[db]
+        # Opens the existing database
+        db_instance = client[db_name]
 
-            print(Fore.GREEN + "        " + Style.BRIGHT + db + Style.NORMAL + " database already exists and was "
-                               "opened successfully" + Fore.RESET)
+        print(Fore.GREEN + "        " + Style.BRIGHT + db_name + Style.NORMAL + " database already exists and was "
+                           "opened successfully" + Fore.RESET)
+    else:
+        print("        Initializing the database")
+
+        # Creates the database using the initialized client. The result is a new CloudantDatabase instance based on
+        # the client
+        db_instance = client.create_database(db_name)
+
+        # Checks that the database was created successfully
+        if db_instance.exists():
+            print(Fore.GREEN + "        " + Style.BRIGHT + db_name + Style.NORMAL + " database was created successfully"
+                  + Fore.RESET)
         else:
-            print("        Initializing the database")
+            print(Fore.RED + "        Error to create the " + Style.BRIGHT + db_name + Style.NORMAL + " database. "
+                             "Please, check the Cloudant NoSQL DB service" + Fore.RESET)
+            sys.exit(0)
 
-            # Creates the database using the initialized client. The result is a new CloudantDatabase instance
-            # based on the client
-            dbs_instances[index] = client.create_database(db)
-
-            # Checks that the database was created successfully
-            if dbs_instances[index].exists():
-                print(Fore.GREEN + "        " + Style.BRIGHT + db + Style.NORMAL + " database was created successfully"
-                      + Fore.RESET)
-            else:
-                print(Fore.RED + "        Error to create the " + Style.BRIGHT + db + Style.NORMAL + " database. "
-                                 "Please, check the Cloudant NoSQL DB service" + Fore.RESET)
-                sys.exit(0)
-
-        time.sleep(1)
+    time.sleep(1)
 
     print("\n        ------------------------------------------------------")
 
 
-def add_document(data, sensor):
+def add_document(data):
     """Adds a new document to the database and checks later that the document exists
     :param data: Document to save in the database
-    :param sensor: Sensor type
     """
 
-    global dbs_instances, sensor_dbs
-
-    db_instance = None                                      # Instance of a specific database
-    db_name = None                                          # Name of the database
-
-    # Selects the database instance based on sensor type
-    if sensor == sensors[0]:                                # DHT11 sensor
-        db_instance = dbs_instances[0]
-        db_name = sensor_dbs[0]
-    elif sensor == sensors[1]:                              # HC-SR04 sensor
-        db_instance = dbs_instances[1]
-        db_name = sensor_dbs[1]
+    global db_instance, db_name
 
     print(Fore.LIGHTBLACK_EX + "   -- Adding the measurement to the database: " + db_name + Fore.RESET),
     time.sleep(0.5)
