@@ -12,5 +12,7 @@
 raspberrypi/hyot/conf/*.yml
 
 # Latex files (report)
-report/.texpadtmp
-report/*.pdf
+docs/**/.texpadtmp
+docs/**/*.pdf
+docs/**/*.bst
+docs/**/*.cls

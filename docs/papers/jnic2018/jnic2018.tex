@@ -1,0 +1,290 @@
+% Paper - JNIC 2018
+
+% Commands
+\newcommand{\CLASSINPUTinnersidemargin}{18mm}
+\newcommand{\CLASSINPUToutersidemargin}{12mm}
+\newcommand{\CLASSINPUTtoptextmargin}{20mm}
+\newcommand{\CLASSINPUTbottomtextmargin}{25mm}
+\documentclass[10pt,conference,a4paper]{IEEEtran}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\DeclareGraphicsExtensions{.png,.eps,.ps,.pdf}
+\usepackage{url}
+\hyphenation{si-guien-do}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{hyperref}
+
+\begin{document}
+
+% Title
+\title{Desarrollo de un sistema de trazabilidad en entornos IoT mediante Hyperledger}
+
+% Authors
+\author{\IEEEauthorblockN{Jesús Iglesias García}
+\IEEEauthorblockA{Escuela Politécnica Superior\\
+Departamento de Ingeniería Informática \\
+Universidad Autónoma de Madrid\\
+jesusgiglesias@gmail.com}
+\and
+\IEEEauthorblockN{David Arroyo Guardeño}
+\IEEEauthorblockA{Escuela Politécnica Superior\\
+Departamento de Ingeniería Informática\\
+Universidad Autónoma de Madrid \\
+david.arroyo@uam.es}}
+
+\maketitle
+
+% Abstract
+\begin{abstract}
+    En la actualidad un grueso importante de empresas tienen un
+    interés especial en construir una nueva generación de aplicaciones
+    transaccionales que establezcan confianza, responsabilidad y
+    transparencia en su núcleo junto con una arquitectura abierta y
+    distribuida. Aquí es de especial relevancia el sistema de pago de
+    gestión no centralizado Bitcoin \cite{JNIC2018_3}, que está basado
+    en la tecnología Blockchain (BC) la cual habilita la creación de un
+    sistema inmutable de registro de eventos. Desde su origen ha
+    propiciado todo un conjunto de iniciativas que, prescindiendo de la
+    existencia de una tercera parte de confianza, puedan
+    proporcionar protocolos para la protección de la integridad de la
+    información.
+
+    Una de estas iniciativas es Hyperledger \cite{JNIC2018_4}
+    -\textit{standard open source} de BC-, se centra en apoyar
+    este tipo de transacciones de negocio para mejorar numerosos
+    aspectos de rendimiento y empresariales. Hyperledger es un ejemplo
+    de BC \emph{permisionada}, ya que la inserción de
+    información requiere que las entidades sean previamente
+    autenticadas. Este modelo de control de acceso es de alto interés
+    en el contexto de la trazabilidad de recursos y productos de una
+    organización. El presente proyecto aborda el desarrollo de una
+    prueba de concepto para implementar Hyperledger en el Internet de
+    las Cosas (\emph{Internet of Things} -IoT-). El objetivo será la recolección de eventos mediante
+    sensores situados en una Raspberry Pi, y la inclusión de
+    incidencias en Hyperledger. Asimismo, la información introducida
+    podrá ser consumida en tiempo real mediante un cliente web.
+\end{abstract}
+
+% Keywords
+\begin{IEEEkeywords}
+Hyperledger, Blockchain, Seguridad, Privacidad, Internet de las Cosas
+\end{IEEEkeywords}
+
+{\bf Tipo de contribución:}  {\it Investigación en desarrollo}
+
+% Section
+\section{Introducción}
+
+Internet ha cambiado la forma de vida y la sociedad en
+general. Nuestra actividad diaria depende cada vez más de la
+información que obtenemos de Internet, de forma que necesitamos contar
+con mecanismos que nos permitan dirimir si los datos que obtenemos son
+fiables. Esta cuestión se ha resuelto tradicionalmente a través de
+alguna suerte de Tercera Parte Confiable (TPC). Sin embargo, la
+participación de intermediarios también presenta desventajas, entre
+las que se encuentra la posible degradación de nuestra privacidad si 
+la TPC  accede sin permiso a nuestra información sensible y personal.
+
+Una posible solución es la descentralización de la gestión de la
+información, de
+forma que no se necesita una autoridad central intermediaria que tenga
+acceso a los datos. Aquí, es donde nace el
+concepto de cadena de bloques o \textit{blockchain}, un libro de
+registros o transacciones (\textit{ledger}) distribuido, del que todos
+los que participan en la red almacenan una copia que se actualiza
+mediante un protocolo \textit{Peer-to-Peer} de consenso. En este contexto, el
+protocolo de consenso distribuido se constituye en garante de la
+integridad de la información y, por ende, de su veracidad. 
+
+En su origen, BC se inventó para sustentar Bitcoin, la primera
+criptomoneda descentralizada no emitida por un banco central. Sin
+embargo, su aplicación no queda limitada a las criptomonedas. En
+efecto, la BC de Bitcoin habilita la escritura de información no
+vinculada a transacciones (por ejemplo, mediante el campo
+\textsc{\textit{OP\_RETURN}}). Esta información puede ser utilizada como canal
+de control de trazabilidad de las cadenas de
+producción (por ejemplo,
+\href{https://www.everledger.io/}{Everledger}), de certificación de
+documentación (como es el caso de
+\href{https://stampery.com/}{Stampery} y
+\href{https://maidsafe.net/}{MaidSafe}), de hipotecas (e.g,
+\href{http://www.zensar.com/blogs/2017/05/reinventing-mortgage-with-blockchain/}{Zensar}),
+de títulos o cualquier otro documento oficial
+(\href{http://bitfury.com/}{Bitfury},
+\href{https://www.factom.com/}{Factom},
+\href{https://chromaway.com/}{ChromaWay} y
+\href{https://www.velox.re/}{Velox.re} son ejemplos de
+\emph{start-ups} que ofrecen este tipo de servicio), así como
+aplicaciones de control de integridad de información en ámbitos
+relacionados con la seguridad lógica\footnote{Aquí cabe destacar el
+  proyecto \href{https://guardtime.com/}{Guardtime}, que cuenta con el
+  patrocinio de \href{https://www.darpa.mil/}{DARPA}.}
+
+Uno de los ámbitos donde BC tiene especial interés es en IoT. La IoT
+constituye una red de dispositivos físicos que por naturaleza se
+conectan entre sí e intercambian datos para hacer nuestras vidas más
+sencillas y eficientes. Sin embargo, cada dispositivo puede ser
+cualquier \textit{cosa} desde una televisión, un vehículo, un
+aspirador o hasta un frigorífico y todos funcionan de forma diferente
+y con diferentes niveles de seguridad implementados. Esta variabilidad
+en las interfaces de acceso a la información y los mecanismos de
+intercambios de datos, introduce una incertidumbre en lo referente a
+las diversas fuentes de datos. Aquí es donde entraría en juego la BC,
+en específico aquellas evoluciones de la BC de Bitcoin mediante la
+incorporación de los denominados \emph{smart
+  contracts}\footnote{Código informático que se ejecuta en la
+  blockchain y hace cumplir un contrato de manera automática. Este
+  concepto fue introducido por Nick Szabo en 1996 (ver \cite{JNIC2018_6},
+  último acceso 08/03/2018).} y
+de modelos de control de acceso.
+
+% Section
+\section{Hyperledger}
+
+Hyperledger es un proyecto de código abierto y de carácter
+colaborativo anunciado en el año 2015 por la fundación Linux que
+implementa la tecnología BC de uso privado y que está orientada al uso
+empresarial gracias a su capacidad de ejecución de transacciones
+privadas. Pretende ser una plataforma multidisciplinar, es decir,
+posibilita la creación de \textit{chaincodes} (los \textit{smart
+  contracts} de Hyperledger) en cualquier lenguaje, así como la
+elección del método de consenso a realizar. Dentro de los proyectos de
+este consorcio, el más conocido es la plataforma de BC permisionada:
+Hyperledger Fabric. Esta plataforma presenta una arquitectura modular
+y características de identidad y seguridad y está orientada al
+desarrollo de aplicaciones empresariales.
+
+% Section
+\section{Hyot}
+
+Hyot es la prueba de concepto o \textit{Proof of Concept} (PoC)
+implementada para la trazabilidad de un entorno controlado de IoT
+mediante la tecnología Hyperledger. Si bien cabe decir que es
+fácilmente escalable a ampliar un mayor rango de cobertura en cuanto a
+IoT se refiere. Esta solución gestiona de forma transparente para el
+usuario una serie de sucesos -temperatura, humedad, distancia, etc.-
+que son monitorizados desde sensores conectados a un ordenador de
+placa reducida (\textit{Single Board Computer}) como es la Raspberry
+Pi3. En caso de que se produzca una incidencia, las lecturas de los
+sensores son almacenados en una base de datos. Una incidencia no es
+sino una acción no controlada que tiene lugar en el entorno que se
+está vigilando, y origina la ejecución de un protocolo de alerta que
+comprende: (1) la captura de un vídeo a través de una cámara conectada
+a la Raspberry Pi;(2) almacenamiento en la nube del vídeo. En la
+medida que estos servicios de almacenamiento son una TPC que pueden
+poner en riesgo la privacidad de las evidencias, hemos asumido un
+modelo de confianza nula en el cual todos la información es cifrada
+mediante  GPG (\textit{GNU Privacy Guard}) antes de ser almacenada en
+al nube.
+
+El  punto central de esta PoC es garantizar que el
+registro de un  suceso anómalo no ha sido indebidamente
+modificado, de forma que una vez registrada una incidencia se tenga
+total certeza respecto a su integridad y veracidad. Este objetivo se
+consigue con la tecnología Hyperledger Fabric, ya que proporciona un
+protocolo de consenso distribuido para la protección de integridad y
+un control de acceso que permite identificar a los agentes que
+introducen datos en la BC. En el dominio de nuestro caso de uso, en Hyperledger
+Fabric se establecen las transacciones posibles a ejecutar junto con
+los activos (\textit{assets}): marca temporal (\textit{timestamp}) en
+la que ocurrió el suceso, el \textit{hash} del contenido del vídeo
+encriptado -calculado con el algoritmo criptográfico SHA3- e incluso
+los valores de los sensores medidos.
+
+Además, en este tipo de sistemas donde se controla un entorno (ya sea
+por cuestiones de seguridad o por cualquier otro motivo), es importante
+informar al administrador del sistema de que un suceso no
+controlado está sucediendo. Esto se consigue con la notificación de la
+información actual mediante un \textit{email} a la dirección de correo
+electrónico configurada.
+
+A modo resumen, se puede detallar que Hyot se compone de tres partes:
+
+\begin{itemize}
+  \item Script de monitorización de los sucesos de los sensores de una
+    Raspberry Pi3.
+  \item Protocolo de registro de incidencias en la BC de Hyperledger
+    Fabric y almacenamiento de evidencias en la nube. 
+  \item Sistema web que actúa como cliente y consume la
+          información en tiempo real registrada por la Raspberry Pi 3.
+\end{itemize}
+
+% Section
+\section{Conclusiones}
+
+La rápida evolución del mercado del IoT ha provocado una explosión en
+el número y la variedad de soluciones IoT, lo que ha creado grandes
+desafíos a medida que la industria evoluciona, principalmente, la
+necesidad urgente de un modelo IoT seguro para realizar tareas comunes
+como detección, almacenamiento y comunicación. Es por ello que la
+aplicación de la tecnología BC puede favorecer el despliegue de
+soluciones y arquitecturas más seguras.
+
+Con este objetivo surge Hyot, un proyecto software de código
+abierto\footnote{El código fuente será liberado en Github una vez
+  finalizado y presentado el Trabajo Fin de Máster.} que propone una
+prueba de concepto simple y novedosa sobre conceptos y tecnologías en
+auge como la BC. Con ello, se pretende mostrar las ventajas de las
+arquitecturas basadas en BC a la hora de diseñar e implementar
+protocolos de control y auditoría en IoT.
+
+Por último, cabe mencionar que se trata de un proyecto en pleno
+desarrollo al momento de redactar este documento y que será presentado
+como Trabajo Fin de Máster (TFM) en el \textit{Máster de Ingeniería
+  Informática} de la Escuela Politécnica Superior de la Universidad
+Autónoma de Madrid (UAM). El ciclo de vida de este proyecto no pretende ser el
+habitual de un trabajo de universidad, y la idea principal es continuar
+con su desarrollo una vez presentado dado que se engloba dentro de un
+área con  gran interés tanto para empresas nacionales como
+internacionales. Como parte del trabajo futuro se incorporarán nuevas
+funcionalidades relacionadas con la gestión de la identidad y su
+equilibrio con la protección de la privacidad\footnote{Aquí se tendrá
+  en mente aplicar los esfuerzos para incluir el entorno Idemix en
+  Hyperledger Fabric.}, con la interoperabilidad con BC
+públicas\footnote{En la línea marcada por la iniciativa Hyperledger
+  Sawtooth, \cite{JNIC2018_5}
+  (Último acceso 08/03/2018).}, así como con la incorporación de técnicas de
+aprendizaje automático  que permitan identificar información sensible
+y relevante como evidencia digital. 
+ 
+% Section
+\section*{Agradecimientos}
+
+Este trabajo ha sido financiado a través de los proyectos
+CIBERDINE (S2013/ICE-3095) -Comunidad Autónoma de Madrid- y
+MINECO/FEDER DPI2015-65833-P (Gobierno de España).
+
+% Bibliography
+\bibliographystyle{IEEEtran}
+
+\begin{thebibliography}{99}
+\bibitem{JNIC2018_1}
+Ali Dorri, Salil Kanhere, Raja Jurdak: `Towards an Optimized BlockChain for IoT`, 2017.
+\bibitem{JNIC2018_7}
+Ethereum White Paper
+
+https://github.com/ethereum/wiki/wiki/White-Paper
+\bibitem{JNIC2018_6}
+Nick Szabo: `Formalizing and Securing Relationships on Public Networks`, First Monday, vol.2, n.9, 1997.
+
+http://journals.uic.edu/ojs/index.php/fm/article/view/548
+\bibitem{JNIC2018_4}
+Hyperledger.
+
+https://www.hyperledger.org
+\bibitem{JNIC2018_5}
+Hyperledger Sawtooth.
+
+https://www.hyperledger.org/projects/sawtooth
+\bibitem{JNIC2018_2}
+Marko Vukolic: `Hyperledger Fabric - An Open-Source Distributed Operating System for Permissioned Blockchains`, Swiss Blockchain Summer School Lausann, 2017.
+\bibitem{JNIC2018_3}
+Pedro Franco: `Understanding Bitcoin: Cryptography, Engineering and Economics`, Wiley Finance Series, 2014.
+
+\end{thebibliography}
+
+\end{document}
