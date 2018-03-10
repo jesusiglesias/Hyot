@@ -45,7 +45,7 @@ david.arroyo@uam.es}}
     transaccionales que establezcan confianza, responsabilidad y
     transparencia en su núcleo junto con una arquitectura abierta y
     distribuida. Aquí es de especial relevancia el sistema de pago de
-    gestión no centralizado Bitcoin \cite{JNIC2018_3}, que está basado
+    gestión no centralizado Bitcoin \cite{franco:2014:UB}, que está basado
     en la tecnología Blockchain (BC) la cual habilita la creación de un
     sistema inmutable de registro de eventos. Desde su origen ha
     propiciado todo un conjunto de iniciativas que, prescindiendo de la
@@ -53,7 +53,7 @@ david.arroyo@uam.es}}
     proporcionar protocolos para la protección de la integridad de la
     información.
 
-    Una de estas iniciativas es Hyperledger \cite{JNIC2018_4}
+    Una de estas iniciativas es Hyperledger \cite{hyperledger:url}
     -\textit{standard open source} de BC-, se centra en apoyar
     este tipo de transacciones de negocio para mejorar numerosos
     aspectos de rendimiento y empresariales. Hyperledger es un ejemplo
@@ -138,7 +138,7 @@ en específico aquellas evoluciones de la BC de Bitcoin mediante la
 incorporación de los denominados \emph{smart
   contracts}\footnote{Código informático que se ejecuta en la
   blockchain y hace cumplir un contrato de manera automática. Este
-  concepto fue introducido por Nick Szabo en 1996 (ver \cite{JNIC2018_6},
+  concepto fue introducido por Nick Szabo en 1996 (ver \cite{szabo:1997:FSRPN},
   último acceso 08/03/2018).} y
 de modelos de control de acceso.
 
@@ -174,14 +174,14 @@ sensores son almacenados en una base de datos. Una incidencia no es
 sino una acción no controlada que tiene lugar en el entorno que se
 está vigilando, y origina la ejecución de un protocolo de alerta que
 comprende: (1) la captura de un vídeo a través de una cámara conectada
-a la Raspberry Pi;(2) almacenamiento en la nube del vídeo. En la
+a la Raspberry Pi; (2) almacenamiento en la nube del vídeo. En la
 medida que estos servicios de almacenamiento son una TPC que pueden
 poner en riesgo la privacidad de las evidencias, hemos asumido un
 modelo de confianza nula en el cual todos la información es cifrada
 mediante  GPG (\textit{GNU Privacy Guard}) antes de ser almacenada en
 al nube.
 
-El  punto central de esta PoC es garantizar que el
+El punto central de esta PoC es garantizar que el
 registro de un  suceso anómalo no ha sido indebidamente
 modificado, de forma que una vez registrada una incidencia se tenga
 total certeza respecto a su integridad y veracidad. Este objetivo se
@@ -246,7 +246,7 @@ equilibrio con la protección de la privacidad\footnote{Aquí se tendrá
   en mente aplicar los esfuerzos para incluir el entorno Idemix en
   Hyperledger Fabric.}, con la interoperabilidad con BC
 públicas\footnote{En la línea marcada por la iniciativa Hyperledger
-  Sawtooth, \cite{JNIC2018_5}
+  Sawtooth, \cite{sawtooth:url}
   (Último acceso 08/03/2018).}, así como con la incorporación de técnicas de
 aprendizaje automático  que permitan identificar información sensible
 y relevante como evidencia digital. 
@@ -262,28 +262,28 @@ MINECO/FEDER DPI2015-65833-P (Gobierno de España).
 \bibliographystyle{IEEEtran}
 
 \begin{thebibliography}{99}
-\bibitem{JNIC2018_1}
-Ali Dorri, Salil Kanhere, Raja Jurdak: `Towards an Optimized BlockChain for IoT`, 2017.
-\bibitem{JNIC2018_7}
+\bibitem{dorri:2017:TOBI}
+Ali Dorri, Salil Kanhere, Raja Jurdak: ``Towards an Optimized BlockChain for IoT'', 2017.
+\bibitem{ethereum:url}
 Ethereum White Paper
 
 https://github.com/ethereum/wiki/wiki/White-Paper
-\bibitem{JNIC2018_6}
-Nick Szabo: `Formalizing and Securing Relationships on Public Networks`, First Monday, vol.2, n.9, 1997.
+\bibitem{szabo:1997:FSRPN}
+Nick Szabo: ``Formalizing and Securing Relationships on Public Networks'', First Monday, vol.2, n.9, 1997.
 
 http://journals.uic.edu/ojs/index.php/fm/article/view/548
-\bibitem{JNIC2018_4}
+\bibitem{hyperledger:url}
 Hyperledger.
 
 https://www.hyperledger.org
-\bibitem{JNIC2018_5}
+\bibitem{sawtooth:url}
 Hyperledger Sawtooth.
 
 https://www.hyperledger.org/projects/sawtooth
-\bibitem{JNIC2018_2}
-Marko Vukolic: `Hyperledger Fabric - An Open-Source Distributed Operating System for Permissioned Blockchains`, Swiss Blockchain Summer School Lausann, 2017.
-\bibitem{JNIC2018_3}
-Pedro Franco: `Understanding Bitcoin: Cryptography, Engineering and Economics`, Wiley Finance Series, 2014.
+\bibitem{vukolic:2017:HF}
+Marko Vukolic: ``Hyperledger Fabric - An Open-Source Distributed Operating System for Permissioned Blockchains'', Swiss Blockchain Summer School Lausann, 2017.
+\bibitem{franco:2014:UB}
+Pedro Franco: ``Understanding Bitcoin: Cryptography, Engineering and Economics'', Wiley Finance Series, 2014.
 
 \end{thebibliography}
 
