@@ -54,15 +54,14 @@ david.arroyo@uam.es}}
     información.
 
     Una de estas iniciativas es Hyperledger \cite{hyperledger:url}
-    -\textit{standard open source} de BC-, se centra en apoyar
+    -\textit{standard open source} de BCs permisionadas-, se centra en apoyar
     este tipo de transacciones de negocio para mejorar numerosos
-    aspectos de rendimiento y empresariales. Hyperledger es un ejemplo
-    de BC permisionada, ya que la inserción de
+    aspectos de rendimiento y empresariales donde la inserción de
     información requiere que las entidades sean previamente
     autenticadas. Este modelo de control de acceso es de alto interés
     en el contexto de la trazabilidad de recursos y productos de una
     organización. El presente proyecto aborda el desarrollo de una
-    prueba de concepto para implementar Hyperledger en el Internet de
+    prueba de concepto (\textit{Proof of Concept} -PoC-) para implementar Hyperledger Fabric \cite{hyperledgerfabric:url} en el Internet de
     las Cosas (\emph{Internet of Things} -IoT-). El objetivo será la recolección de eventos mediante sensores situados en una Raspberry Pi 3 (RPi3), y la inclusión de
     incidencias en Hyperledger. Asimismo, la información introducida
     podrá ser consumida en tiempo real mediante un cliente web.
@@ -124,7 +123,7 @@ relacionados con la seguridad lógica\footnote{Aquí cabe destacar el
   proyecto \href{https://guardtime.com/}{Guardtime}, que cuenta con el
   patrocinio de \href{https://www.darpa.mil/}{DARPA}.}
 
-Uno de los ámbitos donde BC tiene especial interés es en IoT\cite{dorri:2017:TOBI}. La IoT
+Uno de los ámbitos donde BC tiene especial interés es en IoT \cite{dorri:2017:TOBI}. La IoT
 constituye una red de dispositivos físicos que por naturaleza se
 conectan entre sí e intercambian datos para hacer nuestras vidas más
 sencillas y eficientes. Sin embargo, cada dispositivo puede ser
@@ -145,14 +144,12 @@ de modelos de control de acceso.
 
 Hyperledger es una iniciativa de carácter colaborativo anunciado en el año 2015 por la fundación Linux para investigar y evolucionar la tecnología BC de uso privado y orientada al ámbito empresarial.
 
-Dentro de los proyectos\footnote{Listado completo de proyectos de Hyperledger. \href{https://www.hyperledger.org/projects}{Aquí}.} de este consorcio, el más conocido es la plataforma de BC permisionada: Hyperledger Fabric\cite{hyperledgerfabric:url}, proyecto que implementa la tecnología de libro de registros distribuido (\textit{Distributed Ledger Technology} -DLT-) en la BC. En constante evolución\footnote{Hyperledger Fabric \href{https://github.com/hyperledger/fabric/releases/tag/v1.1.0}{v1.1.0} fue liberado en la fecha 15 marzo 2018.} y con una hoja de ruta interesante\cite{hyperledgerfabricroadmap:url}, ofrece características\cite{vukolic:2017:HF} (arquitectura modular y escalable, red transaccional de alto rendimiento permisionada, privacidad e identidad, \textit{chaincode} -\textit{smart contracts} de Hyperledger-, etc.) que tienden a mejorar aspectos de productividad y fiabilidad distinguiéndola de otras alternativas.
+Dentro de los proyectos de este consorcio, el más conocido es la plataforma de BC permisionada: Hyperledger Fabric, proyecto que implementa la tecnología de libro de registros distribuido (\textit{Distributed Ledger Technology} -DLT-) en la BC. En constante evolución\footnote{Hyperledger Fabric \href{https://github.com/hyperledger/fabric/releases/tag/v1.1.0}{v1.1.0} fue liberado en la fecha 15 marzo 2018.} y con una hoja de ruta interesante \cite{hyperledgerfabricroadmap:url}, ofrece características \cite{vukolic:2017:HF} (arquitectura modular y escalable, red transaccional de alto rendimiento permisionada, privacidad e identidad, \textit{chaincode} -\textit{smart contracts} de Hyperledger-, etc.) que tienden a mejorar aspectos de productividad y fiabilidad distinguiéndola de otras alternativas de BC.
 
 % Section
 \section{Hyot}
 
-Hyot es la prueba de concepto o \textit{Proof of Concept} (PoC)
-implementada para la trazabilidad de un entorno controlado de IoT
-mediante la tecnología Hyperledger. Si bien cabe decir que es
+Hyot es la PoC para la trazabilidad de un entorno controlado de IoT mediante la tecnología Hyperledger. Si bien cabe decir que es
 fácilmente escalable a ampliar un mayor rango de cobertura en cuanto a
 IoT se refiere. Esta solución gestiona de forma transparente para el
 usuario una serie de sucesos -temperatura, humedad, distancia, etc.-
@@ -169,7 +166,7 @@ modelo de confianza nula en el cual todos la información es cifrada
 mediante  GPG (\textit{GNU Privacy Guard}) antes de ser almacenada en
 al nube.
 
-El punto central de esta PoC es garantizar que el
+El punto central de Hyot es garantizar que el
 registro de un  suceso anómalo no ha sido indebidamente
 modificado, de forma que una vez registrada una incidencia se tenga
 total certeza respecto a su integridad y veracidad. Este objetivo se
@@ -228,14 +225,10 @@ con su desarrollo una vez presentado dado que se engloba dentro de un
 área con  gran interés tanto para empresas nacionales como
 internacionales. Como parte del trabajo futuro se incorporarán nuevas
 funcionalidades relacionadas con la gestión de la identidad y su
-equilibrio con la protección de la privacidad\footnote{Aquí se tendrá
-  en mente aplicar los esfuerzos para incluir el entorno Idemix en
-  Hyperledger Fabric.}, con la interoperabilidad con BC
-públicas\footnote{En la línea marcada por la iniciativa Hyperledger
-  Sawtooth, \cite{sawtooth:url}
-  (Último acceso 01/05/2018).}, así como con la incorporación de técnicas de
+equilibrio con la protección de la privacidad\cite{jira:IM:FAB-2005}, con la interoperabilidad con BC
+públicas \cite{sawtooth:url,ronghua:2018:BCAC}, así como con la incorporación de técnicas de
 aprendizaje automático  que permitan identificar información sensible
-y relevante como evidencia digital. 
+y relevante como evidencia digital \cite{ramachandran:2018:SmartProvenance}. 
  
 % Section
 \section*{Agradecimientos}
@@ -248,12 +241,10 @@ MINECO/FEDER DPI2015-65833-P (Gobierno de España).
 \bibliographystyle{IEEEtran}
 
 \begin{thebibliography}{99}
-\bibitem{dorri:2017:TOBI}
-Ali Dorri, Salil Kanhere, Raja Jurdak: ``Towards an Optimized BlockChain for IoT'', 2017.
-\bibitem{szabo:1997:FSRPN}
-Nick Szabo: ``Formalizing and Securing Relationships on Public Networks'', First Monday, vol.2, n.9, 1997.
 
-http://journals.uic.edu/ojs/index.php/fm/article/view/548
+\bibitem{dorri:2017:TOBI}
+Dorri, A., Kanhere, S. S., \& Jurdak, R. (2017, April). ``Towards an optimized blockchain for IoT.'' In Proceedings of the Second International Conference on Internet-of-Things Design and Implementation (pp. 173-178). ACM.
+
 \bibitem{hyperledger:url}
 Hyperledger.
 
@@ -270,10 +261,26 @@ https://wiki.hyperledger.org/projects/fabric/roadmap
 Hyperledger Sawtooth.
 
 https://www.hyperledger.org/projects/sawtooth
+
+\bibitem{jira:IM:FAB-2005}
+Idemix (Identity Mixer) en Hyperledger Fabric.
+
+https://jira.hyperledger.org/browse/FAB-2005
+
 \bibitem{vukolic:2017:HF}
 Marko Vukolic: ``Hyperledger Fabric - An Open-Source Distributed Operating System for Permissioned Blockchains'', Swiss Blockchain Summer School Lausann, 2017.
+
+\bibitem{szabo:1997:FSRPN}
+Nick Szabo: ``Formalizing and Securing Relationships on Public Networks'', First Monday, vol.2, n.9, 1997.
+
 \bibitem{franco:2014:UB}
 Pedro Franco: ``Understanding Bitcoin: Cryptography, Engineering and Economics'', Wiley Finance Series, 2014.
+
+\bibitem{ramachandran:2018:SmartProvenance}
+Ramachandran, A., \& Kantarcioglu, M. (2018, March). ``SmartProvenance: A Distributed, Blockchain Based DataProvenance System.'' In Proceedings of the Eighth ACM Conference on Data and Application Security and Privacy (pp. 35-42). ACM.
+
+\bibitem{ronghua:2018:BCAC}
+Xu, R., Chen, Y., Blasch, E., \& Chen, G. (2018). ``BlendCAC: A BLockchain-ENabled Decentralized Capability-based Access Control for IoTs.'' arXiv preprint arXiv:1804.09267.
 
 \end{thebibliography}
 
