@@ -63,7 +63,7 @@ david.arroyo@uam.es}}
     organización. El presente proyecto aborda el desarrollo de una
     prueba de concepto (\textit{Proof of Concept} -PoC-) para implementar Hyperledger Fabric \cite{hyperledgerfabric:url} en el Internet de
     las Cosas (\emph{Internet of Things} -IoT-). El objetivo será la recolección de eventos mediante sensores situados en una Raspberry Pi 3 (RPi3), y la inclusión de
-    incidencias en Hyperledger. Asimismo, la información introducida
+    incidencias en Hyperledger Fabric. Asimismo, la información introducida
     podrá ser consumida en tiempo real mediante un cliente web.
     
 \end{abstract}
@@ -95,7 +95,7 @@ acceso a los datos. Aquí, es donde nace el
 concepto de cadena de bloques o \textit{blockchain}, un libro de
 registros o transacciones (\textit{ledger}) distribuido, del que todos
 los que participan en la red almacenan una copia que se actualiza
-mediante un protocolo \textit{Peer-to-Peer} de consenso. En este contexto, el
+mediante un protocolo \textit{Peer-to-Peer} (P2P) de consenso. En este contexto, el
 protocolo de consenso distribuido se constituye en garante de la
 integridad de la información y, por ende, de su veracidad. 
 
@@ -149,7 +149,7 @@ Dentro de los proyectos de este consorcio, el más conocido es la plataforma de 
 % Section
 \section{Hyot}
 
-Hyot es la PoC para la trazabilidad de un entorno controlado de IoT mediante la tecnología Hyperledger. Si bien cabe decir que es
+Hyot es la PoC para la trazabilidad de un entorno controlado de IoT mediante la tecnología Hyperledger Fabric. Si bien cabe decir que es
 fácilmente escalable a ampliar un mayor rango de cobertura en cuanto a
 IoT se refiere. Esta solución gestiona de forma transparente para el
 usuario una serie de sucesos -temperatura, humedad, distancia, etc.-
@@ -170,7 +170,7 @@ El punto central de Hyot es garantizar que el
 registro de un  suceso anómalo no ha sido indebidamente
 modificado, de forma que una vez registrada una incidencia se tenga
 total certeza respecto a su integridad y veracidad. Este objetivo se
-consigue con la tecnología Hyperledger Fabric, ya que proporciona un
+consigue con Hyperledger Fabric, ya que proporciona un
 protocolo de consenso distribuido para la protección de integridad y
 un control de acceso que permite identificar a los agentes que
 introducen datos en la BC. En el dominio de nuestro caso de uso, se establecen las transacciones posibles a ejecutar junto con
