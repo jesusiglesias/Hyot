@@ -328,8 +328,8 @@ def init():
         print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing GPG" + Style.RESET_ALL)
 
         # Asks the user for the GPG directory
-        gpg_dir = raw_input(Fore.BLUE + "        Enter the path of the directory used by GPG. Empty to use the default "
-                                        "value (" + GPGDIRDEFAULT + "): " + Fore.RESET) or GPGDIRDEFAULT
+        gpg_dir = raw_input(Fore.BLUE + "        Enter the path of the directory used by GPG: " + Fore.WHITE +
+                            "(" + GPGDIRDEFAULT + ") " + Fore.RESET) or GPGDIRDEFAULT
 
         # Checks if the path of the GPG directory is empty
         if gpg_dir.isspace():

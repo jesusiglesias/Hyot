@@ -210,14 +210,13 @@ def init(all_sensors):
 
     # Asks the user for the subdirectory where the videos of an alarm triggered by the DHT11 sensor will be stored
     dht_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the videos of an alarm "
-                                       "triggered by the DHT11 sensor will be stored. Empty to use the default value ("
-                                       + "/" + HYOT_DIR + "/" + DHT11_DIR + "): " + Fore.RESET) or DHT11_DIR
+                                       "triggered by the DHT11 sensor will be stored: " + Fore.WHITE + "(" + "/"
+                           + HYOT_DIR + "/" + DHT11_DIR + ") " + Fore.RESET) or DHT11_DIR
 
     # Asks the user for the subdirectory where the videos of an alarm triggered by the HC-SR04 sensor will be stored
     hcsr_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the videos of an alarm "
-                                        "triggered by the HC-SR04 sensor will be stored. Empty to use the default "
-                                        "value (" + "/" + HYOT_DIR + "/" + HCSR04_DIR + "): "
-                            + Fore.RESET) or HCSR04_DIR
+                                        "triggered by the HC-SR04 sensor will be stored: " + Fore.WHITE + "(" + "/"
+                            + HYOT_DIR + "/" + HCSR04_DIR + ") " + Fore.RESET) or HCSR04_DIR
 
     # Checks if some name is empty
     if dht_subdir.isspace() or hcsr_subdir.isspace():

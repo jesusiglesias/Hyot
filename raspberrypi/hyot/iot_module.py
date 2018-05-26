@@ -98,14 +98,14 @@ def connect():
           + Style.RESET_ALL)
 
     # Asks the user for IoT platform credentials
-    organization_id = raw_input(Fore.BLUE + "        Enter the identifier of the organization or empty to use the "
-                                            "default value: " + Fore.RESET) or ORGID
-    device_type = raw_input(Fore.BLUE + "        Enter the type of device or empty to use the default value: "
+    organization_id = raw_input(Fore.BLUE + "        Enter the identifier of the organization: " + Fore.WHITE + "(" +
+                                ORGID + ") " + Fore.RESET) or ORGID
+    device_type = raw_input(Fore.BLUE + "        Enter the type of device: " + Fore.WHITE + "(" + DEVICETYPE + ") "
                             + Fore.RESET) or DEVICETYPE
-    device_id = raw_input(Fore.BLUE + "        Enter the identifier of the device or empty to use the default value: "
-                          + Fore.RESET) or DEVICEID
+    device_id = raw_input(Fore.BLUE + "        Enter the identifier of the device: " + Fore.WHITE + "(" + DEVICEID +
+                          ") " + Fore.RESET) or DEVICEID
 
-    auth_token = raw_input(Fore.BLUE + "        Enter the authentication token or empty to use the default value: "
+    auth_token = raw_input(Fore.BLUE + "        Enter the authentication token: " + Fore.WHITE + "(" + AUTHTOKEN + ") "
                            + Fore.RESET) or AUTHTOKEN
 
     # Checks if some field is empty

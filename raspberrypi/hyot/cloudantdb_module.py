@@ -133,8 +133,8 @@ def init(timestamp):
     db_instance = None                              # Instance for the database
 
     # Asks the user for the name of the database of the sensors
-    db_name = raw_input(Fore.BLUE + "        Enter the name for the database of the sensors. Empty to use the "
-                                    "default value (" + SENSOR_DB + "(_timestamp)): " + Fore.RESET) or SENSOR_DB
+    db_name = raw_input(Fore.BLUE + "        Enter the name for the database of the sensors: " + Fore.WHITE + "("
+                        + SENSOR_DB + "_timestamp) " + Fore.RESET) or SENSOR_DB
 
     # Checks if the name is empty
     if db_name.isspace():
