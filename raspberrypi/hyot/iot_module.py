@@ -105,7 +105,7 @@ def connect():
     device_id = raw_input(Fore.BLUE + "        Enter the identifier of the device: " + Fore.WHITE + "(" + DEVICEID +
                           ") " + Fore.RESET) or DEVICEID
 
-    auth_token = raw_input(Fore.BLUE + "        Enter the authentication token: " + Fore.WHITE + "(" + AUTHTOKEN + ") "
+    auth_token = raw_input(Fore.BLUE + "        Enter the authentication token or empty to use the default value: "
                            + Fore.RESET) or AUTHTOKEN
 
     # Checks if some field is empty

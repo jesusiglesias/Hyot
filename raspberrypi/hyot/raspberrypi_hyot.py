@@ -47,7 +47,7 @@ try:
     import iot_module as iot                        # Module that contains the logic of the IoT platform
     import cloudantdb_module as cloudantdb          # Module that contains the logic of the Cloudant NoSQL DB service
     import gpg_module as gpg                        # Module that contains the logic of the functionality of GPG
-    import hyperledgerFabric_module as hyperledger  # Module that contains the logic to use Hyperledger Fabric
+    import hyperledgerFabric_module as hlf          # Module that contains the logic to use Hyperledger Fabric
     import dropbox_module as dropbox                # Module that contains the logic of the Dropbox service
     import email_module as email                    # Module to send emails when an alert is triggered
     import lcd_module as lcd                        # Module to handle the LCDs
@@ -120,6 +120,7 @@ alert_origin = None                         # Indicates which event triggered th
 threshold_value = None                      # Indicates the value of the event threshold that triggers the alert
 link_dropbox = None                         # Shared link of the uploaded file to Dropbox
 sent = None                                 # Indicates if the email was or not sent
+video_hash = None                           # Hash of the video file
 
 
 ########################################
@@ -168,7 +169,8 @@ def information_values():
 def reset_values():
     """Resets the values"""
 
-    global video_filename, video_filefullpath, alert_triggered, alert_origin, threshold_value, link_dropbox, sent
+    global video_filename, video_filefullpath, alert_triggered, alert_origin, threshold_value, link_dropbox, sent, \
+        video_hash
 
     video_filename = None
     video_filefullpath = None
@@ -177,6 +179,7 @@ def reset_values():
     threshold_value = None
     link_dropbox = None
     sent = None
+    video_hash = None
 
 
 def add_cloudant(temperature, humidity, distance):
@@ -218,7 +221,7 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     """
 
     global uuid_measurement, datetime_measurement, video_filename, video_filefullpath, ext, recording_time, \
-        alert_triggered, alert_origin, threshold_value, link_dropbox, sent, MAILTO, ALERT_LED
+        alert_triggered, alert_origin, threshold_value, link_dropbox, sent, video_hash, MAILTO, ALERT_LED
 
     # Name of the video file
     video_filename = sensor.lower() + '_' + event.lower() + '_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) + ext
@@ -247,8 +250,8 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     # Checks if the original file exists in the local system
     system.check_file(video_filefullpath)
 
-    # Applies a hash function to the content of the file TODO
-    hyperledger.file_hash(video_filefullpath)
+    # Applies a hash function to the content of the file
+    video_hash = hlf.file_hash(video_filefullpath)
 
     # Encrypts the file
     final_path = gpg.encrypt_file(video_filefullpath)
@@ -279,6 +282,9 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
 
     # Adds the measurement to the database
     add_cloudant(temperature, humidity, distance)
+
+    # Submits the transaction to publish a new alert asset
+    hlf.publishAlert_transaction(str(uuid_measurement), datetime_measurement, sensor, video_hash, link_dropbox)
 
     time.sleep(1)
     lcd.clear_lcd(sensor)                                       # Clears the LCD
@@ -403,6 +409,9 @@ def main(user_args):
         # ############### Initializing Dropbox ###############
         dropbox.connect()                           # Creates a Dropbox client and establishes a connection
         dropbox.init(SENSORS)                       # Initializes the main directory and the subdirectories
+
+        # ############### Initializing Hyperledger Fabric ###############
+        hlf.init()                                  # Checks if Hyperledger Fabric is alive
 
         time.sleep(2)                               # Wait time - 2 seconds
         lcd.clear_lcds()                            # Clears both LCDs

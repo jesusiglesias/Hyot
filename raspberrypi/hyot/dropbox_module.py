@@ -250,6 +250,9 @@ def init(all_sensors):
 
         time.sleep(1)
 
+    time.sleep(1)
+    print("\n        ------------------------------------------------------")
+
 
 def __get_shared_link(upload_path):
     """Creates a shared shortened link of the file. If a shared link already exists for the given path, that link is

@@ -139,13 +139,13 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
     :param filepath: Path of the file to attach
     :param filename: Name of the file to attach
     :param timestamp: Datetime of the alert
-    :param alert_id: Value of this parameter in the measurement
+    :param alert_id: Identifier of the alert
     :param temperature: Value of this parameter in the measurement
     :param humidity: Value of this parameter in the measurement
     :param distance: Value of this parameter in the measurement
-    :param link_dropbox: Link to Dropbox where the file is uploaded
-    :param alert_origin: Contains the sensor and the event that triggers the alert
-    :param threshold_value: Indicates the value of the event threshold that triggers the alert
+    :param link_dropbox: Link to Dropbox where the file was uploaded
+    :param alert_origin: Contains the sensor and the event that triggered the alert
+    :param threshold_value: Indicates the value of the event threshold that triggered the alert
     :return: True/False depending on whether the notification was sent
     """
 
