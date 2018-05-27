@@ -120,7 +120,7 @@ def init():
     print("\n        ------------------------------------------------------")
 
 
-def read_template(filename):
+def __read_template(filename):
     """Reads the email template and generates a Template instance
     :param filename: File to read
     :return: Template instance
@@ -128,6 +128,7 @@ def read_template(filename):
 
     with open(filename, 'r') as template_file:
         template_file_content = template_file.read()
+
     return Template(template_file_content)
 
 
@@ -162,7 +163,7 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
 
     # Message of the email in HTML format
     try:
-        message = read_template(os.path.dirname(os.path.abspath(__file__)) + "/" + TEMPLATEPATH).substitute(
+        message = __read_template(os.path.dirname(os.path.abspath(__file__)) + "/" + TEMPLATEPATH).substitute(
             EVENT=event,
             SENSOR=sensor,
             DATETIME=timestamp,

@@ -101,7 +101,7 @@ fingerprint_array = []                                           # Array to stor
 ########################################
 #               FUNCTIONS              #
 ########################################
-def request_validate_password():
+def __request_validate_password():
     """Asks the user for the password for the private key and validates it based on a set of rules"""
 
     # Variables
@@ -159,7 +159,7 @@ def request_validate_password():
             return key_pass
 
 
-def check_and_rename(filepath, qr, count=0):
+def __check_and_rename(filepath, qr, count=0):
     """Checks if the file exists in the path and if so it renames it adding the rule: [_number]
     :param filepath: Path of the file that will store the public and private key
     :param qr: True, to indicate that the file belongs to the QR image. False, to indicate that belongs to the keys file
@@ -186,10 +186,10 @@ def check_and_rename(filepath, qr, count=0):
 
         return
     else:
-        check_and_rename(original_filepath, qr, count + 1)
+        __check_and_rename(original_filepath, qr, count + 1)
 
 
-def generate_qrcode():
+def __generate_qrcode():
     """Generates a QR code of the fingerprint of the GPG key"""
 
     global gpg_dir, keyid, qr_finalpath, QRIMAGE
@@ -202,7 +202,7 @@ def generate_qrcode():
         qr_initialpath = gpg_dir + "/" + QRIMAGE
 
         # Checks if the file exists in the path and if so it renames it adding the rule: [_number]
-        check_and_rename(qr_initialpath, True)
+        __check_and_rename(qr_initialpath, True)
 
         # Stores the QR image
         qr_image.save(qr_finalpath)
@@ -215,13 +215,13 @@ def generate_qrcode():
         pass
 
 
-def generate_keys():
+def __generate_keys():
     """Creates the GPG key and exports the public and private keys"""
 
     global gpg, gpg_dir, keyid, keys_finalpath, KEYSFILE, NAME, EMAIL
 
     # Asks the user for the password of the private key and validates it later
-    private_key_pass = request_validate_password()
+    private_key_pass = __request_validate_password()
 
     # Establishes the input data
     input_data = gpg.gen_key_input(name_real=NAME, name_email=EMAIL, passphrase=private_key_pass)
@@ -234,7 +234,7 @@ def generate_keys():
     print(Fore.GREEN + "        Files generated and stored in: " + Style.BRIGHT + gpg_dir + Style.RESET_ALL)
 
     # Generates a QR code of the fingerprint
-    generate_qrcode()
+    __generate_qrcode()
 
     public_key = gpg.export_keys(keyid)                                        # Exports the fingerprint (public key)
     private_key = gpg.export_keys(keyid, True, passphrase=private_key_pass)    # Exports the fingerprint (private key)
@@ -246,7 +246,7 @@ def generate_keys():
         keys_initialpath = gpg_dir + "/" + KEYSFILE
 
         # Checks if the file exists in the path and if so it renames it adding the rule: [_number]
-        check_and_rename(keys_initialpath, False)
+        __check_and_rename(keys_initialpath, False)
 
         with open(keys_finalpath, 'w') as f:
             f.write(public_key)
@@ -262,7 +262,7 @@ def generate_keys():
         sys.exit(0)
 
 
-def check_keys():
+def __check_keys():
     """Checks if in the entered GPG directory some key already exists"""
 
     global gpg, keyid, fingerprint_array
@@ -282,7 +282,7 @@ def check_keys():
         time.sleep(0.5)
 
         # Generates the key
-        generate_keys()
+        __generate_keys()
     else:
         print(Fore.BLACK + "        The GPG directory already contains some GPG key." + Fore.RESET)
 
@@ -296,7 +296,7 @@ def check_keys():
             print(Fore.BLACK + "        Generating a GPG key." + Fore.RESET)
 
             # Generates the key
-            generate_keys()
+            __generate_keys()
         else:
             # Removes the spaces
             key_input = key_input.replace(" ", "")
@@ -350,7 +350,7 @@ def init():
               + Style.RESET_ALL)
 
         # Checks if in the entered GPG directory some key already exists
-        check_keys()
+        __check_keys()
 
         time.sleep(1)
 
