@@ -1,0 +1,14 @@
+/************************************************
+ *                                              *
+ *             HYOT BUSINESS NETWORK            *
+ *                                              *
+ *                Custom queries                *
+ *                                              *
+ ************************************************/
+
+query AlertFromSpecificSensor {
+  description: "Selects all alerts triggered by a specific sensor"
+  statement:
+    SELECT org.hyot.network.Alert
+      WHERE (alert_details.alert_origin == _$sensor)
+}

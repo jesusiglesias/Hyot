@@ -1,5 +1,5 @@
 /*-------------------------------------------------------------------------------------------*
- *                               GITIGNORE FILE FOR "HYOT" PROJECT                           *
+ *                                GITIGNORE FILE FOR HYOT PROJECT                            *
  *-------------------------------------------------------------------------------------------*/
 
 # OS X generated files
@@ -8,7 +8,7 @@
 # Jetbrains IDE
 .idea/*
 
-# YAML file
+# Raspberry Pi - Hyot - YAML file
 raspberrypi/hyot/conf/*.yml
 
 # Latex files (report)
@@ -16,3 +16,12 @@ docs/**/.texpadtmp
 docs/**/*.pdf
 docs/**/*.bst
 docs/**/*.cls
+
+# Hyot Business Network - Compiled code/library (BNA file)
+hyot_bnd/dist
+
+# Hyot Business Network - Documentation
+hyot_bnd/doc
+
+# Hyot Business Network - Local packages
+hyot_bnd/node_modules

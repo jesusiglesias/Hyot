@@ -1,0 +1,58 @@
+/************************************************
+ *                                              *
+ *            HYOT NETWORK DEFINITION           *
+ *                                              *
+ *    Defines the declarative access control    *
+ *    over the elements of the domain model     *
+ *                                              *
+ ************************************************/
+
+rule PublishAlertTransaction {
+    description: "All participants can submit PublishAlert transactions"
+    participant: "org.hyot.network.User"
+    operation: CREATE
+    resource: "org.hyot.network.PublishAlert"
+    action: ALLOW
+}
+
+rule CreateAlertWhenPublishAlertTransaction {
+    description: "All participants can create alerts when submitting PublishAlert transactions"
+    participant: "org.hyot.network.User"
+    operation: CREATE
+    resource: "org.hyot.network.Alert"
+    transaction: "org.hyot.network.PublishAlert"
+    action: ALLOW
+}
+
+rule OwnerHasFullAccessToTheirAssets {
+    description: "All participants can only read their own assets"
+    participant(p): "org.hyot.network.User"
+    operation: READ
+    resource(r): "org.hyot.network.Alert"
+    condition: (r.alert_details.owner.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule SystemACL {
+    description: "System ACL to permit all access"
+    participant: "org.hyperledger.composer.system.Participant"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}

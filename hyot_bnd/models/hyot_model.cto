@@ -1,0 +1,45 @@
+/************************************************
+ *                                              *
+ *            HYOT NETWORK DEFINITION           *
+ *                                              *
+ *   Defines the different resources using      *
+ *   Hyperledger Composer modelling language    *
+ *                                              *
+ ************************************************/
+ 
+namespace org.hyot.network
+
+// Enumerated type - Sensor type
+enum SensorType {
+  o DHT11
+  o HCSR04
+}
+
+// Concept - Details of the alert
+concept AlertDetails {
+  o DateTime timestamp
+  o SensorType alert_origin
+  o String hash
+  o String shared_link
+  --> User owner
+}
+
+// Asset - Alert
+asset Alert identified by alert_id {
+  o String alert_id
+  o AlertDetails alert_details
+}
+
+// Participant - User
+participant User identified by username {
+  o String username
+  o String email optional
+  o String first_name
+  o String last_name
+}
+
+// Transaction - Publish alert
+transaction PublishAlert {
+  o String alert_id
+  o AlertDetails alert_details
+}

@@ -1,0 +1,12 @@
+/*-------------------------------------------------------------------------------------------*
+ *                              ESLINTIGNORE FILE FOR HYOT PROJECT                           *
+ *-------------------------------------------------------------------------------------------*/
+
+# Hyot Business Network - Compiled code/library (BNA file)
+dist
+
+# Hyot Business Network - Documentation
+doc
+
+# Hyot Business Network - Local packages
+node_modules
