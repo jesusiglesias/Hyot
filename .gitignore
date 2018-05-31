@@ -9,7 +9,7 @@
 .idea/*
 
 # Raspberry Pi - Hyot - YAML file
-raspberrypi/hyot/conf/*.yml
+hyot_raspberrypi/hyot/conf/*.yml
 
 # Latex files (report)
 docs/**/.texpadtmp
