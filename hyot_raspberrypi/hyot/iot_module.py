@@ -34,12 +34,12 @@
 #               IMPORTS                #
 ########################################
 try:
+    import ibmiotf.device                         # Module for interacting with the IBM Cloud IoT Platform
+    import logging                                # Logging facility for Python
     import sys                                    # System-specific parameters and functions
     import time                                   # Time access and conversions
-    import logging                                # Logging facility for Python
     import yaml                                   # YAML parser and emitter for Python
     from colorama import Fore, Style              # Cross-platform colored terminal text
-    import ibmiotf.device                         # Module for interacting with the IBM Cloud IoT Platform
 
 except ImportError as importError:
     print("Error to import in iot_module: " + importError.message.lower() + ".")

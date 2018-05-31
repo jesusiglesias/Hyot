@@ -33,9 +33,9 @@
 #               IMPORTS                #
 ########################################
 try:
+    import argparse                                 # Python command-line parsing library
     import sys                                      # System-specific parameters and functions
     import traceback                                # Print or retrieve a stack traceback
-    import argparse                                 # Python command-line parsing library
     from colorama import Fore, Style                # Cross-platform colored terminal text
 
 except ImportError as importError:

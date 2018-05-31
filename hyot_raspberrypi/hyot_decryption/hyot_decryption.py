@@ -34,15 +34,16 @@
 #               IMPORTS                #
 ########################################
 try:
-    import sys                                      # System-specific parameters and functions
-    import os                                       # Miscellaneous operating system interfaces
-    import traceback                                # Print or retrieve a stack traceback
-    import time                                     # Time access and conversions
-    import menu_module as menu                      # Module to execute initial checks and to parse the menu
-    import gnupg                                    # GnuPG’s key management, encryption and signature functionality
     import getpass                                  # Portable password input
-    from pyfiglet import Figlet                     # Text banners in a variety of typefaces
+    import gnupg                                    # GnuPG’s key management, encryption and signature functionality
+    import os                                       # Miscellaneous operating system interfaces
+    import sys                                      # System-specific parameters and functions
+    import time                                     # Time access and conversions
+    import traceback                                # Print or retrieve a stack traceback
     from colorama import Fore, Style                # Cross-platform colored terminal text
+    from pyfiglet import Figlet                     # Text banners in a variety of typefaces
+
+    import hyot_decryption.menu_module as menu      # Module to execute initial checks and to parse the menu
 
 except ImportError as importError:
     print("Error to import in hyot_decryption: " + importError.message.lower() + ".")

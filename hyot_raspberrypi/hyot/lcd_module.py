@@ -37,8 +37,8 @@ from __future__ import unicode_literals                 # Future statement defin
 try:
     import sys                                          # System-specific parameters and functions
     import time                                         # Time access and conversions
-    from RPLCD.i2c import CharLCD                       # Character LCD library
     from colorama import Fore, Style                    # Cross-platform colored terminal text
+    from RPLCD.i2c import CharLCD                       # Character LCD library
 
 except ImportError as importError:
     print("Error to import in lcd_module: " + importError.message.lower() + ".")

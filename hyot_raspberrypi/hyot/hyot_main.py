@@ -37,25 +37,25 @@
 from __future__ import unicode_literals             # Future statement definitions TODO Delete
 
 try:
-    import sys                                      # System-specific parameters and functions
-    import traceback                                # Print or retrieve a stack traceback
-    import uuid                                     # UUID objects according to RFC 4122
-    import time                                     # Time access and conversions
-    import datetime                                 # Basic date and time types
+    import Adafruit_DHT                             # DHT11 sensor
     import camera_module as picamera                # Module to handle the Picamera
     import checks_module as checks                  # Module to execute initial checks and to parse the menu
-    import iot_module as iot                        # Module that contains the logic of the IoT platform
     import cloudantdb_module as cloudantdb          # Module that contains the logic of the Cloudant NoSQL DB service
-    import gpg_module as gpg                        # Module that contains the logic of the functionality of GPG
-    import hyperledgerFabric_module as hlf          # Module that contains the logic to use Hyperledger Fabric
+    import datetime                                 # Basic date and time types
     import dropbox_module as dropbox                # Module that contains the logic of the Dropbox service
     import email_module as email                    # Module to send emails when an alert is triggered
+    import gpg_module as gpg                        # Module that contains the logic of the functionality of GPG
+    import hyperledgerFabric_module as hlf          # Module that contains the logic to use Hyperledger Fabric
+    import iot_module as iot                        # Module that contains the logic of the IoT platform
     import lcd_module as lcd                        # Module to handle the LCDs
+    import sys                                      # System-specific parameters and functions
     import system_module as system                  # Module that performs functions in the local operating system
-    from pyfiglet import Figlet                     # Text banners in a variety of typefaces
+    import time                                     # Time access and conversions
+    import traceback                                # Print or retrieve a stack traceback
+    import uuid                                     # UUID objects according to RFC 4122
     from colorama import Fore, Style                # Cross-platform colored terminal text
     from gpiozero import LED, DistanceSensor        # Simple interface to GPIO devices
-    import Adafruit_DHT                             # DHT11 sensor
+    from pyfiglet import Figlet                     # Text banners in a variety of typefaces
 
 except ImportError as importError:
     print("Error to import in raspberrypi_hyot: " + importError.message.lower() + ".")

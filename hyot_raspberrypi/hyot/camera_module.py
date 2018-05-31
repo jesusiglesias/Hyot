@@ -33,9 +33,9 @@
 #               IMPORTS                #
 ########################################
 try:
+    import picamera                                     # Interface for the Raspberry Pi camera module
     import sys                                          # System-specific parameters and functions
     import time                                         # Time access and conversions
-    import picamera                                     # Interface for the Raspberry Pi camera module
     from colorama import Fore, Style                    # Cross-platform colored terminal text
 
 except ImportError as importError:

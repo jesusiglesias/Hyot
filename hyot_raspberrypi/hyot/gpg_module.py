@@ -34,13 +34,13 @@
 #               IMPORTS                #
 ########################################
 try:
-    import sys                                      # System-specific parameters and functions
+    import getpass                                  # Portable password input
+    import gnupg                                    # GnuPG’s key management, encryption and signature functionality
+    import qrcode                                   # Pure python QR Code generator
     import os                                       # Miscellaneous operating system interfaces
+    import sys                                      # System-specific parameters and functions
     import time                                     # Time access and conversions
     import yaml                                     # YAML parser and emitter for Python
-    import gnupg                                    # GnuPG’s key management, encryption and signature functionality
-    import getpass                                  # Portable password input
-    import qrcode                                   # Pure python QR Code generator
     from colorama import Fore, Style                # Cross-platform colored terminal text
 
 except ImportError as importError:

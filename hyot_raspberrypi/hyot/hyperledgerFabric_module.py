@@ -32,14 +32,14 @@
 #               IMPORTS                #
 ########################################
 try:
-    import sys                                      # System-specific parameters and functions
-    import time                                     # Time access and conversions
     import hashlib                                  # Secure hashes and message digests
     import json                                     # JSON encoder and decoder
     import re                                       # Regular expression
     import requests                                 # HTTP for Humans
     import sha3                                     # SHA-3 wrapper (Keccak) for Python
     import socket                                   # Low-level networking interface
+    import sys                                      # System-specific parameters and functions
+    import time                                     # Time access and conversions
     import yaml                                     # YAML parser and emitter for Python
     from colorama import Fore, Style                # Cross-platform colored terminal text
 

@@ -33,9 +33,9 @@
 #               IMPORTS                #
 ########################################
 try:
-    import sys                                      # System-specific parameters and functions
     import os                                       # Miscellaneous operating system interfaces
     import shutil                                   # High-level file operations
+    import sys                                      # System-specific parameters and functions
     import time                                     # Time access and conversions
     from colorama import Fore, Style                # Cross-platform colored terminal text
 

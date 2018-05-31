@@ -33,12 +33,12 @@
 #               IMPORTS                #
 ########################################
 try:
+    import getpass                                  # Portable password input
     import sys                                      # System-specific parameters and functions
     import time                                     # Time access and conversions
-    import getpass                                  # Portable password input
     import yaml                                     # YAML parser and emitter for Python
-    from colorama import Fore, Style                # Cross-platform colored terminal text
     from cloudant.client import Cloudant            # Cloudant NoSQL DB client
+    from colorama import Fore, Style                # Cross-platform colored terminal text
 
 except ImportError as importError:
     print("Error to import in cloudantdb_module: " + importError.message.lower() + ".")

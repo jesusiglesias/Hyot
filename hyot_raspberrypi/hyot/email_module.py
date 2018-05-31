@@ -33,17 +33,17 @@
 #               IMPORTS                #
 ########################################
 try:
-    import sys                                          # System-specific parameters and functions
     import os                                           # Miscellaneous operating system interfaces
-    import time                                         # Time access and conversions
     import smtplib                                      # SMTP protocol client
+    import sys                                          # System-specific parameters and functions
+    import time                                         # Time access and conversions
     import yaml                                         # YAML parser and emitter for Python
     from colorama import Fore, Style                    # Cross-platform colored terminal text
-    from string import Template                         # Common string operations
     from email.MIMEBase import MIMEBase                 # Email and MIME handling package
     from email.MIMEMultipart import MIMEMultipart       # Create MIME messages that are multipart
     from email.MIMEText import MIMEText                 # Create MIME objects of major type text
     from email import encoders                          # Encoders
+    from string import Template                         # Common string operations
 
 except ImportError as importError:
     print("Error to import in email_module: " + importError.message.lower() + ".")

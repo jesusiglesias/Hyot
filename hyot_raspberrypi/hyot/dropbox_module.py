@@ -33,11 +33,11 @@
 #               IMPORTS                #
 ########################################
 try:
+    import dropbox                                      # Python SDK for integrating with the Dropbox API v2
     import sys                                          # System-specific parameters and functions
     import time                                         # Time access and conversions
     import yaml                                         # YAML parser and emitter for Python
     from colorama import Fore, Style                    # Cross-platform colored terminal text
-    import dropbox                                      # Python SDK for integrating with the Dropbox API v2
 
 except ImportError as importError:
     print("Error to import in dropbox_module: " + importError.message.lower() + ".")
