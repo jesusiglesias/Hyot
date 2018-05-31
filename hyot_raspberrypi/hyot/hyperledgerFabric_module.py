@@ -142,10 +142,22 @@ def __hlc_ping():
     # GET request - Ping
     response = requests.get(hlc_server_url + HLC_API_PING, headers=headers)
 
-    # Checks if the response is a JSON serializable and contains a specified key
-    if __is_jsonable(response):
+    # Error 401 - Unauthorized request
+    if response.status_code == requests.codes.unauthorized:
+        print(Fore.RED + "        Error 401: Unauthorized request. Please, enter a valid credentials to submit the"
+                         " request to the Hyperledger Composer REST server" + Fore.RESET)
+        sys.exit(0)
 
-        # Response is OK (200) and the 'participant' key contains a regular expression
+    # Error 404 - Not found
+    elif response.status_code == requests.codes.not_found:
+        print(Fore.RED + "        Error 404: Not found. Please, verify in the code that the URL is right and can be"
+                         " found on the Hyperledger Composer REST server" + Fore.RESET)
+        sys.exit(0)
+
+    # Checks if the response is a JSON serializable and contains a specified key
+    elif __is_jsonable(response):
+
+        # Request is OK (200) and the 'participant' key contains a regular expression
         if (response.status_code == requests.codes.ok and
             (re.match(r"%s" % REGEX_VALUE_PARTICIPANT_USER, response.json()[KEY_PARTICIPANT]) or
              re.match(r"%s" % REGEX_VALUE_PARTICIPANT_NETWORKADMIN, response.json()[KEY_PARTICIPANT]))):
@@ -318,6 +330,19 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, shared_l
     # Request is OK (200)
     if response.status_code == requests.codes.ok:
         print(Fore.GREEN + " ✓" + Fore.RESET)
+
+    # Error 401 - Unauthorized request
+    elif response.status_code == requests.codes.unauthorized:
+        print(Fore.RED + " ✕ Error to submit the transaction. Error 401: Unauthorized request. Please, enter a valid"
+                         " credentials to submit the request to the Hyperledger Composer REST server" + Fore.RESET)
+        sys.exit(0)
+
+    # Error 404 - Not found
+    elif response.status_code == requests.codes.not_found:
+        print(Fore.RED + " ✕ Error to submit the transaction. Error 404: Not found. Please, verify that the URL is"
+                         " right and can be found on the Hyperledger Composer REST server" + Fore.RESET)
+        sys.exit(0)
+
     else:
         print(Fore.RED + " ✕ Error to submit the transaction (code " + str(response.status_code) + "). "
               + str(response.json()['error']['message']) + Fore.RESET)
