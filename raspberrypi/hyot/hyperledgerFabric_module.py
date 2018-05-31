@@ -15,7 +15,7 @@
 #                                                                                                                      #
 #          USAGE:     ---                                                                                              #
 #                                                                                                                      #
-#    DESCRIPTION:     This module contains the logic to interact with the blockchain of Hyperledger Fabric             #
+#    DESCRIPTION:     This module contains the logic to interact with the Blockchain of Hyperledger Fabric             #
 #        OPTIONS:     ---                                                                                              #
 #   REQUIREMENTS:     TODO                                                                                             #
 #          NOTES:     It must be loaded by the main script: raspberrypi_hyot.py                                        #
@@ -26,7 +26,7 @@
 #       REVISION:     ---                                                                                              #
 # =====================================================================================================================#
 
-"""This module contains the logic to interact with the blockchain of Hyperledger Fabric"""
+"""This module contains the logic to interact with the Blockchain of Hyperledger Fabric"""
 
 ########################################
 #               IMPORTS                #
@@ -71,8 +71,24 @@ except yaml.YAMLError as yamlError:
 #              CONSTANTS               #
 ########################################
 BLOCKSIZE = 65536                                       # Block size (64kb) to hash
+HTTP = "http://"                                        # HTTP protocol in the URL
+HTTPS = "https://"                                      # HTTPS protocol in the URL
+HTTP_PORT = 80                                          # Default HTTP port
+HTTPS_PORT = 443                                        # Default HTTPS port
 HLC_HOST = conf['hl']['host']                           # Default host where Hyperledger Composer REST server is running
 HLC_PORT = conf['hl']['port']                           # Default port where Hyperledger Composer REST server is running
+HLC_API_PING = "/api/system/ping"                       # Hyperledger Composer REST server API - Ping
+# Hyperledger Composer REST server API - Publish alert transaction
+HLC_API_PUBLISH_ALERT = "/api/org.hyot.network.PublishAlert"
+KEY_PARTICIPANT = "participant"                         # Key to search in a JSON format file
+# Regex of the possible values that the 'participant key should contain
+REGEX_VALUE_PARTICIPANT_USER= "^org\.hyot\.network\.User\#\w+$"
+REGEX_VALUE_PARTICIPANT_NETWORKADMIN = "^org\.hyperledger\.composer\.system\.NetworkAdmin\#\w+$"
+# Possible values that the 'participant key should contain
+VALUE_PARTICIPANT_USER = "org.hyot.network.User#"
+VALUE_PARTICIPANT_NETWORKADMIN = "org.hyperledger.composer.system.NetworkAdmin#"
+# Regex for the NGROK address
+REGEX_NGROK_ADDRESS = "^(http:\/\/|https:\/\/)\w+\.ngrok\.io$"
 
 
 ########################################
@@ -81,8 +97,6 @@ HLC_PORT = conf['hl']['port']                           # Default port where Hyp
 hlc_server_host = None                                  # Host where Hyperledger Composer REST server is running
 hlc_server_port = None                                  # Port where Hyperledger Composer REST server is running
 hlc_server_url = None                                   # Full address where Hyperledger Composer REST server is running
-key_participant = "participant"                         # Key to search in a JSON format file
-value_participant = "org.hyperledger.composer.system"   # Value that the 'participant key must contain
 
 
 ########################################
@@ -94,14 +108,14 @@ def __is_jsonable(response):
     :return: True, if the response is a JSON serializable and contains the specified key. False, otherwise
     """
 
-    global key_participant
+    global KEY_PARTICIPANT
 
     try:
         # Serializes the response in JSON format
         response_json = response.json()
 
         # Checks if the key exists
-        if key_participant in response_json:
+        if KEY_PARTICIPANT in response_json:
             return True
         else:
             return False
@@ -115,7 +129,8 @@ def __hlc_ping():
     :return: True, if the address belongs to a business network. False, otherwise
     """
 
-    global hlc_server_url, key_participant, value_participant
+    global HLC_API_PING, REGEX_VALUE_PARTICIPANT_USER, REGEX_VALUE_PARTICIPANT_NETWORKADMIN, VALUE_PARTICIPANT_USER,\
+        VALUE_PARTICIPANT_NETWORKADMIN, KEY_PARTICIPANT, hlc_server_url
 
     # Headers of the GET request
     headers = {
@@ -125,14 +140,15 @@ def __hlc_ping():
     print("        Pinging the business network of the address: " + hlc_server_url)
 
     # GET request - Ping
-    response = requests.get(hlc_server_url + "/api/system/ping", headers=headers)
+    response = requests.get(hlc_server_url + HLC_API_PING, headers=headers)
 
     # Checks if the response is a JSON serializable and contains a specified key
     if __is_jsonable(response):
 
         # Response is OK (200) and the 'participant' key contains a regular expression
-        if response.status_code == requests.codes.ok and re.match(r"%s" % value_participant,
-                                                                  response.json()[key_participant]):
+        if (response.status_code == requests.codes.ok and
+            (re.match(r"%s" % REGEX_VALUE_PARTICIPANT_USER, response.json()[KEY_PARTICIPANT]) or
+             re.match(r"%s" % REGEX_VALUE_PARTICIPANT_NETWORKADMIN, response.json()[KEY_PARTICIPANT]))):
 
             print(Fore.GREEN + "        Business network is alive in the address" + Fore.RESET)
 
@@ -142,8 +158,9 @@ def __hlc_ping():
                       str(response.json()['error']['name']) + ": " + str(response.json()['error']['message']) +
                       Fore.RESET)
             else:
-                print(Fore.RED + "        Participant key in the response does not contain the following regular"
-                                 " expression: " + value_participant + ". " + Fore.RESET)
+                print(Fore.RED + "        Participant key in the response does not contain the following"
+                                 " expressions: " + VALUE_PARTICIPANT_NETWORKADMIN + " or " + VALUE_PARTICIPANT_USER +
+                                 "." + Fore.RESET)
             sys.exit(0)
 
     else:
@@ -160,27 +177,39 @@ def __port_isdigit(port):
     return port.replace(".", "", 1).isdigit()
 
 
+def __check_ngrok_address(host):
+    """Checks if the address belongs to the NGROK tool
+    :param host: Host address typed by the user
+    :return: True, to indicate that the host is a NGROK address. False, otherwise
+    """
+
+    global REGEX_NGROK_ADDRESS
+
+    if re.match(r"%s" % REGEX_NGROK_ADDRESS, host):
+        return True
+    else:
+        return False
+
+
 def init():
     """Checks if Hyperledger Fabric is alive through running a ping with REST API exposed by the Hyperledger Composer
-    REST server. This REST server allows to interact with the business network deployed in the blockchain of Hyperledger
+    REST server. This REST server allows to interact with the business network deployed in the Blockchain of Hyperledger
     Fabric"""
 
-    global HLC_HOST, HLC_PORT, hlc_server_host, hlc_server_port, hlc_server_url
+    global HTTP, HTTPS, HTTP_PORT, HTTPS_PORT, HLC_HOST, HLC_PORT, hlc_server_host, hlc_server_port, hlc_server_url
 
     print("\n      " + Style.BRIGHT + Fore.BLACK + "- Checking if the business network in Hyperledger Fabric is alive"
           + Style.RESET_ALL)
 
     # Asks the user for the host where Hyperledger Composer REST server is running
-    hlc_server_host = raw_input(Fore.BLUE + "        Enter the host where Hyperledger Composer REST server is "
-                                            "running: " + Fore.WHITE + "(" + HLC_HOST + ") " + Fore.RESET) or HLC_HOST
+    hlc_server_host = raw_input(Fore.BLUE + "        Enter the host (e.g. IP or ngrok address) where Hyperledger "
+                                            "Composer REST server is running: " + Fore.WHITE + "(" + HLC_HOST + ") "
+                                + Fore.RESET) or HLC_HOST
 
     # Checks if the host is empty
     if hlc_server_host.isspace():
         print(Fore.RED + "        The host of the Hyperledger Composer REST server can not be empty" + Fore.RESET)
         sys.exit(0)
-
-    # Removes the substrings
-    hlc_server_host = hlc_server_host.replace("http://", "").replace("https://", "")
 
     # Asks the user for the port where Hyperledger Composer REST server is running
     hlc_server_port = raw_input(Fore.BLUE + "        Enter the port where Hyperledger Composer REST server is running: "
@@ -196,8 +225,28 @@ def init():
         print(Fore.RED + "        The port of the Hyperledger Composer REST server can only be a number" + Fore.RESET)
         sys.exit(0)
 
-    # Full address
-    hlc_server_url = "http://" + hlc_server_host + ":" + str(hlc_server_port)
+    # Checks if the address belongs to the NGROK tool
+    ngrok_address = __check_ngrok_address(hlc_server_host)
+
+    if ngrok_address:         # Ngrok address
+
+        if int(hlc_server_port) != HTTP_PORT and int(hlc_server_port) != HTTPS_PORT:
+            print(Fore.RED + "        The port of NGROK must be 80 for HTTP connections or 443 for HTTPS connections"
+                  + Fore.RESET)
+            sys.exit(0)
+
+        # Full address
+        hlc_server_url = hlc_server_host
+
+        # Removes the substrings
+        hlc_server_host = hlc_server_host.replace(HTTP, "").replace(HTTPS, "")
+
+    else:                     # Address is IP:Port
+
+        # Removes the substrings
+        hlc_server_host = hlc_server_host.replace(HTTP, "").replace(HTTPS, "")
+        # Full address TODO
+        hlc_server_url = HTTP + hlc_server_host + ":" + str(hlc_server_port)
 
     # Checks if this host and port is alive and listen
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)       # Creates an INET socket of type STREAM
@@ -228,7 +277,7 @@ def init():
 
 
 def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, shared_link):
-    """Submits a transaction to publish a new alert asset in the blockchain of Hyperledger Fabric
+    """Submits a transaction to publish a new alert asset in the Blockchain of Hyperledger Fabric
     :param uuid: Identifier of the alert
     :param timestamp: Datetime of the alert
     :param alert_origin: Indicates the sensor that triggered the alert
@@ -236,7 +285,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, shared_l
     :param shared_link: Link to Dropbox where the file was uploaded
     """
 
-    global hlc_server_url
+    global HLC_API_PUBLISH_ALERT, hlc_server_url
 
     # Headers of the POST request
     headers = {
@@ -258,12 +307,13 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, shared_l
         }
     }
 
-    print(Fore.LIGHTBLACK_EX + "   -- Submitting the transaction to publish the alert to the blockchain of Hyperledger"
+    print(Fore.LIGHTBLACK_EX + "   -- Submitting the transaction to publish the alert to the Blockchain of Hyperledger"
                                " Fabric" + Fore.RESET),
     time.sleep(0.5)
 
-    # POST request - PublishAlert transaction
-    response = requests.post(hlc_server_url + '/api/PublishAlert', headers=headers, data=json.dumps(payload))
+    # POST request - PublishAlert transaction TODO - API Namespace
+    response = requests.post(hlc_server_url + HLC_API_PUBLISH_ALERT, headers=headers,
+                             data=json.dumps(payload))
 
     # Request is OK (200)
     if response.status_code == requests.codes.ok:
