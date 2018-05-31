@@ -93,7 +93,7 @@ db_name = None                                      # Name of the database
 def connect():
     """Creates a Cloudant DB client and establishes a connection"""
 
-    global client, USERNAME_DB, PASSWORD_DB, URL_DB
+    global USERNAME_DB, PASSWORD_DB, URL_DB, client
 
     print("\n      " + Style.BRIGHT + Fore.BLACK + "- Generating the client of the Cloudant NoSQL DB service"
           + Style.RESET_ALL)
@@ -128,7 +128,7 @@ def init(timestamp):
     :param timestamp: Datetime when the measurement was taken
     """
 
-    global client, db_name, db_instance, SENSOR_DB
+    global SENSOR_DB, client, db_name, db_instance
 
     db_instance = None                              # Instance for the database
 

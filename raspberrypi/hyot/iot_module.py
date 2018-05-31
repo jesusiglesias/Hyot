@@ -92,7 +92,7 @@ client = None                                     # IoT platform client
 def connect():
     """Creates the IoT client and establishes a connection"""
 
-    global client, ORGID, DEVICETYPE, DEVICEID, AUTHTOKEN, AUTHMETHOD
+    global ORGID, DEVICETYPE, DEVICEID, AUTHTOKEN, AUTHMETHOD, client
 
     print("\n      " + Style.BRIGHT + Fore.BLACK + "- Generating the client of the IoT Platform"
           + Style.RESET_ALL)

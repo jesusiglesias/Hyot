@@ -325,7 +325,7 @@ def check_invalid_values_dht11(temperature, humidity, distance):
     :param distance: Value of this event in the current measurement
     """
 
-    global threshold_value, SENSORS, HCSR_EVENTS, DISTANCE_THRESHOLD
+    global SENSORS, HCSR_EVENTS, DISTANCE_THRESHOLD, threshold_value
 
     # Prints the UUID and datetime of each measurement
     print_data_measurement()
@@ -369,9 +369,9 @@ def main(user_args):
     try:
 
         # Variables
-        global uuid_measurement, datetime_measurement, recording_time, threshold_value, SENSORS, MAILTO, \
-            TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT11_EVENTS, TEMP_THRESHOLD, HUM_THRESHOLD, \
-            HCSR_SENSOR, HCSR_EVENTS, HCSR_MAXDISTANCE, DISTANCE_THRESHOLD
+        global SENSORS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT11_EVENTS, TEMP_THRESHOLD,\
+            HUM_THRESHOLD, HCSR_SENSOR, HCSR_EVENTS, HCSR_MAXDISTANCE, DISTANCE_THRESHOLD, uuid_measurement,\
+            datetime_measurement, recording_time, threshold_value
 
         count = 0                                   # Measurement counter
         recording_time = user_args.RECORDING_TIME   # Time that the recording will take

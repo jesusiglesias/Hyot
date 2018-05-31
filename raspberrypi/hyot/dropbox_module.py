@@ -95,7 +95,7 @@ sensors = []                # Stores the name of all sensors
 def connect():
     """Creates an instance of the Dropbox class and establishes a connection"""
 
-    global dbx, TOKEN
+    global TOKEN, dbx
 
     print("\n      " + Style.BRIGHT + Fore.BLACK + "- Generating the client of the Dropbox service" + Style.RESET_ALL)
 
@@ -140,7 +140,7 @@ def __create_dir(dir_name):
     :param dir_name: Name of the directory or subdirectory
     """
 
-    global dbx, path, message_dir, HYOT_DIR
+    global HYOT_DIR, dbx, path, message_dir
 
     # Establishes some data
     if dir_name == HYOT_DIR:
@@ -179,7 +179,7 @@ def __create_dir(dir_name):
 def __check_space():
     """Checks the amount of available space in the user account"""
 
-    global dbx, MIN_SPACE
+    global MIN_SPACE, dbx
 
     # Checks if there is a considerable amount of available space in the user account (at least 500MB)
     allocated_space = dbx.users_get_space_usage().allocation.get_individual().allocated             # Allocated space
@@ -199,7 +199,7 @@ def init(all_sensors):
     :param all_sensors: Name of the sensors
     """
 
-    global dht_subdir, hcsr_subdir, sensors, DHT11_DIR, HCSR04_DIR, HYOT_DIR
+    global DHT11_DIR, HCSR04_DIR, HYOT_DIR, dht_subdir, hcsr_subdir, sensors
 
     # Variables
     sensor_subdirs = []                        # Defines a list with the name of the subdirectories of each sensor
@@ -284,7 +284,7 @@ def upload_file(localfile, sensor):
     :return: shared_link Shared link of the uploaded file to Dropbox
     """
 
-    global dbx, dht_subdir, hcsr_subdir, HYOT_DIR
+    global HYOT_DIR, dbx, dht_subdir, hcsr_subdir
 
     # Variables
     upload_path = None                                              # Specify upload path
@@ -329,7 +329,7 @@ def upload_file(localfile, sensor):
                              " Please, check the way in which the names of the videos are generated" + Fore.RESET)
             sys.exit(1)
         elif uploadError.error.get_path().reason.is_insufficient_space():  # Insufficient space
-            print(Fore.RED + "File not uploaded. The user does not have enough available space" + Fore.RESET)
+            print(Fore.RED + " ✕ File not uploaded. The user does not have enough available space" + Fore.RESET)
             pass    # TODO Return None
         else:                                                      # Another error. For example: no write permission
             raise

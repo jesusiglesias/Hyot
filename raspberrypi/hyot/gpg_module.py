@@ -192,7 +192,7 @@ def __check_and_rename(filepath, qr, count=0):
 def __generate_qrcode():
     """Generates a QR code of the fingerprint of the GPG key"""
 
-    global gpg_dir, keyid, qr_finalpath, QRIMAGE
+    global QRIMAGE, gpg_dir, keyid, qr_finalpath
 
     try:
         # Creates an image from the QR Code instance
@@ -218,7 +218,7 @@ def __generate_qrcode():
 def __generate_keys():
     """Creates the GPG key and exports the public and private keys"""
 
-    global gpg, gpg_dir, keyid, keys_finalpath, KEYSFILE, NAME, EMAIL
+    global KEYSFILE, NAME, EMAIL, gpg, gpg_dir, keyid, keys_finalpath
 
     # Asks the user for the password of the private key and validates it later
     private_key_pass = __request_validate_password()
@@ -322,7 +322,7 @@ def __check_keys():
 def init():
     """Creates the GPG instance and the public and private keys"""
 
-    global gpg, gpg_dir, GPGDIRDEFAULT, PUBKEYRING, SECKEYRING
+    global GPGDIRDEFAULT, PUBKEYRING, SECKEYRING, gpg, gpg_dir
 
     try:
         print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing GPG" + Style.RESET_ALL)
@@ -366,7 +366,7 @@ def encrypt_file(video):
     :param video: File to encrypt with its full path
     """
 
-    global gpg, keyid, GPGEXT
+    global GPGEXT, gpg, keyid
 
     try:
         # Path of the encrypted file

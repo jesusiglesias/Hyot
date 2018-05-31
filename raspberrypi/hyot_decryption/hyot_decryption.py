@@ -132,7 +132,7 @@ def check_existence():
 def check_extension():
     """Checks if the encrypted file has the right extension"""
 
-    global encrypted_file, EXT
+    global EXT, encrypted_file
 
     # Obtains the extension
     ext = os.path.splitext(encrypted_file)[-1].lower()
@@ -222,7 +222,7 @@ def main(user_args):
     :param user_args: Values of the options entered by the user
     """
 
-    global gpg, gpg_dir, fingerprint, keys, encrypted_file, decrypted_dir, output_file, PUBKEYRING, SECKEYRING
+    global PUBKEYRING, SECKEYRING, gpg, gpg_dir, fingerprint, keys, encrypted_file, decrypted_dir, output_file
 
     # Try-Catch block
     try:
