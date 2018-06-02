@@ -2,12 +2,19 @@
 # -*- coding: utf-8 -*-
 # =====================================================================================================================#
 #                                                                                                                      #
-#                                    __    __   ___      ___   ________    __________                                  #
-#                                   |  |  |  |  \  \    /  /  |   __   |  |___    ___|                                 #
-#                                   |  |__|  |   \  \__/  /   |  |  |  |      |  |                                     #
-#                                   |   __   |    \_|  |_/    |  |  |  |      |  |                                     #
-#                                   |  |  |  |      |  |      |  |__|  |      |  |                                     #
-#                                   |__|  |__|      |__|      |________|      |__|                                     #
+#                                              _    ___     ______ _______                                             #
+#                                             | |  | \ \   / / __ \__   __|                                            #
+#                                             | |__| |\ \_/ / |  | | | |                                               #
+#                                             |  __  | \   /| |  | | | |                                               #
+#                                             | |  | |  | | | |__| | | |                                               #
+#                                             |_|  |_|  |_|  \____/  |_|                                               #
+#                                                                                                                      #
+#                    _____                         _     _ _ _ _            _          ___    _____                    #
+#                   |_   _| __ __ _  ___ ___  __ _| |__ (_) (_) |_ _   _   (_)_ __    |_ _|__|_   _|                   #
+#                     | || '__/ _` |/ __/ _ \/ _` | '_ \| | | | __| | | |  | | '_ \    | |/ _ \| |                     #
+#                     | || | | (_| | (_|  __/ (_| | |_) | | | | |_| |_| |  | | | | |   | | (_) | |                     #
+#                     |_||_|  \__,_|\___\___|\__,_|_.__/|_|_|_|\__|\__, |  |_|_| |_|  |___\___/|_|                     #
+#                                                                  |___/                                               #
 #                                                                                                                      #
 #                                                                                                                      #
 #        PROJECT:     Hyot                                                                                             #
@@ -18,13 +25,14 @@
 #    DESCRIPTION:     This module contains the logic to handle the Picamera                                            #
 #                                                                                                                      #
 #        OPTIONS:     ---                                                                                              #
-#   REQUIREMENTS:     Connected devices: Picamera                                                                      #
-#          NOTES:     It must be loaded by the main script: raspberrypi_hyot.py                                        #
-#         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                         #
+#   REQUIREMENTS:     Picamera device connected, Camera interface enabled on the Raspberry Pi                          #
+#          NOTES:     It must be loaded by the main traceability script: hyot_main.py                                  #
+#         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  #
 #   ORGANIZATION:     ---                                                                                              #
-#        VERSION:     0.1                                                                                              #
+#        VERSION:     1.0.0                                                                                            #
 #        CREATED:     01/22/18                                                                                         #
 #       REVISION:     ---                                                                                              #
+#                                                                                                                      #
 # =====================================================================================================================#
 
 """This module contains the logic to handle the Picamera"""
@@ -88,8 +96,8 @@ def record_video(path, recording_time):
     global camera
 
     try:
-        print(Fore.LIGHTBLACK_EX + "   -- Taking a recording of " + str(recording_time) + " seconds and temporarily storing"
-                                   " it in the path: " + path + Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "   -- Taking a recording of " + str(recording_time) + " seconds and temporarily"
+              " storing it in the path: " + path + Fore.RESET),
 
         time.sleep(1)
 

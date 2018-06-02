@@ -2,12 +2,19 @@
 # -*- coding: utf-8 -*-
 # =====================================================================================================================#
 #                                                                                                                      #
-#                                    __    __   ___      ___   ________    __________                                  #
-#                                   |  |  |  |  \  \    /  /  |   __   |  |___    ___|                                 #
-#                                   |  |__|  |   \  \__/  /   |  |  |  |      |  |                                     #
-#                                   |   __   |    \_|  |_/    |  |  |  |      |  |                                     #
-#                                   |  |  |  |      |  |      |  |__|  |      |  |                                     #
-#                                   |__|  |__|      |__|      |________|      |__|                                     #
+#                                              _    ___     ______ _______                                             #
+#                                             | |  | \ \   / / __ \__   __|                                            #
+#                                             | |__| |\ \_/ / |  | | | |                                               #
+#                                             |  __  | \   /| |  | | | |                                               #
+#                                             | |  | |  | | | |__| | | |                                               #
+#                                             |_|  |_|  |_|  \____/  |_|                                               #
+#                                                                                                                      #
+#                    _____                         _     _ _ _ _            _          ___    _____                    #
+#                   |_   _| __ __ _  ___ ___  __ _| |__ (_) (_) |_ _   _   (_)_ __    |_ _|__|_   _|                   #
+#                     | || '__/ _` |/ __/ _ \/ _` | '_ \| | | | __| | | |  | | '_ \    | |/ _ \| |                     #
+#                     | || | | (_| | (_|  __/ (_| | |_) | | | | |_| |_| |  | | | | |   | | (_) | |                     #
+#                     |_||_|  \__,_|\___\___|\__,_|_.__/|_|_|_|\__|\__, |  |_|_| |_|  |___\___/|_|                     #
+#                                                                  |___/                                               #
 #                                                                                                                      #
 #                                                                                                                      #
 #        PROJECT:     Hyot                                                                                             #
@@ -15,19 +22,22 @@
 #                                                                                                                      #
 #          USAGE:     ---                                                                                              #
 #                                                                                                                      #
-#    DESCRIPTION:     This module contains the logic to send an email like an alert notification                       #
+#    DESCRIPTION:     This module contains the logic to send emails when an alert notification is triggered or an      #
+#                     error occurs during the execution                                                                #
 #                                                                                                                      #
 #        OPTIONS:     ---                                                                                              #
-#   REQUIREMENTS:     Network connection                                                                               #
-#          NOTES:     It must be loaded by the main script: raspberrypi_hyot.py                                        #
-#         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                         #
+#   REQUIREMENTS:     Gmail account, Connection to the network                                                         #
+#          NOTES:     It must be loaded by the main traceability script: hyot_main.py                                  #
+#         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  #
 #   ORGANIZATION:     ---                                                                                              #
-#        VERSION:     0.1                                                                                              #
+#        VERSION:     1.0.0                                                                                            #
 #        CREATED:     01/20/18                                                                                         #
 #       REVISION:     ---                                                                                              #
+#                                                                                                                      #
 # =====================================================================================================================#
 
-"""This module contains the logic to send an email like an alert notification"""
+"""This module contains the logic to send emails when an alert notification is triggered or an error occurs during
+    the execution"""
 
 ########################################
 #               IMPORTS                #

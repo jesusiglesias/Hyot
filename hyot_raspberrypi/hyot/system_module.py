@@ -2,12 +2,19 @@
 # -*- coding: utf-8 -*-
 # =====================================================================================================================#
 #                                                                                                                      #
-#                                    __    __   ___      ___   ________    __________                                  #
-#                                   |  |  |  |  \  \    /  /  |   __   |  |___    ___|                                 #
-#                                   |  |__|  |   \  \__/  /   |  |  |  |      |  |                                     #
-#                                   |   __   |    \_|  |_/    |  |  |  |      |  |                                     #
-#                                   |  |  |  |      |  |      |  |__|  |      |  |                                     #
-#                                   |__|  |__|      |__|      |________|      |__|                                     #
+#                                              _    ___     ______ _______                                             #
+#                                             | |  | \ \   / / __ \__   __|                                            #
+#                                             | |__| |\ \_/ / |  | | | |                                               #
+#                                             |  __  | \   /| |  | | | |                                               #
+#                                             | |  | |  | | | |__| | | |                                               #
+#                                             |_|  |_|  |_|  \____/  |_|                                               #
+#                                                                                                                      #
+#                    _____                         _     _ _ _ _            _          ___    _____                    #
+#                   |_   _| __ __ _  ___ ___  __ _| |__ (_) (_) |_ _   _   (_)_ __    |_ _|__|_   _|                   #
+#                     | || '__/ _` |/ __/ _ \/ _` | '_ \| | | | __| | | |  | | '_ \    | |/ _ \| |                     #
+#                     | || | | (_| | (_|  __/ (_| | |_) | | | | |_| |_| |  | | | | |   | | (_) | |                     #
+#                     |_||_|  \__,_|\___\___|\__,_|_.__/|_|_|_|\__|\__, |  |_|_| |_|  |___\___/|_|                     #
+#                                                                  |___/                                               #
 #                                                                                                                      #
 #                                                                                                                      #
 #        PROJECT:     Hyot                                                                                             #
@@ -15,19 +22,20 @@
 #                                                                                                                      #
 #          USAGE:     ---                                                                                              #
 #                                                                                                                      #
-#    DESCRIPTION:     This module performs functions in the local operating system                                     #
+#    DESCRIPTION:     This module performs functions with directories and files of the local operating system          #
 #                                                                                                                      #
 #        OPTIONS:     ---                                                                                              #
 #   REQUIREMENTS:     ---                                                                                              #
-#          NOTES:     It must be loaded by the main script: raspberrypi_hyot.py                                        #
-#         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                         #
+#          NOTES:     It must be loaded by the main traceability script: hyot_main.py                                  #
+#         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  #
 #   ORGANIZATION:     ---                                                                                              #
-#        VERSION:     0.1                                                                                              #
+#        VERSION:     1.0.0                                                                                            #
 #        CREATED:     01/13/18                                                                                         #
 #       REVISION:     ---                                                                                              #
+#                                                                                                                      #
 # =====================================================================================================================#
 
-"""This module performs functions in the local operating system"""
+"""This module performs functions with directories and files of the local operating system"""
 
 ########################################
 #               IMPORTS                #
@@ -85,7 +93,7 @@ def create_localdir():
         # After creating, checks again if it was created
         if os.path.exists(tempfiles_path):          # Directory was created
             print(Fore.GREEN + "        " + Style.BRIGHT + tempfiles_path + Style.NORMAL + " directory created "
-                               "successfully" + Fore.RESET)
+                  "successfully" + Fore.RESET)
 
         else:                                       # Directory was not created
             print(Fore.RED + "        Error to create the " + Style.BRIGHT + tempfiles_path + Style.NORMAL +

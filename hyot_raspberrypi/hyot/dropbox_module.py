@@ -2,12 +2,19 @@
 # -*- coding: utf-8 -*-
 # =====================================================================================================================#
 #                                                                                                                      #
-#                                    __    __   ___      ___   ________    __________                                  #
-#                                   |  |  |  |  \  \    /  /  |   __   |  |___    ___|                                 #
-#                                   |  |__|  |   \  \__/  /   |  |  |  |      |  |                                     #
-#                                   |   __   |    \_|  |_/    |  |  |  |      |  |                                     #
-#                                   |  |  |  |      |  |      |  |__|  |      |  |                                     #
-#                                   |__|  |__|      |__|      |________|      |__|                                     #
+#                                              _    ___     ______ _______                                             #
+#                                             | |  | \ \   / / __ \__   __|                                            #
+#                                             | |__| |\ \_/ / |  | | | |                                               #
+#                                             |  __  | \   /| |  | | | |                                               #
+#                                             | |  | |  | | | |__| | | |                                               #
+#                                             |_|  |_|  |_|  \____/  |_|                                               #
+#                                                                                                                      #
+#                    _____                         _     _ _ _ _            _          ___    _____                    #
+#                   |_   _| __ __ _  ___ ___  __ _| |__ (_) (_) |_ _   _   (_)_ __    |_ _|__|_   _|                   #
+#                     | || '__/ _` |/ __/ _ \/ _` | '_ \| | | | __| | | |  | | '_ \    | |/ _ \| |                     #
+#                     | || | | (_| | (_|  __/ (_| | |_) | | | | |_| |_| |  | | | | |   | | (_) | |                     #
+#                     |_||_|  \__,_|\___\___|\__,_|_.__/|_|_|_|\__|\__, |  |_|_| |_|  |___\___/|_|                     #
+#                                                                  |___/                                               #
 #                                                                                                                      #
 #                                                                                                                      #
 #        PROJECT:     Hyot                                                                                             #
@@ -18,13 +25,14 @@
 #    DESCRIPTION:     This module contains the logic of the Dropbox service                                            #
 #                                                                                                                      #
 #        OPTIONS:     ---                                                                                              #
-#   REQUIREMENTS:     Account in the Dropbox service                                                                   #
-#          NOTES:     It must be loaded by the main script: raspberrypi_hyot.py                                        #
-#         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                         #
+#   REQUIREMENTS:     Account in the Dropbox service, Connection to the network                                        #
+#          NOTES:     It must be loaded by the main traceability script: hyot_main.py                                  #
+#         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  #
 #   ORGANIZATION:     ---                                                                                              #
-#        VERSION:     0.1                                                                                              #
+#        VERSION:     1.0.0                                                                                            #
 #        CREATED:     01/08/18                                                                                         #
 #       REVISION:     ---                                                                                              #
+#                                                                                                                      #
 # =====================================================================================================================#
 
 """This module contains the logic of the Dropbox service"""
@@ -162,7 +170,7 @@ def __create_dir(dir_name):
 
         print("        Creating the " + message_dir)
         print(Fore.GREEN + "        " + Style.BRIGHT + dir_name + Style.NORMAL + " " + message_dir + " was created "
-                           "successfully" + Fore.RESET)
+              "successfully" + Fore.RESET)
 
     except dropbox.exceptions.ApiError as createError:
 
@@ -332,7 +340,7 @@ def upload_file(localfile, sensor):
     except IOError:                                                        # Error to open the file
 
         print(Fore.RED + "Could not open the file: " + localfile + ". No such file in the local system or "
-                         "corrupt file" + Fore.RESET)  # TODO
+              "corrupt file" + Fore.RESET)  # TODO
         sys.exit(1)     # TODO
 
     except dropbox.exceptions.ApiError as uploadError:
@@ -343,7 +351,7 @@ def upload_file(localfile, sensor):
             sys.exit(1)
         elif uploadError.error.get_path().reason.is_insufficient_space():  # Insufficient space
             print(Fore.RED + " ✕ File not uploaded. The user does not have enough available space" + Fore.RESET)
-            pass    # TODO Return None
+            pass    # TODO Return None Unnecessary pass statement
         else:                                                      # Another error. For example: no write permission
             raise
 

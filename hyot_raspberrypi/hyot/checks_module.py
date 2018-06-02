@@ -2,12 +2,19 @@
 # -*- coding: utf-8 -*-
 # =====================================================================================================================#
 #                                                                                                                      #
-#                                    __    __   ___      ___   ________    __________                                  #
-#                                   |  |  |  |  \  \    /  /  |   __   |  |___    ___|                                 #
-#                                   |  |__|  |   \  \__/  /   |  |  |  |      |  |                                     #
-#                                   |   __   |    \_|  |_/    |  |  |  |      |  |                                     #
-#                                   |  |  |  |      |  |      |  |__|  |      |  |                                     #
-#                                   |__|  |__|      |__|      |________|      |__|                                     #
+#                                              _    ___     ______ _______                                             #
+#                                             | |  | \ \   / / __ \__   __|                                            #
+#                                             | |__| |\ \_/ / |  | | | |                                               #
+#                                             |  __  | \   /| |  | | | |                                               #
+#                                             | |  | |  | | | |__| | | |                                               #
+#                                             |_|  |_|  |_|  \____/  |_|                                               #
+#                                                                                                                      #
+#                    _____                         _     _ _ _ _            _          ___    _____                    #
+#                   |_   _| __ __ _  ___ ___  __ _| |__ (_) (_) |_ _   _   (_)_ __    |_ _|__|_   _|                   #
+#                     | || '__/ _` |/ __/ _ \/ _` | '_ \| | | | __| | | |  | | '_ \    | |/ _ \| |                     #
+#                     | || | | (_| | (_|  __/ (_| | |_) | | | | |_| |_| |  | | | | |   | | (_) | |                     #
+#                     |_||_|  \__,_|\___\___|\__,_|_.__/|_|_|_|\__|\__, |  |_|_| |_|  |___\___/|_|                     #
+#                                                                  |___/                                               #
 #                                                                                                                      #
 #                                                                                                                      #
 #        PROJECT:     Hyot                                                                                             #
@@ -15,19 +22,21 @@
 #                                                                                                                      #
 #          USAGE:     ---                                                                                              #
 #                                                                                                                      #
-#    DESCRIPTION:     This module executes several initial checks and parses the menu                                  #
+#    DESCRIPTION:     This module executes several initial checks and parses the menu also checking the options        #
+#                     entered by the user                                                                              #
 #                                                                                                                      #
 #        OPTIONS:     ---                                                                                              #
 #   REQUIREMENTS:     ---                                                                                              #
-#          NOTES:     It must be loaded by the main script: raspberrypi_hyot.py                                        #
-#         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                         #
+#          NOTES:     It must be loaded by the main traceability script: hyot_main.py                                  #
+#         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  #
 #   ORGANIZATION:     ---                                                                                              #
-#        VERSION:     0.1                                                                                              #
+#        VERSION:     1.0.0                                                                                            #
 #        CREATED:     01/05/18                                                                                         #
 #       REVISION:     ---                                                                                              #
+#                                                                                                                      #
 # =====================================================================================================================#
 
-"""This module executes several initial checks and parses the menu"""
+"""This module executes several initial checks and parses the menu also checking the options entered by the user"""
 
 ########################################
 #               IMPORTS                #
@@ -48,6 +57,15 @@ except ImportError as importError:
 except KeyboardInterrupt:
     print("\rException: KeyboardInterrupt. Please, do not interrupt the execution.")
     sys.exit(1)
+
+
+########################################
+#              CONSTANTS               #
+########################################
+# Regex to valid an email
+REGEX_VALID_EMAIL = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$"
+# Regex to check if the device is a Raspberry Pi
+REGEX_CHECK_RASPBERRYPI = "^Hardware\s+:\s+(\w+)$"
 
 
 ########################################
@@ -94,7 +112,7 @@ def check_raspberrypi():
         sys.exit(1)
 
     # Matches a line like 'Hardware   : BCMXXXX'
-    match = re.search('^Hardware\s+:\s+(\w+)$', cpuinfo, flags=re.MULTILINE | re.IGNORECASE)
+    match = re.search(r"%s" % REGEX_CHECK_RASPBERRYPI, cpuinfo, flags=re.MULTILINE | re.IGNORECASE)
 
     # 1. Couldn't find the 'Hardware' field. Assume that it isn't a Raspberry Pi
     # 2. Find the 'Hardware' field but the value is another one
@@ -157,10 +175,7 @@ def __is_valid_email(email):
     :return: True/False based on the validity of the email.
     """
 
-    if re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', str(email)) is not None:
-        return True
-    else:
-        return False
+    return bool(re.match(r"%s" % REGEX_VALID_EMAIL, str(email)) is not None)
 
 
 def menu():
@@ -175,14 +190,13 @@ def menu():
         # Maximum distance in meters to be measured by the HC-SR04 sensor
         default_max_distance = 1.5
 
-        # Creates a parser TODO - Description
-        parser = argparse.ArgumentParser(
-            description=Style.BRIGHT + "HYOT/HELP:" + Style.RESET_ALL + " This script monitors several events "
-                                       "-distance, temperature and humidity- from sensors, outputs by console and "
-                                       "sends them to the cloud." + Fore.RED + " Remember " + Fore.RESET + "to run "
-                                       "this script with root user or sudo and the options are optional. If not given,"
-                                       " default values are used.",
-            add_help=False)
+        # Creates a parser
+        parser = argparse.ArgumentParser(description=Style.BRIGHT + "HYOT/HELP:" + Style.RESET_ALL +
+                                         " This script monitors several events -distance, temperature and humidity-"
+                                         " from sensors connected to a Raspberry Pi and in case of an anomalous event,"
+                                         " the alert procedure is activated." + Fore.RED + " Remember " + Fore.RESET +
+                                         "to run this script with root user or sudo and the options are optional. If"
+                                         " not given, default values are used.", add_help=False)
 
         # Groups
         general_group = parser.add_argument_group('General options')

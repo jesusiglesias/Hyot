@@ -2,40 +2,53 @@
 # -*- coding: utf-8 -*-
 # =====================================================================================================================#
 #                                                                                                                      #
-#                                    __    __   ___      ___   ________    __________                                  #
-#                                   |  |  |  |  \  \    /  /  |   __   |  |___    ___|                                 #
-#                                   |  |__|  |   \  \__/  /   |  |  |  |      |  |                                     #
-#                                   |   __   |    \_|  |_/    |  |  |  |      |  |                                     #
-#                                   |  |  |  |      |  |      |  |__|  |      |  |                                     #
-#                                   |__|  |__|      |__|      |________|      |__|                                     #
+#                                              _    ___     ______ _______                                             #
+#                                             | |  | \ \   / / __ \__   __|                                            #
+#                                             | |__| |\ \_/ / |  | | | |                                               #
+#                                             |  __  | \   /| |  | | | |                                               #
+#                                             | |  | |  | | | |__| | | |                                               #
+#                                             |_|  |_|  |_|  \____/  |_|                                               #
+#                                                                                                                      #
+#                    _____                         _     _ _ _ _            _          ___    _____                    #
+#                   |_   _| __ __ _  ___ ___  __ _| |__ (_) (_) |_ _   _   (_)_ __    |_ _|__|_   _|                   #
+#                     | || '__/ _` |/ __/ _ \/ _` | '_ \| | | | __| | | |  | | '_ \    | |/ _ \| |                     #
+#                     | || | | (_| | (_|  __/ (_| | |_) | | | | |_| |_| |  | | | | |   | | (_) | |                     #
+#                     |_||_|  \__,_|\___\___|\__,_|_.__/|_|_|_|\__|\__, |  |_|_| |_|  |___\___/|_|                     #
+#                                                                  |___/                                               #
 #                                                                                                                      #
 #                                                                                                                      #
 #        PROJECT:     Hyot                                                                                             #
-#           FILE:     raspberrypi_hyot.py                                                                              #
+#           FILE:     hyot_main.py                                                                                     #
 #                                                                                                                      #
-#          USAGE:     sudo python raspberrypi_hyot.py                                                                  #
+#          USAGE:     sudo python hyot_main.py                                                                         #
 #                                                                                                                      #
-#    DESCRIPTION:     This script monitors several events from sensors and sends them to the cloud  TODO               #
+#    DESCRIPTION:     This script monitors several events -distance, temperature and humidity- from sensors connected  #
+#                     to a Raspberry Pi and in case of an anomalous event, the alert procedure is activated            #
 #                                                                                                                      #
-#        OPTIONS:     ---                                                                                              #
-#   REQUIREMENTS:     Root user, Connected devices: LCD 16x2 (2), Picamera, DTH11 sensor and HC-SR04 sensor,           #
-#                     Modules: camera_module.py, checks_module.py, cloudantdb_module.py, dropbox_module.py,            #
-#                     email_module.py, lcd_module.py, system_module.py                                                 #
+#        OPTIONS:     Type '-h' or '--help' option to show the help                                                    #
+#   REQUIREMENTS:     Root user, GNU/Linux platform, Connection to the network, Connected devices: DTH11 and HC-SR04   #
+#                     sensors, Modules:                                                                                #
+#                           - camera_module.py                  - gpg_module.py                                        #
+#                           - checks_module.py                  - hyperledgerFabric_module.py                          #
+#                           - cloudantdb_module.py              - iot_module.py                                        #
+#                           - dropbox_module.py                 - lcd_module.py                                        #
+#                           - email_module.py                   - system_module.py                                     #
+#                                                                                                                      #
 #          NOTES:     It must be run with root user on a Raspberry Pi preferably with Raspbian as operating system     #
-#         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                         #
+#         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  #
 #   ORGANIZATION:     ---                                                                                              #
-#        VERSION:     0.1                                                                                              #
+#        VERSION:     1.0.0                                                                                            #
 #        CREATED:     12/27/17                                                                                         #
 #       REVISION:     ---                                                                                              #
+#                                                                                                                      #
 # =====================================================================================================================#
 
-"""This script monitors several events from sensors and sends them to the cloud"""  # TODO
+"""This script monitors several events -distance, temperature and humidity- from sensors connected to a Raspberry Pi
+    and in case of an anomalous event, the alert procedure is activated"""
 
 ########################################
 #               IMPORTS                #
 ########################################
-from __future__ import unicode_literals             # Future statement definitions TODO Delete
-
 try:
     import Adafruit_DHT                             # DHT11 sensor
     import camera_module as picamera                # Module to handle the Picamera
@@ -55,10 +68,9 @@ try:
     import uuid                                     # UUID objects according to RFC 4122
     from colorama import Fore, Style                # Cross-platform colored terminal text
     from gpiozero import LED, DistanceSensor        # Simple interface to GPIO devices
-    from pyfiglet import Figlet                     # Text banners in a variety of typefaces
 
 except ImportError as importError:
-    print("Error to import in raspberrypi_hyot: " + importError.message.lower() + ".")
+    print("Error to import in hyot_main: " + importError.message.lower() + ".")
     sys.exit(1)
 except KeyboardInterrupt:
     print("\rException: KeyboardInterrupt. Please, do not interrupt the execution.")
@@ -75,12 +87,11 @@ def constants(user_args):
     :param user_args: Values of the options entered by the user.
     """
 
-    global FIGLET, SENSORS, DHT11_EVENTS, HCSR_EVENTS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, \
-        TEMP_THRESHOLD, HUM_THRESHOLD, ALERT_LED, HCSR_SENSOR, HCSR_MAXDISTANCE, DISTANCE_THRESHOLD
+    global SENSORS, DHT11_EVENTS, HCSR_EVENTS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, TEMP_THRESHOLD,\
+        HUM_THRESHOLD, ALERT_LED, HCSR_SENSOR, HCSR_MAXDISTANCE, DISTANCE_THRESHOLD, EXT
 
     try:
 
-        FIGLET = Figlet(font='future_8', justify='center')          # Figlet
         SENSORS = ["DHT11", "HCSR04"]                               # Name of the sensors
         DHT11_EVENTS = ["Temperature", "Humidity"]                  # Name of the events of the DHT11 sensor
         HCSR_EVENTS = ["Distance"]                                  # Name of the events of the HC-SR04 sensor
@@ -97,6 +108,7 @@ def constants(user_args):
                                      max_distance=user_args.HCSR_MAXDISTANCE)
         HCSR_MAXDISTANCE = user_args.HCSR_MAXDISTANCE               # Maximum distance to be measured (HC-SR04 sensor)
         DISTANCE_THRESHOLD = user_args.DISTANCE_THRESHOLD           # Distance alert threshold in the HC-SR04 sensor
+        EXT = '.h264'                                               # Extension of the video file
 
     except Exception as exception:
         print(Fore.RED + "Exception in constants() function: " + str(exception))
@@ -115,7 +127,6 @@ uuid_measurement = None                     # UUID of each measurement for both 
 datetime_measurement = None                 # Datetime in which the measurement was taken
 video_filename = None                       # Name of the video file
 video_filefullpath = None                   # Full path of the recording
-ext = '.h264'                               # Extension of the video file
 recording_time = None                       # Time that the recording will take
 alert_triggered = None                      # Indicates if an alert has been triggered
 alert_origin = None                         # Indicates which event triggered the alert
@@ -133,14 +144,33 @@ def header():
     Prints the header in the console.
     """
 
-    global FIGLET
+    banner = """
+         _    ___     ______ _______
+        | |  | \ \   / / __ \__   __|
+        | |__| |\ \_/ / |  | | | |
+        |  __  | \   /| |  | | | |
+        | |  | |  | | | |__| | | |
+        |_|  |_|  |_|  \____/  |_|
+
+
+        A PoC for traceability in IoT environments through Hyperledger by:
+
+            - Jesús Iglesias García, jesusgiglesias@gmail.com
+
+        -----------------------------------------------------
+
+        HYOT - TRACEABILITY IN IoT
+
+        This script monitors several events -distance, temperature and humidity- from sensors
+        connected to a Raspberry Pi and in case of an anomalous event, the alert procedure is activated.
+
+    """
 
     # Header
-    print(Style.BRIGHT + Fore.LIGHTBLUE_EX + FIGLET.renderText("HYOT"))
-    print("This script monitors several events -distance, temperature and humidity- from sensors, outputs by console "
-          "and sends them to the cloud.\n" + Style.RESET_ALL)                      # TODO
+    print(Style.BRIGHT + Fore.LIGHTBLUE_EX + banner + Style.RESET_ALL)
 
-    time.sleep(1)                                   # Wait time - 1 second
+    # Wait time - 1 second
+    time.sleep(1)
 
 
 def timestamp():
@@ -234,11 +264,12 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     :param distance: Indicates the value of measured distance.
     """
 
-    global uuid_measurement, datetime_measurement, video_filename, video_filefullpath, ext, recording_time, \
-        alert_triggered, alert_origin, threshold_value, link_dropbox, sent, video_hash, MAILTO, ALERT_LED
+    global uuid_measurement, datetime_measurement, video_filename, video_filefullpath, recording_time, alert_triggered,\
+        alert_origin, threshold_value, link_dropbox, sent, video_hash, MAILTO, ALERT_LED, EXT
 
     # Name of the video file
-    video_filename = sensor.lower() + '_' + event.lower() + '_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) + ext
+    video_filename = sensor.lower() + '_' + event.lower() + '_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) \
+                     + EXT
 
     # Full path of the video file
     video_filefullpath = system.tempfiles_path + '/' + video_filename
@@ -444,7 +475,7 @@ def main(user_args):
 
         # ############### Reading values ###############
         print(Style.BRIGHT + Fore.BLACK + "\n-- Reading values each " + str(TIME_MEASUREMENTS) + " seconds from "
-                                          "sensors\n" + Style.RESET_ALL)
+              "sensors\n" + Style.RESET_ALL)
 
         lcd.full_print_lcds("Reading values", "from sensors")           # Writes in both LCDS using both rows
         time.sleep(1)

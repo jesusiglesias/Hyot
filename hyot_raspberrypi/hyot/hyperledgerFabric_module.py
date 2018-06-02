@@ -2,12 +2,19 @@
 # -*- coding: utf-8 -*-
 # =====================================================================================================================#
 #                                                                                                                      #
-#                                    __    __   ___      ___   ________    __________                                  #
-#                                   |  |  |  |  \  \    /  /  |   __   |  |___    ___|                                 #
-#                                   |  |__|  |   \  \__/  /   |  |  |  |      |  |                                     #
-#                                   |   __   |    \_|  |_/    |  |  |  |      |  |                                     #
-#                                   |  |  |  |      |  |      |  |__|  |      |  |                                     #
-#                                   |__|  |__|      |__|      |________|      |__|                                     #
+#                                              _    ___     ______ _______                                             #
+#                                             | |  | \ \   / / __ \__   __|                                            #
+#                                             | |__| |\ \_/ / |  | | | |                                               #
+#                                             |  __  | \   /| |  | | | |                                               #
+#                                             | |  | |  | | | |__| | | |                                               #
+#                                             |_|  |_|  |_|  \____/  |_|                                               #
+#                                                                                                                      #
+#                    _____                         _     _ _ _ _            _          ___    _____                    #
+#                   |_   _| __ __ _  ___ ___  __ _| |__ (_) (_) |_ _   _   (_)_ __    |_ _|__|_   _|                   #
+#                     | || '__/ _` |/ __/ _ \/ _` | '_ \| | | | __| | | |  | | '_ \    | |/ _ \| |                     #
+#                     | || | | (_| | (_|  __/ (_| | |_) | | | | |_| |_| |  | | | | |   | | (_) | |                     #
+#                     |_||_|  \__,_|\___\___|\__,_|_.__/|_|_|_|\__|\__, |  |_|_| |_|  |___\___/|_|                     #
+#                                                                  |___/                                               #
 #                                                                                                                      #
 #                                                                                                                      #
 #        PROJECT:     Hyot                                                                                             #
@@ -16,14 +23,17 @@
 #          USAGE:     ---                                                                                              #
 #                                                                                                                      #
 #    DESCRIPTION:     This module contains the logic to interact with the Blockchain of Hyperledger Fabric             #
+#                                                                                                                      #
 #        OPTIONS:     ---                                                                                              #
-#   REQUIREMENTS:     TODO                                                                                             #
-#          NOTES:     It must be loaded by the main script: raspberrypi_hyot.py                                        #
-#         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                         #
+#   REQUIREMENTS:     Business network deployed in Hyperledger Fabric, Hyperledger Composer REST server running,       #
+#                     Connection to the network                                                                        #
+#          NOTES:     It must be loaded by the main traceability script: hyot_main.py                                  #
+#         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  #
 #   ORGANIZATION:     ---                                                                                              #
-#        VERSION:     0.1                                                                                              #
-#        CREATED:     02/18/18                                                                                         #
+#        VERSION:     1.0.0                                                                                            #
+#        CREATED:     01/18/18                                                                                         #
 #       REVISION:     ---                                                                                              #
+#                                                                                                                      #
 # =====================================================================================================================#
 
 """This module contains the logic to interact with the Blockchain of Hyperledger Fabric"""
@@ -82,7 +92,7 @@ HLC_API_PING = "/api/system/ping"                       # Hyperledger Composer R
 HLC_API_PUBLISH_ALERT = "/api/org.hyot.network.PublishAlert"
 KEY_PARTICIPANT = "participant"                         # Key to search in a JSON format file
 # Regex of the possible values that the 'participant key should contain
-REGEX_VALUE_PARTICIPANT_USER= "^org\.hyot\.network\.User\#\w+$"
+REGEX_VALUE_PARTICIPANT_USER = "^org\.hyot\.network\.User\#\w+$"
 REGEX_VALUE_PARTICIPANT_NETWORKADMIN = "^org\.hyperledger\.composer\.system\.NetworkAdmin\#\w+$"
 # Possible values that the 'participant key should contain
 VALUE_PARTICIPANT_USER = "org.hyot.network.User#"
@@ -118,10 +128,7 @@ def __is_jsonable(response):
         response_json = response.json()
 
         # Checks if the key exists
-        if KEY_PARTICIPANT in response_json:
-            return True
-        else:
-            return False
+        return bool(KEY_PARTICIPANT in response_json)
     except ValueError:
         return False
 
@@ -164,8 +171,8 @@ def __hlc_ping():
 
         # Request is OK (200) and the 'participant' key contains a regular expression
         if (response.status_code == requests.codes.ok and
-            (re.match(r"%s" % REGEX_VALUE_PARTICIPANT_USER, response.json()[KEY_PARTICIPANT]) or
-             re.match(r"%s" % REGEX_VALUE_PARTICIPANT_NETWORKADMIN, response.json()[KEY_PARTICIPANT]))):
+           (re.match(r"%s" % REGEX_VALUE_PARTICIPANT_USER, response.json()[KEY_PARTICIPANT]) or
+               re.match(r"%s" % REGEX_VALUE_PARTICIPANT_NETWORKADMIN, response.json()[KEY_PARTICIPANT]))):
 
             print(Fore.GREEN + "        Business network is alive in the address" + Fore.RESET)
 
@@ -176,8 +183,8 @@ def __hlc_ping():
                       Fore.RESET)
             else:
                 print(Fore.RED + "        Participant key in the response does not contain the following"
-                                 " expressions: " + VALUE_PARTICIPANT_NETWORKADMIN + " or " + VALUE_PARTICIPANT_USER +
-                                 "." + Fore.RESET)
+                      " expressions: " + VALUE_PARTICIPANT_NETWORKADMIN + " or " + VALUE_PARTICIPANT_USER + "."
+                      + Fore.RESET)
             sys.exit(0)
 
     else:
@@ -208,10 +215,7 @@ def __check_ngrok_address(host):
 
     global REGEX_NGROK_ADDRESS
 
-    if re.match(r"%s" % REGEX_NGROK_ADDRESS, host):
-        return True
-    else:
-        return False
+    return bool(re.match(r"%s" % REGEX_NGROK_ADDRESS, host))
 
 
 def init():
