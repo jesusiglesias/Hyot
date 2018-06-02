@@ -2,12 +2,19 @@
 # -*- coding: utf-8 -*-
 # =====================================================================================================================#
 #                                                                                                                      #
-#                                    __    __   ___      ___   ________    __________                                  #
-#                                   |  |  |  |  \  \    /  /  |   __   |  |___    ___|                                 #
-#                                   |  |__|  |   \  \__/  /   |  |  |  |      |  |                                     #
-#                                   |   __   |    \_|  |_/    |  |  |  |      |  |                                     #
-#                                   |  |  |  |      |  |      |  |__|  |      |  |                                     #
-#                                   |__|  |__|      |__|      |________|      |__|                                     #
+#                                              _    ___     ______ _______                                             #
+#                                             | |  | \ \   / / __ \__   __|                                            #
+#                                             | |__| |\ \_/ / |  | | | |                                               #
+#                                             |  __  | \   /| |  | | | |                                               #
+#                                             | |  | |  | | | |__| | | |                                               #
+#                                             |_|  |_|  |_|  \____/  |_|                                               #
+#                                                                                                                      #
+#                                  ____                             _   _                                              #
+#                                 |  _ \  ___  ___ _ __ _   _ _ __ | |_(_) ___  _ __                                   #
+#                                 | | | |/ _ \/ __| '__| | | | '_ \| __| |/ _ \| '_ \                                  #
+#                                 | |_| |  __/ (__| |  | |_| | |_) | |_| | (_) | | | |                                 #
+#                                 |____/ \___|\___|_|   \__, | .__/ \__|_|\___/|_| |_|                                 #
+#                                                       |___/|_|                                                       #
 #                                                                                                                      #
 #                                                                                                                      #
 #        PROJECT:     Hyot                                                                                             #
@@ -17,15 +24,16 @@
 #                                                                                                                      #
 #    DESCRIPTION:     This script decrypts a file previously encrypted with GPG                                        #
 #                                                                                                                      #
-#        OPTIONS:     ---                                                                                              #
-#   REQUIREMENTS:     Root user, Have access to a compatible version of the GnuPG executable,                          #
-#                     Encrypted file with GPG                                                                          #
+#        OPTIONS:     Type '-h' or '--help' option to show the help                                                    #
+#   REQUIREMENTS:     Root user, Access to a compatible version of the GnuPG executable, Encrypted file with GPG,      #
+#                     Valid key or fingerprint and hash, Module: menu_module.py                                        #
 #          NOTES:     ---                                                                                              #
-#         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                         #
+#         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  #
 #   ORGANIZATION:     ---                                                                                              #
-#        VERSION:     0.1                                                                                              #
+#        VERSION:     1.0.0                                                                                            #
 #        CREATED:     02/06/18                                                                                         #
 #       REVISION:     ---                                                                                              #
+#                                                                                                                      #
 # =====================================================================================================================#
 
 """This script decrypts a file previously encrypted with GPG"""
@@ -36,14 +44,12 @@
 try:
     import getpass                                  # Portable password input
     import gnupg                                    # GnuPG’s key management, encryption and signature functionality
+    import menu_module as menu                      # Module to execute initial checks and to parse the menu
     import os                                       # Miscellaneous operating system interfaces
     import sys                                      # System-specific parameters and functions
     import time                                     # Time access and conversions
     import traceback                                # Print or retrieve a stack traceback
     from colorama import Fore, Style                # Cross-platform colored terminal text
-    from pyfiglet import Figlet                     # Text banners in a variety of typefaces
-
-    import hyot_decryption.menu_module as menu      # Module to execute initial checks and to parse the menu
 
 except ImportError as importError:
     print("Error to import in hyot_decryption: " + importError.message.lower() + ".")
@@ -94,13 +100,32 @@ def header():
     Prints the header in the console.
     """
 
-    figlet = Figlet(font='future_8', justify='center')      # Figlet
+    banner = """
+         _    ___     ______ _______
+        | |  | \ \   / / __ \__   __|
+        | |__| |\ \_/ / |  | | | |
+        |  __  | \   /| |  | | | |
+        | |  | |  | | | |__| | | |
+        |_|  |_|  |_|  \____/  |_|
+
+
+        A PoC for traceability in IoT environments through Hyperledger by:
+
+            - Jesús Iglesias García, jesusgiglesias@gmail.com
+
+        -----------------------------------------------------
+
+        HYOT - DECRYPTION
+
+        This script allows to decrypt a file previously encrypted with GPG.
+
+    """
 
     # Header
-    print(Style.BRIGHT + Fore.LIGHTBLUE_EX + figlet.renderText("HYOT DECRYPT"))
-    print("This script allows to decrypt a file previously encrypted with GPG.\n" + Style.RESET_ALL)
+    print(Style.BRIGHT + Fore.LIGHTBLUE_EX + banner + Style.RESET_ALL)
 
-    time.sleep(1)                                           # Wait time - 1 second
+    # Wait time - 1 second
+    time.sleep(1)
 
 
 def check_existence():
@@ -181,8 +206,8 @@ def check_fingerprint():
     # Obtains the private keys
     private_keys = gpg.list_keys(True)
 
-    # Checks if the GPG directory has private keys
-    if len(private_keys) == 0:
+    # Checks if the GPG directory has private keys (len(private_keys) == 0)
+    if not private_keys:
         print(Fore.RED + "   The GPG directory does not contain any private key. Please, import the private key to "
                          "decrypt the file (option: -k/--keys)." + Fore.RESET)
         sys.exit(0)

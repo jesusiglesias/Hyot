@@ -2,12 +2,19 @@
 # -*- coding: utf-8 -*-
 # =====================================================================================================================#
 #                                                                                                                      #
-#                                    __    __   ___      ___   ________    __________                                  #
-#                                   |  |  |  |  \  \    /  /  |   __   |  |___    ___|                                 #
-#                                   |  |__|  |   \  \__/  /   |  |  |  |      |  |                                     #
-#                                   |   __   |    \_|  |_/    |  |  |  |      |  |                                     #
-#                                   |  |  |  |      |  |      |  |__|  |      |  |                                     #
-#                                   |__|  |__|      |__|      |________|      |__|                                     #
+#                                              _    ___     ______ _______                                             #
+#                                             | |  | \ \   / / __ \__   __|                                            #
+#                                             | |__| |\ \_/ / |  | | | |                                               #
+#                                             |  __  | \   /| |  | | | |                                               #
+#                                             | |  | |  | | | |__| | | |                                               #
+#                                             |_|  |_|  |_|  \____/  |_|                                               #
+#                                                                                                                      #
+#                                  ____                             _   _                                              #
+#                                 |  _ \  ___  ___ _ __ _   _ _ __ | |_(_) ___  _ __                                   #
+#                                 | | | |/ _ \/ __| '__| | | | '_ \| __| |/ _ \| '_ \                                  #
+#                                 | |_| |  __/ (__| |  | |_| | |_) | |_| | (_) | | | |                                 #
+#                                 |____/ \___|\___|_|   \__, | .__/ \__|_|\___/|_| |_|                                 #
+#                                                       |___/|_|                                                       #
 #                                                                                                                      #
 #                                                                                                                      #
 #        PROJECT:     Hyot                                                                                             #
@@ -15,19 +22,20 @@
 #                                                                                                                      #
 #          USAGE:     ---                                                                                              #
 #                                                                                                                      #
-#    DESCRIPTION:     This module parses the menu                                                                      #
+#    DESCRIPTION:     This module parses the menu and checks the options entered by the user                           #
 #                                                                                                                      #
 #        OPTIONS:     ---                                                                                              #
 #   REQUIREMENTS:     ---                                                                                              #
-#          NOTES:     It must be loaded by the main script: hyot_decryption.py                                         #
-#         AUTHOR:     Jesús Iglesias García, jesus.iglesiasg@estudiante.uam.es                                         #
+#          NOTES:     It must be loaded by the main decryption script: hyot_decryption.py                              #
+#         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  #
 #   ORGANIZATION:     ---                                                                                              #
-#        VERSION:     0.1                                                                                              #
+#        VERSION:     1.0.0                                                                                            #
 #        CREATED:     02/06/18                                                                                         #
 #       REVISION:     ---                                                                                              #
+#                                                                                                                      #
 # =====================================================================================================================#
 
-"""This module parses the menu"""
+"""This module parses the menu and checks the options entered by the user"""
 
 ########################################
 #               IMPORTS                #
@@ -59,9 +67,9 @@ def check_menu():
     try:
 
         # Creates a parser
-        parser = argparse.ArgumentParser(
-            description=Style.BRIGHT + "HYOT DECRYPTION/HELP: " + Style.RESET_ALL + "This script allow to decrypt a file "
-                                       "previously encrypted with GPG", add_help=False)
+        parser = argparse.ArgumentParser(description=Style.BRIGHT + "HYOT DECRYPTION/HELP: " + Style.RESET_ALL +
+                                         "This script allow to decrypt a file previously encrypted with GPG",
+                                         add_help=False)
 
         # Groups
         general_group = parser.add_argument_group('General options')
