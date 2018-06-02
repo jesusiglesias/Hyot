@@ -79,7 +79,9 @@ output_file = None                                  # Full path (path + filename
 #               FUNCTIONS              #
 ########################################
 def check_root():
-    """Checks that the script is run with a root user"""
+    """
+    Checks that the script is run with a root user.
+    """
 
     if not os.geteuid() == 0:
         print(Fore.RED + "You need to have root privileges to run this script. Please try it again using 'sudo'."
@@ -88,7 +90,9 @@ def check_root():
 
 
 def header():
-    """Prints the header in the console"""
+    """
+    Prints the header in the console.
+    """
 
     figlet = Figlet(font='future_8', justify='center')      # Figlet
 
@@ -100,8 +104,10 @@ def header():
 
 
 def check_existence():
-    """Checks if the GPG directory, the file with the private and public key, the encrypted file and the directory,
-    where the decrypted file will be store, exist in the local system"""
+    """
+    Checks if the GPG directory, the file with the private and public key, the encrypted file and the directory,
+    where the decrypted file will be store, exist in the local system.
+    """
 
     global gpg_dir, keys, encrypted_file, decrypted_dir
 
@@ -131,7 +137,9 @@ def check_existence():
 
 
 def check_extension():
-    """Checks if the encrypted file has the right extension"""
+    """
+    Checks if the encrypted file has the right extension.
+    """
 
     global EXT, encrypted_file
 
@@ -145,7 +153,9 @@ def check_extension():
 
 
 def request_password():
-    """Asks the user for the password of the private key"""
+    """
+    Asks the user for the password of the private key.
+    """
 
     global password
 
@@ -162,7 +172,9 @@ def request_password():
 
 
 def check_fingerprint():
-    """Checks if the GPG directory has private keys and if the entered fingerprint exists"""
+    """
+    Checks if the GPG directory has private keys and if the entered fingerprint exists.
+    """
 
     global gpg, fingerprint, fingerprint_array
 
@@ -187,7 +199,9 @@ def check_fingerprint():
 
 
 def decrypt_file():
-    """Decrypts the file using the entered fingerprint or the imported key from a file"""
+    """
+    Decrypts the file using the entered fingerprint or the imported key from a file.
+    """
 
     global gpg, password, encrypted_file, output_file
 
@@ -205,7 +219,9 @@ def decrypt_file():
 
 
 def import_keys():
-    """Import the public and private key from a file"""
+    """
+    Import the public and private key from a file.
+    """
 
     global gpg, keys
 
@@ -219,8 +235,10 @@ def import_keys():
 
 
 def main(user_args):
-    """Main function
-    :param user_args: Values of the options entered by the user
+    """
+    Main function.
+
+    :param user_args: Values of the options entered by the user.
     """
 
     global PUBKEYRING, SECKEYRING, gpg, gpg_dir, fingerprint, keys, encrypted_file, decrypted_dir, output_file

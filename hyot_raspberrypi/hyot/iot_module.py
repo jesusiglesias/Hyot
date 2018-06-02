@@ -90,7 +90,9 @@ client = None                                     # IoT platform client
 #               FUNCTIONS              #
 ########################################
 def connect():
-    """Creates the IoT client and establishes a connection"""
+    """
+    Creates the IoT client and establishes a connection.
+    """
 
     global ORGID, DEVICETYPE, DEVICEID, AUTHTOKEN, AUTHMETHOD, client
 
@@ -149,11 +151,13 @@ def connect():
 
 
 def publish_event(timestamp, temperature, humidity, distance):
-    """Sends the event to the IoT platform
-    :param timestamp: Date and time when the measurement was taken
-    :param temperature: Value of this event in the current measurement
-    :param humidity: Value of this event in the current measurement
-    :param distance: Value of this event in the current measurement
+    """
+    Sends the event to the IoT platform.
+
+    :param timestamp: Date and time when the measurement was taken.
+    :param temperature: Value of this event in the current measurement.
+    :param humidity: Value of this event in the current measurement.
+    :param distance: Value of this event in the current measurement.
     """
 
     global client
@@ -175,7 +179,9 @@ def publish_event(timestamp, temperature, humidity, distance):
 
 
 def disconnect():
-    """Disconnects the IoT platform client"""
+    """
+    Disconnects the IoT platform client.
+    """
 
     global client
 

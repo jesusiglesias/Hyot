@@ -91,7 +91,9 @@ db_name = None                                      # Name of the database
 #               FUNCTIONS              #
 ########################################
 def connect():
-    """Creates a Cloudant DB client and establishes a connection"""
+    """
+    Creates a Cloudant DB client and establishes a connection.
+    """
 
     global USERNAME_DB, PASSWORD_DB, URL_DB, client
 
@@ -124,8 +126,10 @@ def connect():
 
 
 def init(timestamp):
-    """Initializes the DB by checking if these one exist or not
-    :param timestamp: Datetime when the measurement was taken
+    """
+    Initializes the DB by checking if these one exist or not.
+
+    :param timestamp: Datetime when the measurement was taken.
     """
 
     global SENSOR_DB, client, db_name, db_instance
@@ -182,8 +186,10 @@ def init(timestamp):
 
 
 def add_document(data):
-    """Adds a new document to the database and checks later that the document exists
-    :param data: Document to save in the database
+    """
+    Adds a new document to the database and checks later that the document exists.
+
+    :param data: Document to save in the database.
     """
 
     global db_instance, db_name
@@ -203,7 +209,9 @@ def add_document(data):
 
 
 def disconnect():
-    """Disconnects the Cloudant client"""
+    """
+    Disconnects the Cloudant client.
+    """
 
     global client
 

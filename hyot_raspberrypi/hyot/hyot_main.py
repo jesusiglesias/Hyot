@@ -69,8 +69,10 @@ except KeyboardInterrupt:
 #              CONSTANTS               #
 ########################################
 def constants(user_args):
-    """Contains all definitions of constants
-    :param user_args: Values of the options entered by the user
+    """
+    Contains all definitions of constants.
+
+    :param user_args: Values of the options entered by the user.
     """
 
     global FIGLET, SENSORS, DHT11_EVENTS, HCSR_EVENTS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, \
@@ -127,7 +129,9 @@ video_hash = None                           # Hash of the video file
 #               FUNCTIONS              #
 ########################################
 def header():
-    """Prints the header in the console"""
+    """
+    Prints the header in the console.
+    """
 
     global FIGLET
 
@@ -140,13 +144,17 @@ def header():
 
 
 def timestamp():
-    """Generates a timestamp string for each measurement and for each video taken"""
+    """
+    Generates a timestamp string for each measurement and for each video taken.
+    """
 
     return datetime.datetime.now()
 
 
 def information_values():
-    """Shows the information by console about some values established"""
+    """
+    Shows the information by console about some values established.
+    """
 
     global TEMP_THRESHOLD, HUM_THRESHOLD, DISTANCE_THRESHOLD, TIME_MEASUREMENTS, HCSR_MAXDISTANCE, recording_time
 
@@ -167,7 +175,9 @@ def information_values():
 
 
 def reset_values():
-    """Resets the values"""
+    """
+    Resets the value of the global variables.
+    """
 
     global video_filename, video_filefullpath, alert_triggered, alert_origin, threshold_value, link_dropbox, sent, \
         video_hash
@@ -183,10 +193,12 @@ def reset_values():
 
 
 def add_cloudant(temperature, humidity, distance):
-    """Adds the data to the Cloudant NoSQL database
-    :param temperature: Indicates the value of measured temperature
-    :param humidity: Indicates the value of measured humidity
-    :param distance: Indicates the value of measured distance
+    """
+    Adds the data to the Cloudant NoSQL database.
+
+    :param temperature: Indicates the value of measured temperature.
+    :param humidity: Indicates the value of measured humidity.
+    :param distance: Indicates the value of measured distance.
     """
 
     global uuid_measurement, datetime_measurement, alert_triggered, alert_origin, threshold_value, link_dropbox, sent,\
@@ -212,12 +224,14 @@ def add_cloudant(temperature, humidity, distance):
 
 
 def alert_procedure(sensor, event, temperature, humidity, distance):
-    """Initiates the alert procedure
-    :param sensor: Indicates the sensor that triggered the alert
-    :param event: Indicates the event that triggered the alert
-    :param temperature: Indicates the value of measured temperature
-    :param humidity: Indicates the value of measured humidity
-    :param distance: Indicates the value of measured distance
+    """
+    Initiates the alert procedure.
+
+    :param sensor: Indicates the sensor that triggered the alert.
+    :param event: Indicates the event that triggered the alert.
+    :param temperature: Indicates the value of measured temperature.
+    :param humidity: Indicates the value of measured humidity.
+    :param distance: Indicates the value of measured distance.
     """
 
     global uuid_measurement, datetime_measurement, video_filename, video_filefullpath, ext, recording_time, \
@@ -295,7 +309,9 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
 
 
 def print_data_measurement():
-    """Prints the UUID and datetime of each measurement"""
+    """
+    Prints the UUID and datetime of each measurement.
+    """
 
     global datetime_measurement, uuid_measurement
 
@@ -304,10 +320,12 @@ def print_data_measurement():
 
 
 def procedure_no_alert(temperature, humidity, distance):
-    """Steps to perform when an alert is not triggered
-    :param temperature: Value of this event in the current measurement
-    :param humidity: Value of this event in the current measurement
-    :param distance: Value of this event in the current measurement
+    """
+    Steps to perform when an alert is not triggered.
+
+    :param temperature: Value of this event in the current measurement.
+    :param humidity: Value of this event in the current measurement.
+    :param distance: Value of this event in the current measurement.
     """
 
     global datetime_measurement
@@ -319,10 +337,12 @@ def procedure_no_alert(temperature, humidity, distance):
 
 
 def check_invalid_values_dht11(temperature, humidity, distance):
-    """Checks the values of the DHT11 sensor when some are invalid
-    :param temperature: Value of this event in the current measurement
-    :param humidity: Value of this event in the current measurement
-    :param distance: Value of this event in the current measurement
+    """
+    Checks the values of the DHT11 sensor when some are invalid.
+
+    :param temperature: Value of this event in the current measurement.
+    :param humidity: Value of this event in the current measurement.
+    :param distance: Value of this event in the current measurement.
     """
 
     global SENSORS, HCSR_EVENTS, DISTANCE_THRESHOLD, threshold_value
@@ -361,8 +381,10 @@ def check_invalid_values_dht11(temperature, humidity, distance):
 
 
 def main(user_args):
-    """Main function
-    :param user_args: Values of the options entered by the user
+    """
+    Main function.
+
+    :param user_args: Values of the options entered by the user.
     """
 
     # Try-Catch block

@@ -102,7 +102,9 @@ fingerprint_array = []                                           # Array to stor
 #               FUNCTIONS              #
 ########################################
 def __request_validate_password():
-    """Asks the user for the password for the private key and validates it based on a set of rules"""
+    """
+    Asks the user for the password for the private key and validates it based on a set of rules.
+    """
 
     # Variables
     min_length = 8                                               # Minimum length allowed for the password
@@ -160,10 +162,13 @@ def __request_validate_password():
 
 
 def __check_and_rename(filepath, qr, count=0):
-    """Checks if the file exists in the path and if so it renames it adding the rule: [_number]
-    :param filepath: Path of the file that will store the public and private key
-    :param qr: True, to indicate that the file belongs to the QR image. False, to indicate that belongs to the keys file
-    :param count: Number to add to the name
+    """
+    Checks if the file exists in the path and if so it renames it adding the rule: [_number].
+
+    :param filepath: Path of the file that will store the public and private key.
+    :param qr: True, to indicate that the file belongs to the QR image. False, to indicate that belongs to the keys
+     file.
+    :param count: Number to add to the name.
     """
 
     global keys_finalpath, qr_finalpath
@@ -190,7 +195,9 @@ def __check_and_rename(filepath, qr, count=0):
 
 
 def __generate_qrcode():
-    """Generates a QR code of the fingerprint of the GPG key"""
+    """
+    Generates a QR code of the fingerprint of the GPG key.
+    """
 
     global QRIMAGE, gpg_dir, keyid, qr_finalpath
 
@@ -216,7 +223,9 @@ def __generate_qrcode():
 
 
 def __generate_keys():
-    """Creates the GPG key and exports the public and private keys"""
+    """
+    Creates the GPG key and exports the public and private keys.
+    """
 
     global KEYSFILE, NAME, EMAIL, gpg, gpg_dir, keyid, keys_finalpath
 
@@ -263,7 +272,9 @@ def __generate_keys():
 
 
 def __check_keys():
-    """Checks if in the entered GPG directory some key already exists"""
+    """
+    Checks if in the entered GPG directory some key already exists.
+    """
 
     global gpg, keyid, fingerprint_array
 
@@ -320,7 +331,9 @@ def __check_keys():
 
 
 def init():
-    """Creates the GPG instance and the public and private keys"""
+    """
+    Creates the GPG instance and the public and private keys.
+    """
 
     global GPGDIRDEFAULT, PUBKEYRING, SECKEYRING, gpg, gpg_dir
 
@@ -362,9 +375,15 @@ def init():
 
 
 def encrypt_file(video):
-    """Encrypts the file to upload to Dropbox
-    :param video: File to encrypt with its full path
     """
+    Encrypts the file to upload to Dropbox.
+
+    :param video: File to encrypt with its full path.
+
+    :return: video TODO
+    """
+
+
 
     global GPGEXT, gpg, keyid
 
@@ -392,7 +411,9 @@ def encrypt_file(video):
 
 
 def clean():
-    """Cleans the GPG instance"""
+    """
+    Cleans the GPG instance.
+    """
 
     global gpg
 

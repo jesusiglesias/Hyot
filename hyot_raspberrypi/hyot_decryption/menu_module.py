@@ -50,8 +50,10 @@ except KeyboardInterrupt:
 #               FUNCTIONS              #
 ########################################
 def check_menu():
-    """Checks the options entered by the user when running the script
-    :return: args Values of the arguments entered by the user in the console
+    """
+    Checks the options entered by the user when running the script.
+
+    :returns: args Values of the arguments entered by the user in the console.
     """
 
     try:

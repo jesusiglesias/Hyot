@@ -63,7 +63,9 @@ tempfiles_path = None                               # Full path of the temporary
 #               FUNCTIONS              #
 ########################################
 def create_localdir():
-    """Creates the temporary local directory where the videos taken by the Picamera will be stored"""
+    """
+    Creates the temporary local directory where the videos taken by the Picamera will be stored.
+    """
 
     global TEMPFILES_DIR, tempfiles_path
 
@@ -100,7 +102,9 @@ def create_localdir():
 
 
 def remove_localdir():
-    """Removes the temporary local directory"""
+    """
+    Removes the temporary local directory.
+    """
 
     global tempfiles_path
 
@@ -135,9 +139,12 @@ def remove_localdir():
 
 
 def check_file(localfile):
-    """Checks if the file exists in the local system
-    :param localfile: Local path and name of the file to upload to Dropbox
     """
+    Checks if the file exists in the local system.
+
+    :param localfile: Local path and name of the file to upload to Dropbox.
+    """
+
     # TODO - Exit?
     if not os.path.exists(localfile):
         print(Fore.RED + '      ' + localfile + " file not found in the local system. Alert is not stored" + Fore.RESET)
@@ -145,9 +152,11 @@ def check_file(localfile):
 
 
 def remove_file(localfile, encrypted):
-    """Removes in the local system the temporary video taken by the Picamera
-    :param localfile: Local path and name of the file to remove
-    :param encrypted: True, to indicate that the encrypted file will be removed. False, to indicate the original video
+    """
+    Removes in the local system the temporary video taken by the Picamera.
+
+    :param localfile: Local path and name of the file to remove.
+    :param encrypted: True, to indicate that the encrypted file will be removed. False, to indicate the original video.
     """
 
     if encrypted:

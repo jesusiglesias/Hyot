@@ -103,9 +103,12 @@ hlc_server_url = None                                   # Full address where Hyp
 #               FUNCTIONS              #
 ########################################
 def __is_jsonable(response):
-    """Checks if the response is a JSON serializable and contains the 'participant' key
-    :param response: Response of the request
-    :return: True, if the response is a JSON serializable and contains the specified key. False, otherwise
+    """
+    Checks if the response is a JSON serializable and contains the 'participant' key.
+
+    :param response: Response of the request.
+
+    :return: True, if the response is a JSON serializable and contains the specified key. False, otherwise.
     """
 
     global KEY_PARTICIPANT
@@ -124,9 +127,11 @@ def __is_jsonable(response):
 
 
 def __hlc_ping():
-    """Checks if the address belongs to a business network of Hyperledger Fabric through running a ping with REST API
-     exposed by the Hyperledger Composer REST server
-    :return: True, if the address belongs to a business network. False, otherwise
+    """
+    Checks if the address belongs to a business network of Hyperledger Fabric through running a ping with REST API
+    exposed by the Hyperledger Composer REST server.
+
+    :return: True, if the address belongs to a business network. False, otherwise.
     """
 
     global HLC_API_PING, REGEX_VALUE_PARTICIPANT_USER, REGEX_VALUE_PARTICIPANT_NETWORKADMIN, VALUE_PARTICIPANT_USER,\
@@ -182,17 +187,23 @@ def __hlc_ping():
 
 
 def __port_isdigit(port):
-    """Checks if the given port is a number
-    :param port: Port of the address
-    :return: True if the string only contains digits. False, otherwise
+    """
+    Checks if the given port is a number.
+
+    :param port: Port of the address.
+
+    :return: True if the string only contains digits. False, otherwise.
     """
     return port.replace(".", "", 1).isdigit()
 
 
 def __check_ngrok_address(host):
-    """Checks if the address belongs to the NGROK tool
-    :param host: Host address typed by the user
-    :return: True, to indicate that the host is a NGROK address. False, otherwise
+    """
+    Checks if the address belongs to the NGROK tool.
+
+    :param host: Host address typed by the user.
+
+    :return: True, to indicate that the host is a NGROK address. False, otherwise.
     """
 
     global REGEX_NGROK_ADDRESS
@@ -204,9 +215,11 @@ def __check_ngrok_address(host):
 
 
 def init():
-    """Checks if Hyperledger Fabric is alive through running a ping with REST API exposed by the Hyperledger Composer
+    """
+    Checks if Hyperledger Fabric is alive through running a ping with REST API exposed by the Hyperledger Composer
     REST server. This REST server allows to interact with the business network deployed in the Blockchain of Hyperledger
-    Fabric"""
+    Fabric.
+    """
 
     global HTTP, HTTPS, HTTP_PORT, HTTPS_PORT, HLC_HOST, HLC_PORT, hlc_server_host, hlc_server_port, hlc_server_url
 
@@ -289,12 +302,14 @@ def init():
 
 
 def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, shared_link):
-    """Submits a transaction to publish a new alert asset in the Blockchain of Hyperledger Fabric
-    :param uuid: Identifier of the alert
-    :param timestamp: Datetime of the alert
-    :param alert_origin: Indicates the sensor that triggered the alert
-    :param hash_video: Hash of the content of the video
-    :param shared_link: Link to Dropbox where the file was uploaded
+    """
+    Submits a transaction to publish a new alert asset in the Blockchain of Hyperledger Fabric.
+
+    :param uuid: Identifier of the alert.
+    :param timestamp: Datetime of the alert.
+    :param alert_origin: Indicates the sensor that triggered the alert.
+    :param hash_video: Hash of the content of the video.
+    :param shared_link: Link to Dropbox where the file was uploaded.
     """
 
     global HLC_API_PUBLISH_ALERT, hlc_server_url
@@ -350,9 +365,12 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, shared_l
 
 
 def file_hash(video):
-    """Applies a hash function to the content of the file
-    :param video: File to hash
-    :return: Hash of the video file
+    """
+    Applies a hash function to the content of the file.
+
+    :param video: File to hash.
+
+    :return: Hash of the video file.
     """
 
     global BLOCKSIZE

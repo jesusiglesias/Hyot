@@ -8,14 +8,11 @@
 # Jetbrains IDE
 .idea/*
 
-# Raspberry Pi - Hyot - YAML file
-hyot_raspberrypi/hyot/conf/*.yml
+# Hyot Raspberry Pi - Binaries (Python)
+hyot_raspberrypi/**/*.pyc
 
-# Latex files (report)
-docs/**/.texpadtmp
-docs/**/*.pdf
-docs/**/*.bst
-docs/**/*.cls
+# Hyot Raspberry Pi - Hyot - YAML file
+hyot_raspberrypi/hyot/conf/*.yml
 
 # Hyot Business Network - Compiled code/library (BNA file)
 hyot_bnd/dist
@@ -25,3 +22,9 @@ hyot_bnd/doc
 
 # Hyot Business Network - Local packages
 hyot_bnd/node_modules
+
+# Latex files (report)
+docs/**/.texpadtmp
+docs/**/*.pdf
+docs/**/*.bst
+docs/**/*.cls

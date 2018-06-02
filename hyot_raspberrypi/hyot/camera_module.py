@@ -56,7 +56,9 @@ camera = None                                           # Instance of the Picame
 #               FUNCTIONS              #
 ########################################
 def init():
-    """Initializes the Picamera"""
+    """
+    Initializes the Picamera.
+    """
 
     global camera
 
@@ -76,9 +78,11 @@ def init():
 
 
 def record_video(path, recording_time):
-    """Record a video for n seconds. Default: 10 seconds
-    :param path: Path where the video will be saved
-    :param recording_time: Time that the recording will take
+    """
+    Record a video for n seconds. Default: 10 seconds.
+
+    :param path: Path where the video will be saved.
+    :param recording_time: Time that the recording will take.
     """
 
     global camera
@@ -105,7 +109,9 @@ def record_video(path, recording_time):
 
 
 def disconnect():
-    """Disconnects the Picamera"""
+    """
+    Disconnects the Picamera.
+    """
 
     global camera
 

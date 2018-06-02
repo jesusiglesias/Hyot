@@ -61,12 +61,14 @@ sensors = []                                            # Stores the name of all
 #               FUNCTIONS              #
 ########################################
 def init(dht_i2cexpander, dht_i2caddress, hcsr_i2cexpander, hcsr_i2caddress, all_sensors):
-    """Initializes as global variables the instances of the LCDs of the sensors
-    :param dht_i2cexpander: I2C expander type for LCD 16x2 of the DH11 sensor
-    :param dht_i2caddress: I2C address for LCD 16x2 of the DH11 sensor
-    :param hcsr_i2cexpander: I2C expander type for LCD 16x2 of the HC-SR04 sensor
-    :param hcsr_i2caddress: I2C address for LCD 16x2 of the HC-SR04 sensor
-    :param all_sensors: Name of the sensors
+    """
+    Initializes as global variables the instances of the LCDs of the sensors.
+
+    :param dht_i2cexpander: I2C expander type for LCD 16x2 of the DH11 sensor.
+    :param dht_i2caddress: I2C address for LCD 16x2 of the DH11 sensor.
+    :param hcsr_i2cexpander: I2C expander type for LCD 16x2 of the HC-SR04 sensor.
+    :param hcsr_i2caddress: I2C address for LCD 16x2 of the HC-SR04 sensor.
+    :param all_sensors: Name of the sensors.
     """
 
     global lcds, dht_lcd, hcsr_lcd, sensors
@@ -111,8 +113,10 @@ def init(dht_i2cexpander, dht_i2caddress, hcsr_i2cexpander, hcsr_i2caddress, all
 
 
 def backlight(enabled):
-    """Enables or disabled the backlight of all LCDs
-    :param enabled: Indicates if the backlight must be enabled or disabled
+    """
+    Enables or disabled the backlight of all LCDs.
+
+    :param enabled: Indicates if the backlight must be enabled or disabled.
     """
 
     global lcds
@@ -122,9 +126,11 @@ def backlight(enabled):
 
      
 def full_print_lcds(first_row, second_row):
-    """Writes data in the LCDs using both rows
-    :param first_row: Text to write in the first row
-    :param second_row: Text to write in the second row
+    """
+    Writes data in the LCDs using both rows.
+
+    :param first_row: Text to write in the first row.
+    :param second_row: Text to write in the second row.
     """
 
     global lcds
@@ -136,10 +142,12 @@ def full_print_lcds(first_row, second_row):
 
 
 def full_print_lcd(sensor, first_row, second_row):
-    """Writes data in the specified LCD using both rows
-    :param sensor: Indicates the LCD to use based on the sensor
-    :param first_row: Text to write in the first row of the specified LCD
-    :param second_row: Text to write in the second row of the specified LCD
+    """
+    Writes data in the specified LCD using both rows.
+
+    :param sensor: Indicates the LCD to use based on the sensor.
+    :param first_row: Text to write in the first row of the specified LCD.
+    :param second_row: Text to write in the second row of the specified LCD.
     """
 
     global dht_lcd, hcsr_lcd, sensors
@@ -157,9 +165,11 @@ def full_print_lcd(sensor, first_row, second_row):
 
 
 def print_lcds(dht_data, hcsr_data):
-    """Writes data in the LCDs using the first row
-    :param dht_data: Text to write in the LCD of the DHT11 sensor
-    :param hcsr_data: Text to write in the LCD of the HC-SR04 sensor
+    """
+    Writes data in the LCDs using the first row.
+
+    :param dht_data: Text to write in the LCD of the DHT11 sensor.
+    :param hcsr_data: Text to write in the LCD of the HC-SR04 sensor.
     """
 
     global lcds
@@ -171,9 +181,11 @@ def print_lcds(dht_data, hcsr_data):
 
 
 def print_lcd(sensor, data):
-    """Writes data in the specified LCD using the first row
-    :param sensor: Indicates the LCD to use based on the sensor
-    :param data: Text to write in the specified LCD
+    """
+    Writes data in the specified LCD using the first row.
+
+    :param sensor: Indicates the LCD to use based on the sensor.
+    :param data: Text to write in the specified LCD.
     """
 
     global dht_lcd, hcsr_lcd, sensors
@@ -189,11 +201,13 @@ def print_lcd(sensor, data):
 
 
 def print_measure_dht(temperature, humidity, error_measure, clean_lcd):
-    """Writes in the LCD of the DHT11 sensor the values of each measure
-    :param temperature: Value of the temperature event
-    :param humidity: Value of the humidity event
-    :param error_measure: Indicates if the current measurement is valid
-    :param clean_lcd: Indicates if the LCD must be cleared
+    """
+    Writes in the LCD of the DHT11 sensor the values of each measure.
+
+    :param temperature: Value of the temperature event.
+    :param humidity: Value of the humidity event.
+    :param error_measure: Indicates if the current measurement is valid.
+    :param clean_lcd: Indicates if the LCD must be cleared.
     """
 
     global dht_lcd
@@ -216,9 +230,11 @@ def print_measure_dht(temperature, humidity, error_measure, clean_lcd):
 
 
 def print_measure_hcsr(distance, error_measure):
-    """Writes in the LCD of the DHT11 sensor the values of each measure
-    :param distance: Value of the distance event
-    :param error_measure: Indicates if the current measurement is valid
+    """
+    Writes in the LCD of the DHT11 sensor the values of each measure.
+
+    :param distance: Value of the distance event.
+    :param error_measure: Indicates if the current measurement is valid.
     """
 
     global hcsr_lcd
@@ -233,7 +249,9 @@ def print_measure_hcsr(distance, error_measure):
 
 
 def clear_lcds():
-    """Overwrites both LCDs with blank characters and resets the cursor position"""
+    """
+    Overwrites both LCDs with blank characters and resets the cursor position.
+    """
 
     global lcds
 
@@ -242,8 +260,10 @@ def clear_lcds():
 
 
 def clear_lcd(sensor):
-    """Overwrites the LCD of the specified sensor with blank characters and resets the cursor position
-    :param sensor: Indicates the LCD to use based on the sensor
+    """
+    Overwrites the LCD of the specified sensor with blank characters and resets the cursor position.
+
+    :param sensor: Indicates the LCD to use based on the sensor.
     """
 
     global dht_lcd, hcsr_lcd, sensors
@@ -259,7 +279,9 @@ def clear_lcd(sensor):
 
 
 def disconnect_lcds():
-    """Closes and cleans the LCDs"""
+    """
+    Closes and cleans the LCDs.
+    """
 
     global lcds, sensors
 

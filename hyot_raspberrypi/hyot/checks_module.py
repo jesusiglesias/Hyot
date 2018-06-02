@@ -54,7 +54,9 @@ except KeyboardInterrupt:
 #               FUNCTIONS              #
 ########################################
 def check_root():
-    """Checks that the script is run as a root user"""
+    """
+    Checks that the script is run as a root user.
+    """
 
     if not os.geteuid() == 0:
         print(Fore.RED + "You need to have root privileges to run this script. Please try it again using "
@@ -63,7 +65,9 @@ def check_root():
 
 
 def check_platform():
-    """Checks that the script is run on GNU/Linux platform"""
+    """
+    Checks that the script is run on GNU/Linux platform.
+    """
 
     if not sys.platform.startswith('linux'):
         print(Fore.RED + "This script must be run on GNU/Linux platform. For example: Raspbian." + Fore.RESET)
@@ -71,12 +75,14 @@ def check_platform():
 
 
 def check_raspberrypi():
-    """Checks that the script is run on Raspberry Pi. Opens the '/proc/cpuinfo' file to obtain the 'Hardware'
+    """
+    Checks that the script is run on Raspberry Pi. Opens the '/proc/cpuinfo' file to obtain the 'Hardware'
     field value. Possible values:
-        - Raspberry Pi 1 (model A, B, B+) and Zero is 2708
-        - Raspberry Pi 2 (model B) is 2709
-        - Raspberry Pi 3 (model B) on 4.9.x kernel is 2835
-        - Anything else is not a Raspberry Pi"""
+        - Raspberry Pi 1 (model A, B, B+) and Zero is 2708.
+        - Raspberry Pi 2 (model B) is 2709.
+        - Raspberry Pi 3 (model B) on 4.9.x kernel is 2835.
+        - Anything else is not a Raspberry Pi.
+    """
 
     try:
         # Opens the file and searches the field
@@ -98,7 +104,9 @@ def check_raspberrypi():
 
 
 def check_network():
-    """Checks if the Raspberry Pi is connected to the network"""
+    """
+    Checks if the Raspberry Pi is connected to the network.
+    """
 
     # Host: 8.8.8.8 (google-public-dns-a.google.com)
     # OpenPort: 53/tcp
@@ -119,7 +127,9 @@ def check_network():
 
 
 def check_concurrency():
-    """Checks if this script is or not already running"""
+    """
+    Checks if this script is or not already running.
+    """
 
     # Variables
     filename = "raspberrypi_hyot.py"        # Name of the file
@@ -139,9 +149,12 @@ def check_concurrency():
 
 
 def __is_valid_email(email):
-    """Checks if the email is valid
-    :param email: Email entered
-    :return: True/False based on the validity of the email
+    """
+    Checks if the email is valid.
+
+    :param email: Email entered.
+
+    :return: True/False based on the validity of the email.
     """
 
     if re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', str(email)) is not None:
@@ -151,8 +164,10 @@ def __is_valid_email(email):
 
 
 def menu():
-    """Checks the options entered by the user when running the script
-    :return: args Values of the arguments entered by the user in the console
+    """
+    Checks the options entered by the user when running the script.
+
+    :return: args Values of the arguments entered by the user in the console.
     """
 
     try:

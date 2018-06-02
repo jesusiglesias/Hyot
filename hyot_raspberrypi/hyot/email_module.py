@@ -95,7 +95,9 @@ session = None                                          # Mail session
 #               FUNCTIONS              #
 ########################################
 def init():
-    """Initializes the mail session with a Gmail account"""
+    """
+    Initializes the mail session with a Gmail account.
+    """
 
     global FROM, PASSWORD, SERVERIP, SERVERPORT, session
 
@@ -121,9 +123,12 @@ def init():
 
 
 def __read_template(filename):
-    """Reads the email template and generates a Template instance
-    :param filename: File to read
-    :return: Template instance
+    """
+    Reads the email template and generates a Template instance.
+
+    :param filename: File to read.
+
+    :return: Template instance.
     """
 
     with open(filename, 'r') as template_file:
@@ -134,19 +139,22 @@ def __read_template(filename):
 
 def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, humidity, distance, link_dropbox,
                alert_origin, threshold_value):
-    """Sends an email to the recipient to notify a triggered alert
-    :param mailto: Recipient's email address
-    :param filepath: Path of the file to attach
-    :param filename: Name of the file to attach
-    :param timestamp: Datetime of the alert
-    :param alert_id: Identifier of the alert
-    :param temperature: Value of this parameter in the measurement
-    :param humidity: Value of this parameter in the measurement
-    :param distance: Value of this parameter in the measurement
-    :param link_dropbox: Link to Dropbox where the file was uploaded
-    :param alert_origin: Contains the sensor and the event that triggered the alert
-    :param threshold_value: Indicates the value of the event threshold that triggered the alert
-    :return: True/False depending on whether the notification was sent
+    """
+    Sends an email to the recipient to notify a triggered alert.
+
+    :param mailto: Recipient's email address.
+    :param filepath: Path of the file to attach.
+    :param filename: Name of the file to attach.
+    :param timestamp: Datetime of the alert.
+    :param alert_id: Identifier of the alert.
+    :param temperature: Value of this parameter in the measurement.
+    :param humidity: Value of this parameter in the measurement.
+    :param distance: Value of this parameter in the measurement.
+    :param link_dropbox: Link to Dropbox where the file was uploaded.
+    :param alert_origin: Contains the sensor and the event that triggered the alert.
+    :param threshold_value: Indicates the value of the event threshold that triggered the alert.
+
+    :return: True/False depending on whether the notification was sent.
     """
 
     global TEMPLATEPATH, FROM, session
@@ -225,7 +233,9 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
 
 
 def disconnect():
-    """Disconnects the mail session"""
+    """
+    Disconnects the mail session.
+    """
 
     global session
 

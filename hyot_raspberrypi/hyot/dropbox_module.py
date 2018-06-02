@@ -93,7 +93,9 @@ sensors = []                # Stores the name of all sensors
 #               FUNCTIONS              #
 ########################################
 def connect():
-    """Creates an instance of the Dropbox class and establishes a connection"""
+    """
+    Creates an instance of the Dropbox class and establishes a connection.
+    """
 
     global TOKEN, dbx
 
@@ -136,8 +138,10 @@ def connect():
 
 
 def __create_dir(dir_name):
-    """Creates a new directory named Hyot in the root path or a new subdirectory within the Hyot directory
-    :param dir_name: Name of the directory or subdirectory
+    """
+    Creates a new directory named Hyot in the root path or a new subdirectory within the Hyot directory.
+
+    :param dir_name: Name of the directory or subdirectory.
     """
 
     global HYOT_DIR, dbx, path, message_dir
@@ -177,7 +181,9 @@ def __create_dir(dir_name):
 
 
 def __check_space():
-    """Checks the amount of available space in the user account"""
+    """
+    Checks the amount of available space in the user account.
+    """
 
     global MIN_SPACE, dbx
 
@@ -195,8 +201,10 @@ def __check_space():
 
 
 def init(all_sensors):
-    """Initializes the main directory and the subdirectories by checking if these one exist or not
-    :param all_sensors: Name of the sensors
+    """
+    Initializes the main directory and the subdirectories by checking if these one exist or not.
+
+    :param all_sensors: Name of the sensors.
     """
 
     global DHT11_DIR, HCSR04_DIR, HYOT_DIR, dht_subdir, hcsr_subdir, sensors
@@ -255,10 +263,12 @@ def init(all_sensors):
 
 
 def __get_shared_link(upload_path):
-    """Creates a shared shortened link of the file. If a shared link already exists for the given path, that link is
-    returned
-    :param upload_path: Upload path of the current file
-    :return: link Shared link of the uploaded file to Dropbox
+    """
+    Creates a shared shortened link of the file. If a shared link already exists for the given path, that link is
+    returned.
+    :param upload_path: Upload path of the current file.
+
+    :return: link Shared link of the uploaded file to Dropbox.
     """
 
     global dbx
@@ -278,10 +288,13 @@ def __get_shared_link(upload_path):
 
 
 def upload_file(localfile, sensor):
-    """Uploads the file to Dropbox, in particular to the subdirectory of the sensor that triggered the alarm
-    :param localfile: Local path and name of the file to upload
-    :param sensor: Sensor that triggered the alarm
-    :return: shared_link Shared link of the uploaded file to Dropbox
+    """
+    Uploads the file to Dropbox, in particular to the subdirectory of the sensor that triggered the alarm.
+
+    :param localfile: Local path and name of the file to upload.
+    :param sensor: Sensor that triggered the alarm.
+
+    :return: shared_link Shared link of the uploaded file to Dropbox.
     """
 
     global HYOT_DIR, dbx, dht_subdir, hcsr_subdir
@@ -336,7 +349,9 @@ def upload_file(localfile, sensor):
 
 
 def disconnect():
-    """Disconnects the Dropbox client disabling the access token used to authenticate the calls"""
+    """
+    Disconnects the Dropbox client disabling the access token used to authenticate the calls.
+    """
 
     global dbx
 
