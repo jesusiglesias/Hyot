@@ -8,6 +8,9 @@
 # Jetbrains IDE
 .idea/*
 
+# Certificate and key pair
+cert/*
+
 # Hyot Raspberry Pi - Binaries (Python)
 hyot_raspberrypi/**/*.pyc
 
