@@ -6,7 +6,6 @@ gpiozero==1.4.1
 ibmiotf==0.3.4
 picamera==1.13
 psutil==5.4.5
-pyfiglet==0.7.5
 pysha3==1.0.2
 python-gnupg==0.4.2
 PyYAML==3.12
