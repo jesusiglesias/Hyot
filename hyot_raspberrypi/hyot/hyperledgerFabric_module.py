@@ -50,6 +50,7 @@ try:
     import socket                                   # Low-level networking interface
     import sys                                      # System-specific parameters and functions
     import time                                     # Time access and conversions
+    import token_module as token                    # Module that contains the logic for generating secure tokens
     import yaml                                     # YAML parser and emitter for Python
     from colorama import Fore, Style                # Cross-platform colored terminal text
 
@@ -107,6 +108,7 @@ REGEX_NGROK_ADDRESS = "^(http:\/\/|https:\/\/)\w+\.ngrok\.io$"
 hlc_server_host = None                                  # Host where Hyperledger Composer REST server is running
 hlc_server_port = None                                  # Port where Hyperledger Composer REST server is running
 hlc_server_url = None                                   # Full address where Hyperledger Composer REST server is running
+hlc_api_key = None                                      # Api key for Composer REST server
 
 
 ########################################
@@ -142,12 +144,20 @@ def __hlc_ping():
     """
 
     global HLC_API_PING, REGEX_VALUE_PARTICIPANT_USER, REGEX_VALUE_PARTICIPANT_NETWORKADMIN, VALUE_PARTICIPANT_USER,\
-        VALUE_PARTICIPANT_NETWORKADMIN, KEY_PARTICIPANT, hlc_server_url
+        VALUE_PARTICIPANT_NETWORKADMIN, KEY_PARTICIPANT, hlc_server_url, hlc_api_key
 
     # Headers of the GET request
-    headers = {
-        "Accept": "application/json",
-    }
+    if hlc_api_key:
+
+        # REST server protected with API key
+        headers = {
+            'Accept': 'application/json',
+            'x-api-key': hlc_api_key,
+        }
+    else:
+        headers = {
+            'Accept': 'application/json',
+        }
 
     print("        Pinging the business network of the address: " + hlc_server_url)
 
@@ -156,8 +166,8 @@ def __hlc_ping():
 
     # Error 401 - Unauthorized request
     if response.status_code == requests.codes.unauthorized:
-        print(Fore.RED + "        Error 401: Unauthorized request. Please, enter a valid credentials to submit the"
-                         " request to the Hyperledger Composer REST server" + Fore.RESET)
+        print(Fore.RED + "        Error 401: Unauthorized request. Please, enter a valid API key or credentials to"
+                         " submit the request to the Hyperledger Composer REST server" + Fore.RESET)
         sys.exit(0)
 
     # Error 404 - Not found
@@ -218,6 +228,29 @@ def __check_ngrok_address(host):
     return bool(re.match(r"%s" % REGEX_NGROK_ADDRESS, host))
 
 
+def __apikey_yes_no():
+    """
+    Asks the user a yes/no question for the creation of an API key to provide a first layer of security to access the
+    REST API. Default value is yes
+
+    :return: True, if the user wants to generate an API KEY. False, otherwise
+    """
+
+    valid = {"yes": True, "y": True, "ye": True, "no": False, "n": False}
+
+    while True:
+
+        choice = raw_input(Fore.BLUE + "        Do you want to generate an API KEY for Composer REST server? " +
+                           Fore.WHITE + "(Y/n) " + Fore.RESET).lower()
+
+        if choice == '':
+            return True
+        elif choice in valid:
+                return valid[choice]
+        else:
+            print(Fore.RED + "        Please, respond with 'yes' or 'no' (or 'y' or 'n')\n" + Fore.RESET)
+
+
 def init():
     """
     Checks if Hyperledger Fabric is alive through running a ping with REST API exposed by the Hyperledger Composer
@@ -225,10 +258,21 @@ def init():
     Fabric.
     """
 
-    global HTTP, HTTPS, HTTP_PORT, HTTPS_PORT, HLC_HOST, HLC_PORT, hlc_server_host, hlc_server_port, hlc_server_url
+    global HTTP, HTTPS, HTTP_PORT, HTTPS_PORT, HLC_HOST, HLC_PORT, hlc_server_host, hlc_server_port, hlc_server_url,\
+        hlc_api_key
 
     print("\n      " + Style.BRIGHT + Fore.BLACK + "- Checking if the business network in Hyperledger Fabric is alive"
           + Style.RESET_ALL)
+
+    # Asks the user for the creation of an API key to provide a first layer of security to access the REST API
+    choice = __apikey_yes_no()
+
+    if choice:
+        # Generates a random URL-safe text-string with 32 random bytes
+        hlc_api_key = token.token_urlsafe()
+
+        print("        Please, run the Composer REST server with the following API key: " + Fore.GREEN + hlc_api_key
+              + Fore.RESET)
 
     # Asks the user for the host where Hyperledger Composer REST server is running
     hlc_server_host = raw_input(Fore.BLUE + "        Enter the host (e.g. IP or ngrok address) where Hyperledger "
@@ -316,13 +360,22 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, shared_l
     :param shared_link: Link to Dropbox where the file was uploaded.
     """
 
-    global HLC_API_PUBLISH_ALERT, hlc_server_url
+    global HLC_API_PUBLISH_ALERT, hlc_server_url, hlc_api_key
 
     # Headers of the POST request
-    headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-    }
+    if hlc_api_key:
+
+        # REST server protected with API key
+        headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'x-api-key': hlc_api_key,
+        }
+    else:
+        headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
 
     # Properties of the transaction in JSON format
     payload = {
