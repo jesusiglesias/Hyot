@@ -100,6 +100,11 @@ def check_menu():
                                    required=True, action="store", dest="ENCRYPTEDFILE",
                                    help="Path of the encrypted file with GPG.")
 
+        # Hash code of the encrypted file
+        general_group.add_argument("-ha", "--hash",
+                                   required=True, action="store", dest="HASHFILE",
+                                   help="Hash code of the encrypted file.")
+
         # Directory where the decrypted file will be store
         general_group.add_argument("-d", "--decryptedhome",
                                    required=False, action="store", dest="DECRYPTEDHOME",

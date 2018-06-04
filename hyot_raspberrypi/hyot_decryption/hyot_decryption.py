@@ -44,8 +44,10 @@
 try:
     import getpass                                  # Portable password input
     import gnupg                                    # GnuPG’s key management, encryption and signature functionality
+    import hashlib                                  # Secure hashes and message digests
     import menu_module as menu                      # Module to execute initial checks and to parse the menu
     import os                                       # Miscellaneous operating system interfaces
+    import sha3                                     # SHA-3 wrapper (Keccak) for Python
     import sys                                      # System-specific parameters and functions
     import time                                     # Time access and conversions
     import traceback                                # Print or retrieve a stack traceback
@@ -65,6 +67,7 @@ except KeyboardInterrupt:
 PUBKEYRING = "pub_hyot.gpg"                         # Public key ring
 SECKEYRING = "sec_hyot.gpg"                         # Secret key ring
 EXT = ".gpg"                                        # Extension of a GPG file
+BLOCKSIZE = 65536                                   # Block size (64kb) to hash
 
 
 ########################################
@@ -77,6 +80,7 @@ keys = None                                         # Path of the file which sto
 fingerprint = None                                  # Fingerprint of the private key to use
 fingerprint_array = []                              # Array to store the existing fingerprints
 encrypted_file = None                               # Path of the encrypted file with GPG
+hash_file = None                                    # Hash code of the encrypted file
 decrypted_dir = None                                # Directory where the decrypted file will be store
 output_file = None                                  # Full path (path + filename) where the decrypted file will be store
 
@@ -128,7 +132,7 @@ def header():
     time.sleep(1)
 
 
-def check_existence():
+def __check_existence():
     """
     Checks if the GPG directory, the file with the private and public key, the encrypted file and the directory,
     where the decrypted file will be store, exist in the local system.
@@ -138,30 +142,30 @@ def check_existence():
 
     # Checks if the GPG directory exists
     if not os.path.isdir(gpg_dir):
-        print(Fore.RED + "   The entered GPG directory does not exist or is not a directory in the local system."
+        print(Fore.RED + "   The entered GPG directory does not exist or is not a directory in the local system.\n"
               + Fore.RESET)
         sys.exit(0)
 
     # Checks if the file, which must contain the public and private key, exists
     if keys:
         if not os.path.isfile(keys):
-            print(Fore.RED + "   The entered key file does not exist or is not a file in the local system."
+            print(Fore.RED + "   The entered key file does not exist or is not a file in the local system.\n"
                   + Fore.RESET)
             sys.exit(0)
 
     # Checks if the encrypted file exists
     if not os.path.isfile(encrypted_file):
-        print(Fore.RED + "   The encrypted file does not exist or is not a file in the local system." + Fore.RESET)
+        print(Fore.RED + "   The encrypted file does not exist or is not a file in the local system.\n" + Fore.RESET)
         sys.exit(0)
 
     # Checks if the directory, where the decrypted file will be store, exists
     if not os.path.isdir(decrypted_dir):
         print(Fore.RED + "   The directory, where the decrypted file will be store, does not exist or is not a "
-                         "directory in the local system." + Fore.RESET)
+                         "directory in the local system.\n" + Fore.RESET)
         sys.exit(0)
 
 
-def check_extension():
+def __check_extension():
     """
     Checks if the encrypted file has the right extension.
     """
@@ -173,30 +177,11 @@ def check_extension():
 
     if ext != EXT:
         print(Fore.RED + "   The encrypted file has an extension that it is not allowed. It must be a file with "
-                         "format: .gpg." + Fore.RESET)
+                         "format: .gpg.\n" + Fore.RESET)
         sys.exit(0)
 
 
-def request_password():
-    """
-    Asks the user for the password of the private key.
-    """
-
-    global password
-
-    # Asks the user for the password of the private key
-    password = getpass.getpass(Fore.BLUE + "   Enter the password for the private key: " + Fore.RESET) or None
-
-    # Checks if the password is empty
-    if password is None or password.isspace():
-        print(Fore.RED + "   The password can not be empty." + Fore.RESET)
-        sys.exit(0)
-
-    # Removes the spaces
-    password = password.replace(" ", "")
-
-
-def check_fingerprint():
+def __check_fingerprint():
     """
     Checks if the GPG directory has private keys and if the entered fingerprint exists.
     """
@@ -209,7 +194,7 @@ def check_fingerprint():
     # Checks if the GPG directory has private keys (len(private_keys) == 0)
     if not private_keys:
         print(Fore.RED + "   The GPG directory does not contain any private key. Please, import the private key to "
-                         "decrypt the file (option: -k/--keys)." + Fore.RESET)
+                         "decrypt the file (option: -k/--keys).\n" + Fore.RESET)
         sys.exit(0)
 
     # Obtains the fingerprint of each private key
@@ -219,11 +204,85 @@ def check_fingerprint():
     # Checks if the entered fingerprint exists in the key ring
     if fingerprint not in fingerprint_array:
         print(Fore.RED + "   The entered fingerprint does not exist in the indicated GPG directory. Please, import the "
-                         "private key to decrypt the file or use another fingerprint." + Fore.RESET)
+                         "private key to decrypt the file or use another fingerprint.\n" + Fore.RESET)
         sys.exit(0)
 
 
-def decrypt_file():
+def __import_keys():
+    """
+    Import the public and private key from a file.
+    """
+
+    global gpg, keys
+
+    keys_data = open(keys, 'rb').read()
+    import_result = gpg.import_keys(keys_data)
+
+    if import_result.count != 2:
+        print(Fore.RED + "   The entered key file does not contain two keys (public and private key). Please, use the "
+                         "generated file during encryption.\n" + Fore.RESET)
+        sys.exit(0)
+
+
+def __request_password():
+    """
+    Asks the user for the password of the private key.
+    """
+
+    global password
+
+    # Asks the user for the password of the private key
+    password = getpass.getpass(Fore.BLUE + "   Enter the password for the private key: " + Fore.RESET) or None
+
+    # Checks if the password is empty
+    if password is None or password.isspace():
+        print(Fore.RED + "   The password can not be empty.\n" + Fore.RESET)
+        sys.exit(0)
+
+    # Removes the spaces
+    password = password.replace(" ", "")
+
+
+def __compare_hash():
+    """
+    Obtains the hash code of the encrypted file and compares it with the one entered by the user
+
+    :return: True, to indicate that the encrypted file has not altered -stay unchanged-. False, otherwise
+    """
+
+    global BLOCKSIZE, encrypted_file, hash_file
+
+    try:
+
+        print("\n   Comparing hash codes ...")
+
+        time.sleep(1)
+
+        # Variables
+        hasher = hashlib.sha3_512()
+
+        # Opens the file in read and binary mode
+        with open(encrypted_file, 'rb', buffering=0) as f:
+
+            # Reads chunks of a certain size (64kb) to avoid memory failures when not knowing the size of the file
+            for b in iter(lambda: f.read(BLOCKSIZE), b''):
+                hasher.update(b)                                   # Updates the hash
+
+        # Compares both hash codes
+        if hasher.hexdigest() == hash_file:                        # Encrypted file has not been altered
+
+            print(Fore.GREEN + "   Both hash codes are the same. The downloaded file has not been altered and its"
+                             " integrity is guaranteed." + Fore.RESET)
+        else:                                                      # Encrypted file has been altered
+            print(Fore.YELLOW + "   Both hash codes are different. The downloaded file may have been manipulated by a"
+                                " malicious third party and therefore its integrity is not guaranteed." + Fore.RESET)
+
+    except Exception as hashError:
+
+        print(Fore.RED + "   Error to calculate the hash code of the encrypted file: " + str(hashError) + Fore.RESET)
+
+
+def __decrypt_file():
     """
     Decrypts the file using the entered fingerprint or the imported key from a file.
     """
@@ -238,25 +297,9 @@ def decrypt_file():
             print(Fore.RED + "     - File was encrypted with another RSA key." + Fore.RESET)
             print(Fore.RED + "     - Bad passphrase to unlock the GPG secret key." + Fore.RESET)
             print(Fore.RED + "     - No valid OpenPGP data found." + Fore.RESET)
-            print(Fore.RED + "     - Output is a directory." + Fore.RESET)
+            print(Fore.RED + "     - Output is a directory.\n" + Fore.RESET)
         else:
-            print(Fore.GREEN + "\n   File decrypts successfully in the path: " + output_file + "." + Fore.RESET)
-
-
-def import_keys():
-    """
-    Import the public and private key from a file.
-    """
-
-    global gpg, keys
-
-    keys_data = open(keys, 'rb').read()
-    import_result = gpg.import_keys(keys_data)
-
-    if import_result.count != 2:
-        print(Fore.RED + "   The entered key file does not contain two keys (public and private key). Please, use the "
-                         "generated file during encryption." + Fore.RESET)
-        sys.exit(0)
+            print(Fore.GREEN + "\n   File decrypts successfully in the path: " + Fore.RESET + output_file + ".\n")
 
 
 def main(user_args):
@@ -266,7 +309,8 @@ def main(user_args):
     :param user_args: Values of the options entered by the user.
     """
 
-    global PUBKEYRING, SECKEYRING, gpg, gpg_dir, fingerprint, keys, encrypted_file, decrypted_dir, output_file
+    global PUBKEYRING, SECKEYRING, gpg, gpg_dir, fingerprint, keys, encrypted_file, hash_file, decrypted_dir,\
+        output_file
 
     # Try-Catch block
     try:
@@ -275,6 +319,7 @@ def main(user_args):
         fingerprint = user_args.FINGERPRINT
         keys = user_args.KEYS
         encrypted_file = user_args.ENCRYPTEDFILE
+        hash_file = user_args.HASHFILE
         decrypted_dir = user_args.DECRYPTEDHOME
 
         # Header
@@ -299,35 +344,30 @@ def main(user_args):
             output_file = output_file.replace("//", "/")
 
         # Checks if the entered directories and files exist in the local system
-        check_existence()
+        __check_existence()
 
         # Checks if the encrypted file has the right extension (.gpg)
-        check_extension()
+        __check_extension()
 
         # Creates the GPG instance
         gpg = gnupg.GPG(gnupghome=gpg_dir, keyring=PUBKEYRING, secret_keyring=SECKEYRING)
 
-        # Decrypts the file using the fingerprint method
         if fingerprint:
             # Checks if the GPG directory has private keys and if the entered fingerprint exists
-            check_fingerprint()
+            __check_fingerprint()
 
-            # Asks the user for the password of the private key
-            request_password()
-
-            # Decrypts the file using the entered fingerprint
-            decrypt_file()
-
-        # Decrypts the file using the key file method
         elif keys:
             # Imports the keys from a file
-            import_keys()
+            __import_keys()
 
-            # Asks the user for the password of the private key
-            request_password()
+        # Asks the user for the password of the private key
+        __request_password()
 
-            # Decrypts the file
-            decrypt_file()
+        # Compares the hash code of the downloaded file with the one entered by the user
+        __compare_hash()
+
+        # Decrypts the file using the fingerprint or key file method
+        __decrypt_file()
 
     except Exception as exception:
         print(Fore.RED + "\nException in the main() function: " + str(exception.message.lower()) + ".")
