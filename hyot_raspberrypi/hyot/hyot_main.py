@@ -295,14 +295,14 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     # Checks if the original file exists in the local system
     system.check_file(video_filefullpath)
 
-    # Applies a hash function to the content of the file
-    video_hash = hlf.file_hash(video_filefullpath)
-
     # Encrypts the file
     final_path = gpg.encrypt_file(video_filefullpath)
 
     # Checks if the final file (normally encrypted file) exists in the local system
     system.check_file(final_path)
+
+    # Applies a hash function to the content of the encrypted file
+    video_hash = hlf.file_hash(final_path)
 
     # Uploads the file to Dropbox
     link_dropbox = dropbox.upload_file(final_path, sensor)
