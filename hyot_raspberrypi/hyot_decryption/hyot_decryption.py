@@ -176,7 +176,7 @@ def __check_extension():
     ext = os.path.splitext(encrypted_file)[-1].lower()
 
     if ext != EXT:
-        print(Fore.RED + "   The encrypted file has an extension that it is not allowed. It must be a file with "
+        print(Fore.RED + "   The encrypted file has an extension which is not allowed. It must be a file with "
                          "format: .gpg.\n" + Fore.RESET)
         sys.exit(0)
 
@@ -245,16 +245,16 @@ def __request_password():
 
 def __compare_hash():
     """
-    Obtains the hash code of the encrypted file and compares it with the one entered by the user
+    Obtains the hash code of the decrypted file and compares it with the one entered by the user
 
-    :return: True, to indicate that the encrypted file has not altered -stay unchanged-. False, otherwise
+    :return: True, to indicate that the decrypted file has not altered -stay unchanged-. False, otherwise
     """
 
-    global BLOCKSIZE, encrypted_file, hash_file
+    global BLOCKSIZE, output_file, hash_file
 
     try:
 
-        print("\n   Comparing hash codes ...")
+        print("\n   " + Style.BRIGHT + Fore.BLACK + "- Comparing hash codes" + Style.RESET_ALL),
 
         time.sleep(1)
 
@@ -262,24 +262,29 @@ def __compare_hash():
         hasher = hashlib.sha3_512()
 
         # Opens the file in read and binary mode
-        with open(encrypted_file, 'rb', buffering=0) as f:
+        with open(output_file, 'rb', buffering=0) as f:
 
             # Reads chunks of a certain size (64kb) to avoid memory failures when not knowing the size of the file
             for b in iter(lambda: f.read(BLOCKSIZE), b''):
                 hasher.update(b)                                   # Updates the hash
 
         # Compares both hash codes
-        if hasher.hexdigest() == hash_file:                        # Encrypted file has not been altered
+        if hasher.hexdigest() == hash_file:                        # Original file has not been altered
 
-            print(Fore.GREEN + "   Both hash codes are the same. The downloaded file has not been altered and its"
-                             " integrity is guaranteed." + Fore.RESET)
-        else:                                                      # Encrypted file has been altered
-            print(Fore.YELLOW + "   Both hash codes are different. The downloaded file may have been manipulated by a"
-                                " malicious third party and therefore its integrity is not guaranteed." + Fore.RESET)
+            print(Fore.GREEN + " ✓" + Fore.RESET)
+            print("\n     Both hash codes are the same. The downloaded file has not been altered and its integrity is"
+                  " guaranteed.\n")
+
+        else:                                                      # Original file has been altered
+            print(Fore.YELLOW + " " + u"\u26A0" + Fore.RESET)
+            print("\n     ️Both hash codes are different. The downloaded file may have been manipulated by a malicious"
+                  " third party and therefore its integrity is not guaranteed.\n")
 
     except Exception as hashError:
 
-        print(Fore.RED + "   Error to calculate the hash code of the encrypted file: " + str(hashError) + Fore.RESET)
+        print(Fore.RED + " ✕" + Fore.RESET)
+        print(Fore.RED + "\n     ️Error to calculate the hash code of the encrypted file: " + str(hashError) + ".\n" +
+              Fore.RESET)
 
 
 def __decrypt_file():
@@ -289,17 +294,24 @@ def __decrypt_file():
 
     global gpg, password, encrypted_file, output_file
 
+    print("\n   " + Style.BRIGHT + Fore.BLACK + "- Decrypting" + Style.RESET_ALL),
+
     with open(encrypted_file, 'rb') as f:
         status = gpg.decrypt_file(f, passphrase=password, output=output_file)
 
         if not status.ok:
-            print(Fore.RED + "\n   The decryption has failed. Main reasons: " + Fore.RESET)
-            print(Fore.RED + "     - File was encrypted with another RSA key." + Fore.RESET)
-            print(Fore.RED + "     - Bad passphrase to unlock the GPG secret key." + Fore.RESET)
-            print(Fore.RED + "     - No valid OpenPGP data found." + Fore.RESET)
-            print(Fore.RED + "     - Output is a directory.\n" + Fore.RESET)
+
+            print(Fore.RED + " ✕" + Fore.RESET)
+            print(Fore.RED + "\n     The decryption has failed. Main reasons: \n" + Fore.RESET)
+            print(Fore.RED + "      - File was encrypted with another RSA key." + Fore.RESET)
+            print(Fore.RED + "      - Bad passphrase to unlock the GPG secret key." + Fore.RESET)
+            print(Fore.RED + "      - No valid OpenPGP data found." + Fore.RESET)
+            print(Fore.RED + "      - Output is a directory.\n" + Fore.RESET)
+            sys.exit(0)
         else:
-            print(Fore.GREEN + "\n   File decrypts successfully in the path: " + Fore.RESET + output_file + ".\n")
+            print(Fore.GREEN + " ✓" + Fore.RESET)
+
+            print("\n     File successfully decrypted in the path: " + output_file + ".")
 
 
 def main(user_args):
@@ -363,11 +375,11 @@ def main(user_args):
         # Asks the user for the password of the private key
         __request_password()
 
-        # Compares the hash code of the downloaded file with the one entered by the user
-        __compare_hash()
-
         # Decrypts the file using the fingerprint or key file method
         __decrypt_file()
+
+        # Compares the hash code of the decrypted file with the one entered by the user
+        __compare_hash()
 
     except Exception as exception:
         print(Fore.RED + "\nException in the main() function: " + str(exception.message.lower()) + ".")
