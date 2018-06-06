@@ -133,7 +133,7 @@ alert_origin = None                         # Indicates which event triggered th
 threshold_value = None                      # Indicates the value of the event threshold that triggers the alert
 link_dropbox = None                         # Shared link of the uploaded file to Dropbox
 sent = None                                 # Indicates if the email was or not sent
-video_hash = None                           # Hash of the video file
+hash_code = None                            # Hash code of the video file
 
 
 ########################################
@@ -210,7 +210,7 @@ def reset_values():
     """
 
     global video_filename, video_filefullpath, alert_triggered, alert_origin, threshold_value, link_dropbox, sent, \
-        video_hash
+        hash_code
 
     video_filename = None
     video_filefullpath = None
@@ -219,7 +219,7 @@ def reset_values():
     threshold_value = None
     link_dropbox = None
     sent = None
-    video_hash = None
+    hash_code = None
 
 
 def add_cloudant(temperature, humidity, distance):
@@ -265,7 +265,7 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     """
 
     global uuid_measurement, datetime_measurement, video_filename, video_filefullpath, recording_time, alert_triggered,\
-        alert_origin, threshold_value, link_dropbox, sent, video_hash, MAILTO, ALERT_LED, EXT
+        alert_origin, threshold_value, link_dropbox, sent, hash_code, MAILTO, ALERT_LED, EXT
 
     # Name of the video file
     video_filename = sensor.lower() + '_' + event.lower() + '_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) \
@@ -289,20 +289,20 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     print(Fore.BLACK + "  ----------- Initiating the alert procedure ------------  " + Fore.RESET)
     lcd.full_print_lcd(sensor, "Initiating the", "procedure...")
 
-    # Takes a recording for 10 seconds
+    # Takes a recording for n seconds (default 10 seconds)
     picamera.record_video(video_filefullpath, recording_time)
 
     # Checks if the original file exists in the local system
     system.check_file(video_filefullpath)
+
+    # Applies a hash function to the content of the video (unencrypted)
+    hash_code = hlf.file_hash(video_filefullpath)
 
     # Encrypts the file
     final_path = gpg.encrypt_file(video_filefullpath)
 
     # Checks if the final file (normally encrypted file) exists in the local system
     system.check_file(final_path)
-
-    # Applies a hash function to the content of the encrypted file
-    video_hash = hlf.file_hash(final_path)
 
     # Uploads the file to Dropbox
     link_dropbox = dropbox.upload_file(final_path, sensor)
@@ -329,7 +329,7 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     add_cloudant(temperature, humidity, distance)
 
     # Submits the transaction to publish a new alert asset
-    hlf.publishAlert_transaction(str(uuid_measurement), datetime_measurement, sensor, video_hash, link_dropbox)
+    hlf.publishAlert_transaction(str(uuid_measurement), datetime_measurement, sensor, hash_code, link_dropbox)
 
     time.sleep(1)
     lcd.clear_lcd(sensor)                                       # Clears the LCD
