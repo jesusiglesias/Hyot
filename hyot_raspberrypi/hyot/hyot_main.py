@@ -50,6 +50,7 @@
 #               IMPORTS                #
 ########################################
 try:
+    import sys                                      # System-specific parameters and functions
     import Adafruit_DHT                             # DHT11 sensor
     import camera_module as picamera                # Module to handle the Picamera
     import checks_module as checks                  # Module to execute initial checks and to parse the menu
@@ -61,7 +62,6 @@ try:
     import hyperledgerFabric_module as hlf          # Module that contains the logic to use Hyperledger Fabric
     import iot_module as iot                        # Module that contains the logic of the IoT platform
     import lcd_module as lcd                        # Module to handle the LCDs
-    import sys                                      # System-specific parameters and functions
     import system_module as system                  # Module that performs functions in the local operating system
     import time                                     # Time access and conversions
     import traceback                                # Print or retrieve a stack traceback
@@ -131,7 +131,7 @@ recording_time = None                       # Time that the recording will take
 alert_triggered = None                      # Indicates if an alert has been triggered
 alert_origin = None                         # Indicates which event triggered the alert
 threshold_value = None                      # Indicates the value of the event threshold that triggers the alert
-link_dropbox = None                         # Shared link of the uploaded file to Dropbox
+link = None                                 # Link of the uploaded file to the Cloud (e.g. Dropbox)
 sent = None                                 # Indicates if the email was or not sent
 hash_code = None                            # Hash code of the video file
 
@@ -209,7 +209,7 @@ def reset_values():
     Resets the value of the global variables.
     """
 
-    global video_filename, video_filefullpath, alert_triggered, alert_origin, threshold_value, link_dropbox, sent, \
+    global video_filename, video_filefullpath, alert_triggered, alert_origin, threshold_value, link, sent, \
         hash_code
 
     video_filename = None
@@ -217,7 +217,7 @@ def reset_values():
     alert_triggered = False
     alert_origin = None
     threshold_value = None
-    link_dropbox = None
+    link = None
     sent = None
     hash_code = None
 
@@ -231,7 +231,7 @@ def add_cloudant(temperature, humidity, distance):
     :param distance: Indicates the value of measured distance.
     """
 
-    global uuid_measurement, datetime_measurement, alert_triggered, alert_origin, threshold_value, link_dropbox, sent,\
+    global uuid_measurement, datetime_measurement, alert_triggered, alert_origin, threshold_value, link, sent,\
         MAILTO
 
     # Creates a JSON document content data
@@ -244,7 +244,7 @@ def add_cloudant(temperature, humidity, distance):
         "alert_triggered": alert_triggered,
         "alert_origin": alert_origin,
         "threshold_value": threshold_value,
-        "shared_link_Dropbox": link_dropbox,
+        "link": link,
         "notification_sent": sent,
         "mailto": MAILTO
     }
@@ -265,7 +265,7 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     """
 
     global uuid_measurement, datetime_measurement, video_filename, video_filefullpath, recording_time, alert_triggered,\
-        alert_origin, threshold_value, link_dropbox, sent, hash_code, MAILTO, ALERT_LED, EXT
+        alert_origin, threshold_value, link, sent, hash_code, MAILTO, ALERT_LED, EXT
 
     # Name of the video file
     video_filename = sensor.lower() + '_' + event.lower() + '_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) \
@@ -304,14 +304,14 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     # Checks if the final file (normally encrypted file) exists in the local system
     system.check_file(final_path)
 
-    # Uploads the file to Dropbox
-    link_dropbox = dropbox.upload_file(final_path, sensor)
+    # Uploads the file to the Cloud (e.g. Dropbox)
+    link = dropbox.upload_file(final_path, sensor)
 
     # Sends an email when an alert is triggered
     if not (MAILTO is None):
         sent = email.send_email(MAILTO, final_path, video_filename,
                                 str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
-                                str(uuid_measurement), temperature, humidity, distance, link_dropbox,
+                                str(uuid_measurement), temperature, humidity, distance, link,
                                 alert_origin, threshold_value)
 
     # Removes the temporary file (original video)
@@ -319,7 +319,7 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
 
     # Encryption had success
     if video_filefullpath != final_path:
-        # Removes the temporary file (encrypted video) after uploading to Dropbox
+        # Removes the temporary file (encrypted video) after uploading to the Cloud (e.g. Dropbox)
         system.remove_file(final_path, True)
 
     # Publishes the event in the IoT platform
@@ -329,7 +329,7 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     add_cloudant(temperature, humidity, distance)
 
     # Submits the transaction to publish a new alert asset
-    hlf.publishAlert_transaction(str(uuid_measurement), datetime_measurement, sensor, hash_code, link_dropbox)
+    hlf.publishAlert_transaction(str(uuid_measurement), datetime_measurement, sensor, hash_code, link)
 
     time.sleep(1)
     lcd.clear_lcd(sensor)                                       # Clears the LCD

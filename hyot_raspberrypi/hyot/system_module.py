@@ -41,9 +41,9 @@
 #               IMPORTS                #
 ########################################
 try:
+    import sys                                      # System-specific parameters and functions
     import os                                       # Miscellaneous operating system interfaces
     import shutil                                   # High-level file operations
-    import sys                                      # System-specific parameters and functions
     import time                                     # Time access and conversions
     from colorama import Fore, Style                # Cross-platform colored terminal text
 
@@ -150,7 +150,7 @@ def check_file(localfile):
     """
     Checks if the file exists in the local system.
 
-    :param localfile: Local path and name of the file to upload to Dropbox.
+    :param localfile: Local path and name of the file to upload to the Cloud (e.g. Dropbox).
     """
 
     # TODO - Exit?

@@ -42,13 +42,13 @@
 #               IMPORTS                #
 ########################################
 try:
+    import sys                                      # System-specific parameters and functions
     import hashlib                                  # Secure hashes and message digests
     import json                                     # JSON encoder and decoder
     import re                                       # Regular expression
     import requests                                 # HTTP for Humans
     import sha3                                     # SHA-3 wrapper (Keccak) for Python
     import socket                                   # Low-level networking interface
-    import sys                                      # System-specific parameters and functions
     import time                                     # Time access and conversions
     import token_module as token                    # Module that contains the logic for generating secure tokens
     import yaml                                     # YAML parser and emitter for Python
@@ -231,9 +231,9 @@ def __check_ngrok_address(host):
 def __apikey_yes_no():
     """
     Asks the user a yes/no question for the creation of an API key to provide a first layer of security to access the
-    REST API. Default value is yes
+    REST API. Default value is yes.
 
-    :return: True, if the user wants to generate an API KEY. False, otherwise
+    :return: True, if the user wants to generate an API KEY. False, otherwise.
     """
 
     valid = {"yes": True, "y": True, "ye": True, "no": False, "n": False}
@@ -344,12 +344,12 @@ def init():
             sys.exit(0)
     except socket.gaierror:
         print(Fore.RED + "        Given host is invalid" + Fore.RESET)
-        sys.exit(0)
+        sys.exit(1)
     finally:
         sock.close()                                               # Closes the socket
 
 
-def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, shared_link):
+def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link):
     """
     Submits a transaction to publish a new alert asset in the Blockchain of Hyperledger Fabric.
 
@@ -357,7 +357,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, shared_l
     :param timestamp: Datetime of the alert.
     :param alert_origin: Indicates the sensor that triggered the alert.
     :param hash_video: Hash of the content of the video.
-    :param shared_link: Link to Dropbox where the file was uploaded.
+    :param link: Link to the Cloud (e.g. Dropbox) where the file was uploaded.
     """
 
     global HLC_API_PUBLISH_ALERT, hlc_server_url, hlc_api_key
@@ -386,7 +386,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, shared_l
             "timestamp": str(timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")),
             "alert_origin": alert_origin,
             "hash": hash_video,
-            "shared_link": shared_link,
+            "link": link,
             "owner": 'resource:org.hyot.network.User#jesusiglesias',
         }
     }

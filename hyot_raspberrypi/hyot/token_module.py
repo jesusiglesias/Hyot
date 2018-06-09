@@ -68,11 +68,11 @@ DEFAULT_ENTROPY = 32                                    # Number of bytes to ret
 ########################################
 def token_bytes(nbytes=None):
     """
-    Returns a random byte-string containing 'nbytes' number of bytes
+    Returns a random byte-string containing 'nbytes' number of bytes.
 
-    :param nbytes: Number of bytes of the token
+    :param nbytes: Number of bytes of the token.
 
-    :return: Random byte-string
+    :return: Random byte-string.
     """
 
     if nbytes is None:
@@ -84,11 +84,11 @@ def token_bytes(nbytes=None):
 def token_hex(nbytes=None):
     """
     Returns a random text-string in hexadecimal. The string has 'nbytes' random bytes, each byte converted to two
-    hex digits
+    hex digits.
 
-    :param nbytes: Number of bytes of the token
+    :param nbytes: Number of bytes of the token.
 
-    :return: Random text-string in hexadecimal
+    :return: Random text-string in hexadecimal.
     """
 
     return binascii.hexlify(token_bytes(nbytes)).decode('ascii')
@@ -97,11 +97,11 @@ def token_hex(nbytes=None):
 def token_urlsafe(nbytes=None):
     """
     Returns a random URL-safe text-string, containing 'nbytes' random bytes. On average, each byte results in
-    approximately 1.3 characters in the final result
+    approximately 1.3 characters in the final result.
 
-    :param nbytes: Number of bytes of the token
+    :param nbytes: Number of bytes of the token.
 
-    :return: Random URL-safe text-string
+    :return: Random URL-safe text-string.
     """
 
     # Random byte-string

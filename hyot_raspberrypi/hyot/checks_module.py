@@ -42,12 +42,12 @@
 #               IMPORTS                #
 ########################################
 try:
+    import sys                                      # System-specific parameters and functions
     import argparse                                 # Python command-line parsing library
     import psutil                                   # Python system and process utilities
     import os                                       # Miscellaneous operating system interfaces
     import re                                       # Regular expression
     import socket                                   # Low-level networking interface
-    import sys                                      # System-specific parameters and functions
     import traceback                                # Print or retrieve a stack traceback
     from colorama import Fore, Style                # Cross-platform colored terminal text
 

@@ -42,11 +42,11 @@
 #               IMPORTS                #
 ########################################
 try:
+    import sys                                      # System-specific parameters and functions
     import getpass                                  # Portable password input
     import gnupg                                    # GnuPG’s key management, encryption and signature functionality
     import qrcode                                   # Pure python QR Code generator
     import os                                       # Miscellaneous operating system interfaces
-    import sys                                      # System-specific parameters and functions
     import time                                     # Time access and conversions
     import yaml                                     # YAML parser and emitter for Python
     from colorama import Fore, Style                # Cross-platform colored terminal text
@@ -331,7 +331,7 @@ def __check_keys():
             for fingerprint in key_input:
                 if fingerprint not in fingerprint_array:
                     print(Fore.RED + "        The fingerprint: " + fingerprint + " does not exist in the indicated GPG "
-                                                                                 "directory." + Fore.RESET)
+                                     "directory." + Fore.RESET)
                     sys.exit(0)
 
             # All fingerprints exist
@@ -384,7 +384,7 @@ def init():
 
 def encrypt_file(video):
     """
-    Encrypts the file to upload to Dropbox.
+    Encrypts the file to upload to the Cloud (e.g. Dropbox).
 
     :param video: File to encrypt with its full path.
 
@@ -408,12 +408,14 @@ def encrypt_file(video):
             print(Fore.GREEN + " ✓" + Fore.RESET)
             return encrypted_file
         else:
-            print(Fore.RED + "✕ File not encrypted. The file will be stored in Dropbox without encrypting." + Fore.RESET)
-            return video
+            print(Fore.RED + "✕ File not encrypted. The file will be stored in the Cloud (Dropbox) without encrypting."
+                  + Fore.RESET)
+            return video  # TODO
 
     except Exception:
-        print(Fore.RED + "✕ File not encrypted. The file will be stored in Dropbox without encrypting." + Fore.RESET)
-        return video
+        print(Fore.RED + "✕ File not encrypted. The file will be stored in the Cloud (Dropbox) without encrypting."
+              + Fore.RESET)
+        return video  # TODO
 
 
 def clean():

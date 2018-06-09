@@ -41,8 +41,8 @@
 #               IMPORTS                #
 ########################################
 try:
-    import getpass                                  # Portable password input
     import sys                                      # System-specific parameters and functions
+    import getpass                                  # Portable password input
     import time                                     # Time access and conversions
     import yaml                                     # YAML parser and emitter for Python
     from cloudant.client import Cloudant            # Cloudant NoSQL DB client

@@ -42,13 +42,13 @@
 #               IMPORTS                #
 ########################################
 try:
+    import sys                                      # System-specific parameters and functions
     import getpass                                  # Portable password input
     import gnupg                                    # GnuPG’s key management, encryption and signature functionality
     import hashlib                                  # Secure hashes and message digests
     import menu_module as menu                      # Module to execute initial checks and to parse the menu
     import os                                       # Miscellaneous operating system interfaces
     import sha3                                     # SHA-3 wrapper (Keccak) for Python
-    import sys                                      # System-specific parameters and functions
     import time                                     # Time access and conversions
     import traceback                                # Print or retrieve a stack traceback
     from colorama import Fore, Style                # Cross-platform colored terminal text

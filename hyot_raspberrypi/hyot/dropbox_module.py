@@ -41,8 +41,8 @@
 #               IMPORTS                #
 ########################################
 try:
-    import dropbox                                      # Python SDK for integrating with the Dropbox API v2
     import sys                                          # System-specific parameters and functions
+    import dropbox                                      # Python SDK for integrating with the Dropbox API v2
     import time                                         # Time access and conversions
     import yaml                                         # YAML parser and emitter for Python
     from colorama import Fore, Style                    # Cross-platform colored terminal text
@@ -274,9 +274,10 @@ def __get_shared_link(upload_path):
     """
     Creates a shared shortened link of the file. If a shared link already exists for the given path, that link is
     returned.
+
     :param upload_path: Upload path of the current file.
 
-    :return: link Shared link of the uploaded file to Dropbox.
+    :return: link Link of the uploaded file to Dropbox.
     """
 
     global dbx
@@ -297,12 +298,12 @@ def __get_shared_link(upload_path):
 
 def upload_file(localfile, sensor):
     """
-    Uploads the file to Dropbox, in particular to the subdirectory of the sensor that triggered the alarm.
+    Uploads the file to the Cloud (Dropbox), in particular to the subdirectory of the sensor that triggered the alarm.
 
     :param localfile: Local path and name of the file to upload.
     :param sensor: Sensor that triggered the alarm.
 
-    :return: shared_link Shared link of the uploaded file to Dropbox.
+    :return: link Link of the uploaded file to Dropbox.
     """
 
     global HYOT_DIR, dbx, dht_subdir, hcsr_subdir
@@ -329,13 +330,13 @@ def upload_file(localfile, sensor):
             # if there is not enough available space and so on
             dbx.files_upload(f.read(), upload_path, autorename=False)
 
-            # Obtains the shared link of the uploaded file to Dropbox
-            shared_link = __get_shared_link(upload_path)
+            # Obtains the link of the uploaded file to Dropbox
+            link = __get_shared_link(upload_path)
 
             print(Fore.GREEN + " ✓" + Fore.RESET)
 
-            # Returns the shared link
-            return shared_link
+            # Returns the link
+            return link
 
     except IOError:                                                        # Error to open the file
 

@@ -43,9 +43,9 @@
 #               IMPORTS                #
 ########################################
 try:
+    import sys                                          # System-specific parameters and functions
     import os                                           # Miscellaneous operating system interfaces
     import smtplib                                      # SMTP protocol client
-    import sys                                          # System-specific parameters and functions
     import time                                         # Time access and conversions
     import yaml                                         # YAML parser and emitter for Python
     from colorama import Fore, Style                    # Cross-platform colored terminal text
@@ -147,7 +147,7 @@ def __read_template(filename):
     return Template(template_file_content)
 
 
-def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, humidity, distance, link_dropbox,
+def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, humidity, distance, link,
                alert_origin, threshold_value):
     """
     Sends an email to the recipient to notify a triggered alert.
@@ -160,7 +160,7 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
     :param temperature: Value of this parameter in the measurement.
     :param humidity: Value of this parameter in the measurement.
     :param distance: Value of this parameter in the measurement.
-    :param link_dropbox: Link to Dropbox where the file was uploaded.
+    :param link: Link of the Cloud (e.g. Dropbox) where the file was uploaded.
     :param alert_origin: Contains the sensor and the event that triggered the alert.
     :param threshold_value: Indicates the value of the event threshold that triggered the alert.
 
@@ -190,7 +190,7 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
             TEMPERATURE=temperature,
             HUMIDITY=humidity,
             DISTANCE=distance,
-            LINK=link_dropbox)
+            LINK=link)
 
     except Exception as templateError:
         print(Fore.RED + " ✕ Error in the email template. Email not sent. " + str(templateError) + Fore.RESET)

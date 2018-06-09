@@ -122,7 +122,7 @@ check_network () {
     if ! [ -x "$(command -v ${WGETCOMMAND})" ]; then
         e_error "Command: '$WGETCOMMAND' not found. Please, install this command to check if the network connection is\
          available." 1>&2
-        exit 1
+        exit 0
     fi
 
     # Checks if Google can be reached. Some places have a firewall that blocks all traffic except via a web proxy.
@@ -141,7 +141,7 @@ check_concurrency () {
     if ! [ -x "$(command -v ${PIDOFCOMMAND})" ]; then
         e_error "Command: '$PIDOFCOMMAND' not found. Please, install this command to check and avoid the
          concurrency." 1>&2
-        exit 1
+        exit 0
     fi
 
     # Checks if another instance is run
@@ -175,7 +175,7 @@ check_parameters () {
     # Number of parameters must be 0 or 1
     if [[ "$1" -gt "1" ]]; then
         e_error "Invalid parameter number. Please, type the option '-h' or '--help' to show the help." 1>&2
-        exit 1
+        exit 0
     else
         if [[ "$1" -eq "1" ]]; then
             case "$2" in
@@ -188,7 +188,7 @@ check_parameters () {
                     ;;
                 *)                  # Unknown option
                     e_error "Unknown option: $2. Please, type the option '-h' or '--help' to show the help." 1>&2
-                    exit 1
+                    exit 0
                     ;;
             esac
         fi
@@ -329,21 +329,21 @@ install_manually_AdafruitDHT () {
     if ! [ -x "$(command -v ${CURLCOMMAND})" ]; then
         e_error "Command: '$CURLCOMMAND' not found. Please, install this command to install the Adafruit DHT\
          library." 1>&2
-        exit 1
+        exit 0
     fi
 
     # Checks if the 'unzip' command is installed
     if ! [ -x "$(command -v ${UNZIPCOMMAND})" ]; then
         e_error "Command: '$UNZIPCOMMAND' not found. Please, install this command to install the Adafruit DHT\
          library." 1>&2
-        exit 1
+        exit 0
     fi
 
     # Checks if the 'python' command is installed
     if ! [ -x "$(command -v ${PYTHONCOMMAND})" ]; then
         e_error "Command: '$PYTHONCOMMAND' not found. Please, install this command to install the Adafruit DHT\
          library." 1>&2
-        exit 1
+        exit 0
     fi
 
     output "Checking if the '$1' library is installed manually.\\n"
@@ -413,7 +413,7 @@ check_interfaces () {
     if ! [ -x "$(command -v ${RASPICONFIGCOMMAND})" ]; then
         e_error "Command: '$RASPICONFIGCOMMAND' not found. Please, run this script in a Raspberry Pi with Raspbian
          platform." 1>&2
-        exit 1
+        exit 0
     fi
 
     for interface in ${INTERFACES}; do
@@ -568,7 +568,7 @@ if is_confirmed; then
     if ! [ -x "$(command -v ${REBOOTCOMMAND})" ]; then
         echo
         e_error "Command: '$REBOOTCOMMAND' not found. Please, reboot the system manually." 1>&2
-        exit 1
+        exit 0
     else  # Reboot
         e_header_bold "Rebooting the system..."
         sleep 5
