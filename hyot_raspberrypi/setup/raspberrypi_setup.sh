@@ -19,7 +19,7 @@
 #        PROJECT:     Hyot                                                                                             #
 #           FILE:     raspberrypi_setup.sh                                                                             #
 #                                                                                                                      #
-#          USAGE:     sudo bash raspberrypi_setup.sh || sudo ./raspberrypi_setup.sh                                    #
+#          USAGE:     sudo bash raspberrypi_setup.sh [options] || sudo ./raspberrypi_setup.sh [options]                #
 #                                                                                                                      #
 #    DESCRIPTION:     This script sets up the dependencies needed to run the main script of Hyot on the Raspberry Pi   #
 #                                                                                                                      #
@@ -41,6 +41,8 @@ SETUPFILE="raspberrypi_setup.sh"                        # Name of this file
 CWD="$(pwd)"                                            # Current directory
 UTILS="utils.sh"                                        # File of utilities
 VERBOSE=false                                           # Verbose mode
+PROCESS_INSTALL_PACKAGES=false                          # Process of installing packages and libraries
+PROCESS_INTERFACES=false                                # Process of enabling interfaces
 PIDOFCOMMAND="pidof"                                    # Command: pidof
 WGETCOMMAND="wget"                                      # Command: wget
 CURLCOMMAND="curl"                                      # Command: curl
@@ -154,41 +156,73 @@ check_concurrency () {
 # Shows the help to the user
 show_help () {
 
-    help_header "HYOT - HELP FOR THE RASPBERRY PI SETUP"
+    help_header "HELP"
     echo
     help_bold "USAGE: "
-    echo "sudo $0 {--help|--verbose}"
+    echo "   sudo $0 [--help] [[--interfaces|--packages][--verbose]]"
     echo
     help_bold "BASIC OPTIONS:"
     echo
     echo
-    echo "   -h, --help                 Shows the help"
-    echo "   -v, --verbose              Provides very helpful additional details as to what the code is doing"
+    echo "      -h, --help                 Shows the help."
+    echo "      -i, --interfaces           Runs only the activation of interfaces."
+    echo "      -p, --packages             Runs only the installation of packages and libraries."
+    echo "      -v, --verbose              Provides very helpful additional details as to what the code is doing."
     echo
 }
 
 # Checks the entered parameters and the quantity
 check_parameters () {
 
-    # Number of parameters must be 0 or 1
-    if [[ "$1" -gt "1" ]]; then
-        e_error "Invalid parameter number. Please, type the option '-h' or '--help' to show the help." 1>&2
+    # Total number of parameters
+    total_parameters=$1
+
+    # Number of parameters must be 0, 1 or 2
+    if [[ "${total_parameters}" -gt "2" ]]; then
+        e_error_spaces "Invalid parameter number. Please, type the option '-h' or '--help' to show the help." 1>&2
         exit 0
     else
-        if [[ "$1" -eq "1" ]]; then
-            case "$2" in
-                -h | --help)        # Shows the help
-                    show_help
-                    exit 0
-                    ;;
-                -v | --verbose)     # Enables the verbose mode
-                    VERBOSE=true
-                    ;;
-                *)                  # Unknown option
-                    e_error "Unknown option: $2. Please, type the option '-h' or '--help' to show the help." 1>&2
-                    exit 0
-                    ;;
-            esac
+        if [[ "${total_parameters}" -eq "0" ]]; then
+           PROCESS_INSTALL_PACKAGES=true
+           PROCESS_INTERFACES=true
+        else
+
+            # First argument has been removed from the list
+            shift
+
+            for argument in $@; do
+
+                case ${argument} in
+                    -h | --help)        # Shows the help
+                        show_help
+                        exit 0
+                        ;;
+                    -v | --verbose)     # Enables the 'verbose' mode
+
+                        if ${VERBOSE}; then
+                            e_error_spaces "Please, type the verbose mode only once." 1>&2
+                            exit 0
+                        else
+                            VERBOSE=true
+                        fi
+
+                        if [[ "${total_parameters}" -eq "1" ]]; then
+                            PROCESS_INSTALL_PACKAGES=true
+                            PROCESS_INTERFACES=true
+                        fi
+                        ;;
+                    -p | --packages)    # Runs only the installation of packages and libraries
+                        PROCESS_INSTALL_PACKAGES=true
+                        ;;
+                    -i | --interfaces)  # Runs only the activation of interfaces
+                        PROCESS_INTERFACES=true
+                        ;;
+                    *)                  # Unknown option
+                        e_error_spaces "Unknown option: ${argument}. Please, type the option '-h' or '--help' to show the help." 1>&2
+                        exit 0
+                        ;;
+                esac
+            done
         fi
     fi
 }
@@ -201,7 +235,7 @@ output () {
     fi
 }
 
-# Print a line break when 'verbose' mode is disabled
+# Prints a line break when 'verbose' mode is disabled
 lineBreak () {
 
     if ! ${VERBOSE}; then
@@ -459,6 +493,7 @@ check_interfaces () {
 
 # Asks to user whether or not to reboot the system
 seek_confirmation() {
+
     confirmation_message "$1"
     # shellcheck disable=SC2162
     read -p "$(confirmation_message " (y/n) ")" -n 1
@@ -474,7 +509,7 @@ is_confirmed() {
     return 1
 }
 
-# Trap keyboard interrupt (ctrl + c)
+# Traps keyboard interrupt (ctrl + c)
 ctrl_c() {
 
     echo
@@ -486,7 +521,7 @@ ctrl_c() {
 #             MAIN PROGRAM             #
 ########################################
 
-# Trap the keyboard interrupt signal
+# Traps the keyboard interrupt signal
 trap ctrl_c SIGINT
 
 load_utils                          # Loads the 'utils.sh' file
@@ -520,71 +555,73 @@ e_header """
 
    """
 
-check_parameters "$#" "$1"          # Checks the parameters and the number of them
+check_parameters "$#" "$@"          # Checks the parameters and the number of them
 
 e_message_bold "Starting the configuration..."
 
-# Checks if several command line tools are installed ('apt-get', 'apt-cache' and 'dpkg')
-commandLineTools_is_installed
+if ${PROCESS_INSTALL_PACKAGES}; then
+    # Checks if several command line tools are installed ('apt-get', 'apt-cache' and 'dpkg')
+    commandLineTools_is_installed
 
-e_title_bold "Packages"
-e_message_bold "---------------------------------------------------------------------"
+    e_title_bold "Packages"
+    e_message_bold "---------------------------------------------------------------------"
 
-# Checks if each package is installed and updated. If not, it is installed or updated
-for package in ${PACKAGESTOINSTALL}; do
-    output "Checking if the '$package' package is installed and updated.\\n"
-    package_is_installed "$package"
-    output "\\n"
-done
+    # Checks if each package is installed and updated. If not, it is installed or updated
+    for package in ${PACKAGESTOINSTALL}; do
+        output "Checking if the '$package' package is installed and updated.\\n"
+        package_is_installed "$package"
+        output "\\n"
+    done
 
-# Print a line break when 'verbose' mode is disabled
-lineBreak
+    # Prints a line break when 'verbose' mode is disabled
+    lineBreak
 
-e_title_bold "Python libraries"
-e_message_bold "---------------------------------------------------------------------"
+    e_title_bold "Python libraries"
+    e_message_bold "---------------------------------------------------------------------"
 
-# Checks if each library is installed and updated. If not, it is installed or updated
-for library in ${LIBRARYTOINSTALL}; do
-    output "Checking if the '$library' library is installed and updated.\\n"
-    library_is_installed "$library"
-    output "\\n"
-done
+    # Checks if each library is installed and updated. If not, it is installed or updated
+    for library in ${LIBRARYTOINSTALL}; do
+        output "Checking if the '$library' library is installed and updated.\\n"
+        library_is_installed "$library"
+        output "\\n"
+    done
 
-# Print a line break when 'verbose' mode is disabled
-lineBreak
+    # Installs the Adafruit DHT library in a manual way
+    install_manually_AdafruitDHT ${LIBRARYDHT}
 
-# Installs the Adafruit DHT library in a manual way
-install_manually_AdafruitDHT ${LIBRARYDHT}
+    # Prints a line break when 'verbose' mode is disabled
+    lineBreak
+fi
 
-# Print a line break when 'verbose' mode is disabled
-lineBreak
+if ${PROCESS_INTERFACES}; then
+    e_title_bold "Interfaces"
+    e_message_bold "---------------------------------------------------------------------"
 
-e_title_bold "Interfaces"
-e_message_bold "---------------------------------------------------------------------"
+    # Checks if the 'Camera' and 'I2C' interfaces are enabled
+    check_interfaces
 
-# Checks if the 'Camera' and 'I2C' interfaces are enabled
-check_interfaces
+    # Prints a line break when 'verbose' mode is disabled
+    lineBreak
 
-# Print a line break when 'verbose' mode is disabled
-lineBreak
+    # Process finished
+    e_message_bold "Process has finished successfully. The following steps to launch Hyot are to get the I2C addresses with the command: 'i2cdetect -y 1' (RPi v.3) and run the 'raspberrypi_hyot.py' script to monitor the sensors."
 
-# Process finished
-e_message_bold "Process has finished successfully. The following steps to launch Hyot are to get the I2C addresses with\
- the command: 'i2cdetect -y 1' (RPi v.3) and run the 'raspberrypi_hyot.py' script to monitor the sensors."
+    # Asks the user whether or not to reboot the system
+    seek_confirmation "   Do you want to reboot the system? It would be an excellent idea for everything to work correctly!"
 
-# Asks the user whether or not to reboot the system
-seek_confirmation "   Do you want to reboot the system? It would be an excellent idea for everything to work correctly!"
-# Reboot the system
-if is_confirmed; then
-
-    # Checks if the 'reboot' command exists and is executable
-    if ! [ -x "$(command -v ${REBOOTCOMMAND})" ]; then
+    # Reboots the system
+    if is_confirmed; then
+        # Checks if the 'reboot' command exists and is executable
+        if ! [ -x "$(command -v ${REBOOTCOMMAND})" ]; then
+            echo
+            e_error_spaces "Command not found: $REBOOTCOMMAND. Please, reboot the system manually." 1>&2
+            exit 0
+        else  # Reboot
+            e_message_bold "Rebooting the system in 5 seconds..."
+            sleep 5
+            reboot
+        fi
+    else
         echo
-        e_error_spaces "Command not found: $REBOOTCOMMAND. Please, reboot the system manually." 1>&2
-        exit 0
-    else  # Reboot
-        e_message_bold "Rebooting the system in 5 seconds..."
-        sleep 5
-        reboot
     fi
 fi

@@ -106,12 +106,12 @@ e_warning () {
 
 # Header in the 'Help' section
 help_header () {
-    printf "${bold}${cyan}====================  %s  ====================${reset}\\n" "$@"
+    printf "   ${bold}${cyan}====================  %s  ====================${reset}\\n" "$@"
 }
 
 # Bold and yellow message in the 'Help' section
 help_bold () {
-    printf "${bold}${yellow}%s${reset}" "$@"
+    printf "   ${bold}${yellow}%s${reset}" "$@"
 }
 
 # Confirmation message
