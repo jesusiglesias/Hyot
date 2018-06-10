@@ -231,16 +231,29 @@ def __request_password():
 
     global password
 
-    # Asks the user for the password of the private key
-    password = getpass.getpass(Fore.BLUE + "   Enter the password for the private key: " + Fore.RESET) or None
+    # Variables
+    flag = False            # Flag for the loop
+    counter = 0             # Counter of attempts
 
-    # Checks if the password is empty
-    if password is None or password.isspace():
-        print(Fore.RED + "   The password can not be empty.\n" + Fore.RESET)
-        sys.exit(0)
+    while not flag:
 
-    # Removes the spaces
-    password = password.replace(" ", "")
+        # Asks the user for the password of the private key
+        password = getpass.getpass(Fore.BLUE + "      Enter the password for the private key: " + Fore.RESET) or None
+
+        # Checks if the password is empty
+        if password is None or password.isspace():
+
+            if counter < 2:
+                print(Fore.RED + "      ✖ The password can not be empty. Please, try it again.\n" + Fore.RESET)
+                counter = counter + 1
+            else:
+                print(Fore.RED + "      ✖ Number of attempts spent. Please, run again the code.\n" + Fore.RESET)
+                sys.exit(0)
+        else:
+            # Removes the spaces
+            password = password.replace(" ", "")
+            # Breaks out of while loop
+            flag = True
 
 
 def __compare_hash():
