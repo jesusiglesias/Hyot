@@ -61,22 +61,22 @@ e_header () {
 
 # Bold title
 e_title_bold () {
-     printf "${bold}${black}%s${reset}\\n" "$@"
+     printf "   ${bold}${black}%s${reset}\\n" "$@"
 }
 
 # Bold message
 e_message_bold () {
-     printf "${bold}${black}%s${reset}\\n\\n" "$@"
+     printf "   ${bold}${black}%s${reset}\\n\\n" "$@"
 }
 
 # Information message
 e_info () {
-    printf "${cyan}➜ %s${reset}\\n" "$@"
+    printf "   ${cyan}➜ %s${reset}\\n" "$@"
 }
 
 # Success message
 e_success () {
-    printf "${green}✔ %s${reset}\\n" "$@"
+    printf "   ${green}✔ %s${reset}\\n" "$@"
 }
 
 # Error message
@@ -84,9 +84,19 @@ e_error () {
     printf "${red}✖ %s${reset}\\n" "$@"
 }
 
+# Error message with initial spaces
+e_error_initialspaces () {
+    printf "   ${red}✖ %s${reset}\\n" "$@"
+}
+
+# Error message with initial spaces and two break lines
+e_error_spaces () {
+    printf "   ${red}✖ %s${reset}\\n\\n" "$@"
+}
+
 # Error traceback
 e_error_traceback () {
-    printf "${red}%s${reset}\\n" "$@"
+    printf "   ${red}Traceback: %s${reset}\\n\\n" "$@"
 }
 
 # Warning message

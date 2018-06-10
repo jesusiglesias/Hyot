@@ -21,7 +21,7 @@
 #                                                                                                                      #
 #          USAGE:     sudo bash raspberrypi_setup.sh || sudo ./raspberrypi_setup.sh                                    #
 #                                                                                                                      #
-#    DESCRIPTION:     This script sets up the dependencies needed to run the main script of Hyot on the Raspberry Pi   #                                                     #
+#    DESCRIPTION:     This script sets up the dependencies needed to run the main script of Hyot on the Raspberry Pi   #
 #                                                                                                                      #
 #        OPTIONS:     Type '-h' or '--help' option to show the help                                                    #
 #   REQUIREMENTS:     Root user, GNU/Linux platform, Connection to the network, Script: utils.sh                       #
@@ -41,12 +41,12 @@ SETUPFILE="raspberrypi_setup.sh"                        # Name of this file
 CWD="$(pwd)"                                            # Current directory
 UTILS="utils.sh"                                        # File of utilities
 VERBOSE=false                                           # Verbose mode
-PIDOFCOMMAND="pidof"                                    # 'pidof' command
-WGETCOMMAND="wget"                                      # 'wget' command
-CURLCOMMAND="curl"                                      # 'curl' command
-UNZIPCOMMAND="unzip"                                    # 'unzip' command
-PYTHONCOMMAND="python"                                  # 'python' command
-COMMANDLINETOOL="apt-get apt-cache dpkg"                # 'apt-get', 'apt-cache' and 'dpkg' tools
+PIDOFCOMMAND="pidof"                                    # Command: pidof
+WGETCOMMAND="wget"                                      # Command: wget
+CURLCOMMAND="curl"                                      # Command: curl
+UNZIPCOMMAND="unzip"                                    # Command: unzip
+PYTHONCOMMAND="python"                                  # Command: python
+COMMANDLINETOOL="apt-get apt-cache dpkg"                # Tools: apt-get, apt-cache and dpkg
 PACKAGESTOINSTALL="python2.7 build-essential python-dev python-smbus python-pip gnupg
 rng-tools i2c-tools"                                    # Packages to install
 LIBRARYTOINSTALL="PyYAML psutil colorama RPi.GPIO gpiozero RPLCD pysha3 python-gnupg qrcode picamera ibmiotf cloudant
@@ -54,15 +54,15 @@ dropbox requests"                                       # Libraries to install
 LIBRARYDHT="Adafruit_DHT"                               # Adafruit DHT library
 LIBRARYDHTZIP="Adafruit_Python_DHT.zip"                 # File '.zip' of the Adafruit DHT library
 LIBRARYDHTDIR="Adafruit_Python_DHT-master"              # Directory of the Adafruit DHT library
-RASPICONFIGCOMMAND="raspi-config"                       # 'raspi-config' command
+RASPICONFIGCOMMAND="raspi-config"                       # Command: raspi-config
 INTERFACES="i2c camera"                                 # Interfaces to enable
-REBOOTCOMMAND="reboot"                                  # 'reboot' command
+REBOOTCOMMAND="reboot"                                  # Command: reboot
 
 ########################################
 #             FUNCTIONS                #
 ########################################
 
-# Loads the utilities ('utils.sh' file)
+# Loads the utilities (file: utils.sh)
 load_utils () {
 
     # shellcheck source=./utils.sh
@@ -87,7 +87,7 @@ check_root () {
 check_platform () {
 
     if [[ $OSTYPE != linux* ]]; then
-        e_error "This script must be run on GNU/Linux platform. For example: Raspbian." 1>&2
+        e_error "This script must be run on GNU/Linux platform (e.g. Raspbian)." 1>&2
         exit 0
     fi
 }
@@ -103,7 +103,7 @@ check_raspberrypi () {
 
     # '/proc/cpuinfo' file does not exist
     if ! [ -e "/proc/cpuinfo" ]; then
-        e_error "No such file or directory: '/proc/cpuinfo'. This script must be run on a Raspberry Pi." 1>&2
+        e_error "No such file or directory: /proc/cpuinfo. This script must be run on a Raspberry Pi." 1>&2
         exit 0
     else
         hardware="$(grep 'Hardware' /proc/cpuinfo | awk '{print $3}')"
@@ -120,8 +120,7 @@ check_network () {
 
     # Checks if the 'wget' command is installed
     if ! [ -x "$(command -v ${WGETCOMMAND})" ]; then
-        e_error "Command: '$WGETCOMMAND' not found. Please, install this command to check if the network connection is\
-         available." 1>&2
+        e_error "Command not found: $WGETCOMMAND. Please, install this command to check if the network connection is available." 1>&2
         exit 0
     fi
 
@@ -139,12 +138,11 @@ check_concurrency () {
 
     # Checks if the 'pidof' command is installed
     if ! [ -x "$(command -v ${PIDOFCOMMAND})" ]; then
-        e_error "Command: '$PIDOFCOMMAND' not found. Please, install this command to check and avoid the
-         concurrency." 1>&2
+        e_error "Command not found: $PIDOFCOMMAND. Please, install this command to check and avoid the concurrency." 1>&2
         exit 0
     fi
 
-    # Checks if another instance is run
+    # Checks if another instance is running
     for pid in $(pidof -o %PPID -x "$1"); do
         if [ "$pid" != "$$" ]; then
             e_error "Process: $1 is already running with PID $pid." 1>&2
@@ -195,11 +193,11 @@ check_parameters () {
     fi
 }
 
-# Outputs the message by console if the verbose mode is enabled
+# Outputs the message by console if the 'verbose' mode is enabled
 output () {
 
     if ${VERBOSE}; then
-        printf "%b" "$1"
+        printf "   %b" "$1"
     fi
 }
 
@@ -217,8 +215,7 @@ commandLineTools_is_installed () {
     # Checks if the command exists and is executable
     for tool in ${COMMANDLINETOOL}; do
         if ! [ -x "$(command -v "$tool")" ]; then
-            e_error "Command line tool: '$tool' is not installed in the system. Please, install this package before\
-             continuing." 1>&2
+            e_error_spaces "Command line tool: $tool is not installed in the system. Please, install this package before continuing." 1>&2
             exit 0
         fi
     done
@@ -242,13 +239,13 @@ package_is_installed () {
 
             # Error to update the package
             if [ ${return_value_aptget_update} -ne 0 ]; then
-                e_error "Error to update the $1 package." 1>&2
+                e_error_initialspaces "Error to update the package: $1." 1>&2
                 exit 1
             fi
         else
             output "Package is already updated to the last version.\\n"
         fi
-        e_info "Package: '$1' is installed and updated in the system."
+        e_info "Package: $1 is installed and updated in the system."
     else
         output "Package is not installed. Searching the package in the repository...\\n"
 
@@ -262,13 +259,13 @@ package_is_installed () {
 
             # Error to install the package
             if [ ${return_value_aptget_install} -ne 0 ]; then
-                e_error "Error to install the $1 package." 1>&2
+                e_error_initialspaces "Error to install the package: $1." 1>&2
                 exit 1
             fi
 
-            e_success "Package: '$1' was installed successfully."
+            e_success "Package: $1 was installed successfully."
         else
-            e_error "Package: '$1' not found in the repository. Please, check its name." 1>&2
+            e_error_initialspaces "Package: $1 not found in the repository. Please, check its name." 1>&2
         fi
     fi
 }
@@ -291,13 +288,13 @@ library_is_installed () {
 
             # Error to update the library
             if [ ${return_value_pip_update} -ne 0 ]; then
-                e_error "Error to update the $1 library." 1>&2
+                e_error_initialspaces "Error to update the library: $1." 1>&2
                 exit 1
             fi
         else
             output "Library is already updated to the last version.\\n"
         fi
-        e_info "Library: '$1' is installed and updated in the system."
+        e_info "Library: $1 is installed and updated in the system."
     else
         output "Library is not installed. Searching the library in the repository...\\n"
 
@@ -311,13 +308,13 @@ library_is_installed () {
 
             # Error to install the library
             if [ ${return_value_pip_install} -ne 0 ]; then
-                e_error "Error to install the $1 library." 1>&2
+                e_error_initialspaces "Error to install the library: $1." 1>&2
                 exit 1
             fi
 
-            e_success "Library: '$1' was installed successfully."
+            e_success "Library: $1 was installed successfully."
         else
-            e_error "Library: '$1' not found in the repository. Please, check its name." 1>&2
+            e_error_initialspaces "Library: $1 not found in the repository. Please, check its name." 1>&2
         fi
     fi
 }
@@ -327,22 +324,19 @@ install_manually_AdafruitDHT () {
 
    # Checks if the 'curl' command is installed
     if ! [ -x "$(command -v ${CURLCOMMAND})" ]; then
-        e_error "Command: '$CURLCOMMAND' not found. Please, install this command to install the Adafruit DHT\
-         library." 1>&2
+        e_error_spaces "Command not found: $CURLCOMMAND. Please, install this command to install the Adafruit DHT library." 1>&2
         exit 0
     fi
 
     # Checks if the 'unzip' command is installed
     if ! [ -x "$(command -v ${UNZIPCOMMAND})" ]; then
-        e_error "Command: '$UNZIPCOMMAND' not found. Please, install this command to install the Adafruit DHT\
-         library." 1>&2
+        e_error_spaces "Command not found: $UNZIPCOMMAND. Please, install this command to install the Adafruit DHT library." 1>&2
         exit 0
     fi
 
     # Checks if the 'python' command is installed
     if ! [ -x "$(command -v ${PYTHONCOMMAND})" ]; then
-        e_error "Command: '$PYTHONCOMMAND' not found. Please, install this command to install the Adafruit DHT\
-         library." 1>&2
+        e_error_spaces "Command not found: $PYTHONCOMMAND. Please, install this command to install the Adafruit DHT library." 1>&2
         exit 0
     fi
 
@@ -352,7 +346,7 @@ install_manually_AdafruitDHT () {
     if [ "$(pip show "$1")" ]; then
         output "Library is installed. No action is performed.\\n"
 
-        e_info "Library: '$1' is installed manually in the system."
+        e_info "Library: $1 is installed manually in the system."
     else
         output "Library is not installed. Proceeding to its manual installation...\\n"
 
@@ -360,7 +354,7 @@ install_manually_AdafruitDHT () {
         output "Downloading the library from Github.\\n"
         if ! curl -s -o "$LIBRARYDHTZIP" https://codeload.github.com/adafruit/Adafruit_Python_DHT/zip/master>/dev/null
         then
-            e_error "The download of the '$1' library has failed. Please, check the URL and try it again." 1>&2
+            e_error_spaces "The download of the library: $1 has failed. Please, check the URL and try it again." 1>&2
             exit 1
         fi
 
@@ -368,8 +362,13 @@ install_manually_AdafruitDHT () {
         output "Unzipping file.\\n"
         if ! stderr_unzip="$(unzip -oq "$LIBRARYDHTZIP" 2>&1 >/dev/null)"
         then
-            e_error "The unzipping of the '$LIBRARYDHTZIP' file has failed. Corrupt or non-existent file." 1>&2
-            e_error_traceback "$stderr_unzip"
+            e_error_initialspaces "The unzipping of the file: $LIBRARYDHTZIP file has failed. Corrupt or non-existent file." 1>&2
+
+            if ! [ -z ${stderr_unzip} ]; then
+                e_error_traceback "$stderr_unzip"
+            else
+                echo
+            fi
             exit 1
         fi
 
@@ -377,30 +376,45 @@ install_manually_AdafruitDHT () {
         output "Installing the library.\\n"
         if ! stderr_install="$(cd ${CWD}/${LIBRARYDHTDIR} 2>&1 >/dev/null && python setup.py install 2>&1 >/dev/null)"
         then
-            e_error "The installation of the '$1' library has failed." 1>&2
-            e_error_traceback "$stderr_install"
+            e_error_initialspaces "The installation of the library: $1 has failed." 1>&2
+
+            if ! [[ -z ${stderr_install} ]]; then
+                e_error_traceback "$stderr_install"
+            else
+                echo
+            fi
             exit 1
         fi
 
         # Removes the 'Adafruit_Python_DHT.zip' file
-        output "Removing the '$LIBRARYDHTZIP' file.\\n"
+        output "Removing the file: $LIBRARYDHTZIP.\\n"
         if ! stderr_rm="$(rm --interactive=never "$LIBRARYDHTZIP" 2>&1 >/dev/null)"
         then
-            e_error "The deletion of the '$LIBRARYDHTZIP' file has failed." 1>&2
-            e_error_traceback "$stderr_rm"
+            e_error_initialspaces "The deletion of the file has failed." 1>&2
+
+            if ! [ -z ${stderr_rm} ]; then
+                e_error_traceback "$stderr_rm"
+            else
+                echo
+            fi
             exit 1
         fi
 
         # Removes the unzipped directory
-        output "Removing the '$LIBRARYDHTDIR' directory.\\n"
+        output "Removing the directory: $LIBRARYDHTDIR.\\n"
         if ! stderr_rmdir="$(rm -R --interactive=never "$LIBRARYDHTDIR" 2>&1 >/dev/null)"
         then
-            e_error "The deletion of the '$LIBRARYDHTDIR' directory has failed." 1>&2
-            e_error_traceback "$stderr_rmdir"
+            e_error_initialspaces "The deletion of the directory has failed." 1>&2
+
+            if ! [ -z ${stderr_rmdir} ]; then
+                e_error_traceback "$stderr_rmdir"
+            else
+                echo
+            fi
             exit 1
         fi
 
-        e_success "Library: '$1' was installed manually."
+        e_success "Library: $1 was installed manually."
     fi
 
     output "\\n"
@@ -411,8 +425,7 @@ check_interfaces () {
 
     # Checks if the 'raspi-config' command exists and is executable
     if ! [ -x "$(command -v ${RASPICONFIGCOMMAND})" ]; then
-        e_error "Command: '$RASPICONFIGCOMMAND' not found. Please, run this script in a Raspberry Pi with Raspbian
-         platform." 1>&2
+        e_error_spaces "Command not found: $RASPICONFIGCOMMAND. Please, run this script in a Raspberry Pi with Raspbian platform." 1>&2
         exit 0
     fi
 
@@ -421,7 +434,7 @@ check_interfaces () {
 
         # Interface enabled
         if [ "$(raspi-config nonint get_"$interface")" == 0 ]; then
-            e_success "Interface: $interface enabled."
+            e_success "Interface enabled: $interface."
         else
             # Interface disabled
             if [ "$(raspi-config nonint get_"$interface")" == 1 ]; then
@@ -433,11 +446,11 @@ check_interfaces () {
 
                 # Error to enable the interface
                 if [ ${return_value_raspi_config} -ne 0 ]; then
-                    e_error "Error to enable the $interface interface." 1>&2
+                    e_error_spaces "Error to enable the interface: $interface." 1>&2
                     exit 1
                 fi
 
-                e_success "Interface: $interface enabled."
+                e_success "Interface enabled: $interface."
             fi
         fi
         output "\\n"
@@ -560,17 +573,17 @@ e_message_bold "Process has finished successfully. The following steps to launch
  the command: 'i2cdetect -y 1' (RPi v.3) and run the 'raspberrypi_hyot.py' script to monitor the sensors."
 
 # Asks the user whether or not to reboot the system
-seek_confirmation "Do you want to reboot the system? It would be an excellent idea for everything to work correctly!"
+seek_confirmation "   Do you want to reboot the system? It would be an excellent idea for everything to work correctly!"
 # Reboot the system
 if is_confirmed; then
 
     # Checks if the 'reboot' command exists and is executable
     if ! [ -x "$(command -v ${REBOOTCOMMAND})" ]; then
         echo
-        e_error "Command: '$REBOOTCOMMAND' not found. Please, reboot the system manually." 1>&2
+        e_error_spaces "Command not found: $REBOOTCOMMAND. Please, reboot the system manually." 1>&2
         exit 0
     else  # Reboot
-        e_header_bold "Rebooting the system..."
+        e_message_bold "Rebooting the system in 5 seconds..."
         sleep 5
         reboot
     fi
