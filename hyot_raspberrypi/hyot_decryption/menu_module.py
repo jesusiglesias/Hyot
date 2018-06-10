@@ -85,6 +85,21 @@ def check_menu():
                                    help="Directory where the public and private key rings and the trust database of "
                                         "GPG are located.")
 
+        # Local path of the encrypted file with GPG
+        general_group.add_argument("-e", "--encryptedfile",
+                                   required=False, action="store", dest="ENCRYPTEDFILE",
+                                   help="Local path of the encrypted file with GPG (optional).")
+
+        # Link where the encrypted file is stored in the cloud
+        general_group.add_argument("-l", "--link",
+                                   required=False, action="store", dest="LINK",
+                                   help="Link where the encrypted file is stored in the Cloud (optional).")
+
+        # Hash code of the encrypted file
+        general_group.add_argument("-ha", "--hash",
+                                   required=True, action="store", dest="HASHFILE",
+                                   help="Hash code of the content of the original file (decrypted).")
+
         # Fingerprint of the private key to use
         general_group.add_argument("-f", "--fingerprint",
                                    required=False, action="store", dest="FINGERPRINT",
@@ -95,41 +110,42 @@ def check_menu():
                                    required=False, action="store", dest="KEYS",
                                    help="Path of the file which stores the public and private key (optional).")
 
-        # Path of the encrypted file with GPG
-        general_group.add_argument("-e", "--encryptedfile",
-                                   required=True, action="store", dest="ENCRYPTEDFILE",
-                                   help="Path of the encrypted file with GPG.")
-
-        # Hash code of the encrypted file
-        general_group.add_argument("-ha", "--hash",
-                                   required=True, action="store", dest="HASHFILE",
-                                   help="Hash code of the encrypted file.")
-
         # Directory where the decrypted file will be store
         general_group.add_argument("-d", "--decryptedhome",
                                    required=False, action="store", dest="DECRYPTEDHOME",
                                    help="Directory where the decrypted file will be store (optional). Default: same "
-                                        "directory that the encrypted file.")
+                                        "directory that the encrypted file when option '-e/--encryptedfile' is"
+                                        " introduced.")
 
         # Parses the arguments returning the data from the options specified
         args = parser.parse_args()
 
-        if not args.KEYS and not args.FINGERPRINT:
-            print(Fore.RED + "Please, enter some method to indicate the private key. Option: -h/--help to show "
+        if not args.ENCRYPTEDFILE and not args.LINK:
+            print(Fore.RED + "✖ Please, enter some method to indicate the encrypted file. Option: -h/--help to show "
+                             "the help." + Fore.RESET)
+            sys.exit(0)
+        elif args.ENCRYPTEDFILE and args.LINK:
+            print(Fore.RED + "✖ Please, enter only one way to indicate the encrypted file (local file or link)."
+                  + Fore.RESET)
+            sys.exit(0)
+        elif not args.KEYS and not args.FINGERPRINT:
+            print(Fore.RED + "✖ Please, enter some method to indicate the private key. Option: -h/--help to show "
                              "the help." + Fore.RESET)
             sys.exit(0)
         elif args.KEYS and args.FINGERPRINT:
-            print(Fore.RED + "Please, enter only one method (by means of fingerprint or file) to indicate the private"
+            print(Fore.RED + "✖ Please, enter only one method (by means of fingerprint or file) to indicate the private"
                              " key." + Fore.RESET)
             sys.exit(0)
 
         return args
 
     except Exception as argparseError:
-        print(Fore.RED + "\nException in the check_menu() function: " + str(argparseError.message.lower()) + ".")
-        traceback.print_exc()                       # Prints the traceback
+        print(Fore.RED + "\n✖ Exception in the check_menu() function: " + str(argparseError.message.lower()) + ".")
+        # Prints the traceback
+        traceback.print_exc()
         print(Fore.RESET)
         sys.exit(1)
     except KeyboardInterrupt:
-        print("\r" + Fore.RED + "Exception: KeyboardInterrupt. Please, do not interrupt the execution." + Fore.RESET)
+        print("\r" + Fore.RED + "   ✖ Exception: KeyboardInterrupt. Please, do not interrupt the execution.\n"
+              + Fore.RESET)
         sys.exit(1)
