@@ -164,8 +164,6 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
     :param link: Link of the Cloud (e.g. Dropbox) where the file was uploaded.
     :param alert_origin: Contains the sensor and the event that triggered the alert.
     :param threshold_value: Indicates the value of the event threshold that triggered the alert.
-
-    :return: True/False depending on whether the notification was sent.
     """
 
     global TEMPLATEPATH, FROM, session
@@ -196,8 +194,7 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
 
     except Exception as templateError:
         print(Fore.RED + " ✖ Error in the email template. Email not sent. " + str(templateError) + "." + Fore.RESET)
-        return False
-        # TODO Logger Exit
+        sys.exit(1)  # TODO Logger
 
     time.sleep(0.5)
 
@@ -232,19 +229,17 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
 
     except IOError:                                           # Error to open the file
         print(Fore.RED + " ✖ Could not open the file so it is not attached to the email." + Fore.RESET)
-        # TODO Logger Exit
+        sys.exit(1)  # TODO Logger
 
     try:
         # Send the message via a SMTP server
         session.sendmail(FROM, mailto, email_instance.as_string())
 
         print(Fore.GREEN + " ✓" + Fore.RESET)
-        return True
 
     except Exception as sendError:
         print(Fore.RED + " ✖ Error to send the email: " + str(sendError) + "." + Fore.RESET)
-        return False
-        # TODO Logger Exit
+        sys.exit(1)  # TODO Logger
 
 
 def disconnect():

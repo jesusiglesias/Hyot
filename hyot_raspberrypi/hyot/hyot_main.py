@@ -138,7 +138,6 @@ alert_triggered = None                      # Indicates if an alert has been tri
 alert_origin = None                         # Indicates which event triggered the alert
 threshold_value = None                      # Indicates the value of the event threshold that triggers the alert
 link = None                                 # Link of the uploaded file to the Cloud (e.g. Dropbox)
-sent = None                                 # Indicates if the email was or not sent
 hash_code = None                            # Hash code of the video file
 
 
@@ -215,7 +214,7 @@ def reset_values():
     Resets the value of the global variables.
     """
 
-    global video_filename, video_filefullpath, alert_triggered, alert_origin, threshold_value, link, sent, hash_code
+    global video_filename, video_filefullpath, alert_triggered, alert_origin, threshold_value, link, hash_code
 
     video_filename = None
     video_filefullpath = None
@@ -223,7 +222,6 @@ def reset_values():
     alert_origin = None
     threshold_value = None
     link = None
-    sent = None
     hash_code = None
 
 
@@ -236,7 +234,7 @@ def add_cloudant(temperature, humidity, distance):
     :param distance: Indicates the value of measured distance.
     """
 
-    global MAILTO, uuid_measurement, datetime_measurement, alert_triggered, alert_origin, threshold_value, link, sent
+    global MAILTO, uuid_measurement, datetime_measurement, alert_triggered, alert_origin, threshold_value, link
 
     # Creates a JSON document content data
     data = {
@@ -249,7 +247,6 @@ def add_cloudant(temperature, humidity, distance):
         "alert_origin": alert_origin,
         "threshold_value": threshold_value,
         "link": link,
-        "notification_sent": sent,
         "mailto": MAILTO
     }
 
@@ -269,7 +266,7 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     """
 
     global MAILTO, ALERT_LED, EXT, uuid_measurement, datetime_measurement, video_filename, video_filefullpath,\
-        recording_time, alert_triggered, alert_origin, threshold_value, link, sent, hash_code
+        recording_time, alert_triggered, alert_origin, threshold_value, link, hash_code
 
     # Name of the video file
     video_filename = sensor.lower() + '_' + event.lower() + '_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) \
@@ -313,10 +310,8 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
 
     # Sends an email when an alert is triggered
     if not (MAILTO is None):
-        sent = email.send_email(MAILTO, final_path, video_filename,
-                                str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
-                                str(uuid_measurement), temperature, humidity, distance, link,
-                                alert_origin, threshold_value)
+        email.send_email(MAILTO, final_path, video_filename, str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
+                         str(uuid_measurement), temperature, humidity, distance, link, alert_origin, threshold_value)
 
     # Removes the temporary file (original file)
     system.remove_file(video_filefullpath, False)
