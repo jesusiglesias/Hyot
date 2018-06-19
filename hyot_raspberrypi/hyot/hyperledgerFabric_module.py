@@ -231,10 +231,13 @@ def __check_ngrok_address(host):
 def __apikey_yes_no():
     """
     Asks the user a yes/no question for the creation of an API key to provide a first layer of security to access the
-    REST API. Default value is yes.
+    REST API. Default value is yes. User has 3 attempts.
 
     :return: True, if the user wants to generate an API KEY. False, otherwise.
     """
+
+    # Variables
+    counter = 0                                         # Counter of attempts
 
     valid = {"yes": True, "y": True, "ye": True, "no": False, "n": False}
 
@@ -246,9 +249,14 @@ def __apikey_yes_no():
         if choice == '':
             return True
         elif choice in valid:
-                return valid[choice]
+            return valid[choice]
         else:
-            print(Fore.RED + "        Please, respond with 'yes' or 'no' (or 'y' or 'n')\n" + Fore.RESET)
+            if counter < 2:
+                print(Fore.RED + "        ✖ Please, respond with 'yes' or 'no' (or 'y' or 'n').\n" + Fore.RESET)
+                counter = counter + 1
+            else:
+                print(Fore.RED + "        ✖ Number of attempts spent. Please, run again the code.\n" + Fore.RESET)
+                sys.exit(0)
 
 
 def init():
@@ -268,11 +276,16 @@ def init():
     choice = __apikey_yes_no()
 
     if choice:
-        # Generates a random URL-safe text-string with 32 random bytes
-        hlc_api_key = token.token_urlsafe()
+        try:
+            # Generates a random URL-safe text-string with 32 random bytes
+            hlc_api_key = token.token_urlsafe()
+            print("        Please, run the Composer REST server with the following API key: " + Fore.CYAN + hlc_api_key
+                  + Fore.RESET)
 
-        print("        Please, run the Composer REST server with the following API key: " + Fore.GREEN + hlc_api_key
-              + Fore.RESET)
+        except Exception as tokenError:
+            print(Fore.RED + "        ✖ Error to generate the API key. Exception: " + str(tokenError) + "."
+                  + Fore.RESET)
+            sys.exit(1)
 
     # Asks the user for the host where Hyperledger Composer REST server is running
     hlc_server_host = raw_input(Fore.BLUE + "        Enter the host (e.g. IP or ngrok address) where Hyperledger "
