@@ -3,7 +3,7 @@
     "composer": "^0.19.0"
   },
   "name": "hyot-network",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Business network definition for Hyot project",
   "scripts": {
     "build": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/hyot-network@$(node -p \"require('./package.json').version\").bna",

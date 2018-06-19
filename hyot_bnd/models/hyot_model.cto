@@ -45,7 +45,7 @@ concept AlertDetails {
   o DateTime timestamp
   o SensorType alert_origin
   o String hash
-  o String shared_link
+  o String link
   --> User owner
 }
 
