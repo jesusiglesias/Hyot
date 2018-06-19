@@ -113,12 +113,13 @@ fingerprint_array = []                                           # Array to stor
 ########################################
 def __request_validate_password():
     """
-    Asks the user for the password for the private key and validates it based on a set of rules.
+    Asks the user for the password for the private key and validates it based on a set of rules. User has 3 attempts.
     """
 
     # Variables
     min_length = 8                                               # Minimum length allowed for the password
-    counter = 0                                                  # Counter of attempts
+    counter_pass = 0                                             # Counter of attempts
+    counter_confirm_pass = 0                                     # Counter of attempts
 
     while True:
 
@@ -133,18 +134,25 @@ def __request_validate_password():
         # Removes the spaces
         key_pass = key_pass.replace(" ", "")
 
-        if len(key_pass) < min_length:                           # Checks for min length
+        if counter_pass > 2:
+            print(Fore.RED + "        ✖ Number of attempts spent. Please, run again the code.\n" + Fore.RESET)
+            sys.exit(0)
+        elif len(key_pass) < min_length:                           # Checks for min length
             print(Fore.YELLOW + "        Password must be at least " + str(min_length) + " characters long."
                   + Fore.RESET)
+            counter_pass = counter_pass + 1
 
         elif sum(c.isdigit() for c in key_pass) < 1:             # Checks for digit
             print(Fore.YELLOW + "        Password must contain at least 1 number." + Fore.RESET)
+            counter_pass = counter_pass + 1
 
         elif not any(c.isupper() for c in key_pass):             # Checks for uppercase letter
             print(Fore.YELLOW + "        Password must contain at least 1 uppercase letter." + Fore.RESET)
+            counter_pass = counter_pass + 1
 
         elif not any(c.islower() for c in key_pass):             # Checks for lowercase letter
             print(Fore.YELLOW + "        Password must contain at least 1 lowercase letter." + Fore.RESET)
+            counter_pass = counter_pass + 1
 
         else:
             break
@@ -161,9 +169,9 @@ def __request_validate_password():
 
         # Compares both passwords
         if key_pass != confirm_pass:
-            if counter < 2:
-                counter = counter + 1
+            if counter_confirm_pass < 2:
                 print(Fore.YELLOW + "        ✖ Passwords must match. Please, try it again." + Fore.RESET)
+                counter_confirm_pass = counter_confirm_pass + 1
             else:
                 print(Fore.RED + "        ✖ Number of attempts spent. Please, run again the code." + Fore.RESET)
                 sys.exit(0)
@@ -171,26 +179,34 @@ def __request_validate_password():
             return key_pass
 
 
-def __check_and_rename(filepath, qr, count=0):
+def __check_and_rename(qr, count=0):
     """
     Checks if the file exists in the path and if so it renames it adding the rule: [_number].
 
-    :param filepath: Path of the file that will store the public and private key.
     :param qr: True, to indicate that the file belongs to the QR image. False, to indicate that belongs to the keys
      file.
     :param count: Number to add to the name.
     """
 
-    global keys_finalpath, qr_finalpath
+    global KEYSFILE, QRIMAGE, gpg_dir, keys_finalpath, qr_finalpath
 
-    # Saves the original path of the file
-    original_filepath = filepath
-
-    # Builds the new name
+    # Generates the new name
     if count != 0:
-        split = filepath.split(".")
-        name = split[0] + "_" + str(count)
-        filepath = ".".join([name, split[1]])
+        if qr:
+            split = QRIMAGE.split(".")
+        else:
+            split = KEYSFILE.split(".")
+
+        rename = split[0] + "_" + str(count)
+        filename = ".".join([rename, split[1]])
+    else:
+        if qr:
+            filename = QRIMAGE
+        else:
+            filename = KEYSFILE
+
+    # Possible final path
+    filepath = gpg_dir + "/" + filename
 
     # Checks if a file exists with the same name
     if not os.path.isfile(filepath):
@@ -201,7 +217,7 @@ def __check_and_rename(filepath, qr, count=0):
 
         return
     else:
-        __check_and_rename(original_filepath, qr, count + 1)
+        __check_and_rename(qr, count + 1)
 
 
 def __generate_qrcode():
@@ -209,17 +225,14 @@ def __generate_qrcode():
     Generates a QR code of the fingerprint of the GPG key.
     """
 
-    global QRIMAGE, gpg_dir, keyid, qr_finalpath
+    global keyid, qr_finalpath
 
     try:
         # Creates an image from the QR Code instance
         qr_image = qrcode.make(keyid)
 
-        # Path where the QR image will be stored
-        qr_initialpath = gpg_dir + "/" + QRIMAGE
-
         # Checks if the file exists in the path and if so it renames it adding the rule: [_number]
-        __check_and_rename(qr_initialpath, True)
+        __check_and_rename(True)
 
         # Stores the QR image
         qr_image.save(qr_finalpath)
@@ -258,11 +271,8 @@ def __generate_keys():
     # Stores the keys in a file
     if public_key and private_key:
 
-        # Initial path where the keys will be stored
-        keys_initialpath = gpg_dir + "/" + KEYSFILE
-
         # Checks if the file exists in the path and if so it renames it adding the rule: [_number]
-        __check_and_rename(keys_initialpath, False)
+        __check_and_rename(False)
 
         with open(keys_finalpath, 'w') as f:
             f.write(public_key)
