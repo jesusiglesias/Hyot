@@ -78,8 +78,9 @@ except yaml.YAMLError as yamlError:
 ########################################
 #              CONSTANTS               #
 ########################################
-# Path where GPG will store the public and private keyring files and a trust database
-GPGDIRDEFAULT = os.path.dirname(os.path.abspath(__file__)) + "/gpg"
+# Path where GPG will store the public and private keyring files and a trust database. Hidden directory in user’s home
+# directory
+GPGDIRDEFAULT = os.path.expanduser('~') + "/.gpg"
 PUBKEYRING = "pub_hyot.gpg"                                             # Public keyring
 SECKEYRING = "sec_hyot.gpg"                                             # Secret keyring
 KEYSFILE = "hyot_keys.asc"                                              # File with the public and private keys
