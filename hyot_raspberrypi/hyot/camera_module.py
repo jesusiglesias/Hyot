@@ -70,15 +70,16 @@ def init():
 
     global camera
 
-    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing the Picamera " + Style.RESET_ALL)
+    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing the Picamera" + Style.RESET_ALL),
 
     try:
         camera = picamera.PiCamera()                    # Creates an instance of the Picamera
 
-        print(Fore.GREEN + "        Picamera initialized correctly" + Fore.RESET)
+        print(Fore.GREEN + " ✓" + Fore.RESET)
 
     except Exception as cameraError:
-        print(Fore.RED + "        Error to initialize the Picamera. Exception: " + Fore.RESET + str(cameraError))
+        print(Fore.RED + " ✖")
+        print("        Error to initialize the Picamera. Exception: " + str(cameraError) + "." + Fore.RESET)
         sys.exit(1)
 
     time.sleep(1)
@@ -87,16 +88,16 @@ def init():
 
 def record_video(path, recording_time):
     """
-    Record a video for n seconds. Default: 10 seconds.
+    Records a video for n seconds. Default: 10 seconds.
 
     :param path: Path where the video will be saved.
-    :param recording_time: Time that the recording will take.
+    :param recording_time: Time of recording.
     """
 
     global camera
 
     try:
-        print(Fore.LIGHTBLACK_EX + "   -- Taking a recording of " + str(recording_time) + " seconds and temporarily"
+        print(Fore.LIGHTBLACK_EX + "     -- Taking a recording of " + str(recording_time) + " seconds and temporarily"
               " storing it in the path: " + path + Fore.RESET),
 
         time.sleep(1)
@@ -111,9 +112,8 @@ def record_video(path, recording_time):
         time.sleep(1)
 
     except Exception as recordError:
-
-        print(Fore.RED + " ✕ Error to record the video: " + str(recordError) + Fore.RESET)
-        sys.exit(1)  # TODO
+        print(Fore.RED + " ✖ Error to record the video: " + str(recordError) + "." + Fore.RESET)
+        sys.exit(1)  # TODO Logger
 
 
 def disconnect():
@@ -124,7 +124,7 @@ def disconnect():
     global camera
 
     if not (camera is None):
-        print("        Disconnecting the Picamera"),
+        print("      Disconnecting the Picamera"),
 
         time.sleep(0.25)
 

@@ -65,11 +65,11 @@ try:
     conf = yaml.load(open('conf/hyot.yml'))
 
 except IOError as ioERROR:
-    print(Fore.RED + "Please, place the configuration file (hyot.yml) inside a directory called conf in the root "
+    print(Fore.RED + "✖ Please, place the configuration file (hyot.yml) inside a directory called 'conf' in the root "
                      "path (conf/hyot.yml)." + Fore.RESET)
     sys.exit(1)
 except yaml.YAMLError as yamlError:
-    print(Fore.RED + "The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
+    print(Fore.RED + "✖ The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
     sys.exit(1)
 
 
@@ -83,8 +83,9 @@ try:
     AUTHMETHOD = conf['iot']['authmethod']        # Method of authentication
     AUTHTOKEN = conf['iot']['authtoken']          # Authentication token to securely connect the device to the platform
 except (KeyError, TypeError) as keyError:
-    print(Fore.RED + "Please, make sure that the keys: [iot|orgid], [iot|devicetype], [iot|deviceid], [iot|authmethod] "
-                     "and [iot|authtoken] exist in the configuration file (conf/hyot.yml)." + Fore.RESET)
+    print(Fore.RED + "✖ Please, make sure that the keys: [iot|orgid], [iot|devicetype], [iot|deviceid],"
+                     " [iot|authmethod] and [iot|authtoken] exist in the configuration file (conf/hyot.yml)."
+          + Fore.RESET)
     sys.exit(1)
 
 
@@ -104,8 +105,7 @@ def connect():
 
     global ORGID, DEVICETYPE, DEVICEID, AUTHTOKEN, AUTHMETHOD, client
 
-    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Generating the client of the IoT Platform"
-          + Style.RESET_ALL)
+    print(Style.BRIGHT + Fore.BLACK + "\n      - Generating the client of the IoT Platform" + Style.RESET_ALL)
 
     # Asks the user for IoT platform credentials
     organization_id = raw_input(Fore.BLUE + "        Enter the identifier of the organization: " + Fore.WHITE + "(" +
@@ -120,7 +120,7 @@ def connect():
 
     # Checks if some field is empty
     if organization_id.isspace() or device_type.isspace() or device_id.isspace() or auth_token.isspace():
-        print(Fore.RED + "        The IoT platform credentials can not be empty" + Fore.RESET)
+        print(Fore.RED + "        ✖ The IoT platform credentials can not be empty." + Fore.RESET)
         sys.exit(0)
 
     try:
@@ -147,11 +147,10 @@ def connect():
 
         # Establishes a connection with the service instance
         client.connect()
-
-        print(Fore.GREEN + "        IoT platform client connected" + Fore.RESET)
+        print(Fore.GREEN + "        ✓ IoT platform client connected" + Fore.RESET)
 
     except Exception as iotError:
-        print(Fore.RED + "        Error to initialize the IoT client. Exception: " + Fore.RESET + str(iotError))
+        print(Fore.RED + "        ✖ Error to initialize the IoT client. Exception: " + str(iotError) + "." + Fore.RESET)
         sys.exit(1)
 
     time.sleep(1)
@@ -174,7 +173,7 @@ def publish_event(timestamp, temperature, humidity, distance):
     data = {'d': {'Datetime': timestamp, 'Temperature': temperature, 'Humidity': humidity, 'Distance': distance}}
 
     try:
-        print(Fore.LIGHTBLACK_EX + "   -- Publishing the event to the IoT platform" + Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "     -- Publishing the event to the IoT platform" + Fore.RESET),
         time.sleep(0.5)
 
         # Sends the data to the Watson IoT Platform
@@ -183,7 +182,8 @@ def publish_event(timestamp, temperature, humidity, distance):
         print(Fore.GREEN + " ✓" + Fore.RESET)
 
     except Exception as publishError:
-        print(Fore.RED + " ✕ Error publishing the event: " + str(publishError) + Fore.RESET)
+        print(Fore.RED + " ✖ Error publishing the event: " + str(publishError) + ". Aborting..." + Fore.RESET)
+        sys.exit(1)  # TODO Logger
 
 
 def disconnect():
@@ -194,7 +194,7 @@ def disconnect():
     global client
 
     if not (client is None):
-        print("        Disconnecting the IoT platform client"),
+        print("      Disconnecting the IoT platform client"),
 
         time.sleep(0.25)
 

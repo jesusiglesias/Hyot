@@ -70,7 +70,7 @@ try:
     conf = yaml.load(open('conf/hyot.yml'))
 
 except IOError as ioERROR:
-    print(Fore.RED + "Please, place the configuration file (hyot.yml) inside a directory called conf in the root "
+    print(Fore.RED + "✖ Please, place the configuration file (hyot.yml) inside a directory called 'conf' in the root "
                      "path (conf/hyot.yml)." + Fore.RESET)
     sys.exit(1)
 except yaml.YAMLError as yamlError:
@@ -166,14 +166,14 @@ def __hlc_ping():
 
     # Error 401 - Unauthorized request
     if response.status_code == requests.codes.unauthorized:
-        print(Fore.RED + "        Error 401: Unauthorized request. Please, enter a valid API key or credentials to"
-                         " submit the request to the Hyperledger Composer REST server" + Fore.RESET)
+        print(Fore.RED + "        ✖ Error 401: Unauthorized request. Please, enter a valid API key or credentials to"
+                         " submit the request to the Hyperledger Composer REST server." + Fore.RESET)
         sys.exit(0)
 
     # Error 404 - Not found
     elif response.status_code == requests.codes.not_found:
-        print(Fore.RED + "        Error 404: Not found. Please, verify in the code that the URL is right and can be"
-                         " found on the Hyperledger Composer REST server" + Fore.RESET)
+        print(Fore.RED + "        ✖ Error 404: Not found. Please, verify in the code that the URL is right and can be"
+                         " found on the Hyperledger Composer REST server." + Fore.RESET)
         sys.exit(0)
 
     # Checks if the response is a JSON serializable and contains a specified key
@@ -184,22 +184,22 @@ def __hlc_ping():
            (re.match(r"%s" % REGEX_VALUE_PARTICIPANT_USER, response.json()[KEY_PARTICIPANT]) or
                re.match(r"%s" % REGEX_VALUE_PARTICIPANT_NETWORKADMIN, response.json()[KEY_PARTICIPANT]))):
 
-            print(Fore.GREEN + "        Business network is alive in the address" + Fore.RESET)
+            print(Fore.GREEN + "        ✓ Business network is alive in the address" + Fore.RESET)
 
         else:
             if "error" in (response.json()):
-                print(Fore.RED + "        Wrong request. Error: " + str(response.status_code) + ". " +
-                      str(response.json()['error']['name']) + ": " + str(response.json()['error']['message']) +
+                print(Fore.RED + "        ✖ Wrong request. Error: " + str(response.status_code) + ". " +
+                      str(response.json()['error']['name']) + ": " + str(response.json()['error']['message']) + "." +
                       Fore.RESET)
             else:
-                print(Fore.RED + "        Participant key in the response does not contain the following"
+                print(Fore.RED + "        ✖ Participant key in the response does not contain the following"
                       " expressions: " + VALUE_PARTICIPANT_NETWORKADMIN + " or " + VALUE_PARTICIPANT_USER + "."
                       + Fore.RESET)
             sys.exit(0)
 
     else:
-        print(Fore.RED + "        Response of Ping request is not a JSON serializable or it does not contain the"
-                         " 'participant' key" + Fore.RESET)
+        print(Fore.RED + "        ✖ Response of Ping request is not a JSON serializable or it does not contain the"
+                         " 'participant' key." + Fore.RESET)
         sys.exit(0)
 
 
@@ -281,7 +281,7 @@ def init():
 
     # Checks if the host is empty
     if hlc_server_host.isspace():
-        print(Fore.RED + "        The host of the Hyperledger Composer REST server can not be empty" + Fore.RESET)
+        print(Fore.RED + "        ✖ The host of the Hyperledger Composer REST server can not be empty." + Fore.RESET)
         sys.exit(0)
 
     # Asks the user for the port where Hyperledger Composer REST server is running
@@ -290,12 +290,13 @@ def init():
 
     # Checks if the port is empty
     if str(hlc_server_port).isspace():
-        print(Fore.RED + "        The port of the Hyperledger Composer REST server can not be empty" + Fore.RESET)
+        print(Fore.RED + "        ✖ The port of the Hyperledger Composer REST server can not be empty." + Fore.RESET)
         sys.exit(0)
 
     # Checks if the port is a number
     if not __port_isdigit(str(hlc_server_port)):
-        print(Fore.RED + "        The port of the Hyperledger Composer REST server can only be a number" + Fore.RESET)
+        print(Fore.RED + "        ✖ The port of the Hyperledger Composer REST server can only be a number."
+              + Fore.RESET)
         sys.exit(0)
 
     # Checks if the address belongs to the NGROK tool
@@ -304,7 +305,7 @@ def init():
     if ngrok_address:         # Ngrok address
 
         if int(hlc_server_port) != HTTP_PORT and int(hlc_server_port) != HTTPS_PORT:
-            print(Fore.RED + "        The port of NGROK must be 80 for HTTP connections or 443 for HTTPS connections"
+            print(Fore.RED + "        ✖ The port of NGROK must be 80 for HTTP connections or 443 for HTTPS connections."
                   + Fore.RESET)
             sys.exit(0)
 
@@ -333,17 +334,17 @@ def init():
 
         # Host and port is running and alive
         if result_connection == 0:
-            print(Fore.GREEN + "        Port " + str(hlc_server_port) + " in " + hlc_server_host + " reachable"
+            print(Fore.GREEN + "        ✓ Port " + str(hlc_server_port) + " in " + str(hlc_server_host) + " reachable"
                   + Fore.RESET)
 
             # Checks if this address belongs to Hyperledger Composer REST server
             __hlc_ping()
         else:
-            print(Fore.RED + "        Connection closed in this address. Error on connect: " + str(result_connection)
-                  + Fore.RESET)
+            print(Fore.RED + "        ✖ Connection closed in this address. Error on connect: " + str(result_connection)
+                  + "." + Fore.RESET)
             sys.exit(0)
     except socket.gaierror:
-        print(Fore.RED + "        Given host is invalid" + Fore.RESET)
+        print(Fore.RED + "        ✖ Given host is invalid." + Fore.RESET)
         sys.exit(1)
     finally:
         sock.close()                                               # Closes the socket
@@ -391,8 +392,8 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link):
         }
     }
 
-    print(Fore.LIGHTBLACK_EX + "   -- Submitting the transaction to publish the alert to the Blockchain of Hyperledger"
-                               " Fabric" + Fore.RESET),
+    print(Fore.LIGHTBLACK_EX + "     -- Submitting the transaction to publish the alert to the Blockchain of"
+                               " Hyperledger Fabric" + Fore.RESET),
     time.sleep(0.5)
 
     # POST request - PublishAlert transaction TODO - API Namespace
@@ -405,20 +406,20 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link):
 
     # Error 401 - Unauthorized request
     elif response.status_code == requests.codes.unauthorized:
-        print(Fore.RED + " ✕ Error to submit the transaction. Error 401: Unauthorized request. Please, enter a valid"
-                         " credentials to submit the request to the Hyperledger Composer REST server" + Fore.RESET)
-        sys.exit(0)
+        print(Fore.RED + " ✖ Error to submit the transaction. Error 401: Unauthorized request. Please, enter a valid"
+                         " credentials to submit the request to the Hyperledger Composer REST server." + Fore.RESET)
+        sys.exit(0)  # TODO Logger
 
     # Error 404 - Not found
     elif response.status_code == requests.codes.not_found:
-        print(Fore.RED + " ✕ Error to submit the transaction. Error 404: Not found. Please, verify that the URL is"
-                         " right and can be found on the Hyperledger Composer REST server" + Fore.RESET)
-        sys.exit(0)
+        print(Fore.RED + " ✖ Error to submit the transaction. Error 404: Not found. Please, verify that the URL is"
+                         " right and can be found on the Hyperledger Composer REST server." + Fore.RESET)
+        sys.exit(0)  # TODO Logger
 
     else:
-        print(Fore.RED + " ✕ Error to submit the transaction (code " + str(response.status_code) + "). "
-              + str(response.json()['error']['message']) + Fore.RESET)
-        sys.exit(0)
+        print(Fore.RED + " ✖ Error to submit the transaction (code " + str(response.status_code) + "). "
+              + str(response.json()['error']['message']) + "." + Fore.RESET)
+        sys.exit(0)  # TODO Logger
 
 
 def file_hash(video):
@@ -433,7 +434,7 @@ def file_hash(video):
     global BLOCKSIZE
 
     try:
-        print(Fore.LIGHTBLACK_EX + "   -- Applying a hash function to the content of the video" + Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "     -- Applying a hash function to the content of the video" + Fore.RESET),
 
         time.sleep(1)
 
@@ -454,5 +455,5 @@ def file_hash(video):
 
     except Exception as hashError:
 
-        print(Fore.RED + " ✕ Error to apply the hash function to the video: " + str(hashError) + Fore.RESET)
-        sys.exit(1)  # TODO
+        print(Fore.RED + " ✖ Error to apply the hash function to the video: " + str(hashError) + "." + Fore.RESET)
+        sys.exit(1)  # TODO Logger

@@ -66,6 +66,8 @@ except KeyboardInterrupt:
 REGEX_VALID_EMAIL = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$"
 # Regex to check if the device is a Raspberry Pi
 REGEX_CHECK_RASPBERRYPI = "^Hardware\s+:\s+(\w+)$"
+# Name of the main file
+HYOT_MAIN = "hyot_main.py"
 
 
 ########################################
@@ -77,8 +79,8 @@ def check_root():
     """
 
     if not os.geteuid() == 0:
-        print(Fore.RED + "You need to have root privileges to run this script. Please try it again using "
-                         "'sudo'." + Fore.RESET)
+        print(Fore.RED + "✖ You need to have root privileges to run this script. Please, try it again using sudo."
+              + Fore.RESET)
         sys.exit(0)
 
 
@@ -88,7 +90,7 @@ def check_platform():
     """
 
     if not sys.platform.startswith('linux'):
-        print(Fore.RED + "This script must be run on GNU/Linux platform. For example: Raspbian." + Fore.RESET)
+        print(Fore.RED + "✖ This script must be run on GNU/Linux platform (e.g. Raspbian)." + Fore.RESET)
         sys.exit(0)
 
 
@@ -107,17 +109,17 @@ def check_raspberrypi():
         with open('/proc/cpuinfo', 'r') as infile:
             cpuinfo = infile.read()
     except IOError:
-        print(Fore.RED + "No such file or directory: '/proc/cpuinfo'. This script must be run on a Raspberry "
-                         "Pi." + Fore.RESET)
+        print(Fore.RED + "✖ No such file or directory: /proc/cpuinfo. This script must be run on a Raspberry Pi."
+              + Fore.RESET)
         sys.exit(1)
 
     # Matches a line like 'Hardware   : BCMXXXX'
     match = re.search(r"%s" % REGEX_CHECK_RASPBERRYPI, cpuinfo, flags=re.MULTILINE | re.IGNORECASE)
 
-    # 1. Couldn't find the 'Hardware' field. Assume that it isn't a Raspberry Pi
-    # 2. Find the 'Hardware' field but the value is another one
+    # 1. Couldn't find the 'Hardware' field. Assumes that it isn't a Raspberry Pi
+    # 2. Finds the 'Hardware' field but the value is another one
     if not match or match.group(1) not in ('BCM2708', 'BCM2709', 'BCM2835'):
-        print(Fore.RED + "You need to run this script on a Raspberry Pi." + Fore.RESET)
+        print(Fore.RED + "✖ You need to run this script on a Raspberry Pi." + Fore.RESET)
         sys.exit(0)
 
 
@@ -139,8 +141,8 @@ def check_network():
         socket.setdefaulttimeout(timeout)
         socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
     except socket.error:
-        print(Fore.RED + "Raspberry Pi is not connected to the network. Please, enable the network to continue "
-                         "the execution." + Fore.RESET)
+        print(Fore.RED + "✖ Raspberry Pi is not connected to the network. Please, enable the network to continue the "
+                         "execution." + Fore.RESET)
         sys.exit(1)
 
 
@@ -149,18 +151,19 @@ def check_concurrency():
     Checks if this script is or not already running.
     """
 
+    global HYOT_MAIN
+
     # Variables
-    filename = "raspberrypi_hyot.py"        # Name of the file
     count = 0                               # Process number counter
 
     # Obtains all pids
     for pid in psutil.pids():
         p = psutil.Process(pid)
 
-        if p.name() == "python" and len(p.cmdline()) > 1 and filename in p.cmdline()[1]:
+        if p.name() == "python" and len(p.cmdline()) > 1 and HYOT_MAIN in p.cmdline()[1]:
             # Another instance is running
             if count >= 1:
-                print(Fore.RED + "Process: %s is already running with PID %s." % (filename, p.pid) + Fore.RESET)
+                print(Fore.RED + "✖ Process: %s is already running with PID %s." % (HYOT_MAIN, p.pid) + Fore.RESET)
                 sys.exit(0)
             else:
                 count += 1
@@ -172,7 +175,7 @@ def __is_valid_email(email):
 
     :param email: Email entered.
 
-    :return: True/False based on the validity of the email.
+    :return: True or False based on the validity of the email.
     """
 
     return bool(re.match(r"%s" % REGEX_VALID_EMAIL, str(email)) is not None)
@@ -186,7 +189,6 @@ def menu():
     """
 
     try:
-
         # Maximum distance in meters to be measured by the HC-SR04 sensor
         default_max_distance = 1.5
 
@@ -212,18 +214,7 @@ def menu():
         # Email address where to send an alert notification
         general_group.add_argument("-e", "--email",
                                    default=None, required=False, action="store", dest="EMAIL",
-                                   help="Email address where to send an alert notification. Default: disabled option.")
-
-        # Time that the recording will take when an alert is triggered
-        general_group.add_argument("-r", "--recordingtime",
-                                   type=int, default=10, required=False, action="store", dest="RECORDING_TIME",
-                                   help="Time that the recording will take when an alert is triggered (e.g. 10 seconds)"
-                                        ". Default: 10.")
-
-        # Wait time between measurements
-        general_group.add_argument("-wt", "--waittime",
-                                   type=int, default=3, required=False, action="store", dest="WAITTIME_MEASUREMENTS",
-                                   help="Wait time between measurements in the sensors (e.g. 3 seconds). Default: 3.")
+                                   help="Email address where to send an alert notification. Default: disabled.")
 
         # Maximum distance to be measured by the HC-SR04 sensor
         general_group.add_argument("-m", "--maxdistancehcsr",
@@ -231,6 +222,16 @@ def menu():
                                    dest="HCSR_MAXDISTANCE",
                                    help="Maximum distance to be measured by the HC-SR04 sensor (e.g. 1.5 meters). "
                                         "Default: 1.5.")
+
+        # Time of recording when an alert is triggered
+        general_group.add_argument("-r", "--recordingtime",
+                                   type=int, default=10, required=False, action="store", dest="RECORDING_TIME",
+                                   help="Time of recording when an alert is triggered (e.g. 10 seconds). Default: 10.")
+
+        # Wait time between each measurement
+        general_group.add_argument("-wt", "--waittime",
+                                   type=int, default=3, required=False, action="store", dest="WAITTIME_MEASUREMENT",
+                                   help="Wait time between each measurement (e.g. 3 seconds). Default: 3.")
 
         # ### Pin group ###
         # DHT11 sensor - Data pin
@@ -254,8 +255,8 @@ def menu():
         # Red led - Pin
         pin_group.add_argument("-lp", "--ledpin",
                                type=int, default=13, required=False, action="store", dest="LED_PIN",
-                               help="Pin for the LED in Broadcom GPIO pin number (e.g. 13 for Raspberry Pi "
-                                    "GPIO13). Default: 13.")
+                               help="Pin for the LED in Broadcom GPIO pin number (e.g. 13 for Raspberry Pi GPIO13)."
+                                    " Default: 13.")
 
         # ### I2C group ###
         # LCD 16x2 - DHT11 I2C Expander
@@ -304,81 +305,80 @@ def menu():
         # Checks the '--email' argument
         if args.EMAIL:
             if not __is_valid_email(args.EMAIL):
-                print(Fore.RED + "Email address entered is not a valid email. Please, type the '-h/--help' option to "
-                                 "show the help." + Fore.RESET)
+                print(Fore.RED + "✖ Email address entered is not a valid email. Please, type -h/--help option to "
+                                 "get more information." + Fore.RESET)
                 sys.exit(0)
 
         # Checks the '--recordingtime' argument
         if args.RECORDING_TIME < 1:
-            print(Fore.RED + "Invalid recording time. Please, type the '-h/--help' option to show the help"
-                             " or the value must be upper than 0. Default value: 10." + Fore.RESET)
+            print(Fore.RED + "✖ Invalid recording time (value must be upper than 0, default 10). Please, type "
+                             "-h/--help option to get more information." + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--waittime' argument
-        if args.WAITTIME_MEASUREMENTS < 2:
-            print(Fore.RED + "Invalid wait time between measurements. Please, type the '-h/--help' option to show the "
-                             "help or a value in seconds upper than 2. Default value: 3." + Fore.RESET)
+        if args.WAITTIME_MEASUREMENT < 2:
+            print(Fore.RED + "✖ Invalid wait time between measurements (value must be upper than 2, default 3). "
+                             "Please, type -h/--help option to get more information." + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--maxdistancehcsr' argument
         if args.HCSR_MAXDISTANCE <= 0.3:
-            print(Fore.RED + "Invalid maximum distance to be measured by the HC-SR04 sensor. Please, type the "
-                             "'-h/--help' option to show the help or a value in meters upper than 0.3. Default value: "
-                             "1.5." + Fore.RESET)
+            print(Fore.RED + "✖ Invalid maximum distance to be measured by the HC-SR04 sensor (value must be upper "
+                             "than 0.3, default 1.5). Please, type -h/--help option to get more information."
+                  + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--dht11data' argument
         if args.DHT_DATAPIN < 0 or args.DHT_DATAPIN > 27:
-            print(Fore.RED + "Invalid data pin for the DHT11 sensor. Please, type the '-h/--help' option to show the "
-                             "help or the number in Broadcom GPIO format and in the range 0-27. Default value: 21."
+            print(Fore.RED + "✖ Invalid data pin for the DHT11 sensor (number must be in Broadcom GPIO format and in "
+                             "the range 0-27, default 21). Please, type -h/--help option to get more information."
                   + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--hcsrecho' argument
         if args.HCSR_ECHOPIN < 0 or args.HCSR_ECHOPIN > 27:
-            print(Fore.RED + "Invalid echo pin for the HC-SR04 sensor. Please, type the '-h/--help' option to show the "
-                             "help or the number in Broadcom GPIO format and in the range 0-27. Default value: 19."
+            print(Fore.RED + "✖ Invalid echo pin for the HC-SR04 sensor (number must be in Broadcom GPIO format and in "
+                             "the range 0-27, default 19). Please, type -h/--help option to get more information."
                   + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--hcsrtrigger' argument
         if args.HCSR_TRIGPIN < 0 or args.HCSR_TRIGPIN > 27:
-            print(Fore.RED + "Invalid trigger pin for the HC-SR04 sensor. Please, type the '-h/--help' option to show "
-                             "the help or the number in Broadcom GPIO format and in the range 0-27. Default value: 26."
+            print(Fore.RED + "✖ Invalid trigger pin for the HC-SR04 sensor (number must be in Broadcom GPIO format and "
+                             "in the range 0-27, default 26). Please, type -h/--help option to get more information."
                   + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--ledpin' argument
         if args.LED_PIN < 0 or args.LED_PIN > 27:
-            print(Fore.RED + "Invalid pin for led. Please, type the '-h/--help' option to show the help"
-                             " or the number in Broadcom GPIO format and in the range 0-27. Default value: 13."
-                  + Fore.RESET)
+            print(Fore.RED + "✖ Invalid pin for led (number must be in Broadcom GPIO format and in the range 0-27, "
+                             "default 13). Please, type -h/--help option to get more information." + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--dhti2cexpander' argument
         if args.DHT_I2CEXPANDER not in ['PCF8574', 'MCP23008', 'MCP23017']:
-            print(Fore.RED + "Invalid I2C expander type for the LCD of the DHT11 sensor. Please, type the '-h/--help' "
-                             "option to show the help or specify one of 'PCF8574', 'MCP23008', 'MCP23017'. "
-                             "Default value: PCF8574." + Fore.RESET)
+            print(Fore.RED + "✖ Invalid I2C expander type for the LCD of the DHT11 sensor (value must be one of "
+                             "PCF8574, MCP23008, MCP23017, default PCF8574). Please, type -h/--help option to get "
+                             "more information." + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--hcsri2cexpander' argument
         if args.HCSR_I2CEXPANDER not in ['PCF8574', 'MCP23008', 'MCP23017']:
-            print(Fore.RED + "Invalid I2C expander type for the LCD of the HC-SR04 sensor invalid. Please, type the "
-                             "'-h/--help' option to show the help or specify one of 'PCF8574', 'MCP23008', 'MCP23017'."
-                             " Default value: PCF8574." + Fore.RESET)
+            print(Fore.RED + "✖ Invalid I2C expander type for the LCD of the HC-SR04 sensor (value must be one of "
+                             "PCF8574, MCP23008, MCP23017, default PCF8574). Please, type -h/--help option to get "
+                             "more information." + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--tempthreshold' argument
         if args.TEMPERATURE_THRESHOLD < 0:
-            print(Fore.RED + "Invalid temperature alert threshold. Please, type the '-h/--help' option to show the help"
-                             " or the value must be upper than 0. Default value: 30." + Fore.RESET)
+            print(Fore.RED + "✖ Invalid temperature alert threshold (value must be upper than 0, default 30). "
+                             "Please, type -h/--help option to get more information." + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--humthreshold' argument
         if args.HUMIDITY_THRESHOLD < 0 or args.HUMIDITY_THRESHOLD > 100:
-            print(Fore.RED + "Invalid humidity alert threshold. Please, type the '-h/--help' option to show the help"
-                             " or the value must be in the range 0-100. Default value: 80." + Fore.RESET)
+            print(Fore.RED + "✖ Invalid humidity alert threshold (value must be in the range 0-100, default 80). "
+                             "Please, type -h/--help option to get more information." + Fore.RESET)
             sys.exit(0)
 
         # Calculates the maximum distance
@@ -389,18 +389,20 @@ def menu():
 
         # Checks the '--distancethreshold' argument
         if args.DISTANCE_THRESHOLD < 0 or args.DISTANCE_THRESHOLD > args.HCSR_MAXDISTANCE * 100:
-            print(Fore.RED + "Invalid distance alert threshold. Please, type the '-h/--help' option to show the help"
-                             " or the value must be in the range 0-" + str(int(max_distance)) + ". Default value: 50."
+            print(Fore.RED + "✖ Invalid distance alert threshold (value must be in the range 0-" +
+                  str(int(max_distance)) + ", default 50). Please, type -h/--help option to get more information."
                   + Fore.RESET)
             sys.exit(0)
 
         return args
 
     except Exception as argparseError:
-        print(Fore.RED + "\nException in the menu() function: " + str(argparseError.message.lower()) + ".")
-        traceback.print_exc()       # Prints the traceback
+        print(Fore.RED + "\n✖ Exception in the menu() function: " + str(argparseError.message.lower()) + ".")
+        # Prints the traceback
+        traceback.print_exc()
         print(Fore.RESET)
         sys.exit(1)
     except KeyboardInterrupt:
-        print("\r" + Fore.RED + "Exception: KeyboardInterrupt. Please, do not interrupt the execution." + Fore.RESET)
+        print(Fore.RED + "\r✖ Exception: KeyboardInterrupt. Please, do not interrupt the execution."
+              + Fore.RESET)
         sys.exit(1)

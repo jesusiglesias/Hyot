@@ -63,11 +63,11 @@ try:
     conf = yaml.load(open('conf/hyot.yml'))
 
 except IOError as ioERROR:
-    print(Fore.RED + "Please, place the configuration file (hyot.yml) inside a directory called conf in the root "
+    print(Fore.RED + "✖ Please, place the configuration file (hyot.yml) inside a directory called 'conf' in the root "
                      "path (conf/hyot.yml)." + Fore.RESET)
     sys.exit(1)
 except yaml.YAMLError as yamlError:
-    print(Fore.RED + "The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
+    print(Fore.RED + "✖ The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
     sys.exit(1)
 
 
@@ -81,9 +81,10 @@ MIN_SPACE = 524288000                   # Recommended available space in the acc
 
 try:
     TOKEN = conf['dropbox']['token']     # Authorization token
+
 except (KeyError, TypeError) as keyError:
-    print(Fore.RED + "Please, make sure that the key: [dropbox|token] exists in the configuration file (conf/hyot.yml)."
-          + Fore.RESET)
+    print(Fore.RED + "✖ Please, make sure that the key: [dropbox|token] exists in the configuration file"
+                     " (conf/hyot.yml)." + Fore.RESET)
     sys.exit(1)
 
 ########################################
@@ -115,7 +116,7 @@ def connect():
 
     # Checks if the Dropbox token is empty
     if token.isspace():
-        print(Fore.RED + "        The Dropbox token can not be empty" + Fore.RESET)
+        print(Fore.RED + "        ✖ The Dropbox token can not be empty." + Fore.RESET)
         sys.exit(0)
 
     # Creates an instance of the Dropbox class, which can make requests to API
@@ -125,24 +126,26 @@ def connect():
         # Checks that the access token is valid
         current_user = dbx.users_get_current_account()
 
-        print(Fore.GREEN + "        Dropbox client connected with the user: " + current_user.name.given_name
+        print(Fore.GREEN + "        ✓ Dropbox client connected with the user: " + str(current_user.name.given_name)
               + Fore.RESET)
 
         time.sleep(1)
 
     except dropbox.exceptions.BadInputError:
-        print(Fore.RED + "        The given OAuth 2 access token is malformed" + Fore.RESET)
+        print(Fore.RED + "        ✖ The given OAuth 2 access token is malformed." + Fore.RESET)
         sys.exit(1)
 
     except dropbox.exceptions.AuthError as authError:
 
         # Checks if the error is due to an invalid token
         if authError.error.is_invalid_access_token():               # Access token has been revoked
-            print(Fore.RED + "        The introduced access token does not exist or is invalid because it has been "
-                             "revoked" + Fore.RESET)
+            print(Fore.RED + "        ✖ The introduced access token does not exist or is invalid because it has been "
+                             "revoked." + Fore.RESET)
             sys.exit(1)
         else:                                                       # Another error. For example: no write permission
-            raise
+            print(Fore.RED + "        ✖ Error to generating the client of the Dropbox service. Exception: "
+                  + str(authError) + "." + Fore.RESET)
+            sys.exit(1)
 
 
 def __create_dir(dir_name):
@@ -169,23 +172,22 @@ def __create_dir(dir_name):
         dbx.files_create_folder_v2(path + dir_name, autorename=False)
 
         print("        Creating the " + message_dir)
-        print(Fore.GREEN + "        " + Style.BRIGHT + dir_name + Style.NORMAL + " " + message_dir + " was created "
-              "successfully" + Fore.RESET)
+        print(Fore.GREEN + "        ✓ " + message_dir.title() + " was created successfully: " + dir_name + Fore.RESET)
 
     except dropbox.exceptions.ApiError as createError:
 
         if createError.error.get_path().is_conflict():              # Directory or subdirectory already exists
-            print(Fore.GREEN + "        " + Style.BRIGHT + dir_name + Style.NORMAL + " " + message_dir +
-                  " already exists" + Fore.RESET)
-            pass
+            print(Fore.GREEN + "        ✓ " + Fore.CYAN + message_dir.title() + " already exists" + Fore.RESET)
+
         elif createError.error.get_path().is_insufficient_space():  # Insufficient space
             print("        Creating the " + message_dir)
-            print(Fore.RED + "        Error to create the " + Style.BRIGHT + dir_name + Style.NORMAL +
-                  " subdirectory. The user does not have enough available space (bytes) to write more data"
-                  + Fore.RESET)
+            print(Fore.RED + "        ✖ Error to create the subdirectory: " + dir_name + ". The user does not have"
+                             " enough available space (bytes) to write more data." + Fore.RESET)
             sys.exit(1)
         else:                                                       # Another error. For example: no write permission
-            raise
+            print(Fore.RED + "        ✖ Error to create the directory o subdirectory. Exception: " + str(createError)
+                  + "." + Fore.RESET)
+            sys.exit(1)
 
 
 def __check_space():
@@ -202,8 +204,8 @@ def __check_space():
 
     # Notifies the user that the space may be insufficient (< 500 MB)
     if available_space < MIN_SPACE:
-        print("        " + Fore.YELLOW + "Warning!" + Fore.RESET + " The available space may be insufficient (500 MB). "
-              "It is advisable to increase it before continuing the execution due to an error could occur later")
+        print(Fore.YELLOW + "        Warning!" + Fore.RESET + " The available space may be insufficient (500 MB). "
+              "It is advisable to increase it before continuing the execution due to an error could occur later.")
 
         time.sleep(2)
 
@@ -236,7 +238,7 @@ def init(all_sensors):
 
     # Checks if some name is empty
     if dht_subdir.isspace() or hcsr_subdir.isspace():
-        print(Fore.RED + "        The names of the sensor directories can not be empty" + Fore.RESET)
+        print(Fore.RED + "        ✖ The names of the sensor directories can not be empty." + Fore.RESET)
         sys.exit(0)
 
     # Removes spaces and converts to lowercase
@@ -245,7 +247,7 @@ def init(all_sensors):
 
     # Checks if both names are the same
     if dht_subdir == hcsr_subdir:
-        print(Fore.RED + "        The names of the sensor directories can not be the same" + Fore.RESET)
+        print(Fore.RED + "        ✖ The names of the sensor directories can not be the same." + Fore.RESET)
         sys.exit(0)
 
     # Adds the name of each subdirectory to the list
@@ -289,11 +291,13 @@ def __get_shared_link(upload_path):
     except dropbox.exceptions.ApiError as sharedLinkError:
 
         if sharedLinkError.error.is_path():                         # File in the upload path does not exist
-            print(Fore.RED + "There is no file indicated by the upload path. Please, check the way to get the shared "
-                             "link" + Fore.RESET)
-            sys.exit(1)
+            print(Fore.RED + " ✖ There is no file indicated by the upload path. Please, check the way to get the"
+                             " shared link." + Fore.RESET)
+            sys.exit(1)  # TODO Logger
         else:                                                       # Another error
-            raise
+            print(Fore.RED + " ✖ Error to create the shared link of the file in Dropbox. Exception: "
+                  + str(sharedLinkError) + "." + Fore.RESET)
+            sys.exit(1)  # TODO Logger
 
 
 def upload_file(localfile, sensor):
@@ -319,8 +323,8 @@ def upload_file(localfile, sensor):
         upload_path = "/" + HYOT_DIR + "/" + hcsr_subdir + "/" + name
 
     try:
-        print(Fore.LIGHTBLACK_EX + "   -- Uploading the recording to Dropbox like " + upload_path +
-              Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "     -- Uploading the recording to Dropbox to the path: " + upload_path
+              + Fore.RESET),
         time.sleep(0.5)
 
         # Reads the file and uploads it
@@ -340,32 +344,34 @@ def upload_file(localfile, sensor):
 
     except IOError:                                                        # Error to open the file
 
-        print(Fore.RED + "Could not open the file: " + localfile + ". No such file in the local system or "
-              "corrupt file" + Fore.RESET)  # TODO
-        sys.exit(1)     # TODO
+        print(Fore.RED + "✖ Could not open the file: " + localfile + ". No such file in the local system or corrupt"
+                         " file." + Fore.RESET)
+        sys.exit(1)  # TODO Logger
 
     except dropbox.exceptions.ApiError as uploadError:
 
         if uploadError.error.get_path().reason.is_conflict():              # Conflict with another different file
-            print(Fore.RED + "Existing conflict with another file with the same name and different content."
-                             " Please, check the way in which the names of the videos are generated" + Fore.RESET)
-            sys.exit(1)
+            print(Fore.RED + " ✖ Existing conflict with another file with the same name and different content."
+                             " Please, check the way in which the names of the videos are generated." + Fore.RESET)
+            sys.exit(1)  # TODO Logger
         elif uploadError.error.get_path().reason.is_insufficient_space():  # Insufficient space
-            print(Fore.RED + " ✕ File not uploaded. The user does not have enough available space" + Fore.RESET)
-            pass    # TODO Return None Unnecessary pass statement
+            print(Fore.RED + " ✖ File not uploaded. The user does not have enough available space." + Fore.RESET)
+            sys.exit(1)  # TODO Logger
         else:                                                      # Another error. For example: no write permission
-            raise
+            print(Fore.RED + " ✖ Error to upload the recording to Dropbox. Exception: " + str(uploadError) + "."
+                  + Fore.RESET)
+            sys.exit(1)  # TODO Logger
 
 
 def disconnect():
     """
-    Disconnects the Dropbox client disabling the access token used to authenticate the calls.
+    Disconnects the Dropbox client disabling the access token used to authenticate the requests.
     """
 
     global dbx
 
     if not (dbx is None):
-        print("        Disconnecting the Dropbox client session"),
+        print("      Disconnecting the Dropbox client session"),
 
         time.sleep(0.25)
 

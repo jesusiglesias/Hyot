@@ -67,11 +67,11 @@ try:
     conf = yaml.load(open('conf/hyot.yml'))
 
 except IOError as ioERROR:
-    print(Fore.RED + "Please, place the configuration file (hyot.yml) inside a directory called conf in the root "
+    print(Fore.RED + "✖ Please, place the configuration file (hyot.yml) inside a directory called 'conf' in the root "
                      "path (conf/hyot.yml)." + Fore.RESET)
     sys.exit(1)
 except yaml.YAMLError as yamlError:
-    print(Fore.RED + "The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
+    print(Fore.RED + "✖ The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
     sys.exit(1)
 
 
@@ -89,8 +89,9 @@ GPGEXT = "gpg"                                                          # Extens
 try:
     NAME = conf['gpg']['name']                                          # Name
     EMAIL = conf['gpg']['email']                                        # Email id
+
 except (KeyError, TypeError) as keyError:
-    print(Fore.RED + "Please, make sure that the keys: [gpg|name] and [gpg|email] exist in the configuration file "
+    print(Fore.RED + "✖ Please, make sure that the keys: [gpg|name] and [gpg|email] exist in the configuration file "
                      "(conf/hyot.yml)." + Fore.RESET)
     sys.exit(1)
 
@@ -125,7 +126,7 @@ def __request_validate_password():
 
         # Checks if the password is empty
         if key_pass is None or key_pass.isspace():
-            print(Fore.RED + "        The password can not be empty." + Fore.RESET)
+            print(Fore.RED + "        ✖ The password can not be empty." + Fore.RESET)
             sys.exit(0)
 
         # Removes the spaces
@@ -160,10 +161,10 @@ def __request_validate_password():
         # Compares both passwords
         if key_pass != confirm_pass:
             if counter < 2:
-                print(Fore.YELLOW + "        Passwords must match. Please, try it again." + Fore.RESET)
                 counter = counter + 1
+                print(Fore.YELLOW + "        ✖ Passwords must match. Please, try it again." + Fore.RESET)
             else:
-                print(Fore.RED + "        Number of attempts spent. Please, run again the code." + Fore.RESET)
+                print(Fore.RED + "        ✖ Number of attempts spent. Please, run again the code." + Fore.RESET)
                 sys.exit(0)
         else:
             return key_pass
@@ -222,12 +223,11 @@ def __generate_qrcode():
         # Stores the QR image
         qr_image.save(qr_finalpath)
 
-        print(Fore.GREEN + "          - QR image of the fingerprint: " + Style.BRIGHT
-              + qr_finalpath.split("/")[-1] + Style.RESET_ALL)
+        print("          - QR image of the fingerprint: " + Fore.CYAN + qr_finalpath.split("/")[-1] + Fore.RESET)
 
     except Exception as qrError:
-        print(Fore.RED + "        Error to generate the QR image." + str(qrError) + Fore.RESET)
-        pass
+        print(Fore.RED + "        ✖ Error to generate the QR image. Exception: " + str(qrError) + "." + Fore.RESET)
+        sys.exit(1)
 
 
 def __generate_keys():
@@ -245,10 +245,8 @@ def __generate_keys():
     key = gpg.gen_key(input_data)                                              # Creates the GPG key
     keyid = str(key.fingerprint)                                               # Obtains the fingerprint
 
-    print(Fore.GREEN + "        GPG key created successfully with fingerprint: " + Style.BRIGHT + keyid
-          + Style.RESET_ALL)
-
-    print(Fore.GREEN + "        Files generated and stored in: " + Style.BRIGHT + gpg_dir + Style.RESET_ALL)
+    print(Fore.GREEN + "        ✓ GPG key created successfully with fingerprint: " + Fore.CYAN + keyid + Fore.RESET)
+    print("        Files generated and stored in: " + gpg_dir)
 
     # Generates a QR code of the fingerprint
     __generate_qrcode()
@@ -269,13 +267,13 @@ def __generate_keys():
             f.write(public_key)
             f.write(private_key)
 
-        print(Fore.GREEN + "          - Public and private keys: " + Style.BRIGHT + keys_finalpath.split("/")[-1]
-              + '\n' + Style.NORMAL)
+        print("          - Public and private keys: " + Fore.CYAN + keys_finalpath.split("/")[-1] + '\n' + Fore.RESET)
 
         print(Fore.YELLOW + "        It's important that you remember the fingerprint and keep these files to decrypt "
                             "later." + Style.RESET_ALL)
     else:
-        print(Fore.RED + "        Error to write the keys. Can't find key with fingerprint: " + keyid + Fore.RESET)
+        print(Fore.RED + "        ✖ Error to write the keys. Can't find key with fingerprint: " + str(keyid) + "." +
+              Fore.RESET)
         sys.exit(0)
 
 
@@ -296,14 +294,14 @@ def __check_keys():
 
     # Checks if the GPG directory has public and private keys (len(public_keys/private_keys) == 0)
     if not public_keys and not private_keys:
-        print(Fore.BLACK + "        The GPG directory does not contain any GPG key. Generating a GPG key." + Fore.RESET)
+        print("        The GPG directory does not contain any GPG key. Generating a GPG key...")
 
         time.sleep(0.5)
 
         # Generates the key
         __generate_keys()
     else:
-        print(Fore.BLACK + "        The GPG directory already contains some GPG key." + Fore.RESET)
+        print("        The GPG directory already contains some GPG key")
 
         time.sleep(0.5)
 
@@ -312,7 +310,7 @@ def __check_keys():
 
         # Checks if the user entered a fingerprint
         if key_input is None or key_input.isspace():
-            print(Fore.BLACK + "        Generating a GPG key." + Fore.RESET)
+            print(Fore.BLACK + "        Generating a GPG key..." + Fore.RESET)
 
             # Generates the key
             __generate_keys()
@@ -330,8 +328,8 @@ def __check_keys():
             # Checks if some entered fingerprint does not exist in the keyring
             for fingerprint in key_input:
                 if fingerprint not in fingerprint_array:
-                    print(Fore.RED + "        The fingerprint: " + fingerprint + " does not exist in the indicated GPG "
-                                     "directory." + Fore.RESET)
+                    print(Fore.RED + "        ✖ The fingerprint: " + fingerprint + " does not exist in the indicated"
+                                     " GPG directory." + Fore.RESET)
                     sys.exit(0)
 
             # All fingerprints exist
@@ -354,7 +352,7 @@ def init():
 
         # Checks if the path of the GPG directory is empty
         if gpg_dir.isspace():
-            print(Fore.RED + "        The path of the GPG directory can not be empty" + Fore.RESET)
+            print(Fore.RED + "        ✖ The path of the GPG directory can not be empty." + Fore.RESET)
             sys.exit(0)
 
         # Removes the spaces
@@ -367,8 +365,7 @@ def init():
         # Creates the GPG instance
         gpg = gnupg.GPG(gnupghome=gpg_dir, keyring=PUBKEYRING, secret_keyring=SECKEYRING)
 
-        print(Fore.GREEN + "        Keyrings and trust database were created in: " + Style.BRIGHT + gpg_dir
-              + Style.RESET_ALL)
+        print(Fore.GREEN + "        ✓ Keyrings and trust database were successfully created" + Style.RESET_ALL)
 
         # Checks if in the entered GPG directory some key already exists
         __check_keys()
@@ -376,7 +373,8 @@ def init():
         time.sleep(1)
 
     except Exception as initGPGError:
-        print(Fore.RED + "        Error to initialize the GPG module: " + str(initGPGError) + Fore.RESET)
+        print(Fore.RED + "        ✖ Error to initialize the GPG module. Exception: " + str(initGPGError) + "."
+              + Fore.RESET)
         sys.exit(1)
 
     print("\n        ------------------------------------------------------")
@@ -388,7 +386,7 @@ def encrypt_file(video):
 
     :param video: File to encrypt with its full path.
 
-    :return: video TODO
+    :return: encrypted_file File whose content has been encrypted.
     """
 
     global GPGEXT, gpg, keyid
@@ -397,7 +395,7 @@ def encrypt_file(video):
         # Path of the encrypted file
         encrypted_file = ".".join([video, GPGEXT])
 
-        print(Fore.LIGHTBLACK_EX + "   -- Encrypting the video " + Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "     -- Encrypting the video " + Fore.RESET),
 
         time.sleep(0.5)
 
@@ -408,14 +406,12 @@ def encrypt_file(video):
             print(Fore.GREEN + " ✓" + Fore.RESET)
             return encrypted_file
         else:
-            print(Fore.RED + "✕ File not encrypted. The file will be stored in the Cloud (Dropbox) without encrypting."
-                  + Fore.RESET)
-            return video  # TODO
+            print(Fore.RED + "✖ File not encrypted. Aborting..." + Fore.RESET)
+            sys.exit(0)  # TODO Logger
 
     except Exception:
-        print(Fore.RED + "✕ File not encrypted. The file will be stored in the Cloud (Dropbox) without encrypting."
-              + Fore.RESET)
-        return video  # TODO
+        print(Fore.RED + "✖ File not encrypted. Aborting..." + Fore.RESET)
+        sys.exit(0)  # TODO Logger
 
 
 def clean():
@@ -426,7 +422,7 @@ def clean():
     global gpg
 
     if not (gpg is None):
-        print("        Cleaning the GPG instance"),
+        print("      Cleaning the GPG instance"),
 
         time.sleep(0.25)
 
@@ -434,7 +430,7 @@ def clean():
             gpg = None
             print(Fore.GREEN + " ✓" + Fore.RESET)
         except Exception:
-            print(Fore.RED + " ✕" + Fore.RESET)
+            print(Fore.RED + " ✖" + Fore.RESET)
             raise
 
         time.sleep(0.25)

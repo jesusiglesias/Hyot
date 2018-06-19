@@ -81,7 +81,7 @@ def init(dht_i2cexpander, dht_i2caddress, hcsr_i2cexpander, hcsr_i2caddress, all
 
     global lcds, dht_lcd, hcsr_lcd, sensors
 
-    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing the LCDs " + Style.RESET_ALL)
+    print(Style.BRIGHT + Fore.BLACK + "\n      - Initializing the LCDs" + Style.RESET_ALL),
 
     try:
         # LCD for the DHT11 sensor. Default 'PCF8574' and 0x3f
@@ -104,16 +104,18 @@ def init(dht_i2cexpander, dht_i2caddress, hcsr_i2cexpander, hcsr_i2caddress, all
         time.sleep(2)
         full_print_lcds("Initializing", "HYOT...")      # Prints data in the LCDs using both rows
 
-        print(Fore.GREEN + "        LCDs initialized correctly" + Fore.RESET)
+        print(Fore.GREEN + " ✓" + Fore.RESET)
 
     except IOError as ioError:
-        print(Fore.RED + "        Error to initialize the LCDs: " + str(ioError) + ". Main errno:" + "\r")
+        print(Fore.RED + " ✖")
+        print("        Error to initialize the LCDs: " + str(ioError) + ". Main errno:\r")
         print("          - Errno 2: I2C interface is disabled.\r")
         print("          - Errno 22: I2C address is invalid.\r")
         print("          - Errno 121: LCD is not connected.\r")
         sys.exit(1)
     except Exception as lcdError:
-        print(Fore.RED + "        Error to initialize the LCDs. Exception: " + Fore.RESET + str(lcdError))
+        print(Fore.RED + " ✖")
+        print("        Error to initialize the LCDs. Exception: " + str(lcdError) + "." + Fore.RESET)
         sys.exit(1)
 
     time.sleep(2)
@@ -295,7 +297,7 @@ def disconnect_lcds():
 
     for index, lcd in enumerate(lcds):
 
-        print("        Closing and cleaning LCD of the " + sensors[index] + " sensor"),
+        print("      Closing and cleaning LCD of the " + sensors[index] + " sensor"),
         time.sleep(0.25)
 
         try:
@@ -303,7 +305,7 @@ def disconnect_lcds():
             lcd.backlight_enabled = False               # Disables the backlight
             print(Fore.GREEN + " ✓" + Fore.RESET)
         except Exception:
-            print(Fore.RED + " ✕" + Fore.RESET)
+            print(Fore.RED + " ✖" + Fore.RESET)
             raise
 
         time.sleep(0.25)

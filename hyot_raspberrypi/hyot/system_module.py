@@ -77,8 +77,8 @@ def create_localdir():
 
     global TEMPFILES_DIR, tempfiles_path
 
-    print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing the temporary local directory to store the videos "
-          "taken by the Picamera" + Style.RESET_ALL)
+    print(Style.BRIGHT + Fore.BLACK + "\n      - Initializing the temporary local directory to store the videos "
+          "taken by the Picamera" + Style.RESET_ALL),
 
     # Path that contains the temporary files ([project_path]/hyot/tempfiles)
     tempfiles_path = os.path.dirname(os.path.abspath(__file__)) + "/" + TEMPFILES_DIR
@@ -92,17 +92,17 @@ def create_localdir():
 
         # After creating, checks again if it was created
         if os.path.exists(tempfiles_path):          # Directory was created
-            print(Fore.GREEN + "        " + Style.BRIGHT + tempfiles_path + Style.NORMAL + " directory created "
-                  "successfully" + Fore.RESET)
+            print(Fore.GREEN + " ✓" + Fore.RESET)
+            print("        Directory created successfully: " + tempfiles_path)
 
         else:                                       # Directory was not created
-            print(Fore.RED + "        Error to create the " + Style.BRIGHT + tempfiles_path + Style.NORMAL +
-                  " directory" + Fore.RESET)
+            print(Fore.RED + " ✖")
+            print("        Error to create the directory: " + tempfiles_path + Fore.RESET)
             sys.exit(0)
 
     else:
-        print(Fore.GREEN + "        " + Style.BRIGHT + tempfiles_path + Style.NORMAL + " directory already exists"
-              + Fore.RESET)
+        print(Fore.GREEN + " ✓")
+        print(Fore.CYAN + "        Directory already exists: " + tempfiles_path + Fore.RESET)
 
     time.sleep(1)
 
@@ -118,7 +118,7 @@ def remove_localdir():
 
     if not (tempfiles_path is None):
 
-        print("        Removing the temporary local directory: " + tempfiles_path),
+        print("      Removing the temporary local directory: " + tempfiles_path),
 
         time.sleep(0.25)
 
@@ -135,28 +135,28 @@ def remove_localdir():
                     print(Fore.GREEN + " ✓" + Fore.RESET)
 
                 else:                                                   # Directory was not removed
-                    print(Fore.RED + " ✕ Directory does not removed" + Fore.RESET)
+                    print(Fore.RED + " ✖ Directory was not removed" + Fore.RESET)
 
             except OSError:
-                print(Fore.RED + " ✕ No such directory" + Fore.RESET)
+                print(Fore.RED + " ✖ No such directory" + Fore.RESET)
 
         else:
-            print(Fore.CYAN + " Directory does not exist. Not deleted" + Fore.GREEN + " ✓" + Fore.RESET)
+            print(Fore.GREEN + " ✓" + Fore.CYAN + " Directory does not exist. Not deleted" + Fore.RESET)
 
         time.sleep(0.25)
 
 
 def check_file(localfile):
     """
-    Checks if the file exists in the local system.
+    Checks if the file (video) exists in the local system.
 
     :param localfile: Local path and name of the file to upload to the Cloud (e.g. Dropbox).
     """
 
-    # TODO - Exit?
     if not os.path.exists(localfile):
-        print(Fore.RED + '      ' + localfile + " file not found in the local system. Alert is not stored" + Fore.RESET)
-        sys.exit(0)
+        print(Fore.RED + "     ✖ File not found in the local system: " + localfile + ". Aborting..."
+              + Fore.RESET)
+        sys.exit(0)  # TODO Logger
 
 
 def remove_file(localfile, encrypted):
@@ -168,9 +168,9 @@ def remove_file(localfile, encrypted):
     """
 
     if encrypted:
-        print(Fore.LIGHTBLACK_EX + "   -- Removing the encrypted file: " + localfile + Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "     -- Removing the encrypted file: " + localfile + Fore.RESET),
     else:
-        print(Fore.LIGHTBLACK_EX + "   -- Removing the temporary local file: " + localfile + Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "     -- Removing the temporary local file: " + localfile + Fore.RESET),
 
     time.sleep(1)
 
@@ -185,9 +185,9 @@ def remove_file(localfile, encrypted):
             if not os.path.exists(localfile):                  # File was removed
                 print(Fore.GREEN + " ✓" + Fore.RESET)
             else:                                              # File was not removed
-                print(Fore.RED + " ✕ Error to remove the file" + Fore.RESET)
+                print(Fore.RED + " ✖ Error to remove the file" + Fore.RESET)
 
         except OSError:
-            print(Fore.RED + " ✕ No such file" + Fore.RESET)
+            print(Fore.RED + " ✖ No such file" + Fore.RESET)
     else:
-        print(Fore.CYAN + "File does not exist. Not deleted" + Fore.GREEN + " ✓" + Fore.RESET)
+        print(Fore.GREEN + " ✓" + Fore.CYAN + " File does not exist. Not deleted" + Fore.RESET)

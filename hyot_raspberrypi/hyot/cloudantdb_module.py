@@ -64,11 +64,11 @@ try:
     conf = yaml.load(open('conf/hyot.yml'))
 
 except IOError as ioERROR:
-    print(Fore.RED + "Please, place the configuration file (hyot.yml) inside a directory called conf in the root "
+    print(Fore.RED + "✖ Please, place the configuration file (hyot.yml) inside a directory called 'conf' in the root "
                      "path (conf/hyot.yml)." + Fore.RESET)
     sys.exit(1)
 except yaml.YAMLError as yamlError:
-    print(Fore.RED + "The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
+    print(Fore.RED + "✖ The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
     sys.exit(1)
 
 
@@ -79,8 +79,9 @@ try:
     USERNAME_DB = conf['cloudant']['username']      # User name in Cloudant NoSQL DB
     PASSWORD_DB = conf['cloudant']['password']      # Password in Cloudant NoSQL DB
     URL_DB = conf['cloudant']['url']                # URL in Cloudant NoSQL DB
+
 except (KeyError, TypeError) as keyError:
-    print(Fore.RED + "Please, make sure that the keys: [cloudant|username], [cloudant|password] and [cloudant|url] "
+    print(Fore.RED + "✖ Please, make sure that the keys: [cloudant|username], [cloudant|password] and [cloudant|url] "
                      "exist in the configuration file (conf/hyot.yml)." + Fore.RESET)
     sys.exit(1)
 
@@ -118,17 +119,23 @@ def connect():
 
     # Checks if some Cloudant DB credential is empty
     if username.isspace() or password.isspace() or url.isspace():
-        print(Fore.RED + "        The Cloudant DB credentials can not be empty" + Fore.RESET)
+        print(Fore.RED + "        ✖ The Cloudant DB credentials can not be empty." + Fore.RESET)
         sys.exit(0)
 
-    # Creates the client using auto_renew to automatically renew expired cookie auth
-    client = Cloudant(username.replace(" ", ""), password.replace(" ", ""), url=url.replace(" ", ""),
-                      connect=True, auto_renew=True)
+    try:
+        # Creates the client using auto_renew to automatically renew expired cookie auth
+        client = Cloudant(username.replace(" ", ""), password.replace(" ", ""), url=url.replace(" ", ""),
+                          connect=True, auto_renew=True)
 
-    # Establishes a connection with the service instance
-    client.connect()
+        # Establishes a connection with the service instance
+        client.connect()
 
-    print(Fore.GREEN + "        Cloudant DB client connected" + Fore.RESET)
+        print(Fore.GREEN + "        ✓ Cloudant DB client connected" + Fore.RESET)
+
+    except Exception as cloudantError:
+        print(Fore.RED + "        ✖ Error to initialize the Cloudant DB client. Exception: " + str(cloudantError) + "."
+              + Fore.RESET)
+        sys.exit(1)
 
     time.sleep(1)
 
@@ -150,7 +157,7 @@ def init(timestamp):
 
     # Checks if the name is empty
     if db_name.isspace():
-        print(Fore.RED + "        The name of the database can not be empty" + Fore.RESET)
+        print(Fore.RED + "        ✖ The name of the database can not be empty." + Fore.RESET)
         sys.exit(0)
 
     # Removes the spaces and converts to lowercase
@@ -170,8 +177,8 @@ def init(timestamp):
         # Opens the existing database
         db_instance = client[db_name]
 
-        print(Fore.GREEN + "        " + Style.BRIGHT + db_name + Style.NORMAL + " database already exists and was "
-              "opened successfully" + Fore.RESET)
+        print(Fore.GREEN + "        ✓" + Fore.CYAN + " Database already exists and was opened successfully"
+              + Fore.RESET)
     else:
         print("        Initializing the database")
 
@@ -181,11 +188,10 @@ def init(timestamp):
 
         # Checks that the database was created successfully
         if db_instance.exists():
-            print(Fore.GREEN + "        " + Style.BRIGHT + db_name + Style.NORMAL + " database was created successfully"
-                  + Fore.RESET)
+            print(Fore.GREEN + "        ✓ Database was created successfully" + Fore.RESET)
         else:
-            print(Fore.RED + "        Error to create the " + Style.BRIGHT + db_name + Style.NORMAL + " database. "
-                  "Please, check the Cloudant NoSQL DB service" + Fore.RESET)
+            print(Fore.RED + "        ✖ Error to create the database. Please, check the Cloudant NoSQL DB service."
+                  + Fore.RESET)
             sys.exit(0)
 
     time.sleep(1)
@@ -202,7 +208,7 @@ def add_document(data):
 
     global db_instance, db_name
 
-    print(Fore.LIGHTBLACK_EX + "   -- Adding the measurement to the database: " + db_name + Fore.RESET),
+    print(Fore.LIGHTBLACK_EX + "     -- Adding the measurement to the database: " + db_name + Fore.RESET),
     time.sleep(0.5)
 
     # Creates a document using the Database API
@@ -212,8 +218,8 @@ def add_document(data):
     if document.exists():
         print(Fore.GREEN + " ✓" + Fore.RESET)
     else:
-        print(Fore.RED + " ✕ Error to add the measurement. Please, check the Cloudant NoSQL DB service" + Fore.RESET)
-        sys.exit(0)
+        print(Fore.RED + " ✖ Error to add the measurement. Please, check the Cloudant NoSQL DB service." + Fore.RESET)
+        sys.exit(0)  # TODO Logger
 
 
 def disconnect():
@@ -224,7 +230,7 @@ def disconnect():
     global client
 
     if not (client is None):
-        print("        Disconnecting the Cloudant DB client session"),
+        print("      Disconnecting the Cloudant DB client session"),
 
         time.sleep(0.25)
 
@@ -234,7 +240,7 @@ def disconnect():
             client = None
             print(Fore.GREEN + " ✓" + Fore.RESET)
         except Exception:
-            print(Fore.RED + " ✕" + Fore.RESET)
+            print(Fore.RED + " ✖" + Fore.RESET)
             raise
 
         time.sleep(0.25)

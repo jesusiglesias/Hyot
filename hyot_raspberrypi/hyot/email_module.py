@@ -71,11 +71,11 @@ try:
     conf = yaml.load(open('conf/hyot.yml'))
 
 except IOError as ioERROR:
-    print(Fore.RED + "Please, place the configuration file (hyot.yml) inside a directory called conf in the root "
+    print(Fore.RED + "✖ Please, place the configuration file (hyot.yml) inside a directory called 'conf' in the root "
                      "path (conf/hyot.yml)." + Fore.RESET)
     sys.exit(1)
 except yaml.YAMLError as yamlError:
-    print(Fore.RED + "The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
+    print(Fore.RED + "✖ The configuration file (conf/hyot.yml) has not the YAML format." + Fore.RESET)
     sys.exit(1)
 
 
@@ -85,8 +85,9 @@ except yaml.YAMLError as yamlError:
 try:
     FROM = conf['email']['from']                        # Sender's email address
     PASSWORD = conf['email']['password']                # Sender's password
+
 except (KeyError, TypeError) as keyError:
-    print(Fore.RED + "Please, make sure that the keys: [email|from] and [email|password] exist in the configuration "
+    print(Fore.RED + "✖ Please, make sure that the keys: [email|from] and [email|password] exist in the configuration "
                      "file (conf/hyot.yml)." + Fore.RESET)
     sys.exit(1)
 
@@ -112,7 +113,7 @@ def init():
     global FROM, PASSWORD, SERVERIP, SERVERPORT, session
 
     print("\n      " + Style.BRIGHT + Fore.BLACK + "- Initializing the mail session with the email address: "
-          + Style.RESET_ALL + FROM)
+          + Style.RESET_ALL + FROM),
 
     try:
         session = smtplib.SMTP(SERVERIP, SERVERPORT)          # Creates a new session of the mail server
@@ -121,11 +122,11 @@ def init():
         session.ehlo()
         session.login(FROM, PASSWORD)                         # Login
 
-        print(Fore.GREEN + "        Mail session initialized correctly" + Fore.RESET)
+        print(Fore.GREEN + " ✓" + Fore.RESET)
 
     except Exception as mailError:
-        print(Fore.RED + "        Error to initialize the mail session. Check the mail address, the server connection"
-                         " or the network connection. Exception: " + Fore.RESET + str(mailError))
+        print(Fore.RED + " ✖ Error to initialize the mail session. Check the mail address, the server connection or "
+                         "the network connection. Exception: " + str(mailError) + "." + Fore.RESET)
         sys.exit(1)
 
     time.sleep(1)
@@ -177,7 +178,8 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
     # Subject of the email
     subject = "HYOT - Alert notification: {0:s} | {1:s} | {2:s}".format(sensor, event, timestamp)
 
-    print(Fore.LIGHTBLACK_EX + "   -- Sending alert notification to the following email address: " + mailto + Fore.RESET),
+    print(Fore.LIGHTBLACK_EX + "     -- Sending alert notification to the following email address: " + mailto
+          + Fore.RESET),
 
     # Message of the email in HTML format
     try:
@@ -193,8 +195,9 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
             LINK=link)
 
     except Exception as templateError:
-        print(Fore.RED + " ✕ Error in the email template. Email not sent. " + str(templateError) + Fore.RESET)
+        print(Fore.RED + " ✖ Error in the email template. Email not sent. " + str(templateError) + "." + Fore.RESET)
         return False
+        # TODO Logger Exit
 
     time.sleep(0.5)
 
@@ -228,7 +231,8 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
         email_instance.attach(part)
 
     except IOError:                                           # Error to open the file
-        print(Fore.CYAN + " Could not open the file so it is not attached to the email" + Fore.RESET),
+        print(Fore.RED + " ✖ Could not open the file so it is not attached to the email." + Fore.RESET)
+        # TODO Logger Exit
 
     try:
         # Send the message via a SMTP server
@@ -238,8 +242,9 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
         return True
 
     except Exception as sendError:
-        print(Fore.RED + " ✕ Error sending the email: " + str(sendError) + Fore.RESET)
+        print(Fore.RED + " ✖ Error to send the email: " + str(sendError) + "." + Fore.RESET)
         return False
+        # TODO Logger Exit
 
 
 def disconnect():
@@ -250,7 +255,7 @@ def disconnect():
     global session
 
     if not (session is None):
-        print("        Disconnecting the mail session"),
+        print("      Disconnecting the mail session"),
 
         time.sleep(0.25)
 

@@ -87,16 +87,16 @@ def constants(user_args):
     :param user_args: Values of the options entered by the user.
     """
 
-    global SENSORS, DHT11_EVENTS, HCSR_EVENTS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, TEMP_THRESHOLD,\
-        HUM_THRESHOLD, ALERT_LED, HCSR_SENSOR, HCSR_MAXDISTANCE, DISTANCE_THRESHOLD, EXT
+    global SENSORS, DHT11_EVENTS, HCSR_EVENTS, MAILTO, WAIT_TIME_MEASUREMENT, DHT_SENSOR, DHT_PINDATA, TEMP_THRESHOLD,\
+        HUM_THRESHOLD, ALERT_LED, HCSR_SENSOR, HCSR_MAXDISTANCE, DISTANCE_THRESHOLD, EXT, DHT_SENSOR_NAME,\
+        HCSR_SENSOR_NAME, TEMPERATURE_TEXT, HUMIDITY_TEXT, DISTANCE_TEXT
 
     try:
-
         SENSORS = ["DHT11", "HCSR04"]                               # Name of the sensors
         DHT11_EVENTS = ["Temperature", "Humidity"]                  # Name of the events of the DHT11 sensor
         HCSR_EVENTS = ["Distance"]                                  # Name of the events of the HC-SR04 sensor
         MAILTO = user_args.EMAIL                                    # Recipient's email address
-        TIME_MEASUREMENTS = user_args.WAITTIME_MEASUREMENTS         # Wait time between each measurement. Default 3 seconds
+        WAIT_TIME_MEASUREMENT = user_args.WAITTIME_MEASUREMENT      # Wait time between each measurement. Default 3 seconds
         DHT_SENSOR = Adafruit_DHT.DHT11                             # DHT11 sensor
         DHT_PINDATA = user_args.DHT_DATAPIN                         # DHT11 - Data pin. Default 21 (GPIO21)
         TEMP_THRESHOLD = user_args.TEMPERATURE_THRESHOLD            # Temperature alert threshold in the DHT11 sensor
@@ -109,14 +109,20 @@ def constants(user_args):
         HCSR_MAXDISTANCE = user_args.HCSR_MAXDISTANCE               # Maximum distance to be measured (HC-SR04 sensor)
         DISTANCE_THRESHOLD = user_args.DISTANCE_THRESHOLD           # Distance alert threshold in the HC-SR04 sensor
         EXT = '.h264'                                               # Extension of the video file
+        DHT_SENSOR_NAME = "DHT11 sensor"                            # Text - DHT11 sensor name
+        HCSR_SENSOR_NAME = "HC-SR04 sensor"                         # Text - HC-SR04 sensor name
+        TEMPERATURE_TEXT = "Temperature: "                          # Text - Temperature event
+        HUMIDITY_TEXT = "Humidity: "                                # Text - Humidity event
+        DISTANCE_TEXT = "Distance: "                                # Text - Distance event
 
     except Exception as exception:
-        print(Fore.RED + "Exception in constants() function: " + str(exception))
-        traceback.print_exc()                                       # Prints the traceback
+        print(Fore.RED + "\n✖ Exception in constants() function: " + str(exception) + ".")
+        # Prints the traceback
+        traceback.print_exc()
         print(Fore.RESET)
         sys.exit(1)
     except KeyboardInterrupt:
-        print("\r" + Fore.RED + "Exception: KeyboardInterrupt. Please, do not interrupt the execution." + Fore.RESET)
+        print("\r" + Fore.RED + "✖ Exception: KeyboardInterrupt. Please, do not interrupt the execution." + Fore.RESET)
         sys.exit(1)
 
 
@@ -141,30 +147,30 @@ hash_code = None                            # Hash code of the video file
 ########################################
 def header():
     """
-    Prints the header in the console.
+    Prints the header by console.
     """
 
     banner = """
-         _    ___     ______ _______
-        | |  | \ \   / / __ \__   __|
-        | |__| |\ \_/ / |  | | | |
-        |  __  | \   /| |  | | | |
-        | |  | |  | | | |__| | | |
-        |_|  |_|  |_|  \____/  |_|
+    _    ___     ______ _______
+   | |  | \ \   / / __ \__   __|
+   | |__| |\ \_/ / |  | | | |
+   |  __  | \   /| |  | | | |
+   | |  | |  | | | |__| | | |
+   |_|  |_|  |_|  \____/  |_|
 
 
-        A PoC for traceability in IoT environments through Hyperledger by:
+   A PoC for traceability in IoT environments through Hyperledger by:
 
-            - Jesús Iglesias García, jesusgiglesias@gmail.com
+   - Jesús Iglesias García, jesusgiglesias@gmail.com
 
-        -----------------------------------------------------
+   -----------------------------------------------------
 
-        HYOT - TRACEABILITY IN IoT
+   HYOT - TRACEABILITY IN IoT
 
-        This script monitors several events -distance, temperature and humidity- from sensors
-        connected to a Raspberry Pi and in case of an anomalous event, the alert procedure is activated.
+   This script monitors several events -distance, temperature and humidity- from sensors
+   connected to a Raspberry Pi and in case of an anomalous event, the alert procedure is activated.
 
-    """
+   """
 
     # Header
     print(Style.BRIGHT + Fore.LIGHTBLUE_EX + banner + Style.RESET_ALL)
@@ -186,20 +192,20 @@ def information_values():
     Shows the information by console about some values established.
     """
 
-    global TEMP_THRESHOLD, HUM_THRESHOLD, DISTANCE_THRESHOLD, TIME_MEASUREMENTS, HCSR_MAXDISTANCE, recording_time
+    global TEMP_THRESHOLD, HUM_THRESHOLD, DISTANCE_THRESHOLD, WAIT_TIME_MEASUREMENT, HCSR_MAXDISTANCE, recording_time
 
-    print(Style.BRIGHT + Fore.BLACK + "\n-- Information - Values established:" + Style.RESET_ALL)
+    print(Style.BRIGHT + Fore.BLACK + "\n   -- Information - Values established:" + Style.RESET_ALL)
     # Information about the current thresholds
     print(Fore.BLACK + "      -- Alert thresholds:")
     print("        - Sensor: DHT11   | Event: Temperature | > " + str(TEMP_THRESHOLD) + " °C")
     print("        - Sensor: DHT11   | Event: Humidity    | > " + str(HUM_THRESHOLD) + " %")
     print("        - Sensor: HC-SR04 | Event: Distance    | < " + str(DISTANCE_THRESHOLD) + " cm")
     # Information about the recording time
-    print(Fore.BLACK + "      -- Recording time: " + str(recording_time) + " seconds")
+    print("      -- Recording time: " + str(recording_time) + " seconds")
     # Information about the time between measurements
-    print(Fore.BLACK + "      -- Time between measurements: " + str(TIME_MEASUREMENTS) + " seconds")
+    print("      -- Time between measurements: " + str(WAIT_TIME_MEASUREMENT) + " seconds")
     # Information about the maximum distance to be measured by the HC-SR04 sensor
-    print(Fore.BLACK + "      -- Maximum distance to be measured (HC-SR04): " + str(HCSR_MAXDISTANCE) + " meters")
+    print("      -- Maximum distance to be measured (HC-SR04): " + str(HCSR_MAXDISTANCE) + " meters" + Fore.RESET)
 
     time.sleep(2)
 
@@ -209,8 +215,7 @@ def reset_values():
     Resets the value of the global variables.
     """
 
-    global video_filename, video_filefullpath, alert_triggered, alert_origin, threshold_value, link, sent, \
-        hash_code
+    global video_filename, video_filefullpath, alert_triggered, alert_origin, threshold_value, link, sent, hash_code
 
     video_filename = None
     video_filefullpath = None
@@ -231,8 +236,7 @@ def add_cloudant(temperature, humidity, distance):
     :param distance: Indicates the value of measured distance.
     """
 
-    global uuid_measurement, datetime_measurement, alert_triggered, alert_origin, threshold_value, link, sent,\
-        MAILTO
+    global MAILTO, uuid_measurement, datetime_measurement, alert_triggered, alert_origin, threshold_value, link, sent
 
     # Creates a JSON document content data
     data = {
@@ -264,8 +268,8 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     :param distance: Indicates the value of measured distance.
     """
 
-    global uuid_measurement, datetime_measurement, video_filename, video_filefullpath, recording_time, alert_triggered,\
-        alert_origin, threshold_value, link, sent, hash_code, MAILTO, ALERT_LED, EXT
+    global MAILTO, ALERT_LED, EXT, uuid_measurement, datetime_measurement, video_filename, video_filefullpath,\
+        recording_time, alert_triggered, alert_origin, threshold_value, link, sent, hash_code
 
     # Name of the video file
     video_filename = sensor.lower() + '_' + event.lower() + '_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) \
@@ -280,13 +284,13 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     lcd.clear_lcd(sensor)                                               # Clears the LCD
     time.sleep(1)
 
-    print(Fore.RED + "  ---------- ALERT TRIGGERED | " + sensor + " | " + event + " ----------  " + Fore.RESET)
+    print(Fore.RED + "   ---------- ALERT TRIGGERED | " + sensor + " | " + event + " ----------  " + Fore.RESET)
     lcd.full_print_lcd(sensor, "ALERT TRIGGERED!", event)
     ALERT_LED.on()                                                      # Turns on the red led
     time.sleep(5)
 
     lcd.clear_lcd(sensor)                                               # Clears the LCD
-    print(Fore.BLACK + "  ----------- Initiating the alert procedure ------------  " + Fore.RESET)
+    print(Fore.BLACK + "   ----------- Initiating the alert procedure ------------  " + Fore.RESET)
     lcd.full_print_lcd(sensor, "Initiating the", "procedure...")
 
     # Takes a recording for n seconds (default 10 seconds)
@@ -295,16 +299,16 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     # Checks if the original file exists in the local system
     system.check_file(video_filefullpath)
 
-    # Applies a hash function to the content of the video (unencrypted)
+    # Applies a hash function to the content of the video (unencrypted file)
     hash_code = hlf.file_hash(video_filefullpath)
 
     # Encrypts the file
     final_path = gpg.encrypt_file(video_filefullpath)
 
-    # Checks if the final file (normally encrypted file) exists in the local system
+    # Checks if the encrypted file exists in the local system
     system.check_file(final_path)
 
-    # Uploads the file to the Cloud (e.g. Dropbox)
+    # Uploads the encrypted file to the Cloud (e.g. Dropbox)
     link = dropbox.upload_file(final_path, sensor)
 
     # Sends an email when an alert is triggered
@@ -314,28 +318,28 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
                                 str(uuid_measurement), temperature, humidity, distance, link,
                                 alert_origin, threshold_value)
 
-    # Removes the temporary file (original video)
+    # Removes the temporary file (original file)
     system.remove_file(video_filefullpath, False)
 
     # Encryption had success
     if video_filefullpath != final_path:
-        # Removes the temporary file (encrypted video) after uploading to the Cloud (e.g. Dropbox)
+        # Removes the temporary file (encrypted file) after uploading to the Cloud (e.g. Dropbox)
         system.remove_file(final_path, True)
 
     # Publishes the event in the IoT platform
     iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance)
 
-    # Adds the measurement to the database
+    # Adds the current measurement to the database
     add_cloudant(temperature, humidity, distance)
 
-    # Submits the transaction to publish a new alert asset
+    # Submits the transaction to Hyperledger Fabric to publish a new alert asset
     hlf.publishAlert_transaction(str(uuid_measurement), datetime_measurement, sensor, hash_code, link)
 
     time.sleep(1)
     lcd.clear_lcd(sensor)                                       # Clears the LCD
     ALERT_LED.off()                                             # Turns off the red led
     time.sleep(1)
-    print(Fore.RED + "  ----------- PROCEDURE FINISHED. CONTINUING... ----------  " + Fore.RESET)
+    print(Fore.RED + "   ----------- PROCEDURE FINISHED. CONTINUING... ----------  " + Fore.RESET)
     lcd.full_print_lcd(sensor, "Procedure", "finished...")
 
 
@@ -346,11 +350,11 @@ def print_data_measurement():
 
     global datetime_measurement, uuid_measurement
 
-    print(Style.BRIGHT + "UUID: " + Style.RESET_ALL + str(uuid_measurement))
-    print("Datetime: " + str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")))
+    print(Style.BRIGHT + "   UUID: " + Style.RESET_ALL + str(uuid_measurement))
+    print("   Datetime: " + str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")))
 
 
-def procedure_no_alert(temperature, humidity, distance):
+def no_alert_procedure(temperature, humidity, distance):
     """
     Steps to perform when an alert is not triggered.
 
@@ -363,41 +367,42 @@ def procedure_no_alert(temperature, humidity, distance):
 
     # Publishes the event in the IoT platform
     iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance)
+
     # Adds the measurement to the database
     add_cloudant(temperature, humidity, distance)
 
 
 def check_invalid_values_dht11(temperature, humidity, distance):
     """
-    Checks the values of the DHT11 sensor when some are invalid.
+    Checks the values of the DHT11 sensor when some is invalid.
 
     :param temperature: Value of this event in the current measurement.
     :param humidity: Value of this event in the current measurement.
     :param distance: Value of this event in the current measurement.
     """
 
-    global SENSORS, HCSR_EVENTS, DISTANCE_THRESHOLD, threshold_value
+    global SENSORS, HCSR_EVENTS, DISTANCE_THRESHOLD, DHT_SENSOR_NAME, HCSR_SENSOR_NAME, DISTANCE_TEXT, threshold_value
 
     # Prints the UUID and datetime of each measurement
     print_data_measurement()
 
-    print(Style.BRIGHT + Fore.BLACK + "DHT11 sensor" + Style.RESET_ALL)
+    print(Style.BRIGHT + Fore.BLACK + "   " + DHT_SENSOR_NAME + Style.RESET_ALL)
 
     # Checks that event is invalid
     if temperature is None and humidity is None:
-        print("Failed to get reading. Humidity and temperature are invalid or None")
+        print("   Failed to get reading. Humidity and temperature are invalid or None.")
 
     elif humidity is None:
-        print("Failed to get reading. Humidity is invalid or None")
+        print("   Failed to get reading. Humidity is invalid or None.")
 
     elif temperature is None:
-        print("Failed to get reading. Temperature is invalid or None")
+        print("   Failed to get reading. Temperature is invalid or None.")
 
     # Shows the LCD as empty - DHT11 sensor
     lcd.print_measure_dht(None, None, True, True)
 
-    print(Style.BRIGHT + Fore.BLACK + "HC-SR04 sensor" + Style.RESET_ALL)
-    print("Distance: {0:0.3f} cm \n".format(distance) + Fore.RESET)
+    print(Style.BRIGHT + Fore.BLACK + "   " + HCSR_SENSOR_NAME + Style.RESET_ALL)
+    print("   " + DISTANCE_TEXT + " {0:0.3f} cm \n".format(distance) + Fore.RESET)
 
     # Outputs the data by LCD
     lcd.print_measure_hcsr(distance, False)
@@ -408,7 +413,7 @@ def check_invalid_values_dht11(temperature, humidity, distance):
         alert_procedure(SENSORS[1], HCSR_EVENTS[0], temperature, humidity, distance)
     # No alert
     else:
-        procedure_no_alert(temperature, humidity, distance)
+        no_alert_procedure(temperature, humidity, distance)
 
 
 def main(user_args):
@@ -421,19 +426,20 @@ def main(user_args):
     # Try-Catch block
     try:
 
-        # Variables
-        global SENSORS, MAILTO, TIME_MEASUREMENTS, DHT_SENSOR, DHT_PINDATA, DHT11_EVENTS, TEMP_THRESHOLD,\
-            HUM_THRESHOLD, HCSR_SENSOR, HCSR_EVENTS, HCSR_MAXDISTANCE, DISTANCE_THRESHOLD, uuid_measurement,\
-            datetime_measurement, recording_time, threshold_value
+        global SENSORS, MAILTO, WAIT_TIME_MEASUREMENT, DHT_SENSOR, DHT_PINDATA, DHT11_EVENTS, TEMP_THRESHOLD,\
+            HUM_THRESHOLD, HCSR_SENSOR, HCSR_EVENTS, HCSR_MAXDISTANCE, DISTANCE_THRESHOLD, DHT_SENSOR_NAME,\
+            HCSR_SENSOR_NAME, TEMPERATURE_TEXT, HUMIDITY_TEXT, DISTANCE_TEXT, uuid_measurement, datetime_measurement,\
+            recording_time, threshold_value
 
-        count = 0                                   # Measurement counter
-        recording_time = user_args.RECORDING_TIME   # Time that the recording will take
+        # Variables
+        count = 0                                           # Measurement counter
+        recording_time = user_args.RECORDING_TIME           # Time of recording
 
         # Header
         header()
 
         # ############### Initializing HYOT ###############
-        print(Style.BRIGHT + Fore.BLACK + "-- Initializing HYOT..." + Style.RESET_ALL)
+        print(Style.BRIGHT + Fore.BLACK + "   -- Initializing HYOT..." + Style.RESET_ALL)
 
         # ############### Initializing LCDs ###############
         lcd.init(user_args.DHT_I2CEXPANDER, user_args.DHT_I2CADDRESS, user_args.HCSR_I2CEXPANDER,
@@ -461,7 +467,7 @@ def main(user_args):
 
         # ############### Initializing Dropbox ###############
         dropbox.connect()                           # Creates a Dropbox client and establishes a connection
-        dropbox.init(SENSORS)                       # Initializes the main directory and the subdirectories
+        dropbox.init(SENSORS)                       # Initializes the main directory and subdirectories
 
         # ############### Initializing Hyperledger Fabric ###############
         hlf.init()                                  # Checks if Hyperledger Fabric is alive
@@ -474,7 +480,7 @@ def main(user_args):
         information_values()
 
         # ############### Reading values ###############
-        print(Style.BRIGHT + Fore.BLACK + "\n-- Reading values each " + str(TIME_MEASUREMENTS) + " seconds from "
+        print(Style.BRIGHT + Fore.BLACK + "\n   -- Reading values each " + str(WAIT_TIME_MEASUREMENT) + " seconds from "
               "sensors\n" + Style.RESET_ALL)
 
         lcd.full_print_lcds("Reading values", "from sensors")           # Writes in both LCDS using both rows
@@ -483,23 +489,23 @@ def main(user_args):
         time.sleep(1)
 
         # DHT11 and HC-SR04 sensors
-        lcd.print_lcds("- DHT11 sensor -", " HC-SR04 sensor ")
+        lcd.print_lcds("- " + DHT_SENSOR_NAME + " -", " " + HCSR_SENSOR_NAME + " ")
         time.sleep(2)
         lcd.clear_lcds()
 
-        # Loop each n seconds, hence, this is the time between measurements
+        # Loops each n seconds (default 3 seconds). This is the time between each measurement
         while True:
 
-            # If an alert has been triggered, the LCD are cleared
+            # If an alert has been triggered, the LCDs are cleared
             if alert_triggered:
                 lcd.clear_lcds()
 
-            count += 1                                                  # Increment the counter
+            count += 1                                                  # Increments the counter
             datetime_measurement = timestamp()                          # Obtains a timestamp (datetime)
             uuid_measurement = uuid.uuid4()                             # Generates a random UUID
             reset_values()                                              # Resets the values
 
-            print(Style.BRIGHT + Fore.CYAN + "Measurement %i" % count + Style.RESET_ALL)
+            print(Style.BRIGHT + Fore.CYAN + "   Measurement %i" % count + Style.RESET_ALL)
 
             # Obtains the humidity and temperature
             humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PINDATA)
@@ -510,7 +516,7 @@ def main(user_args):
             if (humidity is None or 0 > humidity > 100) and (temperature is None or temperature < 0) and \
                (distance is None or distance < 0 or distance > HCSR_MAXDISTANCE * 100):
 
-                print("Failed to get reading. All events have invalid values")
+                print("   Failed to get reading. All events have invalid values.")
 
                 # Shows the LCDs as empty
                 lcd.print_measure_dht(None, None, True, True)
@@ -549,14 +555,15 @@ def main(user_args):
                 distance = None                                     # Invalid value
                 print_data_measurement()                            # Prints the UUID and datetime of each measurement
 
-                print(Style.BRIGHT + Fore.BLACK + "DHT11 sensor" + Style.RESET_ALL)
-                print("Temperature: {0:0.1f} °C \nHumidity: {1:0.1f} %".format(temperature, humidity) + Fore.RESET)
+                print(Style.BRIGHT + Fore.BLACK + "   " + DHT_SENSOR_NAME + Style.RESET_ALL)
+                print("   " + TEMPERATURE_TEXT + " {0:0.1f} °C \n   ".format(temperature) + HUMIDITY_TEXT +
+                      " {0:0.1f} %".format(humidity) + Fore.RESET)
 
                 # Outputs the data by LCD
                 lcd.print_measure_dht(temperature, humidity, False, False)
 
-                print(Style.BRIGHT + Fore.BLACK + "HC-SR04 sensor" + Style.RESET_ALL)
-                print("Failed to get reading. Distance is invalid, None or upper than the maximum distance")
+                print(Style.BRIGHT + Fore.BLACK + "   " + HCSR_SENSOR_NAME + Style.RESET_ALL)
+                print("   Failed to get reading. Distance is invalid, None or upper than the maximum distance.")
                 lcd.print_measure_hcsr(None, True)
 
                 # Alert - DHT11 | Temperature
@@ -571,7 +578,7 @@ def main(user_args):
 
                 # No alert
                 else:
-                    procedure_no_alert(temperature, humidity, distance)
+                    no_alert_procedure(temperature, humidity, distance)
 
             # All values are valid
             else:
@@ -579,14 +586,15 @@ def main(user_args):
                 # Prints the UUID and datetime of each measurement
                 print_data_measurement()
 
-                print(Style.BRIGHT + Fore.BLACK + "DHT11 sensor" + Style.RESET_ALL)
-                print("Temperature: {0:0.1f} °C \nHumidity: {1:0.1f} %".format(temperature, humidity) + Fore.RESET)
+                print(Style.BRIGHT + Fore.BLACK + "   " + DHT_SENSOR_NAME + Style.RESET_ALL)
+                print("   " + TEMPERATURE_TEXT + " {0:0.1f} °C \n   ".format(temperature) + HUMIDITY_TEXT +
+                      " {0:0.1f} %".format(humidity) + Fore.RESET)
 
                 # Outputs the data by LCD
                 lcd.print_measure_dht(temperature, humidity, False, False)
 
-                print(Style.BRIGHT + Fore.BLACK + "HC-SR04 sensor" + Style.RESET_ALL)
-                print("Distance: {0:0.3f} cm \n".format(distance) + Fore.RESET)
+                print(Style.BRIGHT + Fore.BLACK + "   " + HCSR_SENSOR_NAME + Style.RESET_ALL)
+                print("   " + DISTANCE_TEXT + " {0:0.3f} cm \n".format(distance) + Fore.RESET)
 
                 # Outputs the data by LCD
                 lcd.print_measure_hcsr(distance, False)
@@ -608,35 +616,31 @@ def main(user_args):
 
                 # No alert
                 else:
-                    procedure_no_alert(temperature, humidity, distance)
+                    no_alert_procedure(temperature, humidity, distance)
 
-            print("-----------------------------")
+            print("\n   -----------------------------\n")
 
-            time.sleep(TIME_MEASUREMENTS - 1)
+            time.sleep(WAIT_TIME_MEASUREMENT - 1)
 
     except IOError as ioError:                      # Related to LCD 16x2 and Cloudant NoSQL DB
-        print(Fore.RED + "\nIOError in the main() function or in the modules: " + str(ioError) + ". Main reasons:")
-        print("\n- Cloudant NoSQL DB service")
-        print("      401 Unauthorized: credentials do not have permission to access to the specified Cloudant instance."
-              "\r")
-        print("      Errno -2: cloudant instance (URL) is wrong or unknown.\r")
-        print("- LCD - I2C protocol")
-        print("      Errno 2: I2C interface is disabled.\r")
-        print("      Errno 22: I2C address is invalid.\r")
-        print("      Errno 121: LCD is not connected.\r")
+        print(Fore.RED + "\n   ✖ IOError in the main() function or in the modules: " + str(ioError) + ". Main reasons:")
+        print("     - LCD - I2C protocol")
+        print("       Errno 2: I2C interface is disabled.\r")
+        print("       Errno 22: I2C address is invalid.\r")
+        print("       Errno 121: LCD is not connected.\r")
         sys.exit(1)
     except Exception as exception:
-        print(Fore.RED + "\nException in the main() function or in the modules: " + str(exception.message.lower()) +
-              ".")
-        traceback.print_exc()                       # Prints the traceback
+        print(Fore.RED + "\n   ✖ Exception in the main() function or in the modules: " + str(exception.message.lower())
+              + ".")
+        # Prints the traceback
+        traceback.print_exc()
         print(Fore.RESET)
         sys.exit(1)
-    except KeyboardInterrupt:                       # TODO
-        print("\n" + Fore.RED + "Exception: KeyboardInterrupt. Please, turn off the system for proper operation."
-              + Fore.RESET)
+    except KeyboardInterrupt:
+        print(Fore.RED + "\n\n   ✖ Exception: KeyboardInterrupt." + Fore.RESET)
         sys.exit(1)
     finally:
-        print(Style.BRIGHT + Fore.BLACK + "\n-- Ending HYOT..." + Style.RESET_ALL)
+        print(Style.BRIGHT + Fore.BLACK + "\n   -- Ending HYOT..." + Style.RESET_ALL)
         try:
             print("\r")
             lcd.disconnect_lcds()                       # Disconnects the LCDs
@@ -649,9 +653,10 @@ def main(user_args):
             dropbox.disconnect()                        # Disables the access token used to authenticate the calls
             print("\r")
         except Exception as finallyException:
-            print(Fore.RED + "\nException in the finally statement of the main() function: " +
+            print(Fore.RED + "\n   ✖ Exception in the finally statement of the main() function: " +
                   str(finallyException.message.lower()) + ".")
-            traceback.print_exc()                       # Prints the traceback
+            # Prints the traceback
+            traceback.print_exc()
             print(Fore.RESET)
             sys.exit(1)
 
