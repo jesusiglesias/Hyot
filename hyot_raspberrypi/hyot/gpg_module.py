@@ -43,6 +43,7 @@
 ########################################
 try:
     import sys                                      # System-specific parameters and functions
+    import email_module as email                    # Module to send emails
     import getpass                                  # Portable password input
     import gnupg                                    # GnuPG’s key management, encryption and signature functionality
     import qrcode                                   # Pure python QR Code generator
@@ -391,11 +392,12 @@ def init():
     print("\n        ------------------------------------------------------")
 
 
-def encrypt_file(video):
+def encrypt_file(video, mailto):
     """
     Encrypts the file to upload to the Cloud (e.g. Dropbox).
 
     :param video: File to encrypt with its full path.
+    :param mailto: Email address where to send the error notification if it occurs.
 
     :return: encrypted_file File whose content has been encrypted.
     """
@@ -417,12 +419,20 @@ def encrypt_file(video):
             print(Fore.GREEN + " ✓" + Fore.RESET)
             return encrypted_file
         else:
-            print(Fore.RED + "✖ File not encrypted. Aborting..." + Fore.RESET)
+            print(Fore.RED + "✖ File not encrypted. Exception (status): " + str(status) + ".\n" + Fore.RESET)
+
+            # Prints a message or sends an email when an error occurs during the alert procedure
+            email.print_error_notification_or_send_email(mailto)
+
             sys.exit(0)  # TODO Logger
 
-    except Exception:
-        print(Fore.RED + "✖ File not encrypted. Aborting..." + Fore.RESET)
-        sys.exit(0)  # TODO Logger
+    except Exception as encryptError:
+        print(Fore.RED + "✖ File not encrypted. Exception: " + str(encryptError) + ".\n" + Fore.RESET)
+
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        email.print_error_notification_or_send_email(mailto)
+
+        sys.exit(1)  # TODO Logger
 
 
 def clean():

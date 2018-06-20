@@ -43,6 +43,7 @@
 ########################################
 try:
     import sys                                    # System-specific parameters and functions
+    import email_module as email                  # Module to send emails
     import ibmiotf.device                         # Module for interacting with the IBM Cloud IoT Platform
     import logging                                # Logging facility for Python
     import time                                   # Time access and conversions
@@ -157,7 +158,7 @@ def connect():
     print("\n        ------------------------------------------------------")
 
 
-def publish_event(timestamp, temperature, humidity, distance):
+def publish_event(timestamp, temperature, humidity, distance, mailto):
     """
     Sends the event to the IoT platform.
 
@@ -165,6 +166,7 @@ def publish_event(timestamp, temperature, humidity, distance):
     :param temperature: Value of this event in the current measurement.
     :param humidity: Value of this event in the current measurement.
     :param distance: Value of this event in the current measurement.
+    :param mailto: Email address where to send the error notification if it occurs.
     """
 
     global client
@@ -182,7 +184,12 @@ def publish_event(timestamp, temperature, humidity, distance):
         print(Fore.GREEN + " ✓" + Fore.RESET)
 
     except Exception as publishError:
-        print(Fore.RED + " ✖ Error publishing the event: " + str(publishError) + ". Aborting..." + Fore.RESET)
+        print(Fore.RED + " ✖ Error publishing the event in IoT Platform. Exception: " + str(publishError) + ".\n"
+              + Fore.RESET)
+
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        email.print_error_notification_or_send_email(mailto)
+
         sys.exit(1)  # TODO Logger
 
 

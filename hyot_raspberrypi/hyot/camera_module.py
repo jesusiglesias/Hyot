@@ -42,6 +42,7 @@
 ########################################
 try:
     import sys                                          # System-specific parameters and functions
+    import email_module as email                        # Module to send emails
     import picamera                                     # Interface for the Raspberry Pi camera module
     import time                                         # Time access and conversions
     from colorama import Fore, Style                    # Cross-platform colored terminal text
@@ -86,12 +87,13 @@ def init():
     print("\n        ------------------------------------------------------")
 
 
-def record_video(path, recording_time):
+def record_video(path, recording_time, mailto):
     """
     Records a video for n seconds. Default: 10 seconds.
 
     :param path: Path where the video will be saved.
     :param recording_time: Time of recording.
+    :param mailto: Email address where to send the error notification if it occurs.
     """
 
     global camera
@@ -112,7 +114,11 @@ def record_video(path, recording_time):
         time.sleep(1)
 
     except Exception as recordError:
-        print(Fore.RED + " ✖ Error to record the video: " + str(recordError) + "." + Fore.RESET)
+        print(Fore.RED + " ✖ Error to record the video. Exception: " + str(recordError) + ".\n" + Fore.RESET)
+
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        email.print_error_notification_or_send_email(mailto)
+
         sys.exit(1)  # TODO Logger
 
 

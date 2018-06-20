@@ -42,6 +42,7 @@
 ########################################
 try:
     import sys                                      # System-specific parameters and functions
+    import email_module as email                    # Module to send emails
     import getpass                                  # Portable password input
     import time                                     # Time access and conversions
     import yaml                                     # YAML parser and emitter for Python
@@ -199,11 +200,12 @@ def init(timestamp):
     print("\n        ------------------------------------------------------")
 
 
-def add_document(data):
+def add_document(data, mailto):
     """
     Adds a new document to the database and checks later that the document exists.
 
     :param data: Document to save in the database.
+    :param mailto: Email address where to send the error notification if it occurs.
     """
 
     global db_instance, db_name
@@ -218,7 +220,12 @@ def add_document(data):
     if document.exists():
         print(Fore.GREEN + " ✓" + Fore.RESET)
     else:
-        print(Fore.RED + " ✖ Error to add the measurement. Please, check the Cloudant NoSQL DB service." + Fore.RESET)
+        print(Fore.RED + " ✖ Error to add the measurement. A measurement with the same identifier already exists."
+                         " Please, check the Cloudant NoSQL DB service.\n" + Fore.RESET)
+
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        email.print_error_notification_or_send_email(mailto)
+
         sys.exit(0)  # TODO Logger
 
 

@@ -43,6 +43,7 @@
 ########################################
 try:
     import sys                                      # System-specific parameters and functions
+    import email_module as email                    # Module to send emails
     import hashlib                                  # Secure hashes and message digests
     import json                                     # JSON encoder and decoder
     import re                                       # Regular expression
@@ -363,7 +364,7 @@ def init():
         sock.close()                                               # Closes the socket
 
 
-def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link):
+def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, mailto):
     """
     Submits a transaction to publish a new alert asset in the Blockchain of Hyperledger Fabric.
 
@@ -372,6 +373,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link):
     :param alert_origin: Indicates the sensor that triggered the alert.
     :param hash_video: Hash of the content of the video.
     :param link: Link to the Cloud (e.g. Dropbox) where the file was uploaded.
+    :param mailto: Email address where to send the error notification if it occurs.
     """
 
     global HLC_API_PUBLISH_ALERT, hlc_server_url, hlc_api_key
@@ -420,26 +422,29 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link):
     # Error 401 - Unauthorized request
     elif response.status_code == requests.codes.unauthorized:
         print(Fore.RED + " ✖ Error to submit the transaction. Error 401: Unauthorized request. Please, enter a valid"
-                         " credentials to submit the request to the Hyperledger Composer REST server." + Fore.RESET)
-        sys.exit(0)  # TODO Logger
+                         " credentials to submit the request to the Hyperledger Composer REST server.\n" + Fore.RESET)
 
     # Error 404 - Not found
     elif response.status_code == requests.codes.not_found:
         print(Fore.RED + " ✖ Error to submit the transaction. Error 404: Not found. Please, verify that the URL is"
-                         " right and can be found on the Hyperledger Composer REST server." + Fore.RESET)
-        sys.exit(0)  # TODO Logger
+                         " right and can be found on the Hyperledger Composer REST server.\n" + Fore.RESET)
 
     else:
-        print(Fore.RED + " ✖ Error to submit the transaction (code " + str(response.status_code) + "). "
-              + str(response.json()['error']['message']) + "." + Fore.RESET)
-        sys.exit(0)  # TODO Logger
+        print(Fore.RED + " ✖ Error to submit the transaction (code " + str(response.status_code) + "). Exception: "
+              + str(response.json()['error']['message']) + ".\n" + Fore.RESET)
+
+    # Prints a message or sends an email when an error occurs during the alert procedure
+    email.print_error_notification_or_send_email(mailto)
+
+    sys.exit(0)  # TODO Logger
 
 
-def file_hash(video):
+def file_hash(video, mailto):
     """
     Applies a hash function to the content of the file.
 
     :param video: File to hash.
+    :param mailto: Email address where to send the error notification if it occurs.
 
     :return: Hash of the video file.
     """
@@ -467,6 +472,10 @@ def file_hash(video):
         return hasher.hexdigest()
 
     except Exception as hashError:
+        print(Fore.RED + " ✖ Error to apply the hash function to the video. Exception: " + str(hashError) + ".\n"
+              + Fore.RESET)
 
-        print(Fore.RED + " ✖ Error to apply the hash function to the video: " + str(hashError) + "." + Fore.RESET)
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        email.print_error_notification_or_send_email(mailto)
+
         sys.exit(1)  # TODO Logger

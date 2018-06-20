@@ -42,6 +42,7 @@
 ########################################
 try:
     import sys                                      # System-specific parameters and functions
+    import email_module as email                    # Module to send emails
     import os                                       # Miscellaneous operating system interfaces
     import shutil                                   # High-level file operations
     import time                                     # Time access and conversions
@@ -146,16 +147,20 @@ def remove_localdir():
         time.sleep(0.25)
 
 
-def check_file(localfile):
+def check_file(localfile, mailto):
     """
     Checks if the file (video) exists in the local system.
 
     :param localfile: Local path and name of the file to upload to the Cloud (e.g. Dropbox).
+    :param mailto: Email address where to send the error notification if it occurs.
     """
 
     if not os.path.exists(localfile):
-        print(Fore.RED + "     ✖ File not found in the local system: " + localfile + ". Aborting..."
-              + Fore.RESET)
+        print(Fore.RED + "     ✖ File not found in the local system. Exception: " + str(localfile) + ".\n" + Fore.RESET)
+
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        email.print_error_notification_or_send_email(mailto)
+
         sys.exit(0)  # TODO Logger
 
 

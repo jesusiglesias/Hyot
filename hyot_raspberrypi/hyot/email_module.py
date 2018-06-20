@@ -23,7 +23,7 @@
 #          USAGE:     ---                                                                                              #
 #                                                                                                                      #
 #    DESCRIPTION:     This module contains the logic to send emails when an alert notification is triggered or an      #
-#                     error occurs during the execution                                                                #
+#                     error occurs during the execution of the measurement procedure                                   #
 #                                                                                                                      #
 #        OPTIONS:     ---                                                                                              #
 #   REQUIREMENTS:     Gmail account, Connection to the network                                                         #
@@ -36,8 +36,8 @@
 #                                                                                                                      #
 # =====================================================================================================================#
 
-"""This module contains the logic to send emails when an alert notification is triggered or an error occurs during
-    the execution"""
+"""This module contains the logic to send emails when an alert notification is triggered or an error occurs during the
+   execution of the measurement procedure"""
 
 ########################################
 #               IMPORTS                #
@@ -193,7 +193,11 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
             LINK=link)
 
     except Exception as templateError:
-        print(Fore.RED + " ✖ Error in the email template. Email not sent. " + str(templateError) + "." + Fore.RESET)
+        print(Fore.RED + " ✖ Error in the email template. Exception: " + str(templateError) + ".\n" + Fore.RESET)
+
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        print_error_notification_or_send_email(mailto)
+
         sys.exit(1)  # TODO Logger
 
     time.sleep(0.5)
@@ -228,7 +232,11 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
         email_instance.attach(part)
 
     except IOError:                                           # Error to open the file
-        print(Fore.RED + " ✖ Could not open the file so it is not attached to the email." + Fore.RESET)
+        print(Fore.RED + " ✖ Could not open the file so it is not attached to the email.\n" + Fore.RESET)
+
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        print_error_notification_or_send_email(mailto)
+
         sys.exit(1)  # TODO Logger
 
     try:
@@ -238,8 +246,31 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
         print(Fore.GREEN + " ✓" + Fore.RESET)
 
     except Exception as sendError:
-        print(Fore.RED + " ✖ Error to send the email: " + str(sendError) + "." + Fore.RESET)
+        print(Fore.RED + " ✖ Error to send the email. Exception: " + str(sendError) + ".\n" + Fore.RESET)
+
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        print_error_notification_or_send_email(mailto)
+
         sys.exit(1)  # TODO Logger
+
+
+def print_error_notification_or_send_email(mailto):
+    """
+    Prints a message by console or sends an email when an error occurs during the execution of the measurement
+    procedure.
+
+    :param mailto: Email address where to send the error notification if it occurs.
+    """
+
+    print(Fore.RED + "     Aborting the execution...\r")
+
+    # Sends an email depending on whether the user entered an email address when the code was run
+    if mailto is None:
+        print(Fore.CYAN + "     Information!" + Fore.RESET + " Consider enabling the error notification by email to"
+                          " receive an informative email instantly. To do this, use the -e/--email option or type"
+                          " -h/--help option to get more information.")
+    else:  # TODO
+        print("     Sending mail" + Fore.RESET)
 
 
 def disconnect():

@@ -211,10 +211,11 @@ def menu():
         general_group.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
                                    help='Shows the help.')
 
-        # Email address where to send an alert notification
+        # Email address where to send an alert notification or error notification in the measurement procedure
         general_group.add_argument("-e", "--email",
                                    default=None, required=False, action="store", dest="EMAIL",
-                                   help="Email address where to send an alert notification. Default: disabled.")
+                                   help="Email address where to send an alert notification or error notification in"
+                                        " the measurement procedure. Default: disabled.")
 
         # Maximum distance to be measured by the HC-SR04 sensor
         general_group.add_argument("-m", "--maxdistancehcsr",

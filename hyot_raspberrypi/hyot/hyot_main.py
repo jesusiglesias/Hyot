@@ -44,7 +44,7 @@
 # =====================================================================================================================#
 
 """This script monitors several events -distance, temperature and humidity- from sensors connected to a Raspberry Pi
-    and in case of an anomalous event, the alert procedure is activated"""
+   and in case of an anomalous event, the alert procedure is activated"""
 
 ########################################
 #               IMPORTS                #
@@ -57,7 +57,7 @@ try:
     import cloudantdb_module as cloudantdb          # Module that contains the logic of the Cloudant NoSQL DB service
     import datetime                                 # Basic date and time types
     import dropbox_module as dropbox                # Module that contains the logic of the Dropbox service
-    import email_module as email                    # Module to send emails when an alert is triggered
+    import email_module as email                    # Module to send emails
     import gpg_module as gpg                        # Module that contains the logic of the functionality of GPG
     import hyperledgerFabric_module as hlf          # Module that contains the logic to use Hyperledger Fabric
     import iot_module as iot                        # Module that contains the logic of the IoT platform
@@ -251,7 +251,7 @@ def add_cloudant(temperature, humidity, distance):
     }
 
     # Adds the document to the database of the Cloudant NoSQL service
-    cloudantdb.add_document(data)
+    cloudantdb.add_document(data, MAILTO)
 
 
 def alert_procedure(sensor, event, temperature, humidity, distance):
@@ -291,22 +291,22 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     lcd.full_print_lcd(sensor, "Initiating the", "procedure...")
 
     # Takes a recording for n seconds (default 10 seconds)
-    picamera.record_video(video_filefullpath, recording_time)
+    picamera.record_video(video_filefullpath, recording_time, MAILTO)
 
     # Checks if the original file exists in the local system
-    system.check_file(video_filefullpath)
+    system.check_file(video_filefullpath, MAILTO)
 
     # Applies a hash function to the content of the video (unencrypted file)
-    hash_code = hlf.file_hash(video_filefullpath)
+    hash_code = hlf.file_hash(video_filefullpath, MAILTO)
 
     # Encrypts the file
-    final_path = gpg.encrypt_file(video_filefullpath)
+    final_path = gpg.encrypt_file(video_filefullpath, MAILTO)
 
     # Checks if the encrypted file exists in the local system
-    system.check_file(final_path)
+    system.check_file(final_path, MAILTO)
 
     # Uploads the encrypted file to the Cloud (e.g. Dropbox)
-    link = dropbox.upload_file(final_path, sensor)
+    link = dropbox.upload_file(final_path, sensor, MAILTO)
 
     # Sends an email when an alert is triggered
     if not (MAILTO is None):
@@ -322,13 +322,13 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
         system.remove_file(final_path, True)
 
     # Publishes the event in the IoT platform
-    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance)
+    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance, MAILTO)
 
     # Adds the current measurement to the database
     add_cloudant(temperature, humidity, distance)
 
     # Submits the transaction to Hyperledger Fabric to publish a new alert asset
-    hlf.publishAlert_transaction(str(uuid_measurement), datetime_measurement, sensor, hash_code, link)
+    hlf.publishAlert_transaction(str(uuid_measurement), datetime_measurement, sensor, hash_code, link, MAILTO)
 
     time.sleep(1)
     lcd.clear_lcd(sensor)                                       # Clears the LCD
@@ -358,10 +358,10 @@ def no_alert_procedure(temperature, humidity, distance):
     :param distance: Value of this event in the current measurement.
     """
 
-    global datetime_measurement
+    global MAILTO, datetime_measurement
 
     # Publishes the event in the IoT platform
-    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance)
+    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance, MAILTO)
 
     # Adds the measurement to the database
     add_cloudant(temperature, humidity, distance)

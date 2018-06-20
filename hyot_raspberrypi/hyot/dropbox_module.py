@@ -43,6 +43,7 @@
 try:
     import sys                                          # System-specific parameters and functions
     import dropbox                                      # Python SDK for integrating with the Dropbox API v2
+    import email_module as email                        # Module to send emails
     import time                                         # Time access and conversions
     import yaml                                         # YAML parser and emitter for Python
     from colorama import Fore, Style                    # Cross-platform colored terminal text
@@ -272,12 +273,13 @@ def init(all_sensors):
     print("\n        ------------------------------------------------------")
 
 
-def __get_shared_link(upload_path):
+def __get_shared_link(upload_path, mailto):
     """
     Creates a shared shortened link of the file. If a shared link already exists for the given path, that link is
     returned.
 
     :param upload_path: Upload path of the current file.
+    :param mailto: Email address where to send the error notification if it occurs.
 
     :return: link Link of the uploaded file to Dropbox.
     """
@@ -292,20 +294,24 @@ def __get_shared_link(upload_path):
 
         if sharedLinkError.error.is_path():                         # File in the upload path does not exist
             print(Fore.RED + " ✖ There is no file indicated by the upload path. Please, check the way to get the"
-                             " shared link." + Fore.RESET)
-            sys.exit(1)  # TODO Logger
+                             " shared link.\n" + Fore.RESET)
         else:                                                       # Another error
             print(Fore.RED + " ✖ Error to create the shared link of the file in Dropbox. Exception: "
-                  + str(sharedLinkError) + "." + Fore.RESET)
-            sys.exit(1)  # TODO Logger
+                  + str(sharedLinkError) + ".\n" + Fore.RESET)
+
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        email.print_error_notification_or_send_email(mailto)
+
+        sys.exit(1)  # TODO Logger
 
 
-def upload_file(localfile, sensor):
+def upload_file(localfile, sensor, mailto):
     """
     Uploads the file to the Cloud (Dropbox), in particular to the subdirectory of the sensor that triggered the alarm.
 
     :param localfile: Local path and name of the file to upload.
     :param sensor: Sensor that triggered the alarm.
+    :param mailto: Email address where to send the error notification if it occurs.
 
     :return: link Link of the uploaded file to Dropbox.
     """
@@ -335,7 +341,7 @@ def upload_file(localfile, sensor):
             dbx.files_upload(f.read(), upload_path, autorename=False)
 
             # Obtains the link of the uploaded file to Dropbox
-            link = __get_shared_link(upload_path)
+            link = __get_shared_link(upload_path, mailto)
 
             print(Fore.GREEN + " ✓" + Fore.RESET)
 
@@ -345,22 +351,30 @@ def upload_file(localfile, sensor):
     except IOError:                                                        # Error to open the file
 
         print(Fore.RED + "✖ Could not open the file: " + localfile + ". No such file in the local system or corrupt"
-                         " file." + Fore.RESET)
+                         " file.\n")
+
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        email.print_error_notification_or_send_email(mailto)
+
         sys.exit(1)  # TODO Logger
 
     except dropbox.exceptions.ApiError as uploadError:
 
         if uploadError.error.get_path().reason.is_conflict():              # Conflict with another different file
             print(Fore.RED + " ✖ Existing conflict with another file with the same name and different content."
-                             " Please, check the way in which the names of the videos are generated." + Fore.RESET)
-            sys.exit(1)  # TODO Logger
+                             " Please, check the way in which the names of the videos are generated.\n" + Fore.RESET)
+
         elif uploadError.error.get_path().reason.is_insufficient_space():  # Insufficient space
-            print(Fore.RED + " ✖ File not uploaded. The user does not have enough available space." + Fore.RESET)
-            sys.exit(1)  # TODO Logger
+            print(Fore.RED + " ✖ File not uploaded. The user does not have enough available space.\n" + Fore.RESET)
+
         else:                                                      # Another error. For example: no write permission
-            print(Fore.RED + " ✖ Error to upload the recording to Dropbox. Exception: " + str(uploadError) + "."
+            print(Fore.RED + " ✖ Error to upload the recording to Dropbox. Exception: " + str(uploadError) + ".\n"
                   + Fore.RESET)
-            sys.exit(1)  # TODO Logger
+
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        email.print_error_notification_or_send_email(mailto)
+
+        sys.exit(1)  # TODO Logger
 
 
 def disconnect():
