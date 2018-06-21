@@ -87,6 +87,7 @@ except (KeyError, TypeError) as keyError:
     sys.exit(1)
 
 SENSOR_DB = "sensors_measurements"                  # Name of the database that will stores the values of the sensors
+STEP_ADD_DB = "Add document to Cloudant NoSQL DB"   # Name to identify the step where the error has occurred
 
 
 ########################################
@@ -208,7 +209,7 @@ def add_document(data, mailto):
     :param mailto: Email address where to send the error notification if it occurs.
     """
 
-    global db_instance, db_name
+    global STEP_ADD_DB, db_instance, db_name
 
     print(Fore.LIGHTBLACK_EX + "     -- Adding the measurement to the database: " + db_name + Fore.RESET),
     time.sleep(0.5)
@@ -224,7 +225,7 @@ def add_document(data, mailto):
                          " Please, check the Cloudant NoSQL DB service.\n" + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert procedure
-        email.print_error_notification_or_send_email(mailto)
+        email.print_error_notification_or_send_email(mailto, STEP_ADD_DB)
 
         sys.exit(0)  # TODO Logger
 

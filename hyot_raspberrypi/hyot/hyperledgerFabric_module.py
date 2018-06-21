@@ -101,6 +101,11 @@ VALUE_PARTICIPANT_USER = "org.hyot.network.User#"
 VALUE_PARTICIPANT_NETWORKADMIN = "org.hyperledger.composer.system.NetworkAdmin#"
 # Regex for the NGROK address
 REGEX_NGROK_ADDRESS = "^(http:\/\/|https:\/\/)\w+\.ngrok\.io$"
+# Names to identify the step where the error has occurred
+STEP_SUBMIT_ALERTTRANSACTION_UNAUTHORIZED = "Submit alert transaction to Hyperledger Fabric - Unauthorized"
+STEP_SUBMIT_ALERTTRANSACTION_NOTFOUND = "Submit alert transaction to Hyperledger Fabric - Not found"
+STEP_SUBMIT_ALERTTRANSACTION = "Submit alert transaction to Hyperledger Fabric"
+STEP_HASH = "Generate hash code"
 
 
 ########################################
@@ -376,7 +381,8 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
     :param mailto: Email address where to send the error notification if it occurs.
     """
 
-    global HLC_API_PUBLISH_ALERT, hlc_server_url, hlc_api_key
+    global HLC_API_PUBLISH_ALERT, STEP_SUBMIT_ALERTTRANSACTION_UNAUTHORIZED, STEP_SUBMIT_ALERTTRANSACTION_NOTFOUND,\
+        STEP_SUBMIT_ALERTTRANSACTION, hlc_server_url, hlc_api_key
 
     # Headers of the POST request
     if hlc_api_key:
@@ -424,19 +430,26 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
         print(Fore.RED + " ✖ Error to submit the transaction. Error 401: Unauthorized request. Please, enter a valid"
                          " credentials to submit the request to the Hyperledger Composer REST server.\n" + Fore.RESET)
 
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        email.print_error_notification_or_send_email(mailto, STEP_SUBMIT_ALERTTRANSACTION_UNAUTHORIZED)
+        sys.exit(0)  # TODO Logger
+
     # Error 404 - Not found
     elif response.status_code == requests.codes.not_found:
         print(Fore.RED + " ✖ Error to submit the transaction. Error 404: Not found. Please, verify that the URL is"
                          " right and can be found on the Hyperledger Composer REST server.\n" + Fore.RESET)
 
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        email.print_error_notification_or_send_email(mailto, STEP_SUBMIT_ALERTTRANSACTION_NOTFOUND)
+        sys.exit(0)  # TODO Logger
+
     else:
         print(Fore.RED + " ✖ Error to submit the transaction (code " + str(response.status_code) + "). Exception: "
               + str(response.json()['error']['message']) + ".\n" + Fore.RESET)
 
-    # Prints a message or sends an email when an error occurs during the alert procedure
-    email.print_error_notification_or_send_email(mailto)
-
-    sys.exit(0)  # TODO Logger
+        # Prints a message or sends an email when an error occurs during the alert procedure
+        email.print_error_notification_or_send_email(mailto, STEP_SUBMIT_ALERTTRANSACTION)
+        sys.exit(0)  # TODO Logger
 
 
 def file_hash(video, mailto):
@@ -449,7 +462,7 @@ def file_hash(video, mailto):
     :return: Hash of the video file.
     """
 
-    global BLOCKSIZE
+    global BLOCKSIZE, STEP_HASH
 
     try:
         print(Fore.LIGHTBLACK_EX + "     -- Applying a hash function to the content of the video" + Fore.RESET),
@@ -476,6 +489,6 @@ def file_hash(video, mailto):
               + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert procedure
-        email.print_error_notification_or_send_email(mailto)
+        email.print_error_notification_or_send_email(mailto, STEP_HASH)
 
         sys.exit(1)  # TODO Logger

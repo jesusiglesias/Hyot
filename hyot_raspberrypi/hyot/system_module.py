@@ -59,7 +59,8 @@ except KeyboardInterrupt:
 ########################################
 #              CONSTANTS               #
 ########################################
-TEMPFILES_DIR = "tempfiles"                         # Name of the temporary directory
+TEMPFILES_DIR = "tempfiles"                                              # Name of the temporary directory
+STEP_CHECKFILE = "Check the existence of the video in the local system"  # Name of the step where the error has occurred
 
 
 ########################################
@@ -155,11 +156,13 @@ def check_file(localfile, mailto):
     :param mailto: Email address where to send the error notification if it occurs.
     """
 
+    global STEP_CHECKFILE
+
     if not os.path.exists(localfile):
         print(Fore.RED + "     ✖ File not found in the local system. Exception: " + str(localfile) + ".\n" + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert procedure
-        email.print_error_notification_or_send_email(mailto)
+        email.print_error_notification_or_send_email(mailto, STEP_CHECKFILE)
 
         sys.exit(0)  # TODO Logger
 

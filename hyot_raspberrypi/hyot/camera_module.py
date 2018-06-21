@@ -56,6 +56,12 @@ except KeyboardInterrupt:
 
 
 ########################################
+#              CONSTANTS               #
+########################################
+STEP_VIDEO = "Record the video"                         # Name to identify the step where the error has occurred
+
+
+########################################
 #           GLOBAL VARIABLES           #
 ########################################
 camera = None                                           # Instance of the Picamera
@@ -96,7 +102,7 @@ def record_video(path, recording_time, mailto):
     :param mailto: Email address where to send the error notification if it occurs.
     """
 
-    global camera
+    global STEP_VIDEO, camera
 
     try:
         print(Fore.LIGHTBLACK_EX + "     -- Taking a recording of " + str(recording_time) + " seconds and temporarily"
@@ -117,7 +123,7 @@ def record_video(path, recording_time, mailto):
         print(Fore.RED + " ✖ Error to record the video. Exception: " + str(recordError) + ".\n" + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert procedure
-        email.print_error_notification_or_send_email(mailto)
+        email.print_error_notification_or_send_email(mailto, STEP_VIDEO)
 
         sys.exit(1)  # TODO Logger
 

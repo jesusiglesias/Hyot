@@ -1,5 +1,5 @@
 <!-------------------------------------------------------------------------------------------*
- *                       HYOT - EMAIL TEMPLATE FOR ALERT NOTIFICATION                        *
+ *                        HYOT - EMAIL TEMPLATE FOR MEASUREMENT ERROR                        *
  *------------------------------------------------------------------------------------------->
 
 <!DOCTYPE html>
@@ -153,7 +153,7 @@
                     <tr>
                         <td>
                             <h1 width="680" height="" border="0" text-align="center" style="width: 100%; -webkit-margin-before: 0; -webkit-margin-after: 0; padding: 30px 0 30px 0; 
-                            text-align: center; color: #ffffff; background-color: #d23f3f; font-family: Oswald, sans-serif"> HYOT - ALERT NOTIFICATION </h1>
+                            text-align: center; color: #ffffff; background-color: #d23f3f; font-family: Oswald, sans-serif"> HYOT - MEASUREMENT ERROR </h1>
                         </td>
                     </tr>
 
@@ -164,45 +164,8 @@
                                 <tr>
                                     <td style="padding: 20px 30px 20px 30px; font-family: roboto, sans-serif; font-size: 14px; mso-height-rule: exactly; 
                                     line-height: 20px; color: #242726;">
-                                        <p style="text-align: center;">An alert has been triggered by the <b>${EVENT}</b> event of the <b>${SENSOR}</b> sensor at
-                                            <b>${DATETIME}</b> with threshold value: <b>${THRESHOLD} </b> and ID: <b>${ID}</b>. Below is the full information of the measurement: </p>
-
-                                        <ul>
-                                            <li><b>DHT11 sensor: </b>
-                                                <ul>
-                                                    <li>Temperature: ${TEMPERATURE} &deg;C</li>
-                                                    <li>Humidity: ${HUMIDITY} &#37;</li>
-                                                </ul>
-                                            </li>
-                                            <br>
-                                            <li><b>HC-SR04 sensor: </b>
-                                                <ul>
-                                                    <li>Distance: ${DISTANCE} cm</li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                    <!-- Button -->
-                    <tr>
-                        <td bgcolor="#555555" valign="middle" style="text-align: center; background-position: center center !important; background-size: cover !important;">
-                            <table cellspacing="0" cellpadding="0" border="0" width="100%">
-                                <tr>
-                                    <td style="padding: 30px; text-align: center; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #4f5152;">
-                                        <table cellspacing="0" cellpadding="0" border="0" align="center" style="Margin: auto">
-                                            <tr>
-                                                <td style="border-radius: 3px; text-align: center;" class="button-td">
-                                                    <a href="${LINK}" style="background: #ffffff; border: 15px solid #ffffff; padding: 0 10px;color: #4f5152; font-family: roboto, sans-serif;
-                                                     font-size: 14px; line-height: 1.1; text-align: center; text-decoration: none; display: block; border-radius: 3px; font-weight: bold;" class="button-a">
-                                                        File uploaded to Dropbox
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                        <p style="text-align: center;">An error has occurred during the execution of the program, specifically, in a measurement. Step where the error occurred: ${STEP}.</p>
+                                        <p>A file with the output of the console is attached to get more information about the execution.</p>
                                     </td>
                                 </tr>
                             </table>

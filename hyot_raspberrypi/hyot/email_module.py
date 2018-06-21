@@ -83,17 +83,22 @@ except yaml.YAMLError as yamlError:
 #              CONSTANTS               #
 ########################################
 try:
-    FROM = conf['email']['from']                        # Sender's email address
-    PASSWORD = conf['email']['password']                # Sender's password
+    FROM = conf['email']['from']                                    # Sender's email address
+    PASSWORD = conf['email']['password']                            # Sender's password
 
 except (KeyError, TypeError) as keyError:
     print(Fore.RED + "✖ Please, make sure that the keys: [email|from] and [email|password] exist in the configuration "
                      "file (conf/hyot.yml)." + Fore.RESET)
     sys.exit(1)
 
-SERVERIP = "smtp.gmail.com"                             # Host/IP of the mail server
-SERVERPORT = 587                                        # Port of the mail server
-TEMPLATEPATH = "template/email_template.html"           # Path of the template email
+SERVERIP = "smtp.gmail.com"                                         # Host/IP of the mail server
+SERVERPORT = 587                                                    # Port of the mail server
+TEMPLATEPATH = "template/email_template.html"                       # Path of the email template
+ERRORTEMPLATEPATH = "template/error_measurement_template.html"      # Path of the error template
+# Names to identify the step where the error has occurred
+STEP_ALERTEMAIL_TEMPLATE = "Send email of alert - Template"
+STEP_ALERTEMAIL_ATTACHMENT = "Send email of alert - Attachment"
+STEP_ALERTEMAIL_SEND = "Send email of alert - Sending"
 
 
 ########################################
@@ -166,7 +171,7 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
     :param threshold_value: Indicates the value of the event threshold that triggered the alert.
     """
 
-    global TEMPLATEPATH, FROM, session
+    global TEMPLATEPATH, STEP_ALERTEMAIL_TEMPLATE, STEP_ALERTEMAIL_ATTACHMENT, STEP_ALERTEMAIL_SEND, FROM, session
 
     # Extracts the sensor and the event
     sensor, event = alert_origin.split('-')
@@ -196,7 +201,7 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
         print(Fore.RED + " ✖ Error in the email template. Exception: " + str(templateError) + ".\n" + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert procedure
-        print_error_notification_or_send_email(mailto)
+        print_error_notification_or_send_email(mailto, STEP_ALERTEMAIL_TEMPLATE)
 
         sys.exit(1)  # TODO Logger
 
@@ -235,12 +240,12 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
         print(Fore.RED + " ✖ Could not open the file so it is not attached to the email.\n" + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert procedure
-        print_error_notification_or_send_email(mailto)
+        print_error_notification_or_send_email(mailto, STEP_ALERTEMAIL_ATTACHMENT)
 
         sys.exit(1)  # TODO Logger
 
     try:
-        # Send the message via a SMTP server
+        # Sends the message via a SMTP server
         session.sendmail(FROM, mailto, email_instance.as_string())
 
         print(Fore.GREEN + " ✓" + Fore.RESET)
@@ -249,28 +254,80 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
         print(Fore.RED + " ✖ Error to send the email. Exception: " + str(sendError) + ".\n" + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert procedure
-        print_error_notification_or_send_email(mailto)
+        print_error_notification_or_send_email(mailto, STEP_ALERTEMAIL_SEND)
 
         sys.exit(1)  # TODO Logger
 
 
-def print_error_notification_or_send_email(mailto):
+def __send_email_measurement_error(mailto, step):
+    """
+    Sends an email to the recipient to notify that an execution error has occurred during the measurement.
+
+    :param mailto: Recipient's email address.
+    :param step: Step where the error has occurred.
+    """
+
+    global ERRORTEMPLATEPATH, FROM, session
+
+    print(Fore.CYAN + "     Sending email to the following email address: " + mailto + " to notify the measurement"
+                      " error" + Fore.RESET),
+
+    # Subject of the email
+    subject = "HYOT - Measurement error - Step: " + step
+
+    # Message of the email in HTML format
+    try:
+        message = __read_template(os.path.dirname(os.path.abspath(__file__)) + "/" + ERRORTEMPLATEPATH).substitute(
+            STEP=step)
+
+    except Exception as templateError:
+        print(Fore.RED + " ✖ Error in the email template. Exception: " + str(templateError) + ".\n" + Fore.RESET)
+        sys.exit(1)
+
+    time.sleep(0.5)
+
+    # Creates an instance of MIMEMultipart
+    email_instance = MIMEMultipart()
+
+    # Constructs the email
+    email_instance["From"] = FROM                             # Sender's email address
+    email_instance["To"] = mailto                             # Recipient's email address
+    email_instance["Subject"] = subject
+
+    # Creates and attaches the message in HTML text
+    email_instance.attach(MIMEText(message, 'html'))
+
+    # TODO Attach log file
+
+    try:
+        # Sends the message via a SMTP server
+        session.sendmail(FROM, mailto, email_instance.as_string())
+
+        print(Fore.GREEN + " ✓" + Fore.RESET)
+
+    except Exception as sendError:
+        print(Fore.RED + " ✖ Error to send the email. Exception: " + str(sendError) + ".\n" + Fore.RESET)
+        sys.exit(1)
+
+
+def print_error_notification_or_send_email(mailto, step):
     """
     Prints a message by console or sends an email when an error occurs during the execution of the measurement
     procedure.
 
     :param mailto: Email address where to send the error notification if it occurs.
+    :param step: Step where the error has occurred.
     """
 
-    print(Fore.RED + "     Aborting the execution...\r")
+    print(Fore.RED + "     Aborting the execution...\r" + Fore.RESET)
 
     # Sends an email depending on whether the user entered an email address when the code was run
     if mailto is None:
         print(Fore.CYAN + "     Information!" + Fore.RESET + " Consider enabling the error notification by email to"
                           " receive an informative email instantly. To do this, use the -e/--email option or type"
                           " -h/--help option to get more information.")
-    else:  # TODO
-        print("     Sending mail" + Fore.RESET)
+    else:
+        __send_email_measurement_error(mailto, step)
 
 
 def disconnect():

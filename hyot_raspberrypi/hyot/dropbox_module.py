@@ -79,6 +79,10 @@ HYOT_DIR = "Hyot"                       # Name of the main directory
 DHT11_DIR = "dht11"                     # Name of the DHT11 sensor subdirectory
 HCSR04_DIR = "hcsr04"                   # Name of the HC-SR04 sensor subdirectory
 MIN_SPACE = 524288000                   # Recommended available space in the account (500 MB = 524288000 bytes)
+# Names to identify the step where the error has occurred
+STEP_UPLOADDROPBOX = "Upload video to Dropbox"
+STEP_UPLOADDROPBOX_NOTFILE = "Upload video to Dropbox - File not found in the local system"
+STEP_UPLOADDROPBOX_LINK = "Upload video to Dropbox - Get shared link"
 
 try:
     TOKEN = conf['dropbox']['token']     # Authorization token
@@ -87,6 +91,7 @@ except (KeyError, TypeError) as keyError:
     print(Fore.RED + "✖ Please, make sure that the key: [dropbox|token] exists in the configuration file"
                      " (conf/hyot.yml)." + Fore.RESET)
     sys.exit(1)
+
 
 ########################################
 #           GLOBAL VARIABLES           #
@@ -284,7 +289,7 @@ def __get_shared_link(upload_path, mailto):
     :return: link Link of the uploaded file to Dropbox.
     """
 
-    global dbx
+    global STEP_UPLOADDROPBOX_LINK, dbx
 
     try:
         link = dbx.sharing_create_shared_link(upload_path, short_url=True, pending_upload=None)
@@ -300,7 +305,7 @@ def __get_shared_link(upload_path, mailto):
                   + str(sharedLinkError) + ".\n" + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert procedure
-        email.print_error_notification_or_send_email(mailto)
+        email.print_error_notification_or_send_email(mailto, STEP_UPLOADDROPBOX_LINK)
 
         sys.exit(1)  # TODO Logger
 
@@ -316,7 +321,7 @@ def upload_file(localfile, sensor, mailto):
     :return: link Link of the uploaded file to Dropbox.
     """
 
-    global HYOT_DIR, dbx, dht_subdir, hcsr_subdir
+    global HYOT_DIR, STEP_UPLOADDROPBOX_NOTFILE, STEP_UPLOADDROPBOX, dbx, dht_subdir, hcsr_subdir
 
     # Variables
     upload_path = None                                              # Specify upload path
@@ -354,7 +359,7 @@ def upload_file(localfile, sensor, mailto):
                          " file.\n")
 
         # Prints a message or sends an email when an error occurs during the alert procedure
-        email.print_error_notification_or_send_email(mailto)
+        email.print_error_notification_or_send_email(mailto, STEP_UPLOADDROPBOX_NOTFILE)
 
         sys.exit(1)  # TODO Logger
 
@@ -372,7 +377,7 @@ def upload_file(localfile, sensor, mailto):
                   + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert procedure
-        email.print_error_notification_or_send_email(mailto)
+        email.print_error_notification_or_send_email(mailto, STEP_UPLOADDROPBOX)
 
         sys.exit(1)  # TODO Logger
 

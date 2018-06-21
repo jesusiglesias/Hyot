@@ -87,6 +87,9 @@ SECKEYRING = "sec_hyot.gpg"                                             # Secret
 KEYSFILE = "hyot_keys.asc"                                              # File with the public and private keys
 QRIMAGE = "hyot_qr.png"                                                 # QR image
 GPGEXT = "gpg"                                                          # Extension of the encrypted file
+# Names to identify the step where the error has occurred
+STEP_ENCRYPT_STATUS = "Encrypt file with GPG - Status"
+STEP_ENCRYPT = "Encrypt file with GPG"
 
 try:
     NAME = conf['gpg']['name']                                          # Name
@@ -402,7 +405,7 @@ def encrypt_file(video, mailto):
     :return: encrypted_file File whose content has been encrypted.
     """
 
-    global GPGEXT, gpg, keyid
+    global GPGEXT, STEP_ENCRYPT_STATUS, STEP_ENCRYPT, gpg, keyid
 
     try:
         # Path of the encrypted file
@@ -422,7 +425,7 @@ def encrypt_file(video, mailto):
             print(Fore.RED + "✖ File not encrypted. Exception (status): " + str(status) + ".\n" + Fore.RESET)
 
             # Prints a message or sends an email when an error occurs during the alert procedure
-            email.print_error_notification_or_send_email(mailto)
+            email.print_error_notification_or_send_email(mailto, STEP_ENCRYPT_STATUS)
 
             sys.exit(0)  # TODO Logger
 
@@ -430,7 +433,7 @@ def encrypt_file(video, mailto):
         print(Fore.RED + "✖ File not encrypted. Exception: " + str(encryptError) + ".\n" + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert procedure
-        email.print_error_notification_or_send_email(mailto)
+        email.print_error_notification_or_send_email(mailto, STEP_ENCRYPT)
 
         sys.exit(1)  # TODO Logger
 

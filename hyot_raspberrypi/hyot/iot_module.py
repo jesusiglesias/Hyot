@@ -89,6 +89,8 @@ except (KeyError, TypeError) as keyError:
           + Fore.RESET)
     sys.exit(1)
 
+# Name to identify the step where the error has occurred
+STEP_IOTPLATFORM = "Publish event in IoT Platform"
 
 ########################################
 #           GLOBAL VARIABLES           #
@@ -169,7 +171,7 @@ def publish_event(timestamp, temperature, humidity, distance, mailto):
     :param mailto: Email address where to send the error notification if it occurs.
     """
 
-    global client
+    global STEP_IOTPLATFORM, client
 
     # Data to send to the IoT platform
     data = {'d': {'Datetime': timestamp, 'Temperature': temperature, 'Humidity': humidity, 'Distance': distance}}
@@ -188,7 +190,7 @@ def publish_event(timestamp, temperature, humidity, distance, mailto):
               + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert procedure
-        email.print_error_notification_or_send_email(mailto)
+        email.print_error_notification_or_send_email(mailto, STEP_IOTPLATFORM)
 
         sys.exit(1)  # TODO Logger
 
