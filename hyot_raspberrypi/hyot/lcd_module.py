@@ -104,17 +104,17 @@ def init(dht_i2cexpander, dht_i2caddress, hcsr_i2cexpander, hcsr_i2caddress, all
         time.sleep(2)
         full_print_lcds("Initializing", "HYOT...")      # Prints data in the LCDs using both rows
 
-        print(Fore.GREEN + " ✓" + Fore.RESET)
+        print(Fore.GREEN + " ✓".encode('utf-8') + Fore.RESET)
 
     except IOError as ioError:
-        print(Fore.RED + " ✖")
+        print(Fore.RED + " ✖".encode('utf-8'))
         print("        Error to initialize the LCDs: " + str(ioError) + ". Main errno:\r")
         print("          - Errno 2: I2C interface is disabled.\r")
         print("          - Errno 22: I2C address is invalid.\r")
         print("          - Errno 121: LCD is not connected.\r")
         sys.exit(1)
     except Exception as lcdError:
-        print(Fore.RED + " ✖")
+        print(Fore.RED + " ✖".encode('utf-8'))
         print("        Error to initialize the LCDs. Exception: " + str(lcdError) + "." + Fore.RESET)
         sys.exit(1)
 
@@ -303,9 +303,9 @@ def disconnect_lcds():
         try:
             lcd.close(clear=True)                       # Closes and calls the clear function
             lcd.backlight_enabled = False               # Disables the backlight
-            print(Fore.GREEN + " ✓" + Fore.RESET)
+            print(Fore.GREEN + " ✓".encode('utf-8') + Fore.RESET)
         except Exception:
-            print(Fore.RED + " ✖" + Fore.RESET)
+            print(Fore.RED + " ✖".encode('utf-8') + Fore.RESET)
             raise
 
         time.sleep(0.25)

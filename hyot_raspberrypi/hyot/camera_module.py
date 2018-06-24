@@ -145,7 +145,7 @@ def disconnect():
             camera = None
             print(Fore.GREEN + " ✓" + Fore.RESET)
         except Exception:
-            print(Fore.RED + " ✕" + Fore.RESET)
+            print(Fore.RED + " ✖" + Fore.RESET)
             raise
 
         time.sleep(0.25)
