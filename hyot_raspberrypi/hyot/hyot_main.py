@@ -33,6 +33,7 @@
 #                           - cloudantdb_module.py              - iot_module.py                                        #
 #                           - dropbox_module.py                 - lcd_module.py                                        #
 #                           - email_module.py                   - system_module.py                                     #
+#                           - logger.py                                                                                #
 #                                                                                                                      #
 #          NOTES:     It must be run with root user on a Raspberry Pi preferably with Raspbian as operating system     #
 #         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  #
@@ -62,6 +63,7 @@ try:
     import hyperledgerFabric_module as hlf          # Module that contains the logic to use Hyperledger Fabric
     import iot_module as iot                        # Module that contains the logic of the IoT platform
     import lcd_module as lcd                        # Module to handle the LCDs
+    import logger as logger                         # Class to redirect stdout to both file and console
     import system_module as system                  # Module that performs functions in the local operating system
     import time                                     # Time access and conversions
     import traceback                                # Print or retrieve a stack traceback
@@ -661,11 +663,15 @@ def main(user_args):
 ########################################
 if __name__ == '__main__':
 
-    checks.check_root()                # Function to check the user
-    checks.check_platform()            # Checks if the script is run on GNU/Linux platform
-    checks.check_raspberrypi()         # Checks if the script is run on a Raspberry Pi
-    checks.check_network()             # Checks if the Raspberry Pi is connected to the network
-    checks.check_concurrency()         # Checks if the script is or not already running
-    arguments = checks.menu()          # Checks the options entered by the user when running the script
-    constants(arguments)               # Declares all the constants
-    main(arguments)                    # Main function
+    checks.check_root()                             # Function to check the user
+    checks.check_platform()                         # Checks if the script is run on GNU/Linux platform
+    checks.check_raspberrypi()                      # Checks if the script is run on a Raspberry Pi
+    checks.check_network()                          # Checks if the Raspberry Pi is connected to the network
+    checks.check_concurrency()                      # Checks if the script is or not already running
+
+    logfile = system.create_logger_dir()            # Creates the directory for logging file
+    logger.start(logfile)                           # Starts the logger
+
+    arguments = checks.menu()                       # Checks the options entered by the user when running the script
+    constants(arguments)                            # Declares all the constants
+    main(arguments)                                 # Main function

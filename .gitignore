@@ -14,6 +14,9 @@ cert/*
 # Hyot Raspberry Pi - Binaries (Python)
 hyot_raspberrypi/**/*.pyc
 
+# Hyot Raspberry Pi - Logs
+hyot_raspberrypi/hyot/logs/*
+
 # Hyot Raspberry Pi - Hyot - YAML file
 hyot_raspberrypi/hyot/conf/*.yml
 
