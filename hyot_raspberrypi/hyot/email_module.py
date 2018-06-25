@@ -206,7 +206,7 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
         # Prints a message or sends an email when an error occurs during the alert procedure
         print_error_notification_or_send_email(mailto, STEP_ALERTEMAIL_TEMPLATE)
 
-        sys.exit(1)  # TODO Logger
+        sys.exit(1)
 
     time.sleep(0.5)
 
@@ -246,7 +246,7 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
         # Prints a message or sends an email when an error occurs during the alert procedure
         print_error_notification_or_send_email(mailto, STEP_ALERTEMAIL_ATTACHMENT)
 
-        sys.exit(1)  # TODO Logger
+        sys.exit(1)
 
     try:
         # Sends the message via a SMTP server
@@ -260,7 +260,7 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
         # Prints a message or sends an email when an error occurs during the alert procedure
         print_error_notification_or_send_email(mailto, STEP_ALERTEMAIL_SEND)
 
-        sys.exit(1)  # TODO Logger
+        sys.exit(1)
 
 
 def __send_email_measurement_error(mailto, step):

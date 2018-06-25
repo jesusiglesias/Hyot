@@ -307,7 +307,7 @@ def __get_shared_link(upload_path, mailto):
         # Prints a message or sends an email when an error occurs during the alert procedure
         email.print_error_notification_or_send_email(mailto, STEP_UPLOADDROPBOX_LINK)
 
-        sys.exit(1)  # TODO Logger
+        sys.exit(1)
 
 
 def upload_file(localfile, sensor, mailto):
@@ -361,7 +361,7 @@ def upload_file(localfile, sensor, mailto):
         # Prints a message or sends an email when an error occurs during the alert procedure
         email.print_error_notification_or_send_email(mailto, STEP_UPLOADDROPBOX_NOTFILE)
 
-        sys.exit(1)  # TODO Logger
+        sys.exit(1)
 
     except dropbox.exceptions.ApiError as uploadError:
 
@@ -379,7 +379,7 @@ def upload_file(localfile, sensor, mailto):
         # Prints a message or sends an email when an error occurs during the alert procedure
         email.print_error_notification_or_send_email(mailto, STEP_UPLOADDROPBOX)
 
-        sys.exit(1)  # TODO Logger
+        sys.exit(1)
 
 
 def disconnect():

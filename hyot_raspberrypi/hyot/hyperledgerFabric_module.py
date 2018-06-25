@@ -432,7 +432,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
 
         # Prints a message or sends an email when an error occurs during the alert procedure
         email.print_error_notification_or_send_email(mailto, STEP_SUBMIT_ALERTTRANSACTION_UNAUTHORIZED)
-        sys.exit(0)  # TODO Logger
+        sys.exit(0)
 
     # Error 404 - Not found
     elif response.status_code == requests.codes.not_found:
@@ -441,7 +441,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
 
         # Prints a message or sends an email when an error occurs during the alert procedure
         email.print_error_notification_or_send_email(mailto, STEP_SUBMIT_ALERTTRANSACTION_NOTFOUND)
-        sys.exit(0)  # TODO Logger
+        sys.exit(0)
 
     else:
         print(Fore.RED + " ✖ Error to submit the transaction (code " + str(response.status_code) + "). Exception: "
@@ -449,7 +449,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
 
         # Prints a message or sends an email when an error occurs during the alert procedure
         email.print_error_notification_or_send_email(mailto, STEP_SUBMIT_ALERTTRANSACTION)
-        sys.exit(0)  # TODO Logger
+        sys.exit(0)
 
 
 def file_hash(video, mailto):
@@ -491,4 +491,4 @@ def file_hash(video, mailto):
         # Prints a message or sends an email when an error occurs during the alert procedure
         email.print_error_notification_or_send_email(mailto, STEP_HASH)
 
-        sys.exit(1)  # TODO Logger
+        sys.exit(1)

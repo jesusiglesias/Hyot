@@ -125,7 +125,7 @@ def record_video(path, recording_time, mailto):
         # Prints a message or sends an email when an error occurs during the alert procedure
         email.print_error_notification_or_send_email(mailto, STEP_VIDEO)
 
-        sys.exit(1)  # TODO Logger
+        sys.exit(1)
 
 
 def disconnect():

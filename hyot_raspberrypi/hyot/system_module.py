@@ -244,7 +244,7 @@ def check_file(localfile, mailto):
         # Prints a message or sends an email when an error occurs during the alert procedure
         email.print_error_notification_or_send_email(mailto, STEP_CHECKFILE)
 
-        sys.exit(0)  # TODO Logger
+        sys.exit(0)
 
 
 def remove_file(localfile, encrypted):

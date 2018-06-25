@@ -192,7 +192,7 @@ def publish_event(timestamp, temperature, humidity, distance, mailto):
         # Prints a message or sends an email when an error occurs during the alert procedure
         email.print_error_notification_or_send_email(mailto, STEP_IOTPLATFORM)
 
-        sys.exit(1)  # TODO Logger
+        sys.exit(1)
 
 
 def disconnect():

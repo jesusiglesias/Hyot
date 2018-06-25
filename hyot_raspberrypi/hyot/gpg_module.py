@@ -427,7 +427,7 @@ def encrypt_file(video, mailto):
             # Prints a message or sends an email when an error occurs during the alert procedure
             email.print_error_notification_or_send_email(mailto, STEP_ENCRYPT_STATUS)
 
-            sys.exit(0)  # TODO Logger
+            sys.exit(0)
 
     except Exception as encryptError:
         print(Fore.RED + "✖ File not encrypted. Exception: " + str(encryptError) + ".\n" + Fore.RESET)
@@ -435,7 +435,7 @@ def encrypt_file(video, mailto):
         # Prints a message or sends an email when an error occurs during the alert procedure
         email.print_error_notification_or_send_email(mailto, STEP_ENCRYPT)
 
-        sys.exit(1)  # TODO Logger
+        sys.exit(1)
 
 
 def clean():

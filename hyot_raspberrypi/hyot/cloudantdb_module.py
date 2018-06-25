@@ -227,7 +227,7 @@ def add_document(data, mailto):
         # Prints a message or sends an email when an error occurs during the alert procedure
         email.print_error_notification_or_send_email(mailto, STEP_ADD_DB)
 
-        sys.exit(0)  # TODO Logger
+        sys.exit(0)
 
 
 def disconnect():
