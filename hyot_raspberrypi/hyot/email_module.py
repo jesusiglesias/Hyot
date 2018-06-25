@@ -44,6 +44,7 @@
 ########################################
 try:
     import sys                                          # System-specific parameters and functions
+    import logger as logger                             # Class to redirect stdout to both file and console
     import os                                           # Miscellaneous operating system interfaces
     import smtplib                                      # SMTP protocol client
     import time                                         # Time access and conversions
@@ -95,6 +96,8 @@ SERVERIP = "smtp.gmail.com"                                         # Host/IP of
 SERVERPORT = 587                                                    # Port of the mail server
 TEMPLATEPATH = "template/email_template.html"                       # Path of the email template
 ERRORTEMPLATEPATH = "template/error_measurement_template.html"      # Path of the error template
+LOGFILE_DIR = "logs"                                                # Name of the directory of the log file
+LOGFILE = "hyot.log"                                                # Name of the log file
 # Names to identify the step where the error has occurred
 STEP_ALERTEMAIL_TEMPLATE = "Send email of alert - Template"
 STEP_ALERTEMAIL_ATTACHMENT = "Send email of alert - Attachment"
@@ -236,8 +239,9 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
         # Attaches the file
         email_instance.attach(part)
 
-    except IOError:                                           # Error to open the file
-        print(Fore.RED + " ✖ Could not open the file so it is not attached to the email.\n" + Fore.RESET)
+    except IOError as attachedError:                          # Error to open the file
+        print(Fore.RED + " ✖ Could not open the file so it is not attached to the email. Exception: " +
+              str(attachedError) + ".\n" + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert procedure
         print_error_notification_or_send_email(mailto, STEP_ALERTEMAIL_ATTACHMENT)
@@ -267,7 +271,10 @@ def __send_email_measurement_error(mailto, step):
     :param step: Step where the error has occurred.
     """
 
-    global ERRORTEMPLATEPATH, FROM, session
+    global ERRORTEMPLATEPATH, FROM, LOGFILE_DIR, LOGFILE, attachError, session
+
+    # Variable
+    attachError = None
 
     print(Fore.CYAN + "     Sending email to the following email address: " + mailto + " to notify the measurement"
                       " error" + Fore.RESET),
@@ -297,13 +304,39 @@ def __send_email_measurement_error(mailto, step):
     # Creates and attaches the message in HTML text
     email_instance.attach(MIMEText(message, 'html'))
 
-    # TODO Attach log file
+    try:
+        # Stops the logger and returns print functionality to normal. Also, the log file is closed
+        logger.stop()
+
+        # Opens the file to attach
+        attachment = open(LOGFILE_DIR + "/" + LOGFILE, "rb")
+
+        # Creates an instance of MIMEBase
+        part = MIMEBase('application', 'octet-stream')
+
+        # Steps to convert the file into a Base64
+        part.set_payload(attachment.read())
+        encoders.encode_base64(part)
+        part.add_header('Content-Disposition', "attachment; filename= %s" % LOGFILE)
+
+        # Closes the open file
+        attachment.close()
+
+        # Attaches the file
+        email_instance.attach(part)
+
+    except IOError as attachedError:                          # Error to open the file
+        attachError = "     Could not open the log file so it is not attached to the email. Exception: "\
+                      + str(attachedError) + ".\n"
 
     try:
         # Sends the message via a SMTP server
         session.sendmail(FROM, mailto, email_instance.as_string())
 
         print(Fore.GREEN + " ✓" + Fore.RESET)
+
+        if not (attachError is None):
+            print(Fore.YELLOW + attachError + Fore.RESET)
 
     except Exception as sendError:
         print(Fore.RED + " ✖ Error to send the email. Exception: " + str(sendError) + ".\n" + Fore.RESET)
