@@ -459,7 +459,7 @@ check_interfaces () {
 
     # Checks if the 'raspi-config' command exists and is executable
     if ! [ -x "$(command -v ${RASPICONFIGCOMMAND})" ]; then
-        e_error_spaces "Command not found: $RASPICONFIGCOMMAND. Please, run this script in a Raspberry Pi with Raspbian platform." 1>&2
+        e_error_spaces "Command not found: $RASPICONFIGCOMMAND. Please, run this script on a Raspberry Pi with Raspbian platform." 1>&2
         exit 0
     fi
 
@@ -604,7 +604,7 @@ if ${PROCESS_INTERFACES}; then
     lineBreak
 
     # Process finished
-    e_message_bold "Process has finished successfully. The following steps to launch Hyot are to get the I2C addresses with the command: 'i2cdetect -y 1' (RPi v.3) and run the 'raspberrypi_hyot.py' script to monitor the sensors."
+    e_message_bold "Process has finished successfully. The following steps to launch Hyot are to get the I2C addresses with the command: 'i2cdetect -y 1' (RPi v.3) and run the 'hyot_main.py' script to monitor the sensors."
 
     # Asks the user whether or not to reboot the system
     seek_confirmation "   Do you want to reboot the system? It would be an excellent idea for everything to work correctly!"
