@@ -310,6 +310,15 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     # Uploads the encrypted file to the Cloud (e.g. Dropbox)
     link = dropbox.upload_file(final_path, sensor, MAILTO)
 
+    # Publishes the event in the IoT platform
+    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance, MAILTO)
+
+    # Adds the current measurement to the database
+    add_cloudant(temperature, humidity, distance)
+
+    # Submits the transaction to Hyperledger Fabric to publish a new alert asset
+    hlf.publishAlert_transaction(str(uuid_measurement), datetime_measurement, sensor, hash_code, link, MAILTO)
+
     # Sends an email when an alert is triggered
     if not (MAILTO is None):
         email.send_email(MAILTO, final_path, video_filename, str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
@@ -322,15 +331,6 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     if video_filefullpath != final_path:
         # Removes the temporary file (encrypted file) after uploading to the Cloud (e.g. Dropbox)
         system.remove_file(final_path, True)
-
-    # Publishes the event in the IoT platform
-    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance, MAILTO)
-
-    # Adds the current measurement to the database
-    add_cloudant(temperature, humidity, distance)
-
-    # Submits the transaction to Hyperledger Fabric to publish a new alert asset
-    hlf.publishAlert_transaction(str(uuid_measurement), datetime_measurement, sensor, hash_code, link, MAILTO)
 
     time.sleep(1)
     lcd.clear_lcd(sensor)                                       # Clears the LCD
