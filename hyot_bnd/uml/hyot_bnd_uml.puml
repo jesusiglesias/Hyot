@@ -1,0 +1,50 @@
+@startuml composer
+'** Auto generated content, any changes may be lost **'
+!define DATE %date[EEE, MMM d, ''yy 'at' HH:mm]%
+skinparam class {
+  Font {
+    Color Black
+    Style Plain
+    Size 16
+  }
+}
+skinparam title {
+  BackgroundColor LightYellow
+  BorderThickness 0.5
+  BorderRoundCorner 6
+  FontColor Black
+  FontSize 18
+}
+title
+Business Network Definition for 'hyot_model.cto'
+end title
+class org.hyot.network.SensorType << (E,grey) >> {
+   + DHT11
+   + HCSR04
+}
+class org.hyot.network.AlertDetails {
+   + DateTime timestamp
+   + SensorType alert_origin
+   + String hash
+   + String link
+   + User owner
+}
+class org.hyot.network.Alert << (A,green) >> {
+   + String alert_id
+   + AlertDetails alert_details
+}
+org.hyot.network.Alert --|> org.hyperledger.composer.system.Asset
+class org.hyot.network.User << (P,lightblue) >> {
+   + String username
+   + String email
+   + String first_name
+   + String last_name
+}
+org.hyot.network.User --|> org.hyperledger.composer.system.Participant
+class org.hyot.network.PublishAlert << (T,yellow) >> {
+   + String alert_id
+   + AlertDetails alert_details
+}
+org.hyot.network.PublishAlert --|> org.hyperledger.composer.system.Transaction
+right footer DATE
+@enduml
