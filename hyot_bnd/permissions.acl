@@ -33,7 +33,7 @@
 * *********************************************************************************************************************/
 
 rule PublishAlertTransaction {
-    description: "All participants can submit PublishAlert transactions"
+    description: "All User participants can submit PublishAlert transactions"
     participant: "org.hyot.network.User"
     operation: CREATE
     resource: "org.hyot.network.PublishAlert"
@@ -41,7 +41,7 @@ rule PublishAlertTransaction {
 }
 
 rule CreateAlertWhenPublishAlertTransaction {
-    description: "All participants can create alerts when submitting PublishAlert transactions"
+    description: "All User participants can create alerts when submitting PublishAlert transactions"
     participant: "org.hyot.network.User"
     operation: CREATE
     resource: "org.hyot.network.Alert"
@@ -50,7 +50,7 @@ rule CreateAlertWhenPublishAlertTransaction {
 }
 
 rule OwnerHasFullAccessToTheirAssets {
-    description: "All participants can only read their own assets"
+    description: "All User participants can only read their own assets"
     participant(p): "org.hyot.network.User"
     operation: READ
     resource(r): "org.hyot.network.Alert"
