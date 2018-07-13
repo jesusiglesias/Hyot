@@ -43,6 +43,7 @@
 ########################################
 try:
     import sys                                      # System-specific parameters and functions
+    import checks_module as checks                  # Module to execute initial checks and to parse the menu
     import email_module as email                    # Module to send emails
     import getpass                                  # Portable password input
     import gnupg                                    # GnuPG’s key management, encryption and signature functionality
@@ -115,6 +116,43 @@ fingerprint_array = []                                           # Array to stor
 ########################################
 #               FUNCTIONS              #
 ########################################
+def __request_parameters_key():
+    """
+    Asks the user for the real name and an email address of the user identity which is represented by the key.
+    """
+
+    global NAME, EMAIL
+
+    # Asks the user for a real name
+    name_identity = raw_input(Fore.BLUE + "        Enter the real name of the user identity: " + Fore.WHITE + "(" +
+                              NAME + ") " + Fore.RESET) or NAME
+
+    # Checks if the name is empty
+    if name_identity.isspace():
+        print(Fore.RED + "        ✖ The name can not be empty." + Fore.RESET)
+        sys.exit(0)
+
+    # Asks the user for an email address
+    email_identity = raw_input(Fore.BLUE + "        Enter the email address of the user identity: " + Fore.WHITE + "("
+                               + EMAIL + ") " + Fore.RESET) or EMAIL
+
+    # Checks if the email address is empty
+    if email_identity.isspace():
+        print(Fore.RED + "        ✖ The email address can not be empty." + Fore.RESET)
+        sys.exit(0)
+
+    # Checks if the data entered is a valid email
+    if not checks.__is_valid_email(email_identity):
+        print(Fore.RED + "        ✖ The email address entered is not a valid email." + Fore.RESET)
+        sys.exit(0)
+
+    # Removes the spaces
+    name_identity = name_identity.replace(" ", "")
+    email_identity = email_identity.replace(" ", "")
+
+    return name_identity, email_identity
+
+
 def __request_validate_password():
     """
     Asks the user for the password for the private key and validates it based on a set of rules. User has 3 attempts.
@@ -253,13 +291,17 @@ def __generate_keys():
     Creates the GPG key and exports the public and private keys.
     """
 
-    global KEYSFILE, NAME, EMAIL, gpg, gpg_dir, keyid, keys_finalpath
+    global KEYSFILE, gpg, gpg_dir, keyid, keys_finalpath
+
+    # Asks the user for the real name and email address of the user identity
+    name_user, email_user = __request_parameters_key()
 
     # Asks the user for the password of the private key and validates it later
     private_key_pass = __request_validate_password()
 
     # Establishes the input data
-    input_data = gpg.gen_key_input(name_real=NAME, name_email=EMAIL, passphrase=private_key_pass)
+    input_data = gpg.gen_key_input(key_type="RSA", key_length=2048, name_real=name_user, name_email=email_user,
+                                   passphrase=private_key_pass)
     key = gpg.gen_key(input_data)                                              # Creates the GPG key
     keyid = str(key.fingerprint)                                               # Obtains the fingerprint
 
