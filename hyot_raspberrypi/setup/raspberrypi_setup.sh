@@ -138,15 +138,15 @@ check_network () {
 # Checks if this script is or not already running
 check_concurrency () {
 
-    # Checks if the 'pidof' command is installed
-    if ! [ -x "$(command -v ${PIDOFCOMMAND})" ]; then
-        e_error "Command not found: $PIDOFCOMMAND. Please, install this command to check and avoid the concurrency." 1>&2
+    # Checks if the 'pgrep' command is installed
+    if ! [ -x "$(command -v ${PGREPCOMMAND})" ]; then
+        e_error "Command not found: $PGREPCOMMAND. Please, install this command to check and avoid the concurrency." 1>&2
         exit 0
     fi
 
     # Checks if another instance is running
-    for pid in $(pidof -o %PPID -x "$1"); do
-        if [ "$pid" != "$$" ]; then
+    for pid in $(pgrep -lf "(^|/)bash( | .*/)$1( |\$)"); do
+        if  [[ ( "$pid" != $$ && "$pid" != "bash" ) ]]; then
             e_error "Process: $1 is already running with PID $pid." 1>&2
             exit 0
         fi
