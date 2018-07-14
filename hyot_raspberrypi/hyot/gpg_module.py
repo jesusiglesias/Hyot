@@ -211,34 +211,39 @@ def __request_validate_password():
 
         # Checks if the password is empty
         if key_pass is None or key_pass.isspace():
-            print(Fore.RED + "        ✖ The password can not be empty." + Fore.RESET)
-            sys.exit(0)
-
-        # Removes the spaces
-        key_pass = key_pass.replace(" ", "")
-
-        if counter_pass > 2:
-            print(Fore.RED + "        ✖ Number of attempts spent. Please, run again the code.\n" + Fore.RESET)
-            sys.exit(0)
-        elif len(key_pass) < min_length:                           # Checks for min length
-            print(Fore.YELLOW + "        Password must be at least " + str(min_length) + " characters long."
-                  + Fore.RESET)
-            counter_pass = counter_pass + 1
-
-        elif sum(c.isdigit() for c in key_pass) < 1:             # Checks for digit
-            print(Fore.YELLOW + "        Password must contain at least 1 number." + Fore.RESET)
-            counter_pass = counter_pass + 1
-
-        elif not any(c.isupper() for c in key_pass):             # Checks for uppercase letter
-            print(Fore.YELLOW + "        Password must contain at least 1 uppercase letter." + Fore.RESET)
-            counter_pass = counter_pass + 1
-
-        elif not any(c.islower() for c in key_pass):             # Checks for lowercase letter
-            print(Fore.YELLOW + "        Password must contain at least 1 lowercase letter." + Fore.RESET)
-            counter_pass = counter_pass + 1
-
+            if counter_pass < 2:
+                print(Fore.RED + "        ✖ The password can not be empty. Please, try it again.\n" + Fore.RESET)
+                counter_pass = counter_pass + 1
+            else:
+                print(Fore.RED + "        ✖ The password can not be empty. Number of attempts spent so please, run again"
+                                 " the code.\n" + Fore.RESET)
+                sys.exit(0)
         else:
-            break
+            # Removes the spaces
+            key_pass = key_pass.replace(" ", "")
+
+            if counter_pass > 2:
+                print(Fore.RED + "        ✖ Number of attempts spent. Please, run again the code.\n" + Fore.RESET)
+                sys.exit(0)
+            elif len(key_pass) < min_length:                           # Checks for min length
+                print(Fore.YELLOW + "        Password must be at least " + str(min_length) + " characters long."
+                      + Fore.RESET)
+                counter_pass = counter_pass + 1
+
+            elif sum(c.isdigit() for c in key_pass) < 1:             # Checks for digit
+                print(Fore.YELLOW + "        Password must contain at least 1 number." + Fore.RESET)
+                counter_pass = counter_pass + 1
+    
+            elif not any(c.isupper() for c in key_pass):             # Checks for uppercase letter
+                print(Fore.YELLOW + "        Password must contain at least 1 uppercase letter." + Fore.RESET)
+                counter_pass = counter_pass + 1
+
+            elif not any(c.islower() for c in key_pass):             # Checks for lowercase letter
+                print(Fore.YELLOW + "        Password must contain at least 1 lowercase letter." + Fore.RESET)
+                counter_pass = counter_pass + 1
+
+            else:
+                break
 
     while True:
 
