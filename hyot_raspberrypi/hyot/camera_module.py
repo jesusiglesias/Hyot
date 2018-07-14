@@ -122,7 +122,7 @@ def record_video(path, recording_time, mailto):
     except Exception as recordError:
         print(Fore.RED + " ✖ Error to record the video. Exception: " + str(recordError) + ".\n" + Fore.RESET)
 
-        # Prints a message or sends an email when an error occurs during the alert procedure
+        # Prints a message or sends an email when an error occurs during the alert protocol
         email.print_error_notification_or_send_email(mailto, STEP_VIDEO)
 
         sys.exit(1)

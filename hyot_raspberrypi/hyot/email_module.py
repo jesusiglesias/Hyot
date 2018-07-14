@@ -203,7 +203,7 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
     except Exception as templateError:
         print(Fore.RED + " ✖ Error in the email template. Exception: " + str(templateError) + ".\n" + Fore.RESET)
 
-        # Prints a message or sends an email when an error occurs during the alert procedure
+        # Prints a message or sends an email when an error occurs during the alert protocol
         print_error_notification_or_send_email(mailto, STEP_ALERTEMAIL_TEMPLATE)
 
         sys.exit(1)
@@ -243,7 +243,7 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
         print(Fore.RED + " ✖ Could not open the file so it is not attached to the email. Exception: " +
               str(attachedError) + ".\n" + Fore.RESET)
 
-        # Prints a message or sends an email when an error occurs during the alert procedure
+        # Prints a message or sends an email when an error occurs during the alert protocol
         print_error_notification_or_send_email(mailto, STEP_ALERTEMAIL_ATTACHMENT)
 
         sys.exit(1)
@@ -257,7 +257,7 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
     except Exception as sendError:
         print(Fore.RED + " ✖ Error to send the email. Exception: " + str(sendError) + ".\n" + Fore.RESET)
 
-        # Prints a message or sends an email when an error occurs during the alert procedure
+        # Prints a message or sends an email when an error occurs during the alert protocol
         print_error_notification_or_send_email(mailto, STEP_ALERTEMAIL_SEND)
 
         sys.exit(1)

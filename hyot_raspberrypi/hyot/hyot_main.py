@@ -22,8 +22,9 @@
 #                                                                                                                      #
 #          USAGE:     sudo python hyot_main.py                                                                         #
 #                                                                                                                      #
-#    DESCRIPTION:     This script monitors several events -distance, temperature and humidity- from sensors connected  #
-#                     to a Raspberry Pi and in case of an anomalous event, the alert procedure is activated            #
+#    DESCRIPTION:     This script monitors several events -distance, temperature and humidity- of the environment      #
+#                     from sensors connected to a Raspberry Pi and in case of an anomalous reading, the alert protocol #
+#                     is activated                                                                                     #
 #                                                                                                                      #
 #        OPTIONS:     Type '-h' or '--help' option to show the help                                                    #
 #   REQUIREMENTS:     Root user, GNU/Linux platform, Connection to the network, Connected devices: DTH11 and HC-SR04   #
@@ -44,8 +45,8 @@
 #                                                                                                                      #
 # =====================================================================================================================#
 
-"""This script monitors several events -distance, temperature and humidity- from sensors connected to a Raspberry Pi
-   and in case of an anomalous event, the alert procedure is activated"""
+"""This script monitors several events -distance, temperature and humidity- of the environment from sensors connected
+   to a Raspberry Pi and in case of an anomalous reading, the alert protocol is activated"""
 
 ########################################
 #               IMPORTS                #
@@ -168,8 +169,8 @@ def header():
 
    HYOT - TRACEABILITY IN IoT
 
-   This script monitors several events -distance, temperature and humidity- from sensors
-   connected to a Raspberry Pi and in case of an anomalous event, the alert procedure is activated.
+   This script monitors several events -distance, temperature and humidity- of the environment from 
+   sensors connected to a Raspberry Pi and in case of an anomalous reading, the alert protocol is activated.
 
    """
 
@@ -256,9 +257,9 @@ def add_cloudant(temperature, humidity, distance):
     cloudantdb.add_document(data, MAILTO)
 
 
-def alert_procedure(sensor, event, temperature, humidity, distance):
+def alert_protocol(sensor, event, temperature, humidity, distance):
     """
-    Initiates the alert procedure.
+    Initiates the alert protocol.
 
     :param sensor: Indicates the sensor that triggered the alert.
     :param event: Indicates the event that triggered the alert.
@@ -289,8 +290,8 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     time.sleep(5)
 
     lcd.clear_lcd(sensor)                                               # Clears the LCD
-    print(Fore.BLACK + "   ----------- Initiating the alert procedure ------------  " + Fore.RESET)
-    lcd.full_print_lcd(sensor, "Initiating the", "procedure...")
+    print(Fore.BLACK + "   ----------- Initiating the alert protocol ------------  " + Fore.RESET)
+    lcd.full_print_lcd(sensor, "Initiating the", "protocol...")
 
     # Takes a recording for n seconds (default 10 seconds)
     picamera.record_video(video_filefullpath, recording_time, MAILTO)
@@ -302,7 +303,7 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     hash_code = hlf.file_hash(video_filefullpath, MAILTO)
 
     # Encrypts the file
-    final_path = gpg.encrypt_file(video_filefullpath, MAILTO)
+    final_path = gpg.encrypt_sign_file(video_filefullpath, MAILTO)
 
     # Checks if the encrypted file exists in the local system
     system.check_file(final_path, MAILTO)
@@ -336,8 +337,8 @@ def alert_procedure(sensor, event, temperature, humidity, distance):
     lcd.clear_lcd(sensor)                                       # Clears the LCD
     ALERT_LED.off()                                             # Turns off the red led
     time.sleep(1)
-    print(Fore.RED + "   ----------- PROCEDURE FINISHED. CONTINUING... ----------  " + Fore.RESET)
-    lcd.full_print_lcd(sensor, "Procedure", "finished...")
+    print(Fore.RED + "   ----------- PROTOCOL FINISHED. CONTINUING... ----------  " + Fore.RESET)
+    lcd.full_print_lcd(sensor, "Protocol", "finished...")
 
 
 def print_data_measurement():
@@ -351,7 +352,7 @@ def print_data_measurement():
     print("   Datetime: " + str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")))
 
 
-def no_alert_procedure(temperature, humidity, distance):
+def no_alert_protocol(temperature, humidity, distance):
     """
     Steps to perform when an alert is not triggered.
 
@@ -407,10 +408,10 @@ def check_invalid_values_dht11(temperature, humidity, distance):
     # Alert - HC-SR04 | Distance
     if distance < DISTANCE_THRESHOLD:
         threshold_value = DISTANCE_THRESHOLD
-        alert_procedure(SENSORS[1], HCSR_EVENTS[0], temperature, humidity, distance)
+        alert_protocol(SENSORS[1], HCSR_EVENTS[0], temperature, humidity, distance)
     # No alert
     else:
-        no_alert_procedure(temperature, humidity, distance)
+        no_alert_protocol(temperature, humidity, distance)
 
 
 def main(user_args):
@@ -566,16 +567,16 @@ def main(user_args):
                 # Alert - DHT11 | Temperature
                 if temperature > TEMP_THRESHOLD:
                     threshold_value = TEMP_THRESHOLD
-                    alert_procedure(SENSORS[0], DHT11_EVENTS[0], temperature, humidity, distance)
+                    alert_protocol(SENSORS[0], DHT11_EVENTS[0], temperature, humidity, distance)
 
                 # Alert - DHT11 | Humidity
                 elif humidity > HUM_THRESHOLD:
                     threshold_value = HUM_THRESHOLD
-                    alert_procedure(SENSORS[0], DHT11_EVENTS[1], temperature, humidity, distance)
+                    alert_protocol(SENSORS[0], DHT11_EVENTS[1], temperature, humidity, distance)
 
                 # No alert
                 else:
-                    no_alert_procedure(temperature, humidity, distance)
+                    no_alert_protocol(temperature, humidity, distance)
 
             # All values are valid
             else:
@@ -599,21 +600,21 @@ def main(user_args):
                 # Alert - DHT11 | Temperature
                 if temperature > TEMP_THRESHOLD:
                     threshold_value = TEMP_THRESHOLD
-                    alert_procedure(SENSORS[0], DHT11_EVENTS[0], temperature, humidity, distance)
+                    alert_protocol(SENSORS[0], DHT11_EVENTS[0], temperature, humidity, distance)
 
                 # Alert - DHT11 | Humidity
                 elif humidity > HUM_THRESHOLD:
                     threshold_value = HUM_THRESHOLD
-                    alert_procedure(SENSORS[0], DHT11_EVENTS[1], temperature, humidity, distance)
+                    alert_protocol(SENSORS[0], DHT11_EVENTS[1], temperature, humidity, distance)
 
                 # Alert - HC-SR04 | Distance
                 elif distance < DISTANCE_THRESHOLD:
                     threshold_value = DISTANCE_THRESHOLD
-                    alert_procedure(SENSORS[1], HCSR_EVENTS[0], temperature, humidity, distance)
+                    alert_protocol(SENSORS[1], HCSR_EVENTS[0], temperature, humidity, distance)
 
                 # No alert
                 else:
-                    no_alert_procedure(temperature, humidity, distance)
+                    no_alert_protocol(temperature, humidity, distance)
 
             print("\n   -----------------------------\n")
 

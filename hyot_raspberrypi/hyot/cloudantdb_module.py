@@ -224,7 +224,7 @@ def add_document(data, mailto):
         print(Fore.RED + " ✖ Error to add the measurement. A measurement with the same identifier already exists."
                          " Please, check the Cloudant NoSQL DB service.\n" + Fore.RESET)
 
-        # Prints a message or sends an email when an error occurs during the alert procedure
+        # Prints a message or sends an email when an error occurs during the alert protocol
         email.print_error_notification_or_send_email(mailto, STEP_ADD_DB)
 
         sys.exit(0)

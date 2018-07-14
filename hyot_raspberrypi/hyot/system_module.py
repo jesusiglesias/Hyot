@@ -241,7 +241,7 @@ def check_file(localfile, mailto):
     if not os.path.exists(localfile):
         print(Fore.RED + "     ✖ File not found in the local system. Exception: " + str(localfile) + ".\n" + Fore.RESET)
 
-        # Prints a message or sends an email when an error occurs during the alert procedure
+        # Prints a message or sends an email when an error occurs during the alert protocol
         email.print_error_notification_or_send_email(mailto, STEP_CHECKFILE)
 
         sys.exit(0)

@@ -430,7 +430,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
         print(Fore.RED + " ✖ Error to submit the transaction. Error 401: Unauthorized request. Please, enter a valid"
                          " credentials to submit the request to the Hyperledger Composer REST server.\n" + Fore.RESET)
 
-        # Prints a message or sends an email when an error occurs during the alert procedure
+        # Prints a message or sends an email when an error occurs during the alert protocol
         email.print_error_notification_or_send_email(mailto, STEP_SUBMIT_ALERTTRANSACTION_UNAUTHORIZED)
         sys.exit(0)
 
@@ -439,7 +439,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
         print(Fore.RED + " ✖ Error to submit the transaction. Error 404: Not found. Please, verify that the URL is"
                          " right and can be found on the Hyperledger Composer REST server.\n" + Fore.RESET)
 
-        # Prints a message or sends an email when an error occurs during the alert procedure
+        # Prints a message or sends an email when an error occurs during the alert protocol
         email.print_error_notification_or_send_email(mailto, STEP_SUBMIT_ALERTTRANSACTION_NOTFOUND)
         sys.exit(0)
 
@@ -447,7 +447,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
         print(Fore.RED + " ✖ Error to submit the transaction (code " + str(response.status_code) + "). Exception: "
               + str(response.json()['error']['message']) + ".\n" + Fore.RESET)
 
-        # Prints a message or sends an email when an error occurs during the alert procedure
+        # Prints a message or sends an email when an error occurs during the alert protocol
         email.print_error_notification_or_send_email(mailto, STEP_SUBMIT_ALERTTRANSACTION)
         sys.exit(0)
 
@@ -488,7 +488,7 @@ def file_hash(video, mailto):
         print(Fore.RED + " ✖ Error to apply the hash function to the video. Exception: " + str(hashError) + ".\n"
               + Fore.RESET)
 
-        # Prints a message or sends an email when an error occurs during the alert procedure
+        # Prints a message or sends an email when an error occurs during the alert protocol
         email.print_error_notification_or_send_email(mailto, STEP_HASH)
 
         sys.exit(1)

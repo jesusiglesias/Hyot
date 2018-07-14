@@ -195,10 +195,11 @@ def menu():
         # Creates a parser
         parser = argparse.ArgumentParser(description=Style.BRIGHT + "HYOT/HELP:" + Style.RESET_ALL +
                                          " This script monitors several events -distance, temperature and humidity-"
-                                         " from sensors connected to a Raspberry Pi and in case of an anomalous event,"
-                                         " the alert procedure is activated." + Fore.RED + " Remember " + Fore.RESET +
-                                         "to run this script with root user or sudo and the options are optional. If"
-                                         " not given, default values are used.", add_help=False)
+                                         " of the environment from sensors connected to a Raspberry Pi and in case of"
+                                         " an anomalous reading, the alert protocol is activated." + Fore.RED +
+                                         " Remember " + Fore.RESET + "to run this script with root user or sudo and"
+                                         " the options are optional. If not given, default values are used.",
+                                         add_help=False)
 
         # Groups
         general_group = parser.add_argument_group('General options')

@@ -189,7 +189,7 @@ def publish_event(timestamp, temperature, humidity, distance, mailto):
         print(Fore.RED + " ✖ Error publishing the event in IoT Platform. Exception: " + str(publishError) + ".\n"
               + Fore.RESET)
 
-        # Prints a message or sends an email when an error occurs during the alert procedure
+        # Prints a message or sends an email when an error occurs during the alert protocol
         email.print_error_notification_or_send_email(mailto, STEP_IOTPLATFORM)
 
         sys.exit(1)

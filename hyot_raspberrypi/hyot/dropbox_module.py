@@ -304,7 +304,7 @@ def __get_shared_link(upload_path, mailto):
             print(Fore.RED + " ✖ Error to create the shared link of the file in Dropbox. Exception: "
                   + str(sharedLinkError) + ".\n" + Fore.RESET)
 
-        # Prints a message or sends an email when an error occurs during the alert procedure
+        # Prints a message or sends an email when an error occurs during the alert protocol
         email.print_error_notification_or_send_email(mailto, STEP_UPLOADDROPBOX_LINK)
 
         sys.exit(1)
@@ -358,7 +358,7 @@ def upload_file(localfile, sensor, mailto):
         print(Fore.RED + "✖ Could not open the file: " + localfile + ". No such file in the local system or corrupt"
                          " file.\n")
 
-        # Prints a message or sends an email when an error occurs during the alert procedure
+        # Prints a message or sends an email when an error occurs during the alert protocol
         email.print_error_notification_or_send_email(mailto, STEP_UPLOADDROPBOX_NOTFILE)
 
         sys.exit(1)
@@ -376,7 +376,7 @@ def upload_file(localfile, sensor, mailto):
             print(Fore.RED + " ✖ Error to upload the recording to Dropbox. Exception: " + str(uploadError) + ".\n"
                   + Fore.RESET)
 
-        # Prints a message or sends an email when an error occurs during the alert procedure
+        # Prints a message or sends an email when an error occurs during the alert protocol
         email.print_error_notification_or_send_email(mailto, STEP_UPLOADDROPBOX)
 
         sys.exit(1)
