@@ -22,7 +22,7 @@
 #                                                                                                                      #
 #          USAGE:     sudo python hyot_decryption.py                                                                   #
 #                                                                                                                      #
-#    DESCRIPTION:     This script decrypts a file previously encrypted with GPG                                        #
+#    DESCRIPTION:     This script decrypts a file previously encrypted and signed with GPG                             #
 #                                                                                                                      #
 #        OPTIONS:     Type '-h' or '--help' option to show the help                                                    #
 #   REQUIREMENTS:     Root user, Access to a compatible version of the GnuPG executable, Encrypted file with GPG,      #
@@ -36,13 +36,14 @@
 #                                                                                                                      #
 # =====================================================================================================================#
 
-"""This script decrypts a file previously encrypted with GPG"""
+"""This script decrypts a file previously encrypted and signed with GPG"""
 
 ########################################
 #               IMPORTS                #
 ########################################
 try:
     import sys                                      # System-specific parameters and functions
+    import datetime                                 # Basic date and time types
     import getpass                                  # Portable password input
     import gnupg                                    # GnuPG’s key management, encryption and signature functionality
     import hashlib                                  # Secure hashes and message digests
@@ -76,7 +77,7 @@ BLOCKSIZE = 65536                                   # Block size (64kb) to hash
 gpg = None                                          # GPG instance
 gpg_dir = None                                      # GPG directory
 password = None                                     # Password of the private key
-keys = None                                         # Path of the file which stores the public and private key
+keys = None                                         # Local path of the file which stores the public and private key
 fingerprint = None                                  # Fingerprint of the private key to use
 fingerprint_array = []                              # Array to store the existing fingerprints
 encrypted_file = None                               # Path of the encrypted file with GPG
@@ -121,9 +122,9 @@ def header():
 
    HYOT - DECRYPTION
 
-   This script allows to decrypt a file previously encrypted with GPG.
+   This script allows to decrypt a file previously encrypted and signed with GPG.
 
-    """
+   """
 
     # Header
     print(Style.BRIGHT + Fore.LIGHTBLUE_EX + banner + Style.RESET_ALL)
@@ -188,13 +189,16 @@ def __check_fingerprint():
 
     global gpg, fingerprint, fingerprint_array
 
+    # Obtains the public keys
+    public_keys = gpg.list_keys(False)
+
     # Obtains the private keys
     private_keys = gpg.list_keys(True)
 
-    # Checks if the GPG directory has private keys (len(private_keys) == 0)
-    if not private_keys:
-        print(Fore.RED + "   ✖ The GPG directory does not contain any private key. Please, import the private key to "
-                         "decrypt the file (option: -k/--keys).\n" + Fore.RESET)
+    # Checks if the GPG directory has public and private keys (len(public_keys/private_keys) == 0)
+    if not public_keys and not private_keys:
+        print(Fore.RED + "   ✖ The GPG directory does not contain any public or private key. Please, import the pair "
+                         "keys with the -k/--keys option to decrypt the file and verify the sign.\n" + Fore.RESET)
         sys.exit(0)
 
     # Obtains the fingerprint of each private key
@@ -203,8 +207,9 @@ def __check_fingerprint():
 
     # Checks if the entered fingerprint exists in the key ring
     if fingerprint not in fingerprint_array:
-        print(Fore.RED + "   ✖ The entered fingerprint does not exist in the indicated GPG directory. Please, import"
-                         " the private key to decrypt the file or use another fingerprint.\n" + Fore.RESET)
+        print(Fore.RED + "   ✖ The entered fingerprint does not exist in the indicated GPG directory. Please, import "
+                         "the pair keys to decrypt the file and verify the sign or use an existing fingerprint.\n" +
+              Fore.RESET)
         sys.exit(0)
 
 
@@ -219,14 +224,15 @@ def __import_keys():
     import_result = gpg.import_keys(keys_data)
 
     if import_result.count != 2:
-        print(Fore.RED + "   ✖ The entered key file does not contain two keys (public and private key). Please, use"
-                         " the generated file during the initialization of GPG.\n" + Fore.RESET)
+        print(Fore.RED + "   ✖ The entered key file does not contain the pair keys (public and private key). Please,"
+                         " use the file generated during the initialization of GPG (component of monitoring of events"
+                         " of the environment)\n" + Fore.RESET)
         sys.exit(0)
 
 
 def __request_password():
     """
-    Asks the user for the password of the private key.
+    Asks the user for the password of the private key. User has 3 attempts.
     """
 
     global password
@@ -300,6 +306,40 @@ def __compare_hash():
               + Fore.RESET)
 
 
+def __verify_signature(verified_data):
+    """
+    Verifies the signature of the file.
+
+    :param verified_data Result of the verification of the signature.
+    """
+
+    print(Style.BRIGHT + Fore.BLACK + "\n      - Verifying the signature" + Style.RESET_ALL),
+
+    if verified_data.signature_id is not None:
+        print(Fore.GREEN + " ✓" + Fore.RESET)
+
+        print("\n      Information of the signature")
+        print("      ----------------------------")
+        print("      User identity: " + verified_data.username)
+        print("      Signature made: " +
+              datetime.datetime.fromtimestamp(int(verified_data.sig_timestamp)).strftime('%Y-%m-%d %H:%M:%S'))
+        print("      Fingerprint used: " + verified_data.fingerprint)
+
+        if verified_data.trust_level is not None:
+
+            print("\n      Trust level of the key used")
+            print("      ---------------------------")
+
+            if int(verified_data.trust_level) == 0:
+                print("      This key is not certified with a trusted signature because it has not been marked as"
+                      " reliable or it does not belong to the GPG trust ring.")
+            else:
+                print("      " + str(verified_data.trust_level) + " - " + str(verified_data.trust_text))
+    else:
+        print(Fore.YELLOW + " " + u"\u26A0" + Fore.RESET)
+        print("\n      File was not signed.")
+
+
 def __decrypt_file():
     """
     Decrypts the file using the entered fingerprint or the imported key from a file.
@@ -324,6 +364,9 @@ def __decrypt_file():
         else:
             print(Fore.GREEN + " ✓" + Fore.RESET)
             print("\n      File successfully decrypted in the path: " + str(output_file) + ".")
+
+            # Verifies the signature
+            __verify_signature(status)
 
 
 def main(user_args):
@@ -356,7 +399,7 @@ def main(user_args):
 
         # Checks if the directory, which will store the decrypted file, has been entered by the user (optional argument)
         if not decrypted_dir:
-            # Obtains the directory from the encrypted file, removing the file
+            # Obtains the directory from the encrypted file, removing the filename
             decrypted_dir = "/".join(encrypted_file.split("/")[:-1])
 
             # Full path where the decrypted file will be stored. It removes the extension: .gpg

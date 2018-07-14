@@ -114,8 +114,8 @@ def check_menu():
         general_group.add_argument("-d", "--decryptedhome",
                                    required=False, action="store", dest="DECRYPTEDHOME",
                                    help="Directory where the decrypted file will be store (optional). Default: same "
-                                        "directory that the encrypted file when option '-e/--encryptedfile' is"
-                                        " introduced.")
+                                        "directory that the encrypted file when -e/--encryptedfile option is "
+                                        "introduced.")
 
         # Parses the arguments returning the data from the options specified
         args = parser.parse_args()
