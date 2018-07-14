@@ -107,10 +107,12 @@ except (KeyError, TypeError) as keyError:
 ########################################
 gpg = None                                                       # GPG instance
 keyid = None                                                     # Fingerprint of the GPG key
+passphrase_pk = None                                             # Passphrase of the GPG key
 gpg_dir = None                                                   # GPG directory
 keys_finalpath = None                                            # Path where the public and private key will be stored
 qr_finalpath = None                                              # Path where the QR image will be stored
 fingerprint_array = []                                           # Array to store the existing fingerprints
+fingerprint_sign = None                                          # Fingerprint used to sign the file
 
 
 ########################################
@@ -119,6 +121,8 @@ fingerprint_array = []                                           # Array to stor
 def __request_parameters_key():
     """
     Asks the user for the real name and an email address of the user identity which is represented by the key.
+
+    :return: name_identity, email_identity Real name and email address of the user identity.
     """
 
     global NAME, EMAIL
@@ -153,9 +157,46 @@ def __request_parameters_key():
     return name_identity, email_identity
 
 
+def __request_fingerprint_sign(total, inputs):
+    """
+     Asks the user for the fingerprint to use to sign the file.
+
+    :param total: Number of fingerprints entered by the user.
+    :param inputs: Fingerprints entered by the user.
+
+    :return: Fingerprint to use to sign the file.
+    """
+
+    # Asks the user for the fingerprint
+    number_fingerprint = raw_input(Fore.BLUE + "        Enter the number of the fingerprint to use to sign the file [1-"
+                                   + str(total) + "]: " + Fore.WHITE + "(1) " + Fore.RESET) or 1
+
+    # Checks if the number is empty
+    if number_fingerprint.isspace():
+        print(Fore.RED + "        ✖ The input can not be empty." + Fore.RESET)
+        sys.exit(0)
+
+    # Checks if the number is a number
+    if not number_fingerprint.isdigit():
+        print(Fore.RED + "        ✖ The input must be a number." + Fore.RESET)
+        sys.exit(0)
+
+    # Checks if the number is in the range
+    if int(number_fingerprint) < 1 or int(number_fingerprint) > total:
+        print(Fore.RED + "        ✖ The input must be in the range [1-" + str(total) + "]." + Fore.RESET)
+        sys.exit(0)
+
+    # Removes the spaces
+    number_fingerprint = number_fingerprint.replace(" ", "")
+
+    return inputs[int(number_fingerprint) - 1]
+
+
 def __request_validate_password():
     """
     Asks the user for the password for the private key and validates it based on a set of rules. User has 3 attempts.
+
+    :return: key_pass Passphrase of the private key.
     """
 
     # Variables
@@ -291,19 +332,20 @@ def __generate_keys():
     Creates the GPG key and exports the public and private keys.
     """
 
-    global KEYSFILE, gpg, gpg_dir, keyid, keys_finalpath
+    global KEYSFILE, passphrase_pk, gpg, gpg_dir, keyid, fingerprint_sign, keys_finalpath
 
     # Asks the user for the real name and email address of the user identity
     name_user, email_user = __request_parameters_key()
 
     # Asks the user for the password of the private key and validates it later
-    private_key_pass = __request_validate_password()
+    passphrase_pk = __request_validate_password()
 
     # Establishes the input data
     input_data = gpg.gen_key_input(key_type="RSA", key_length=2048, name_real=name_user, name_email=email_user,
-                                   passphrase=private_key_pass)
+                                   passphrase=passphrase_pk)
     key = gpg.gen_key(input_data)                                              # Creates the GPG key
     keyid = str(key.fingerprint)                                               # Obtains the fingerprint
+    fingerprint_sign = keyid                                                   # Assigns the fingerprint to sign
 
     print(Fore.GREEN + "        ✓ GPG key created successfully with fingerprint: " + Fore.CYAN + keyid + Fore.RESET)
     print("        Files generated and stored in: " + gpg_dir)
@@ -312,7 +354,7 @@ def __generate_keys():
     __generate_qrcode()
 
     public_key = gpg.export_keys(keyid)                                        # Exports the fingerprint (public key)
-    private_key = gpg.export_keys(keyid, True, passphrase=private_key_pass)    # Exports the fingerprint (private key)
+    private_key = gpg.export_keys(keyid, True, passphrase=passphrase_pk)       # Exports the fingerprint (private key)
 
     # Stores the keys in a file
     if public_key and private_key:
@@ -336,10 +378,10 @@ def __generate_keys():
 
 def __check_keys():
     """
-    Checks if in the entered GPG directory some key already exists.
+    Checks if the entered GPG directory has some keys.
     """
 
-    global gpg, keyid, fingerprint_array
+    global gpg, keyid, fingerprint_array, fingerprint_sign, passphrase_pk
 
     # Obtains the public keys
     public_keys = gpg.list_keys(False)
@@ -358,12 +400,13 @@ def __check_keys():
         # Generates the key
         __generate_keys()
     else:
-        print("        The GPG directory already contains some GPG key")
+        print("        The GPG directory already contains some GPG keys")
 
         time.sleep(0.5)
 
-        key_input = raw_input(Fore.BLUE + "        Please, enter the fingerprint the key or keys (separated by commas)"
-                                          " to use or empty to create a new one: " + Fore.RESET) or None
+        key_input = raw_input(Fore.BLUE + "        Please, enter the fingerprint of the key or keys (separated by"
+                                          " commas) to use in the encryption or empty to create a new one: "
+                              + Fore.RESET) or None
 
         # Checks if the user entered a fingerprint
         if key_input is None or key_input.isspace():
@@ -389,7 +432,13 @@ def __check_keys():
                                      " GPG directory." + Fore.RESET)
                     sys.exit(0)
 
-            # All fingerprints exist
+            # All fingerprints exits
+            if len(key_input) is 1:                                 # Checks the number of inputs
+                fingerprint_sign = key_input[0]
+            else:
+                fingerprint_sign = __request_fingerprint_sign(len(key_input), key_input)
+
+            passphrase_pk = __request_validate_password()           # Passphrase of the private key to sign the file
             keyid = key_input
 
 
@@ -420,11 +469,12 @@ def init():
             os.chmod(gpg_dir, 0700)
 
         # Creates the GPG instance
-        gpg = gnupg.GPG(gnupghome=gpg_dir, keyring=PUBKEYRING, secret_keyring=SECKEYRING)
+        gpg = gnupg.GPG(gnupghome=gpg_dir, keyring=PUBKEYRING, secret_keyring=SECKEYRING, use_agent=True,
+                        options=["--pinentry-mode", "loopback"])
 
         print(Fore.GREEN + "        ✓ Keyrings and trust database were successfully created" + Style.RESET_ALL)
 
-        # Checks if in the entered GPG directory some key already exists
+        # Checks if the entered GPG directory has some keys
         __check_keys()
 
         time.sleep(1)
@@ -447,7 +497,7 @@ def encrypt_file(video, mailto):
     :return: encrypted_file File whose content has been encrypted.
     """
 
-    global GPGEXT, STEP_ENCRYPT_STATUS, STEP_ENCRYPT, gpg, keyid
+    global GPGEXT, STEP_ENCRYPT_STATUS, STEP_ENCRYPT, gpg, keyid, fingerprint_sign, passphrase_pk
 
     try:
         # Path of the encrypted file
@@ -458,13 +508,14 @@ def encrypt_file(video, mailto):
         time.sleep(0.5)
 
         with open(video, 'rb') as f:
-            status = gpg.encrypt_file(f, recipients=keyid, output=encrypted_file)
+            status = gpg.encrypt_file(f, recipients=keyid, output=encrypted_file, sign=fingerprint_sign,
+                                      passphrase=passphrase_pk)
 
         if status.ok:
             print(Fore.GREEN + " ✓" + Fore.RESET)
             return encrypted_file
         else:
-            print(Fore.RED + "✖ File not encrypted. Exception (status): " + str(status) + ".\n" + Fore.RESET)
+            print(Fore.RED + "✖ File not encrypted. Exception (status): " + str(status.stderr) + ".\n" + Fore.RESET)
 
             # Prints a message or sends an email when an error occurs during the alert procedure
             email.print_error_notification_or_send_email(mailto, STEP_ENCRYPT_STATUS)
