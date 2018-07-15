@@ -508,7 +508,7 @@ def encrypt_sign_file(video, mailto):
         # Path of the encrypted file
         encrypted_file = ".".join([video, GPGEXT])
 
-        print(Fore.LIGHTBLACK_EX + "     -- Encrypting the video " + Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "     -- Encrypting and signing the video " + Fore.RESET),
 
         time.sleep(0.5)
 
