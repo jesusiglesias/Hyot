@@ -54,6 +54,8 @@ try:
     import token_module as token                    # Module that contains the logic for generating secure tokens
     import yaml                                     # YAML parser and emitter for Python
     from colorama import Fore, Style                # Cross-platform colored terminal text
+    # Exception when making an unverified HTTPS request
+    from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 except ImportError as importError:
     print("Error to import in hyperledgerFabric_module: " + importError.message.lower() + ".")
@@ -89,6 +91,8 @@ HTTP_PORT = 80                                          # Default HTTP port
 HTTPS_PORT = 443                                        # Default HTTPS port
 HLC_HOST = conf['hl']['host']                           # Default host where Hyperledger Composer REST server is running
 HLC_PORT = conf['hl']['port']                           # Default port where Hyperledger Composer REST server is running
+# Indicates if the certificate used in the Hyperledger Composer REST server is self-signed
+HLC_SELFSIGNED_CERT = conf['hl']['selfsignedcert']
 HLC_API_PING = "/api/system/ping"                       # Hyperledger Composer REST server API - Ping
 # Hyperledger Composer REST server API - Publish alert transaction
 HLC_API_PUBLISH_ALERT = "/api/org.hyot.network.PublishAlert"
@@ -115,6 +119,7 @@ hlc_server_host = None                                  # Host where Hyperledger
 hlc_server_port = None                                  # Port where Hyperledger Composer REST server is running
 hlc_server_url = None                                   # Full address where Hyperledger Composer REST server is running
 hlc_api_key = None                                      # Api key for Composer REST server
+verify_requests = None                                  # Verifies the identity of the certificate in the requests
 
 
 ########################################
@@ -150,7 +155,7 @@ def __hlc_ping():
     """
 
     global HLC_API_PING, REGEX_VALUE_PARTICIPANT_USER, REGEX_VALUE_PARTICIPANT_NETWORKADMIN, VALUE_PARTICIPANT_USER,\
-        VALUE_PARTICIPANT_NETWORKADMIN, KEY_PARTICIPANT, hlc_server_url, hlc_api_key
+        VALUE_PARTICIPANT_NETWORKADMIN, KEY_PARTICIPANT, hlc_server_url, hlc_api_key, verify_requests
 
     # Headers of the GET request
     if hlc_api_key:
@@ -167,8 +172,12 @@ def __hlc_ping():
 
     print("        Pinging the business network of the address: " + hlc_server_url)
 
-    # GET request - Ping
-    response = requests.get(hlc_server_url + HLC_API_PING, headers=headers)
+    try:
+        # GET request - Ping
+        response = requests.get(hlc_server_url + HLC_API_PING, headers=headers, verify=verify_requests)
+    except Exception as requestsError:
+        print(Fore.RED + "        ✖ Error in GET request. Exception: " + str(requestsError) + "." + Fore.RESET)
+        sys.exit(1)
 
     # Error 401 - Unauthorized request
     if response.status_code == requests.codes.unauthorized:
@@ -272,8 +281,8 @@ def init():
     Fabric.
     """
 
-    global HTTP, HTTPS, HTTP_PORT, HTTPS_PORT, HLC_HOST, HLC_PORT, hlc_server_host, hlc_server_port, hlc_server_url,\
-        hlc_api_key
+    global HTTPS, HTTP, HTTP_PORT, HTTPS_PORT, HLC_HOST, HLC_PORT, HLC_SELFSIGNED_CERT, verify_requests,\
+           hlc_server_host, hlc_server_port, hlc_server_url, hlc_api_key
 
     print("\n      " + Style.BRIGHT + Fore.BLACK + "- Checking if the business network in Hyperledger Fabric is alive"
           + Style.RESET_ALL)
@@ -318,6 +327,13 @@ def init():
               + Fore.RESET)
         sys.exit(0)
 
+    # Checks if the REST server is using a self-signed certificate
+    verify_requests = not HLC_SELFSIGNED_CERT
+
+    # Disables the warning message when making an unverified HTTPS request (self-signed certificate)
+    if not verify_requests:
+        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
     # Checks if the address belongs to the NGROK tool
     ngrok_address = __check_ngrok_address(hlc_server_host)
 
@@ -338,8 +354,8 @@ def init():
 
         # Removes the substrings
         hlc_server_host = hlc_server_host.replace(HTTP, "").replace(HTTPS, "")
-        # Full address TODO
-        hlc_server_url = HTTP + hlc_server_host + ":" + str(hlc_server_port)
+        # Full address - Only HTTPS communications
+        hlc_server_url = HTTPS + hlc_server_host + ":" + str(hlc_server_port)
 
     # Checks if this host and port is alive and listen
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)       # Creates an INET socket of type STREAM
@@ -382,7 +398,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
     """
 
     global HLC_API_PUBLISH_ALERT, STEP_SUBMIT_ALERTTRANSACTION_UNAUTHORIZED, STEP_SUBMIT_ALERTTRANSACTION_NOTFOUND,\
-        STEP_SUBMIT_ALERTTRANSACTION, hlc_server_url, hlc_api_key
+        STEP_SUBMIT_ALERTTRANSACTION, hlc_server_url, hlc_api_key, verify_requests
 
     # Headers of the POST request
     if hlc_api_key:
@@ -417,9 +433,13 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
                                " Hyperledger Fabric" + Fore.RESET),
     time.sleep(0.5)
 
-    # POST request - PublishAlert transaction TODO - API Namespace
-    response = requests.post(hlc_server_url + HLC_API_PUBLISH_ALERT, headers=headers,
-                             data=json.dumps(payload))
+    try:
+        # POST request - PublishAlert transaction
+        response = requests.post(hlc_server_url + HLC_API_PUBLISH_ALERT, headers=headers, data=json.dumps(payload),
+                                 verify=verify_requests)
+    except Exception as requestsError:
+        print(Fore.RED + "        ✖ Error in POST request. Exception: " + str(requestsError) + "." + Fore.RESET)
+        sys.exit(1)
 
     # Request is OK (200)
     if response.status_code == requests.codes.ok:

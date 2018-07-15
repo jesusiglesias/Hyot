@@ -107,7 +107,7 @@ except (KeyError, TypeError) as keyError:
 ########################################
 gpg = None                                                       # GPG instance
 keyid = None                                                     # Fingerprint of the GPG key
-passphrase_pk = None                                             # Passphrase of the GPG key
+passphrase_pk = None                                             # Passphrase of the private key
 gpg_dir = None                                                   # GPG directory
 keys_finalpath = None                                            # Path where the public and private key will be stored
 qr_finalpath = None                                              # Path where the QR image will be stored
