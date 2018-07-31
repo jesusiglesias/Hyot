@@ -21,7 +21,8 @@
 #                                                                                                                      #
 #          USAGE:     sudo bash raspberrypi_setup.sh [options] || sudo ./raspberrypi_setup.sh [options]                #
 #                                                                                                                      #
-#    DESCRIPTION:     This script sets up the dependencies needed to run the main script of Hyot on the Raspberry Pi   #
+#    DESCRIPTION:     This component sets up the initial configuration on the Raspberry Pi to run the component of     #
+#                     monitoring of environmental events                                                               #                                                                                   #
 #                                                                                                                      #
 #        OPTIONS:     Type '-h' or '--help' option to show the help                                                    #
 #   REQUIREMENTS:     Root user, GNU/Linux platform, Connection to the network, Script: utils.sh                       #
@@ -542,7 +543,7 @@ e_header """
    |_|  |_|  |_|  \____/  |_|
 
 
-   A PoC for traceability in IoT environments through Hyperledger by:
+   A PoC for traceability in IoT environments through Hyperledger Fabric by:
 
        - Jesús Iglesias García, jesusgiglesias@gmail.com
 
@@ -550,8 +551,10 @@ e_header """
 
    HYOT - RASPBERRY PI SETUP
 
-   This script sets up the dependencies needed to run the main script of Hyot on the Raspberry Pi.
-   Type the '-v' or '--verbose' option to show the trace.
+   This component sets up the initial configuration on the Raspberry Pi to run the component
+   monitoring of environmental events.
+
+   Type the '-h' or '--help' option to get more information.
 
    """
 

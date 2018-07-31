@@ -161,7 +161,7 @@ def header():
    |_|  |_|  |_|  \____/  |_|
 
 
-   A PoC for traceability in IoT environments through Hyperledger by:
+   A PoC for traceability in IoT environments through Hyperledger Fabric by:
 
    - Jesús Iglesias García, jesusgiglesias@gmail.com
 
@@ -169,8 +169,10 @@ def header():
 
    HYOT - TRACEABILITY IN IoT
 
-   This script monitors several events -distance, temperature and humidity- of the environment from 
+   This component monitors several events -distance, temperature and humidity- of the environment from 
    sensors connected to a Raspberry Pi and in case of an anomalous reading, the alert protocol is activated.
+   
+   Type the '-h' or '--help' option to get more information.
 
    """
 

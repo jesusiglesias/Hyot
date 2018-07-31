@@ -115,7 +115,7 @@ def header():
    |_|  |_|  |_|  \____/  |_|
 
 
-   A PoC for traceability in IoT environments through Hyperledger by:
+   A PoC for traceability in IoT environments through Hyperledger Fabric by:
 
    - Jesús Iglesias García, jesusgiglesias@gmail.com
 
@@ -123,7 +123,10 @@ def header():
 
    HYOT - DECRYPTION
 
-   This script allows to decrypt an evidence previously encrypted with GPG, verify the sign and the integrity of the content.
+   This component allows to decrypt an evidence previously encrypted with GPG, verify the sign and the
+   integrity of the content.
+   
+   Type the '-h' or '--help' option to get more information.
 
    """
 
