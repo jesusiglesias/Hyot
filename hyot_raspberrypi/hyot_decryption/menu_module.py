@@ -85,36 +85,36 @@ def check_menu():
                                    help="Directory where the public and private key rings and the trust database of "
                                         "GPG are located.")
 
-        # Local path of the encrypted file with GPG
+        # Local path of the encrypted and signed evidence with GPG
         general_group.add_argument("-e", "--encryptedfile",
                                    required=False, action="store", dest="ENCRYPTEDFILE",
-                                   help="Local path of the encrypted file with GPG (optional).")
+                                   help="Local path of the encrypted and signed evidence with GPG (optional).")
 
         # Link where the encrypted file is stored in the cloud
         general_group.add_argument("-l", "--link",
                                    required=False, action="store", dest="LINK",
                                    help="Link where the encrypted file is stored in the Cloud (optional).")
 
-        # Hash code of the encrypted file
+        # Hash code of the content of the original evidence
         general_group.add_argument("-ha", "--hash",
                                    required=True, action="store", dest="HASHFILE",
-                                   help="Hash code of the content of the original file (decrypted).")
+                                   help="Hash code of the content of the original evidence (decrypted).")
 
-        # Fingerprint of the private key to use
+        # Fingerprint of the pair of keys to use
         general_group.add_argument("-f", "--fingerprint",
                                    required=False, action="store", dest="FINGERPRINT",
-                                   help="Fingerprint of the private key to use (optional).")
+                                   help="Fingerprint of the pair of keys to use (optional).")
 
         # Path of the file which stores the public and private key
         general_group.add_argument("-k", "--keys",
                                    required=False, action="store", dest="KEYS",
                                    help="Path of the file which stores the public and private key (optional).")
 
-        # Directory where the decrypted file will be store
+        # Directory where the decrypted evidence will be store
         general_group.add_argument("-d", "--decryptedhome",
                                    required=False, action="store", dest="DECRYPTEDHOME",
-                                   help="Directory where the decrypted file will be store (optional). Default: same "
-                                        "directory that the encrypted file when -e/--encryptedfile option is "
+                                   help="Directory where the decrypted evidence will be store (optional). Default:"
+                                        " same directory that the encrypted evidence when -e/--encryptedfile option is "
                                         "introduced.")
 
         # Parses the arguments returning the data from the options specified
@@ -128,13 +128,15 @@ def check_menu():
             print(Fore.RED + "✖ Please, enter only one way to indicate the encrypted file (local file or link)."
                   + Fore.RESET)
             sys.exit(0)
-        elif not args.KEYS and not args.FINGERPRINT:
-            print(Fore.RED + "✖ Please, enter some method to indicate the private key. Option: -h/--help to show "
-                             "the help." + Fore.RESET)
+
+        # Checks the '--keys' and '--fingerprint' arguments
+        if not args.KEYS and not args.FINGERPRINT:
+            print(Fore.RED + "✖ Please, enter some method to indicate the pair of keys to use or type -h/--help option"
+                             " to get more information." + Fore.RESET)
             sys.exit(0)
         elif args.KEYS and args.FINGERPRINT:
-            print(Fore.RED + "✖ Please, enter only one method (by means of fingerprint or file) to indicate the private"
-                             " key." + Fore.RESET)
+            print(Fore.RED + "✖ Please, enter only one method (by means of fingerprint or file) to indicate the pair"
+                             " of keys to use or type -h/--help option to get more information." + Fore.RESET)
             sys.exit(0)
 
         return args

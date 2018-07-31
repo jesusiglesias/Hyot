@@ -22,11 +22,12 @@
 #                                                                                                                      #
 #          USAGE:     sudo python hyot_decryption.py                                                                   #
 #                                                                                                                      #
-#    DESCRIPTION:     This script decrypts a file previously encrypted and signed with GPG                             #
+#    DESCRIPTION:     This script decrypts an evidence previously encrypted with GPG, verifies the sign and the        #
+#                     integrity of the content                                                                         #
 #                                                                                                                      #
 #        OPTIONS:     Type '-h' or '--help' option to show the help                                                    #
-#   REQUIREMENTS:     Root user, Access to a compatible version of the GnuPG executable, Encrypted file with GPG,      #
-#                     Valid key or fingerprint and hash, Module: menu_module.py                                        #
+#   REQUIREMENTS:     Root user, Access to a compatible version of the GnuPG executable, Encrypted and signed evidence #
+#                     with GPG, Valid key or fingerprint and hash, Module: menu_module.py                              #
 #          NOTES:     ---                                                                                              #
 #         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  #
 #   ORGANIZATION:     ---                                                                                              #
@@ -36,7 +37,7 @@
 #                                                                                                                      #
 # =====================================================================================================================#
 
-"""This script decrypts a file previously encrypted and signed with GPG"""
+"""This script decrypts an evidence previously encrypted with GPG, verifies the sign and the integrity of the content"""
 
 ########################################
 #               IMPORTS                #
@@ -76,14 +77,14 @@ BLOCKSIZE = 65536                                   # Block size (64kb) to hash
 ########################################
 gpg = None                                          # GPG instance
 gpg_dir = None                                      # GPG directory
-password = None                                     # Password of the private key
+password = None                                     # Passphrase of the private key
 keys = None                                         # Local path of the file which stores the public and private key
 fingerprint = None                                  # Fingerprint of the private key to use
 fingerprint_array = []                              # Array to store the existing fingerprints
-encrypted_file = None                               # Path of the encrypted file with GPG
-hash_file = None                                    # Hash code of the encrypted file
-decrypted_dir = None                                # Directory where the decrypted file will be store
-output_file = None                                  # Full path (path + filename) where the decrypted file will be store
+encrypted_file = None                               # Path of the encrypted and signed evidence with GPG
+hash_file = None                                    # Hash code of the decrypted evidence
+decrypted_dir = None                                # Directory where the decrypted evidence will be store
+output_file = None                                  # Full path where the decrypted evidence will be store
 
 
 ########################################
@@ -122,7 +123,7 @@ def header():
 
    HYOT - DECRYPTION
 
-   This script allows to decrypt a file previously encrypted and signed with GPG.
+   This script allows to decrypt an evidence previously encrypted with GPG, verify the sign and the integrity of the content.
 
    """
 
@@ -135,7 +136,7 @@ def header():
 
 def __check_existence():
     """
-    Checks if the GPG directory, the file with the private and public key, the encrypted file and the directory,
+    Checks if the GPG directory, the file with the private and public key, the encrypted evidence and the directory,
     where the decrypted file will be store, exist in the local system.
     """
 
@@ -156,19 +157,20 @@ def __check_existence():
 
     # Checks if the encrypted file exists
     if not os.path.isfile(encrypted_file):
-        print(Fore.RED + "   ✖ The encrypted file does not exist or is not a file in the local system.\n" + Fore.RESET)
+        print(Fore.RED + "   ✖ The encrypted evidence does not exist or is not a file in the local system.\n" +
+              Fore.RESET)
         sys.exit(0)
 
     # Checks if the directory, where the decrypted file will be store, exists
     if not os.path.isdir(decrypted_dir):
-        print(Fore.RED + "   ✖ The directory, where the decrypted file will be store, does not exist or is not a "
+        print(Fore.RED + "   ✖ The directory, where the decrypted evidence will be store, does not exist or is not a "
                          "directory in the local system.\n" + Fore.RESET)
         sys.exit(0)
 
 
 def __check_extension():
     """
-    Checks if the encrypted file has the right extension.
+    Checks if the encrypted evidence has the right extension.
     """
 
     global EXT, encrypted_file
@@ -177,7 +179,7 @@ def __check_extension():
     ext = os.path.splitext(encrypted_file)[-1].lower()
 
     if ext != EXT:
-        print(Fore.RED + "   ✖ The encrypted file has an extension which is not allowed. It must be a file with "
+        print(Fore.RED + "   ✖ The encrypted evidence has an extension which is not allowed. It must be a file with "
                          "format: .gpg.\n" + Fore.RESET)
         sys.exit(0)
 
@@ -215,7 +217,7 @@ def __check_fingerprint():
 
 def __import_keys():
     """
-    Import the public and private keys from a file.
+    Imports the public and private keys from a file.
     """
 
     global gpg, keys
@@ -224,7 +226,7 @@ def __import_keys():
     import_result = gpg.import_keys(keys_data)
 
     if import_result.count != 2:
-        print(Fore.RED + "   ✖ The entered key file does not contain the pair keys (public and private key). Please,"
+        print(Fore.RED + "   ✖ The entered key file does not contain the pair of keys (public and private key). Please,"
                          " use the file generated during the initialization of GPG (component of monitoring of events"
                          " of the environment)\n" + Fore.RESET)
         sys.exit(0)
@@ -264,9 +266,9 @@ def __request_password():
 
 def __compare_hash():
     """
-    Obtains the hash code of the decrypted file and compares it with the one entered by the user.
+    Obtains the hash code of the decrypted evidence and compares it with the one entered by the user.
 
-    :return: True, to indicate that the decrypted file has not altered -stay unchanged-. False, otherwise.
+    :return: True, to indicate that the decrypted evidence has not altered -stay unchanged-. False, otherwise.
     """
 
     global BLOCKSIZE, output_file, hash_file
@@ -291,24 +293,24 @@ def __compare_hash():
         if hasher.hexdigest() == hash_file:                        # Original file has not been altered
 
             print(Fore.GREEN + " ✓" + Fore.RESET)
-            print("\n      Both hash codes are the same. The downloaded file has not been altered and its integrity is"
+            print("\n      Both hash codes are the same. The evidence has not been altered and its integrity is"
                   " guaranteed.\n")
 
         else:                                                      # Original file has been altered
             print(Fore.YELLOW + " " + u"\u26A0" + Fore.RESET)
-            print("\n      Both hash codes are different. The downloaded file may have been manipulated by a malicious"
+            print("\n      Both hash codes are different. The evidence may have been manipulated by a malicious"
                   " third party and therefore its integrity is not guaranteed.\n")
 
     except Exception as hashError:
 
         print(Fore.RED + " ✕")
-        print("\n      ✖ Error to calculate the hash code of the encrypted file. Error: " + str(hashError) + ".\n"
+        print("\n      ✖ Error to calculate the hash code of the evidence. Error: " + str(hashError) + ".\n"
               + Fore.RESET)
 
 
 def __verify_signature(verified_data):
     """
-    Verifies the signature of the file.
+    Verifies the signature of the evidence.
 
     :param verified_data Result of the verification of the signature.
     """
@@ -337,12 +339,12 @@ def __verify_signature(verified_data):
                 print("      " + str(verified_data.trust_level) + " - " + str(verified_data.trust_text))
     else:
         print(Fore.YELLOW + " " + u"\u26A0" + Fore.RESET)
-        print("\n      File was not signed.")
+        print("\n      Evidence was not signed.")
 
 
 def __decrypt_file():
     """
-    Decrypts the file using the entered fingerprint or the imported key from a file.
+    Decrypts the evidence using the entered fingerprint or the imported key from a file.
     """
 
     global gpg, password, encrypted_file, output_file
@@ -356,14 +358,14 @@ def __decrypt_file():
 
             print(Fore.RED + " ✕")
             print("\n      The decryption has failed. Main reasons: \n")
-            print("       - File was encrypted with another RSA key.")
+            print("       - Evidence was encrypted with another RSA key.")
             print("       - Bad passphrase to unlock the GPG secret key.")
             print("       - No valid OpenPGP data found.")
             print("       - Output is a directory.\n" + Fore.RESET)
             sys.exit(0)
         else:
             print(Fore.GREEN + " ✓" + Fore.RESET)
-            print("\n      File successfully decrypted in the path: " + str(output_file) + ".")
+            print("\n      Evidence successfully decrypted in the path: " + str(output_file) + ".")
 
             # Verifies the signature
             __verify_signature(status)
