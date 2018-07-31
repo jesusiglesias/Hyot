@@ -62,7 +62,8 @@ except KeyboardInterrupt:
 TEMPFILES_DIR = "tempfiles"                                              # Name of the temporary directory
 LOGFILE_DIR = "logs"                                                     # Name of the directory of the log file
 LOGFILE = "hyot.log"                                                     # Name of the log file
-STEP_CHECKFILE = "Check the existence of the video in the local system"  # Name of the step where the error has occurred
+# Name of the step where the error has occurred
+STEP_CHECKFILE = "Check the existence of the evidence in the local system"
 
 
 ########################################
@@ -147,12 +148,12 @@ def create_logger_dir():
 
 def create_localdir():
     """
-    Creates the temporary local directory where the videos taken by the Picamera will be stored.
+    Creates the temporary local directory where the evidences taken by the Picamera will be stored.
     """
 
     global TEMPFILES_DIR, tempfiles_path
 
-    print(Style.BRIGHT + Fore.BLACK + "\n      - Initializing the temporary local directory to store the videos "
+    print(Style.BRIGHT + Fore.BLACK + "\n      - Initializing the temporary local directory to store the evidences "
           "taken by the Picamera" + Style.RESET_ALL),
 
     # Path that contains the temporary files ([project_path]/hyot/tempfiles)
@@ -230,16 +231,17 @@ def remove_localdir():
 
 def check_file(localfile, mailto):
     """
-    Checks if the file (video) exists in the local system.
+    Checks if the evidence exists in the local system.
 
-    :param localfile: Local path and name of the file to upload to the Cloud (e.g. Dropbox).
+    :param localfile: Local path and name of the evidence to upload to the Cloud (e.g. Dropbox).
     :param mailto: Email address where to send the error notification if it occurs.
     """
 
     global STEP_CHECKFILE
 
     if not os.path.exists(localfile):
-        print(Fore.RED + "     ✖ File not found in the local system. Exception: " + str(localfile) + ".\n" + Fore.RESET)
+        print(Fore.RED + "     ✖ Evidence not found in the local system. Exception: " + str(localfile) + ".\n" +
+              Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert protocol
         email.print_error_notification_or_send_email(mailto, STEP_CHECKFILE)
@@ -249,16 +251,17 @@ def check_file(localfile, mailto):
 
 def remove_file(localfile, encrypted):
     """
-    Removes in the local system the temporary video taken by the Picamera.
+    Removes in the local system the temporary evidence taken by the Picamera.
 
-    :param localfile: Local path and name of the file to remove.
-    :param encrypted: True, to indicate that the encrypted file will be removed. False, to indicate the original video.
+    :param localfile: Local path and name of the evidence to remove.
+    :param encrypted: True, to indicate that the encrypted and signed evidence will be removed. False, to indicate
+    the original evidence.
     """
 
     if encrypted:
-        print(Fore.LIGHTBLACK_EX + "     -- Removing the encrypted file: " + localfile + Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "     -- Removing the encrypted and signed evidence: " + localfile + Fore.RESET),
     else:
-        print(Fore.LIGHTBLACK_EX + "     -- Removing the temporary local file: " + localfile + Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "     -- Removing the temporary local evidence: " + localfile + Fore.RESET),
 
     time.sleep(1)
 
@@ -273,10 +276,10 @@ def remove_file(localfile, encrypted):
             if not os.path.exists(localfile):                  # File was removed
                 print(Fore.GREEN + " ✓" + Fore.RESET)
             else:                                              # File was not removed
-                print(Fore.RED + " ✖ Error to remove the file" + Fore.RESET)
+                print(Fore.RED + " ✖ Error to remove the evidence" + Fore.RESET)
 
         except Exception as removeFileError:
-            print(Fore.RED + " ✖ Error to remove the file. Exception: " + str(removeFileError) + "." + Fore.RESET)
+            print(Fore.RED + " ✖ Error to remove the evidence. Exception: " + str(removeFileError) + "." + Fore.RESET)
 
     else:
-        print(Fore.GREEN + " ✓" + Fore.CYAN + " File does not exist. Not deleted" + Fore.RESET)
+        print(Fore.GREEN + " ✓" + Fore.CYAN + " Evidence does not exist. Not deleted" + Fore.RESET)

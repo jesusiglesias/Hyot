@@ -80,9 +80,9 @@ DHT11_DIR = "dht11"                     # Name of the DHT11 sensor subdirectory
 HCSR04_DIR = "hcsr04"                   # Name of the HC-SR04 sensor subdirectory
 MIN_SPACE = 524288000                   # Recommended available space in the account (500 MB = 524288000 bytes)
 # Names to identify the step where the error has occurred
-STEP_UPLOADDROPBOX = "Upload video to Dropbox"
-STEP_UPLOADDROPBOX_NOTFILE = "Upload video to Dropbox - File not found in the local system"
-STEP_UPLOADDROPBOX_LINK = "Upload video to Dropbox - Get shared link"
+STEP_UPLOADDROPBOX = "Upload evidence to Dropbox"
+STEP_UPLOADDROPBOX_NOTFILE = "Upload evidence to Dropbox - File not found in the local system"
+STEP_UPLOADDROPBOX_LINK = "Upload evidence to Dropbox - Get shared link"
 
 try:
     TOKEN = conf['dropbox']['token']     # Authorization token
@@ -233,12 +233,12 @@ def init(all_sensors):
     __check_space()
 
     # Asks the user for the subdirectory where the videos of an alarm triggered by the DHT11 sensor will be stored
-    dht_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the videos of an alarm "
+    dht_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the evidences of an alarm "
                                        "triggered by the DHT11 sensor will be stored: " + Fore.WHITE + "(" + "/"
                            + HYOT_DIR + "/" + DHT11_DIR + ") " + Fore.RESET) or DHT11_DIR
 
     # Asks the user for the subdirectory where the videos of an alarm triggered by the HC-SR04 sensor will be stored
-    hcsr_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the videos of an alarm "
+    hcsr_subdir = raw_input(Fore.BLUE + "        Enter the name of the subdirectory where the evidences of an alarm "
                                         "triggered by the HC-SR04 sensor will be stored: " + Fore.WHITE + "(" + "/"
                             + HYOT_DIR + "/" + HCSR04_DIR + ") " + Fore.RESET) or HCSR04_DIR
 
@@ -280,13 +280,13 @@ def init(all_sensors):
 
 def __get_shared_link(upload_path, mailto):
     """
-    Creates a shared shortened link of the file. If a shared link already exists for the given path, that link is
+    Creates a shared shortened link of the evidence. If a shared link already exists for the given path, that link is
     returned.
 
-    :param upload_path: Upload path of the current file.
+    :param upload_path: Upload path of the current evidence.
     :param mailto: Email address where to send the error notification if it occurs.
 
-    :return: link Link of the uploaded file to Dropbox.
+    :return: link Link of the uploaded evidence to Dropbox.
     """
 
     global STEP_UPLOADDROPBOX_LINK, dbx
@@ -297,11 +297,11 @@ def __get_shared_link(upload_path, mailto):
 
     except dropbox.exceptions.ApiError as sharedLinkError:
 
-        if sharedLinkError.error.is_path():                         # File in the upload path does not exist
-            print(Fore.RED + " ✖ There is no file indicated by the upload path. Please, check the way to get the"
+        if sharedLinkError.error.is_path():                         # Evidence in the upload path does not exist
+            print(Fore.RED + " ✖ There is no evidence indicated by the upload path. Please, check the way to get the"
                              " shared link.\n" + Fore.RESET)
         else:                                                       # Another error
-            print(Fore.RED + " ✖ Error to create the shared link of the file in Dropbox. Exception: "
+            print(Fore.RED + " ✖ Error to create the shared link of the evidence in Dropbox. Exception: "
                   + str(sharedLinkError) + ".\n" + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert protocol
@@ -312,9 +312,10 @@ def __get_shared_link(upload_path, mailto):
 
 def upload_file(localfile, sensor, mailto):
     """
-    Uploads the file to the Cloud (Dropbox), in particular to the subdirectory of the sensor that triggered the alarm.
+    Uploads the evidence to the Cloud (Dropbox), in particular to the subdirectory of the sensor that triggered the
+    alarm.
 
-    :param localfile: Local path and name of the file to upload.
+    :param localfile: Local path and name of the evidence to upload.
     :param sensor: Sensor that triggered the alarm.
     :param mailto: Email address where to send the error notification if it occurs.
 
@@ -334,7 +335,7 @@ def upload_file(localfile, sensor, mailto):
         upload_path = "/" + HYOT_DIR + "/" + hcsr_subdir + "/" + name
 
     try:
-        print(Fore.LIGHTBLACK_EX + "     -- Uploading the recording to Dropbox to the path: " + upload_path
+        print(Fore.LIGHTBLACK_EX + "     -- Uploading the evidence to Dropbox to the path: " + upload_path
               + Fore.RESET),
         time.sleep(0.5)
 
@@ -355,7 +356,7 @@ def upload_file(localfile, sensor, mailto):
 
     except IOError:                                                        # Error to open the file
 
-        print(Fore.RED + "✖ Could not open the file: " + localfile + ". No such file in the local system or corrupt"
+        print(Fore.RED + "✖ Could not open the evidence: " + localfile + ". No such file in the local system or corrupt"
                          " file.\n")
 
         # Prints a message or sends an email when an error occurs during the alert protocol
@@ -366,14 +367,14 @@ def upload_file(localfile, sensor, mailto):
     except dropbox.exceptions.ApiError as uploadError:
 
         if uploadError.error.get_path().reason.is_conflict():              # Conflict with another different file
-            print(Fore.RED + " ✖ Existing conflict with another file with the same name and different content."
+            print(Fore.RED + " ✖ Existing conflict with another evidence with the same name and different content."
                              " Please, check the way in which the names of the videos are generated.\n" + Fore.RESET)
 
         elif uploadError.error.get_path().reason.is_insufficient_space():  # Insufficient space
-            print(Fore.RED + " ✖ File not uploaded. The user does not have enough available space.\n" + Fore.RESET)
+            print(Fore.RED + " ✖ Evidence not uploaded. The user does not have enough available space.\n" + Fore.RESET)
 
         else:                                                      # Another error. For example: no write permission
-            print(Fore.RED + " ✖ Error to upload the recording to Dropbox. Exception: " + str(uploadError) + ".\n"
+            print(Fore.RED + " ✖ Error to upload the evidence to Dropbox. Exception: " + str(uploadError) + ".\n"
                   + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert protocol

@@ -240,7 +240,7 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
         email_instance.attach(part)
 
     except IOError as attachedError:                          # Error to open the file
-        print(Fore.RED + " ✖ Could not open the file so it is not attached to the email. Exception: " +
+        print(Fore.RED + " ✖ Could not open the evidence so it is not attached to the email. Exception: " +
               str(attachedError) + ".\n" + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert protocol

@@ -293,22 +293,22 @@ def alert_protocol(sensor, event, temperature, humidity, distance):
     print(Fore.BLACK + "   ----------- Initiating the alert protocol ------------  " + Fore.RESET)
     lcd.full_print_lcd(sensor, "Initiating the", "protocol...")
 
-    # Takes a recording for n seconds (default 10 seconds)
+    # Takes a recording for n seconds (default 10 seconds). This recording is the evidence
     picamera.record_video(video_filefullpath, recording_time, MAILTO)
 
-    # Checks if the original file exists in the local system
+    # Checks if the original evidence exists in the local system
     system.check_file(video_filefullpath, MAILTO)
 
-    # Applies a hash function to the content of the video (unencrypted file)
+    # Applies a hash function to the content of the evidence (decrypted file)
     hash_code = hlf.file_hash(video_filefullpath, MAILTO)
 
-    # Encrypts the file
+    # Encrypts the evidence
     final_path = gpg.encrypt_sign_file(video_filefullpath, MAILTO)
 
-    # Checks if the encrypted file exists in the local system
+    # Checks if the encrypted evidence exists in the local system
     system.check_file(final_path, MAILTO)
 
-    # Uploads the encrypted file to the Cloud (e.g. Dropbox)
+    # Uploads the encrypted evidence to the Cloud (e.g. Dropbox)
     link = dropbox.upload_file(final_path, sensor, MAILTO)
 
     # Publishes the event in the IoT platform
@@ -325,12 +325,12 @@ def alert_protocol(sensor, event, temperature, humidity, distance):
         email.send_email(MAILTO, final_path, video_filename, str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
                          str(uuid_measurement), temperature, humidity, distance, link, alert_origin, threshold_value)
 
-    # Removes the temporary file (original file)
+    # Removes the temporary file (original evidence)
     system.remove_file(video_filefullpath, False)
 
     # Encryption had success
     if video_filefullpath != final_path:
-        # Removes the temporary file (encrypted file) after uploading to the Cloud (e.g. Dropbox)
+        # Removes the temporary file (encrypted evidence) after uploading to the Cloud (e.g. Dropbox)
         system.remove_file(final_path, True)
 
     time.sleep(1)

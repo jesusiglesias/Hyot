@@ -494,12 +494,12 @@ def init():
 
 def encrypt_sign_file(video, mailto):
     """
-    Encrypts and signs the file to upload to the Cloud (e.g. Dropbox).
+    Encrypts and signs the evidence to upload to the Cloud (e.g. Dropbox).
 
-    :param video: Full path of the file to encrypt and sign.
+    :param video: Full path of the evidence to encrypt and sign.
     :param mailto: Email address where to send the error notification if it occurs.
 
-    :return: encrypted_file File whose content has been encrypted and signed.
+    :return: encrypted_file Evidence whose content has been encrypted and signed.
     """
 
     global GPGEXT, STEP_ENCRYPT_STATUS, STEP_ENCRYPT, gpg, keyid, fingerprint_sign, passphrase_pk
@@ -508,7 +508,7 @@ def encrypt_sign_file(video, mailto):
         # Path of the encrypted file
         encrypted_file = ".".join([video, GPGEXT])
 
-        print(Fore.LIGHTBLACK_EX + "     -- Encrypting and signing the video " + Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "     -- Encrypting and signing the evidence " + Fore.RESET),
 
         time.sleep(0.5)
 
@@ -520,7 +520,8 @@ def encrypt_sign_file(video, mailto):
             print(Fore.GREEN + " ✓" + Fore.RESET)
             return encrypted_file
         else:
-            print(Fore.RED + "✖ File not encrypted or signed. Exception (status): " + str(status.stderr) + ".\n" + Fore.RESET)
+            print(Fore.RED + "✖ Evidence not encrypted or signed. Exception (status): " + str(status.stderr) + ".\n" +
+                  Fore.RESET)
 
             # Prints a message or sends an email when an error occurs during the alert protocol
             email.print_error_notification_or_send_email(mailto, STEP_ENCRYPT_STATUS)
@@ -528,7 +529,7 @@ def encrypt_sign_file(video, mailto):
             sys.exit(0)
 
     except Exception as encryptError:
-        print(Fore.RED + "✖ File not encrypted or signed. Exception: " + str(encryptError) + ".\n" + Fore.RESET)
+        print(Fore.RED + "✖ Evidence not encrypted or signed. Exception: " + str(encryptError) + ".\n" + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert protocol
         email.print_error_notification_or_send_email(mailto, STEP_ENCRYPT)
