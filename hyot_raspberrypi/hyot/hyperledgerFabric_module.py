@@ -89,6 +89,7 @@ HTTP = "http://"                                        # HTTP protocol in the U
 HTTPS = "https://"                                      # HTTPS protocol in the URL
 HTTP_PORT = 80                                          # Default HTTP port
 HTTPS_PORT = 443                                        # Default HTTPS port
+DEFAULT_OWNER_ALERT = "hyotRPi"                         # Default owner for the Alert assets
 HLC_HOST = conf['hl']['host']                           # Default host where Hyperledger Composer REST server is running
 HLC_PORT = conf['hl']['port']                           # Default port where Hyperledger Composer REST server is running
 # Indicates if the certificate used in the Hyperledger Composer REST server is self-signed
@@ -120,6 +121,7 @@ hlc_server_port = None                                  # Port where Hyperledger
 hlc_server_url = None                                   # Full address where Hyperledger Composer REST server is running
 hlc_api_key = None                                      # Api key for Composer REST server
 verify_requests = None                                  # Verifies the identity of the certificate in the requests
+owner_alert = None                                      # Owner of the alerts
 
 
 ########################################
@@ -274,6 +276,23 @@ def __apikey_yes_no():
                 sys.exit(0)
 
 
+def __owner():
+    """
+    Asks the user for the owner of the alert assets.
+    """
+
+    global DEFAULT_OWNER_ALERT, owner_alert
+
+    # Asks the user for the owner
+    owner_alert = raw_input(Fore.BLUE + "        Enter the owner for the alerts: " + Fore.WHITE + "(" +
+                                DEFAULT_OWNER_ALERT + ") " + Fore.RESET) or DEFAULT_OWNER_ALERT
+
+    # Checks if the owner is empty
+    if owner_alert.isspace():
+        print(Fore.RED + "        ✖ The owner can not be empty." + Fore.RESET)
+        sys.exit(0)
+
+
 def init():
     """
     Checks if Hyperledger Fabric is alive through running a ping with REST API exposed by the Hyperledger Composer
@@ -289,6 +308,9 @@ def init():
 
     # Asks the user for the creation of an API key to provide a first layer of security to access the REST API
     choice = __apikey_yes_no()
+
+    # Asks the user for the owner of the alert assets
+    __owner()
 
     if choice:
         try:
@@ -398,7 +420,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
     """
 
     global HLC_API_PUBLISH_ALERT, STEP_SUBMIT_ALERTTRANSACTION_UNAUTHORIZED, STEP_SUBMIT_ALERTTRANSACTION_NOTFOUND,\
-        STEP_SUBMIT_ALERTTRANSACTION, hlc_server_url, hlc_api_key, verify_requests
+        STEP_SUBMIT_ALERTTRANSACTION, hlc_server_url, hlc_api_key, verify_requests, owner_alert
 
     # Headers of the POST request
     if hlc_api_key:
@@ -425,7 +447,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
             "alert_origin": alert_origin,
             "hash": hash_video,
             "link": link,
-            "owner": 'resource:org.hyot.network.User#jesusiglesias',
+            "owner": 'resource:org.hyot.network.User#' + owner_alert,
         }
     }
 
@@ -485,7 +507,7 @@ def file_hash(video, mailto):
     global BLOCKSIZE, STEP_HASH
 
     try:
-        print(Fore.LIGHTBLACK_EX + "     -- Applying a hash function to the content of the video" + Fore.RESET),
+        print(Fore.LIGHTBLACK_EX + "     -- Applying a hash function to the content of the evidence" + Fore.RESET),
 
         time.sleep(1)
 
@@ -505,7 +527,7 @@ def file_hash(video, mailto):
         return hasher.hexdigest()
 
     except Exception as hashError:
-        print(Fore.RED + " ✖ Error to apply the hash function to the video. Exception: " + str(hashError) + ".\n"
+        print(Fore.RED + " ✖ Error to apply the hash function to the evidence. Exception: " + str(hashError) + ".\n"
               + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert protocol
