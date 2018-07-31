@@ -81,7 +81,7 @@ load_utils () {
 check_root () {
 
     if (( EUID != 0 )); then
-        e_error "This script must be run as root." 1>&2
+        e_error "This component must be run as root." 1>&2
         exit 0
     fi
 }
@@ -90,7 +90,7 @@ check_root () {
 check_platform () {
 
     if [[ $OSTYPE != linux* ]]; then
-        e_error "This script must be run on GNU/Linux platform (e.g. Raspbian)." 1>&2
+        e_error "This component must be run on GNU/Linux platform (e.g. Raspbian)." 1>&2
         exit 0
     fi
 }
@@ -106,13 +106,13 @@ check_raspberrypi () {
 
     # '/proc/cpuinfo' file does not exist
     if ! [ -e "/proc/cpuinfo" ]; then
-        e_error "No such file or directory: /proc/cpuinfo. This script must be run on a Raspberry Pi." 1>&2
+        e_error "No such file or directory: /proc/cpuinfo. This component must be run on a Raspberry Pi." 1>&2
         exit 0
     else
         hardware="$(grep 'Hardware' /proc/cpuinfo | awk '{print $3}')"
 
         if [[ ${hardware} != "BCM2708" && ${hardware} != "BCM2709" && ${hardware} != "BCM2835" ]]; then
-            e_error "This script must be run on a Raspberry Pi." 1>&2
+            e_error "This component must be run on a Raspberry Pi." 1>&2
             exit 0
         fi
     fi
@@ -460,7 +460,7 @@ check_interfaces () {
 
     # Checks if the 'raspi-config' command exists and is executable
     if ! [ -x "$(command -v ${RASPICONFIGCOMMAND})" ]; then
-        e_error_spaces "Command not found: $RASPICONFIGCOMMAND. Please, run this script on a Raspberry Pi with Raspbian platform." 1>&2
+        e_error_spaces "Command not found: $RASPICONFIGCOMMAND. Please, run this component on a Raspberry Pi with Raspbian platform." 1>&2
         exit 0
     fi
 
@@ -607,7 +607,7 @@ if ${PROCESS_INTERFACES}; then
     lineBreak
 
     # Process finished
-    e_message_bold "Process has finished successfully. The following steps to launch Hyot are to get the I2C addresses with the command: 'i2cdetect -y 1' (RPi v.3) and run the 'hyot_main.py' script to monitor the sensors."
+    e_message_bold "Process has finished successfully. The following steps to launch Hyot are to get the I2C addresses with the command: 'i2cdetect -y 1' (RPi v.3) and run the 'hyot_main.py' component to monitor the environmental events."
 
     # Asks the user whether or not to reboot the system
     seek_confirmation "   Do you want to reboot the system? It would be an excellent idea for everything to work correctly!"
