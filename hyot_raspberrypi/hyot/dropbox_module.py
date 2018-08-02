@@ -292,7 +292,7 @@ def __get_shared_link(upload_path, mailto):
     global STEP_UPLOADDROPBOX_LINK, dbx
 
     try:
-        link = dbx.sharing_create_shared_link(upload_path, short_url=True, pending_upload=None)
+        link = dbx.sharing_create_shared_link(upload_path, short_url=False, pending_upload=None)
         return link.url
 
     except dropbox.exceptions.ApiError as sharedLinkError:
