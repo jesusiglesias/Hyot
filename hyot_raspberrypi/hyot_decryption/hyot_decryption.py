@@ -27,12 +27,12 @@
 #                                                                                                                      #
 #        OPTIONS:     Type '-h' or '--help' option to show the help                                                    #
 #   REQUIREMENTS:     Root user, Access to a compatible version of the GnuPG executable, Encrypted and signed evidence #
-#                     with GPG, Valid key or fingerprint and hash, Module: menu_module.py                              #
+#                     with GPG or link of the evidence, Valid key or fingerprint and hash, Module: menu_module.py      #
 #          NOTES:     ---                                                                                              #
 #         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  #
 #   ORGANIZATION:     ---                                                                                              #
-#        VERSION:     1.0.0                                                                                            #
-#        CREATED:     02/06/18                                                                                         #
+#        VERSION:     1.1.0                                                                                            #
+#        CREATED:     25/07/18                                                                                         #
 #       REVISION:     ---                                                                                              #
 #                                                                                                                      #
 # =====================================================================================================================#
@@ -50,7 +50,10 @@ try:
     import hashlib                                  # Secure hashes and message digests
     import menu_module as menu                      # Module to execute initial checks and to parse the menu
     import os                                       # Miscellaneous operating system interfaces
+    import re                                       # Regular expression
+    import requests                                 # HTTP for Humans
     import sha3                                     # SHA-3 wrapper (Keccak) for Python
+    import socket                                   # Low-level networking interface
     import time                                     # Time access and conversions
     import traceback                                # Print or retrieve a stack traceback
     from colorama import Fore, Style                # Cross-platform colored terminal text
@@ -79,9 +82,10 @@ gpg = None                                          # GPG instance
 gpg_dir = None                                      # GPG directory
 password = None                                     # Passphrase of the private key
 keys = None                                         # Local path of the file which stores the public and private key
-fingerprint = None                                  # Fingerprint of the private key to use
+fingerprint = None                                  # Fingerprint of the pair of keys to use
 fingerprint_array = []                              # Array to store the existing fingerprints
 encrypted_file = None                               # Path of the encrypted and signed evidence with GPG
+link = None                                         # Link of the evidence uploaded to the Cloud (e.g. Dropbox)
 hash_file = None                                    # Hash code of the decrypted evidence
 decrypted_dir = None                                # Directory where the decrypted evidence will be store
 output_file = None                                  # Full path where the decrypted evidence will be store
@@ -137,10 +141,103 @@ def header():
     time.sleep(1)
 
 
+def __check_network():
+    """
+    Checks if the system is connected to the network.
+    """
+
+    # Host: 8.8.8.8 (google-public-dns-a.google.com)
+    # OpenPort: 53/tcp
+    # Service: domain (DNS/TCP)
+
+    # Variables
+    host = "8.8.8.8"
+    port = 53
+    timeout = 5
+
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
+    except socket.error:
+        print(Fore.RED + "   ✖ System is not connected to the network. Please, enable the network to continue the"
+                         " execution.\n" + Fore.RESET)
+        sys.exit(1)
+
+
+def __url_validator():
+    """
+    Checks that the entered string is an URL or IP.
+    """
+
+    global link
+
+    regex_url = re.compile(
+        r'^(?:http|ftp)s?://'                                                                   # http:// or https://
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'    # Domain
+        r'localhost|'                                                                           # localhost...
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'                                                  # IP
+        r'(?::\d+)?'                                                                            # Optional port
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+
+    if not re.match(regex_url, link):
+        print(Fore.RED + "   ✖ The link entered has not URL format. Please, type a valid URL to download the encrypted"
+                         " and signed evidence.\n" + Fore.RESET)
+        sys.exit(0)
+
+
+def __download_file():
+    """
+    Downloads the file from the Cloud.
+    """
+
+    global link
+
+    # Checks if the system is connected to the network
+    __check_network()
+
+    # Checks that the entered string is an URL
+    __url_validator()
+
+    print(Style.BRIGHT + Fore.BLACK + "      - Downloading encrypted and signed evidence" + Style.RESET_ALL),
+
+    split_link = link.split("/")[-1].split("?")
+
+    # Checks a substring of the Dropbox link, where:
+    # ?dl=0 will show the file in the preview page
+    # ?dl=1 will force the file to download
+    if split_link[1] == "dl=0":
+        link = link.replace("?dl=0", "?dl=1")
+
+    # Obtains the name of the evidence (Dropbox format)
+    filename = split_link[0]
+    fullpath = os.path.dirname(os.path.abspath(__file__)) + "/" + filename
+
+    try:
+        response = requests.get(link)                       # Downloads the evidence
+    except requests.exceptions.RequestException as downloadEvidence:
+        print(Fore.RED + " ✕")
+        print("\n      ✖ Error to download the evidence. Error: " + str(downloadEvidence) + ".\n" + Fore.RESET)
+        sys.exit(1)
+
+    try:
+        with open(fullpath, "wb") as code:                  # Saves the evidence in a local file
+            for chunk in response.iter_content():
+                code.write(chunk)
+
+        del response
+
+        print(Fore.GREEN + " ✓\n" + Fore.RESET)
+        return fullpath
+    except Exception as fileException:
+        print(Fore.RED + " ✕")
+        print("\n      ✖ Error to save the evidence downloaded. Error: " + str(fileException) + ".\n" + Fore.RESET)
+        sys.exit(1)
+
+
 def __check_existence():
     """
-    Checks if the GPG directory, the file with the private and public key, the encrypted evidence and the directory,
-    where the decrypted file will be store, exist in the local system.
+    Checks if the GPG directory, the file with the private and public key, the encrypted and signed evidence and the
+    directory where the decrypted evidence will be store exist in the local system.
     """
 
     global gpg_dir, keys, encrypted_file, decrypted_dir
@@ -158,22 +255,23 @@ def __check_existence():
                   + Fore.RESET)
             sys.exit(0)
 
-    # Checks if the encrypted file exists
+    # Checks if the encrypted and signed evidence exists
     if not os.path.isfile(encrypted_file):
-        print(Fore.RED + "   ✖ The encrypted evidence does not exist or is not a file in the local system.\n" +
-              Fore.RESET)
+        print(Fore.RED + "   ✖ The encrypted and signed evidence does not exist or is not a file in the local"
+                         " system.\n" + Fore.RESET)
         sys.exit(0)
 
-    # Checks if the directory, where the decrypted file will be store, exists
-    if not os.path.isdir(decrypted_dir):
-        print(Fore.RED + "   ✖ The directory, where the decrypted evidence will be store, does not exist or is not a "
-                         "directory in the local system.\n" + Fore.RESET)
-        sys.exit(0)
+    # Checks if the directory, where the decrypted evidence will be store, exists
+    if decrypted_dir:
+        if not os.path.isdir(decrypted_dir):
+            print(Fore.RED + "   ✖ The directory, where the decrypted evidence will be store, does not exist or is not"
+                             " a directory in the local system.\n" + Fore.RESET)
+            sys.exit(0)
 
 
 def __check_extension():
     """
-    Checks if the encrypted evidence has the right extension.
+    Checks if the encrypted and signed evidence has the right extension.
     """
 
     global EXT, encrypted_file
@@ -182,8 +280,8 @@ def __check_extension():
     ext = os.path.splitext(encrypted_file)[-1].lower()
 
     if ext != EXT:
-        print(Fore.RED + "   ✖ The encrypted evidence has an extension which is not allowed. It must be a file with "
-                         "format: .gpg.\n" + Fore.RESET)
+        print(Fore.RED + "   ✖ The encrypted and signed evidence has an extension which is not allowed. It must be a"
+                         " file with format: .gpg.\n" + Fore.RESET)
         sys.exit(0)
 
 
@@ -293,13 +391,13 @@ def __compare_hash():
                 hasher.update(b)                                   # Updates the hash
 
         # Compares both hash codes
-        if hasher.hexdigest() == hash_file:                        # Original file has not been altered
+        if hasher.hexdigest() == hash_file:                        # Original evidence has not been altered
 
             print(Fore.GREEN + " ✓" + Fore.RESET)
             print("\n      Both hash codes are the same. The evidence has not been altered and its integrity is"
                   " guaranteed.\n")
 
-        else:                                                      # Original file has been altered
+        else:                                                      # Original evidence has been altered
             print(Fore.YELLOW + " " + u"\u26A0" + Fore.RESET)
             print("\n      Both hash codes are different. The evidence may have been manipulated by a malicious"
                   " third party and therefore its integrity is not guaranteed.\n")
@@ -381,8 +479,8 @@ def main(user_args):
     :param user_args: Values of the options entered by the user.
     """
 
-    global PUBKEYRING, SECKEYRING, gpg, gpg_dir, fingerprint, keys, encrypted_file, hash_file, decrypted_dir,\
-        output_file
+    global PUBKEYRING, SECKEYRING, gpg, gpg_dir, fingerprint, keys, encrypted_file, link, hash_file,\
+        decrypted_dir, output_file
 
     # Try-Catch block
     try:
@@ -392,6 +490,7 @@ def main(user_args):
         fingerprint = user_args.FINGERPRINT
         keys = user_args.KEYS
         encrypted_file = user_args.ENCRYPTEDFILE
+        link = user_args.LINK
         hash_file = user_args.HASHFILE
         decrypted_dir = user_args.DECRYPTEDHOME
 
@@ -402,16 +501,22 @@ def main(user_args):
 
         time.sleep(1)
 
-        # Checks if the directory, which will store the decrypted file, has been entered by the user (optional argument)
+        # Link of the evidence to download entered by the user
+        if link:
+            # Downloads the evidence from the Cloud
+            encrypted_file = __download_file()
+
+        # Checks if the directory, which will store the decrypted evidence, has been entered by the user (optional
+        # argument)
         if not decrypted_dir:
-            # Obtains the directory from the encrypted file, removing the filename
+            # Obtains the directory from the encrypted evidence, removing the filename
             decrypted_dir = "/".join(encrypted_file.split("/")[:-1])
 
-            # Full path where the decrypted file will be stored. It removes the extension: .gpg
+            # Full path where the decrypted evidence will be stored. It removes the extension: .gpg
             output_file = os.path.splitext(encrypted_file)[0]
         else:
-            # Full path where the decrypted file will be stored. Takes the name of the encrypted file removing the
-            # extension '.gpg' and adds it to the directory that will store the decrypted file
+            # Full path where the decrypted evidence will be stored. Takes the name of the encrypted and signed evidence
+            # removing the extension '.gpg' and adds it to the directory that will store the decrypted evidence
             output_file = "/".join([decrypted_dir, os.path.splitext(encrypted_file.split("/")[-1])[0]])
 
             output_file = output_file.replace("//", "/")
@@ -419,7 +524,7 @@ def main(user_args):
         # Checks if the entered directories and files exist in the local system
         __check_existence()
 
-        # Checks if the encrypted file has the right extension (.gpg)
+        # Checks if the encrypted and signed evidence has the right extension (.gpg)
         __check_extension()
 
         # Creates the GPG instance
@@ -430,16 +535,16 @@ def main(user_args):
             __check_fingerprint()
 
         elif keys:
-            # Imports the keys from a file
+            # Imports the pair of keys from a file
             __import_keys()
 
         # Asks the user for the password of the private key
         __request_password()
 
-        # Decrypts the file using the fingerprint or key file method
+        # Decrypts the evidence using the fingerprint or key file method
         __decrypt_file()
 
-        # Compares the hash code of the decrypted file with the one entered by the user
+        # Compares the hash code of the decrypted evidence with the one entered by the user
         __compare_hash()
 
     except Exception as exception:

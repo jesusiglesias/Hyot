@@ -90,10 +90,11 @@ def check_menu():
                                    required=False, action="store", dest="ENCRYPTEDFILE",
                                    help="Local path of the encrypted and signed evidence with GPG (optional).")
 
-        # Link where the encrypted file is stored in the cloud
+        # Link where the encrypted and signed evidence is stored in the cloud
         general_group.add_argument("-l", "--link",
                                    required=False, action="store", dest="LINK",
-                                   help="Link where the encrypted file is stored in the Cloud (optional).")
+                                   help="Link where the encrypted and signed evidence is stored in the Cloud"
+                                        " (optional).")
 
         # Hash code of the content of the original evidence
         general_group.add_argument("-ha", "--hash",
@@ -120,13 +121,14 @@ def check_menu():
         # Parses the arguments returning the data from the options specified
         args = parser.parse_args()
 
+        # Checks the '--encryptedfile' and '--link' arguments
         if not args.ENCRYPTEDFILE and not args.LINK:
-            print(Fore.RED + "✖ Please, enter some method to indicate the encrypted file. Option: -h/--help to show "
-                             "the help." + Fore.RESET)
+            print(Fore.RED + "✖ Please, enter some method to indicate the evidence to use or type -h/--help option to"
+                             " get more information." + Fore.RESET)
             sys.exit(0)
         elif args.ENCRYPTEDFILE and args.LINK:
-            print(Fore.RED + "✖ Please, enter only one way to indicate the encrypted file (local file or link)."
-                  + Fore.RESET)
+            print(Fore.RED + "✖ Please, enter only one way to indicate the evidence to use (local file or link) or"
+                             " type -h/--help option to get more information." + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--keys' and '--fingerprint' arguments
