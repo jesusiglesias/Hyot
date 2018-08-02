@@ -46,17 +46,11 @@ PROCESS_INSTALL_PACKAGES=false                          # Process of installing 
 PROCESS_INTERFACES=false                                # Process of enabling interfaces
 PGREPCOMMAND="pgrep"                                    # Command: pgrep
 WGETCOMMAND="wget"                                      # Command: wget
-CURLCOMMAND="curl"                                      # Command: curl
-UNZIPCOMMAND="unzip"                                    # Command: unzip
-PYTHONCOMMAND="python"                                  # Command: python
 COMMANDLINETOOL="apt-get apt-cache dpkg"                # Tools: apt-get, apt-cache and dpkg
 PACKAGESTOINSTALL="python2.7 build-essential python-dev python-smbus python-pip gnupg
 rng-tools i2c-tools"                                    # Packages to install
-LIBRARYTOINSTALL="PyYAML psutil colorama RPi.GPIO gpiozero RPLCD pysha3 python-gnupg qrcode picamera ibmiotf cloudant
-dropbox requests"                                       # Libraries to install
-LIBRARYDHT="Adafruit_DHT"                               # Adafruit DHT library
-LIBRARYDHTZIP="Adafruit_Python_DHT.zip"                 # File '.zip' of the Adafruit DHT library
-LIBRARYDHTDIR="Adafruit_Python_DHT-master"              # Directory of the Adafruit DHT library
+LIBRARYTOINSTALL="Adafruit-DHT PyYAML psutil colorama RPi.GPIO gpiozero RPLCD pysha3 python-gnupg qrcode picamera
+ibmiotf cloudant dropbox requests"                      # Libraries to install
 RASPICONFIGCOMMAND="raspi-config"                       # Command: raspi-config
 INTERFACES="i2c camera"                                 # Interfaces to enable
 REBOOTCOMMAND="reboot"                                  # Command: reboot
@@ -354,107 +348,6 @@ library_is_installed () {
     fi
 }
 
-# Installs manually the Adafruit DHT library
-install_manually_AdafruitDHT () {
-
-   # Checks if the 'curl' command is installed
-    if ! [ -x "$(command -v ${CURLCOMMAND})" ]; then
-        e_error_spaces "Command not found: $CURLCOMMAND. Please, install this command to install the Adafruit DHT library." 1>&2
-        exit 0
-    fi
-
-    # Checks if the 'unzip' command is installed
-    if ! [ -x "$(command -v ${UNZIPCOMMAND})" ]; then
-        e_error_spaces "Command not found: $UNZIPCOMMAND. Please, install this command to install the Adafruit DHT library." 1>&2
-        exit 0
-    fi
-
-    # Checks if the 'python' command is installed
-    if ! [ -x "$(command -v ${PYTHONCOMMAND})" ]; then
-        e_error_spaces "Command not found: $PYTHONCOMMAND. Please, install this command to install the Adafruit DHT library." 1>&2
-        exit 0
-    fi
-
-    output "Checking if the '$1' library is installed manually.\\n"
-
-    # Checks if the library is installed
-    if [ "$(pip show "$1")" ]; then
-        output "Library is installed. No action is performed.\\n"
-
-        e_info "Library: $1 is installed manually in the system."
-    else
-        output "Library is not installed. Proceeding to its manual installation...\\n"
-
-        # Downloads the library from Github
-        output "Downloading the library from Github.\\n"
-        if ! curl -s -o "$LIBRARYDHTZIP" https://codeload.github.com/adafruit/Adafruit_Python_DHT/zip/master>/dev/null
-        then
-            e_error_spaces "The download of the library: $1 has failed. Please, check the URL and try it again." 1>&2
-            exit 1
-        fi
-
-        # Extracts the files
-        output "Unzipping file.\\n"
-        if ! stderr_unzip="$(unzip -oq "$LIBRARYDHTZIP" 2>&1 >/dev/null)"
-        then
-            e_error_initialspaces "The unzipping of the file: $LIBRARYDHTZIP file has failed. Corrupt or non-existent file." 1>&2
-
-            if ! [ -z ${stderr_unzip} ]; then
-                e_error_traceback "$stderr_unzip"
-            else
-                echo
-            fi
-            exit 1
-        fi
-
-        # Installs the library
-        output "Installing the library.\\n"
-        if ! stderr_install="$(cd ${CWD}/${LIBRARYDHTDIR} 2>&1 >/dev/null && python setup.py install 2>&1 >/dev/null)"
-        then
-            e_error_initialspaces "The installation of the library: $1 has failed." 1>&2
-
-            if ! [[ -z ${stderr_install} ]]; then
-                e_error_traceback "$stderr_install"
-            else
-                echo
-            fi
-            exit 1
-        fi
-
-        # Removes the 'Adafruit_Python_DHT.zip' file
-        output "Removing the file: $LIBRARYDHTZIP.\\n"
-        if ! stderr_rm="$(rm --interactive=never "$LIBRARYDHTZIP" 2>&1 >/dev/null)"
-        then
-            e_error_initialspaces "The deletion of the file has failed." 1>&2
-
-            if ! [ -z ${stderr_rm} ]; then
-                e_error_traceback "$stderr_rm"
-            else
-                echo
-            fi
-            exit 1
-        fi
-
-        # Removes the unzipped directory
-        output "Removing the directory: $LIBRARYDHTDIR.\\n"
-        if ! stderr_rmdir="$(rm -R --interactive=never "$LIBRARYDHTDIR" 2>&1 >/dev/null)"
-        then
-            e_error_initialspaces "The deletion of the directory has failed." 1>&2
-
-            if ! [ -z ${stderr_rmdir} ]; then
-                e_error_traceback "$stderr_rmdir"
-            else
-                echo
-            fi
-            exit 1
-        fi
-
-        e_success "Library: $1 was installed manually."
-    fi
-
-    output "\\n"
-}
-
 # Checks if the 'Camera' and 'I2C' interfaces are enabled
 check_interfaces () {
 
@@ -588,9 +481,6 @@ if ${PROCESS_INSTALL_PACKAGES}; then
         library_is_installed "$library"
         output "\\n"
     done
-
-    # Installs the Adafruit DHT library in a manual way
-    install_manually_AdafruitDHT ${LIBRARYDHT}
 
     # Prints a line break when 'verbose' mode is disabled
     lineBreak
