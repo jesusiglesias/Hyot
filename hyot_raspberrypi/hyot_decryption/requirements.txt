@@ -1,2 +1,4 @@
 colorama==0.3.9
-python-gnupg==0.4.2
+pysha3==1.0.2
+python-gnupg==0.4.3
+requests==2.18.4
