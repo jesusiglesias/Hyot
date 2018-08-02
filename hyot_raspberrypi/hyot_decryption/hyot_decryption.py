@@ -22,7 +22,7 @@
 #                                                                                                                      #
 #          USAGE:     sudo python hyot_decryption.py                                                                   #
 #                                                                                                                      #
-#    DESCRIPTION:     This script decrypts an evidence previously encrypted with GPG, verifies the sign and the        #
+#    DESCRIPTION:     This component decrypts an evidence previously encrypted with GPG, verifies the sign and the     #
 #                     integrity of the content                                                                         #
 #                                                                                                                      #
 #        OPTIONS:     Type '-h' or '--help' option to show the help                                                    #
@@ -37,7 +37,8 @@
 #                                                                                                                      #
 # =====================================================================================================================#
 
-"""This script decrypts an evidence previously encrypted with GPG, verifies the sign and the integrity of the content"""
+"""This component decrypts an evidence previously encrypted with GPG, verifies the sign and the integrity of the
+content"""
 
 ########################################
 #               IMPORTS                #
@@ -96,11 +97,11 @@ output_file = None                                  # Full path where the decryp
 ########################################
 def check_root():
     """
-    Checks that the script is run with a root user.
+    Checks that the component is run with a root user.
     """
 
     if not os.geteuid() == 0:
-        print(Fore.RED + "✖ You need to have root privileges to run this script. Please, try it again using sudo."
+        print(Fore.RED + "✖ You need to have root privileges to run this component. Please, try it again using sudo."
               + Fore.RESET)
         sys.exit(0)
 
@@ -565,5 +566,5 @@ def main(user_args):
 if __name__ == '__main__':
 
     check_root()                    # Function to check the type of user
-    arguments = menu.check_menu()   # Checks the options entered by the user when running the script
+    arguments = menu.check_menu()   # Checks the options entered by the user when running the component
     main(arguments)                 # Main function

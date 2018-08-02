@@ -77,7 +77,7 @@ load_utils () {
     fi
 }
 
-# Checks that the script is executed as a root user
+# Checks that the component is executed as a root user
 check_root () {
 
     if (( EUID != 0 )); then
@@ -86,7 +86,7 @@ check_root () {
     fi
 }
 
-# Checks that the script is executed on GNU/Linux platform
+# Checks that the component is executed on GNU/Linux platform
 check_platform () {
 
     if [[ $OSTYPE != linux* ]]; then
@@ -95,7 +95,7 @@ check_platform () {
     fi
 }
 
-# Checks that the script is executed on a Raspberry pi
+# Checks that the component is executed on a Raspberry pi
 check_raspberrypi () {
 
     # Checks the '/proc/cpuinfo' file to obtain the 'Hardware' field value. Possible values:
@@ -136,7 +136,7 @@ check_network () {
     fi
 }
 
-# Checks if this script is or not already running
+# Checks if this component is or not already running
 check_concurrency () {
 
     # Checks if the 'pgrep' command is installed
@@ -526,11 +526,11 @@ ctrl_c() {
 trap ctrl_c SIGINT
 
 load_utils                          # Loads the 'utils.sh' file
-check_root                          # Checks that the script is executed as a root user
-check_platform                      # Checks that the script is executed on GNU/Linux platform
-check_raspberrypi                   # Checks that the script is executed on a Raspberry pi
+check_root                          # Checks that the component is executed as a root user
+check_platform                      # Checks that the component is executed on GNU/Linux platform
+check_raspberrypi                   # Checks that the component is executed on a Raspberry pi
 check_network                       # Checks if the Raspberry Pi is connected to the network
-check_concurrency ${SETUPFILE}      # Checks if this script is or not already running
+check_concurrency ${SETUPFILE}      # Checks if this component is or not already running
 
 # Header
 # shellcheck disable=SC1117

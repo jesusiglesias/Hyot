@@ -22,7 +22,7 @@
 #                                                                                                                      #
 #          USAGE:     sudo python hyot_main.py                                                                         #
 #                                                                                                                      #
-#    DESCRIPTION:     This script monitors several events -distance, temperature and humidity- of the environment      #
+#    DESCRIPTION:     This component monitors several events -distance, temperature and humidity- of the environment   #
 #                     from sensors connected to a Raspberry Pi and in case of an anomalous reading, the alert protocol #
 #                     is activated                                                                                     #
 #                                                                                                                      #
@@ -45,7 +45,7 @@
 #                                                                                                                      #
 # =====================================================================================================================#
 
-"""This script monitors several events -distance, temperature and humidity- of the environment from sensors connected
+"""This component monitors several events -distance, temperature and humidity- of the environment from sensors connected
    to a Raspberry Pi and in case of an anomalous reading, the alert protocol is activated"""
 
 ########################################
@@ -667,14 +667,14 @@ def main(user_args):
 if __name__ == '__main__':
 
     checks.check_root()                             # Function to check the user
-    checks.check_platform()                         # Checks if the script is run on GNU/Linux platform
-    checks.check_raspberrypi()                      # Checks if the script is run on a Raspberry Pi
+    checks.check_platform()                         # Checks if the component is run on GNU/Linux platform
+    checks.check_raspberrypi()                      # Checks if the component is run on a Raspberry Pi
     checks.check_network()                          # Checks if the Raspberry Pi is connected to the network
-    checks.check_concurrency()                      # Checks if the script is or not already running
+    checks.check_concurrency()                      # Checks if the component is or not already running
 
     logfile = system.create_logger_dir()            # Creates the directory for logging file
     logger.start(logfile)                           # Starts the logger
 
-    arguments = checks.menu()                       # Checks the options entered by the user when running the script
+    arguments = checks.menu()                       # Checks the options entered by the user when running the component
     constants(arguments)                            # Declares all the constants
     main(arguments)                                 # Main function

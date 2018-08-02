@@ -75,28 +75,28 @@ HYOT_MAIN = "hyot_main.py"
 ########################################
 def check_root():
     """
-    Checks that the script is run as a root user.
+    Checks that the component is run as a root user.
     """
 
     if not os.geteuid() == 0:
-        print(Fore.RED + "✖ You need to have root privileges to run this script. Please, try it again using sudo."
+        print(Fore.RED + "✖ You need to have root privileges to run this component. Please, try it again using sudo."
               + Fore.RESET)
         sys.exit(0)
 
 
 def check_platform():
     """
-    Checks that the script is run on GNU/Linux platform.
+    Checks that the component is run on GNU/Linux platform.
     """
 
     if not sys.platform.startswith('linux'):
-        print(Fore.RED + "✖ This script must be run on GNU/Linux platform (e.g. Raspbian)." + Fore.RESET)
+        print(Fore.RED + "✖ This component must be run on GNU/Linux platform (e.g. Raspbian)." + Fore.RESET)
         sys.exit(0)
 
 
 def check_raspberrypi():
     """
-    Checks that the script is run on Raspberry Pi. Opens the '/proc/cpuinfo' file to obtain the 'Hardware'
+    Checks that the component is run on Raspberry Pi. Opens the '/proc/cpuinfo' file to obtain the 'Hardware'
     field value. Possible values:
         - Raspberry Pi 1 (model A, B, B+) and Zero is 2708.
         - Raspberry Pi 2 (model B) is 2709.
@@ -109,7 +109,7 @@ def check_raspberrypi():
         with open('/proc/cpuinfo', 'r') as infile:
             cpuinfo = infile.read()
     except IOError:
-        print(Fore.RED + "✖ No such file or directory: /proc/cpuinfo. This script must be run on a Raspberry Pi."
+        print(Fore.RED + "✖ No such file or directory: /proc/cpuinfo. This component must be run on a Raspberry Pi."
               + Fore.RESET)
         sys.exit(1)
 
@@ -119,7 +119,7 @@ def check_raspberrypi():
     # 1. Couldn't find the 'Hardware' field. Assumes that it isn't a Raspberry Pi
     # 2. Finds the 'Hardware' field but the value is another one
     if not match or match.group(1) not in ('BCM2708', 'BCM2709', 'BCM2835'):
-        print(Fore.RED + "✖ You need to run this script on a Raspberry Pi." + Fore.RESET)
+        print(Fore.RED + "✖ You need to run this component on a Raspberry Pi." + Fore.RESET)
         sys.exit(0)
 
 
@@ -148,7 +148,7 @@ def check_network():
 
 def check_concurrency():
     """
-    Checks if this script is or not already running.
+    Checks if this component is or not already running.
     """
 
     global HYOT_MAIN
@@ -183,7 +183,7 @@ def __is_valid_email(email):
 
 def menu():
     """
-    Checks the options entered by the user when running the script.
+    Checks the options entered by the user when running the component.
 
     :return: args Values of the arguments entered by the user in the console.
     """
@@ -194,10 +194,10 @@ def menu():
 
         # Creates a parser
         parser = argparse.ArgumentParser(description=Style.BRIGHT + "HYOT/HELP:" + Style.RESET_ALL +
-                                         " This script monitors several events -distance, temperature and humidity-"
+                                         " This component monitors several events -distance, temperature and humidity-"
                                          " of the environment from sensors connected to a Raspberry Pi and in case of"
                                          " an anomalous reading, the alert protocol is activated." + Fore.RED +
-                                         " Remember " + Fore.RESET + "to run this script with root user or sudo and"
+                                         " Remember " + Fore.RESET + "to run this component with root user or sudo and"
                                          " the options are optional. If not given, default values are used.",
                                          add_help=False)
 
