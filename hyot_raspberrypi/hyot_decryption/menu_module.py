@@ -124,22 +124,22 @@ def check_menu():
 
         # Checks the '--encryptedfile' and '--link' arguments
         if not args.ENCRYPTEDFILE and not args.LINK:
-            print(Fore.RED + "✖ Please, enter some method to indicate the evidence to use or type -h/--help option to"
-                             " get more information." + Fore.RESET)
+            print(Fore.RED + "✖ Please, enter some method to indicate the evidence to use or type the -h/--help option"
+                             " to get more information." + Fore.RESET)
             sys.exit(0)
         elif args.ENCRYPTEDFILE and args.LINK:
             print(Fore.RED + "✖ Please, enter only one way to indicate the evidence to use (local file or link) or"
-                             " type -h/--help option to get more information." + Fore.RESET)
+                             " type the -h/--help option to get more information." + Fore.RESET)
             sys.exit(0)
 
         # Checks the '--keys' and '--fingerprint' arguments
         if not args.KEYS and not args.FINGERPRINT:
-            print(Fore.RED + "✖ Please, enter some method to indicate the pair of keys to use or type -h/--help option"
-                             " to get more information." + Fore.RESET)
+            print(Fore.RED + "✖ Please, enter some method to indicate the pair of keys to use or type the -h/--help"
+                             " option to get more information." + Fore.RESET)
             sys.exit(0)
         elif args.KEYS and args.FINGERPRINT:
             print(Fore.RED + "✖ Please, enter only one method (by means of fingerprint or file) to indicate the pair"
-                             " of keys to use or type -h/--help option to get more information." + Fore.RESET)
+                             " of keys to use or type the -h/--help option to get more information." + Fore.RESET)
             sys.exit(0)
 
         return args

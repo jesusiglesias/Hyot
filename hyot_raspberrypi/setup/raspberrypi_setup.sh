@@ -174,7 +174,7 @@ check_parameters () {
 
     # Number of parameters must be 0, 1 or 2
     if [[ "${total_parameters}" -gt "2" ]]; then
-        e_error_spaces "Invalid parameter number. Please, type the option '-h' or '--help' to show the help." 1>&2
+        e_error_spaces "Invalid parameter number. Please, type the '-h' or '--help' option to show the help." 1>&2
         exit 0
     else
         if [[ "${total_parameters}" -eq "0" ]]; then
