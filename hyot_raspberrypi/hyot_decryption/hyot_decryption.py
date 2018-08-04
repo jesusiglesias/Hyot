@@ -301,8 +301,8 @@ def __check_fingerprint():
 
     # Checks if the GPG directory has public and private keys (len(public_keys/private_keys) == 0)
     if not public_keys and not private_keys:
-        print(Fore.RED + "   ✖ The GPG directory does not contain any public or private key. Please, import the pair "
-                         "keys with the -k/--keys option to decrypt the file and verify the sign.\n" + Fore.RESET)
+        print(Fore.RED + "   ✖ The GPG directory does not contain any public or private key. Please, import the pair of"
+                         " keys with the -k/--keys option to continue the process.\n" + Fore.RESET)
         sys.exit(0)
 
     # Obtains the fingerprint of each private key
@@ -312,7 +312,7 @@ def __check_fingerprint():
     # Checks if the entered fingerprint exists in the key ring
     if fingerprint not in fingerprint_array:
         print(Fore.RED + "   ✖ The entered fingerprint does not exist in the indicated GPG directory. Please, import "
-                         "the pair keys to decrypt the file and verify the sign or use an existing fingerprint.\n" +
+                         "the pair of keys to continue the process or use an existing fingerprint.\n" +
               Fore.RESET)
         sys.exit(0)
 
@@ -329,8 +329,8 @@ def __import_keys():
 
     if import_result.count != 2:
         print(Fore.RED + "   ✖ The entered key file does not contain the pair of keys (public and private key). Please,"
-                         " use the file generated during the initialization of GPG (component of monitoring of events"
-                         " of the environment)\n" + Fore.RESET)
+                         " use the file generated in the component of monitoring of environmental events.\n" +
+              Fore.RESET)
         sys.exit(0)
 
 
