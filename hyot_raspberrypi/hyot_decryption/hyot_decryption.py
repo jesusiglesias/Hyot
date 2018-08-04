@@ -181,8 +181,8 @@ def __url_validator():
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)
 
     if not re.match(regex_url, link):
-        print(Fore.RED + "   ✖ The link entered has not URL format. Please, type a valid URL to download the encrypted"
-                         " and signed evidence.\n" + Fore.RESET)
+        print(Fore.RED + "   ✖ The link entered has not URL or IP format. Please, type a valid URL to download the"
+                         " encrypted and signed evidence.\n" + Fore.RESET)
         sys.exit(0)
 
 
