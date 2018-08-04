@@ -68,7 +68,8 @@ def check_menu():
 
         # Creates a parser
         parser = argparse.ArgumentParser(description=Style.BRIGHT + "HYOT DECRYPTION/HELP: " + Style.RESET_ALL +
-                                         "This script allow to decrypt a file previously encrypted with GPG",
+                                         "This component allows to decrypt an evidence previously encrypted with GPG,"
+                                         " verify the sign and the integrity of the content.",
                                          add_help=False)
 
         # Groups
