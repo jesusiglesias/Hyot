@@ -370,7 +370,7 @@ def __compare_hash():
     """
     Obtains the hash code of the decrypted evidence and compares it with the one entered by the user.
 
-    :return: True, to indicate that the decrypted evidence has not altered -stay unchanged-. False, otherwise.
+    :return: True, to indicate that the original evidence has not altered -stay unchanged-. False, otherwise.
     """
 
     global BLOCKSIZE, output_file, hash_file
@@ -395,18 +395,18 @@ def __compare_hash():
         if hasher.hexdigest() == hash_file:                        # Original evidence has not been altered
 
             print(Fore.GREEN + " ✓" + Fore.RESET)
-            print("\n      Both hash codes are the same. The evidence has not been altered and its integrity is"
-                  " guaranteed.\n")
+            print("\n      Both hash codes are the same. The original evidence has not been altered and its integrity"
+                  " is guaranteed.\n")
 
         else:                                                      # Original evidence has been altered
             print(Fore.YELLOW + " " + u"\u26A0" + Fore.RESET)
-            print("\n      Both hash codes are different. The evidence may have been manipulated by a malicious"
-                  " third party and therefore its integrity is not guaranteed.\n")
+            print("\n      Both hash codes are different. The original evidence may have been manipulated by a"
+                  " malicious third party and therefore its integrity is not guaranteed.\n")
 
     except Exception as hashError:
 
         print(Fore.RED + " ✕")
-        print("\n      ✖ Error to calculate the hash code of the evidence. Error: " + str(hashError) + ".\n"
+        print("\n      ✖ Error to calculate the hash code of the original evidence. Error: " + str(hashError) + ".\n"
               + Fore.RESET)
 
 
