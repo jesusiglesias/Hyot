@@ -3178,7 +3178,7 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{12cm}|}{\textbf{Redirección usuario normal}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Versión}} &\multicolumn{1}{p{12cm}|}{1.0 - 05/01/2018} \\ \hline
 
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{12cm}|}{El sistema web deberá \textit{redirigir al usuario normal a su perfil de usuario tras autenticarse}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{12cm}|}{El sistema web deberá \textit{redirigir al usuario normal a la página de usuario tras autenticarse}} \\ \hline
 		
 		\caption{RNF.30 - Redirección usuario normal}
 	\end{longtable}
@@ -3747,15 +3747,15 @@ breaklines=true,
 		% Sequence
 		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Secuencia normal}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 1 & El caso de uso comienza cuando un actor Usuario administrador (ACT-0001) o actor Usuario normal (ACT-0002) introduce sus credenciales para la autenticación  		\\ \cline{2-3} 
-		\cellcolor{Gainsboro} & 2 & El sistema web comprueba que los datos introducidos sean correctos. En caso afirmativo, crea la sesión de usuario y le redirige a su perfil de usuario dentro del sistema, si éste posee rol usuario normal 		\\ \hline
+		\cellcolor{Gainsboro} & 2 & El sistema web comprueba que los datos introducidos sean correctos. En caso afirmativo, crea la sesión de usuario y le redirige a la página de usuario dentro del sistema, si éste posee rol usuario normal 		\\ \hline
 
 		% Alternative flow
 		\multirow{0}{3.2cm}{\cellcolor{Gainsboro}\textbf{Flujo alternativo}} & \textbf{Paso} & \textbf{Acción}  	\\ \cline{2-3} 
-		\cellcolor{Gainsboro} & 1.1 & El sistema web comprueba si existe la \textit{\gls{cookie}} referente a la funcionalidad de \textit{Recordarme}. En caso afirmativo, el sistema web inicia sesión automáticamente al usuario y le redirige a su perfil de usuario dentro del sistema o al panel de control según su rol. A continuación, el caso de uso finaliza \\ \cline{2-3} 
+		\cellcolor{Gainsboro} & 1.1 & El sistema web comprueba si existe la \textit{\gls{cookie}} referente a la funcionalidad de \textit{Recordarme}. En caso afirmativo, el sistema web inicia sesión automáticamente al usuario y le redirige a la página de usuario dentro del sistema o al panel de control según su rol. A continuación, el caso de uso finaliza \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 2.1 & El sistema web comprueba que los datos introducidos sean correctos. En caso afirmativo, crea la sesión de usuario y le redirige al panel de control, si éste posee rol usuario administrador \\ \hline
 
 		% Post-condition 
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Post-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor Usuario administrador (ACT-0001) o  actor Usuario normal (ACT-0002) ha iniciado sesión en el sistema web y se encuentra dentro de él ya sea en el panel de control o en su perfil de usuario según el rol de éste} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Post-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor Usuario administrador (ACT-0001) o  actor Usuario normal (ACT-0002) ha iniciado sesión en el sistema web y se encuentra dentro de él ya sea en el panel de control o en la página de usuario según el rol de éste} \\ \hline
 			
 		% Exceptions
 		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3}
@@ -5164,7 +5164,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Ejecución con la opción: -h o --help \textbf{\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Se muestra la ayuda} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{La ayuda es mostrada y se finaliza la ejecución posteriormente} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{La ayuda es mostrada y la ejecución es finalizada posteriormente} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 									
@@ -5784,7 +5784,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Inicialización del servicio Dropbox. Espacio disponible insuficiente}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Mensaje informativo: ``\textit{Warning! The available space may be insufficient (500 MB). It is advisable to increase it before continuing the execution...}'' y continuación de la ejecución} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Inicialización del servicio informando al usuario de que dispone menos de 500 MB de espacio lo cual podría ser insuficiente y continuación de la ejecución} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Inicialización del servicio informando al usuario de que dispone menos de 500 MB de espacio lo cual puede ser insuficiente y continuación de la ejecución} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 									
@@ -5850,7 +5850,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Monitorización de sucesos correctos}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Comprobación de suceso normal y continuación de la ejecución} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Acciones de un suceso normal ejecutadas y continuación con la siguiente medición} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Acciones de un suceso normal son ejecutadas y continuación con la siguiente medición} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 									
@@ -5865,7 +5865,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Monitorización de suceso anómalos}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Activación del protocolo de alerta y continuación de la ejecución} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Acciones de un suceso anómalo ejecutadas y continuación con la siguiente medición} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Acciones de un suceso anómalo son ejecutadas y continuación con la siguiente medición} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 									
@@ -5880,7 +5880,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Monitorización de suceso anómalos. Notificación vía \textit{email} activada}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Activación del protocolo de alerta, envío de notificación y continuación de la ejecución} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Acciones de un suceso anómalo ejecutadas incluyendo el envío de una notificación a la dirección de correo especificada y continuación con la siguiente medición} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Acciones de un suceso anómalo son ejecutadas incluyendo el envío de una notificación a la dirección de correo especificada y continuación con la siguiente medición} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 									
@@ -6110,7 +6110,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Ejecución indicando un fichero que contiene el par de claves}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Comprobación del fichero correcta y continuación de la ejecución} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Importación de la clave pública y privada correcta y continuación de la ejecución} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{La clave pública y privada son importadas correctamente y continuación de la ejecución} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 									
@@ -6125,7 +6125,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Ejecución indicando un fichero que contiene solamente la clave pública}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Mensaje informativo: ``\textit{The entered key file does not contain the pair of keys (public and private key). Please, use the file generated in the component of monitoring of environmental events}'' y finalización de la ejecución} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Comprobación del fichero que contiene el par de claves y finalización de la ejecución porque no contiene la clave pública y privada} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Comprobación del fichero y finalización de la ejecución porque no contiene el par de claves} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 									
@@ -6239,7 +6239,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Ejecución indicando una evidencia encriptada y firmada}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Mensaje informativo: ``\textit{Information of the signature...}'' y continuación de la ejecución} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Evidencia desencriptada (almacenada en el mismo directorio que la evidencia encriptada y firmada), verificación de la firma y continuación de la ejecución} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Evidencia es desencriptada (almacenada en el mismo directorio que la evidencia encriptada y firmada), firma es verificada y continuación de la ejecución} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 							
@@ -6254,7 +6254,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Ejecución indicando una evidencia encriptada y no firmada}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Mensaje informativo: ``\textit{Evidence was not signed}'' y continuación de la ejecución} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Evidencia desencriptada y continuación de la ejecución} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Evidencia es desencriptada y continuación de la ejecución} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 							
@@ -6269,7 +6269,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Ejecución indicando un valor \textit{hash} correcto para la evidencia}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Mensaje informativo: ``\textit{Both hash codes are the same. The evidence has not been altered and its integrity is guaranteed}'' y finalización de la ejecución} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Integridad del contenido garantizado y finalización de la ejecución} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Integridad del contenido es garantizado y finalización de la ejecución} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 							
@@ -6287,7 +6287,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Ejecución indicando un valor \textit{hash} incorrecto para la evidencia}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Mensaje informativo: ``\textit{Both hash codes are different. The evidence may have been manipulated by a malicious third party and therefore its integrity is not guaranteed}'' y finalización de la ejecución} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Integridad del contenido no garantizado y finalización de la ejecución} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Integridad del contenido no es garantizado y finalización de la ejecución} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 							
@@ -6301,12 +6301,686 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0086}}
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Ejecución indicando un directorio de desencriptación (opción -d/--decryptedhome)}} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Evidencia desencriptada almacenada en el directorio destino especificado} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Proceso completo de desencriptación correcto y evidencia original almacenada en el directorio destino} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Evidencia desencriptada es almacenada en el directorio destino especificado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Proceso completo de desencriptación correcto y evidencia original es almacenada en el directorio destino} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 							
 		\caption{Caso de prueba - Ejecución indicando un directorio de desencriptación (opción -d/--decryptedhome)}
+	\end{longtable}
+	
+	% TODO Consumir información
+	% TODO Reautenticación
+	% TODO Filtro XSS
+	% TODO Clickjacking - 57 a 89
+	% TODO Idiomas
+	% Subsection
+	\subsection{Componente - Sistema web}
+		
+	Los casos de prueba a continuación descritos hacen referencia al componente del proyecto Hyot que permite la consulta en tiempo real de toda la información monitorizada del entorno. \\
+	
+	% CP-0087: Carga inicial de datos en el sistema web
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0087}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Carga inicial de datos en el sistema web}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web carga datos iniciales al arrancar} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El sistema web contiene los usuarios iniciales} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Carga inicial de datos en el sistema web}
+	\end{longtable}
+	
+	% NEW PAGE
+	\newpage
+	
+	% CP-00: Iniciar sesión con nombre de usuario o email 
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Iniciar sesión con nombre de usuario o \textit{email}}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Inicio de sesión correcto} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario inicia sesión correctamente en el sistema web} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Iniciar sesión con nombre de usuario o email}
+	\end{longtable}
+	
+	% CP-00: Iniciar sesión con credenciales erróneas
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Iniciar sesión con credenciales erróneas}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Mensaje informativo notificando del error al usuario} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Inicio de sesión no efectuado debido a credenciales erróneas} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Iniciar sesión con credenciales erróneas}
+	\end{longtable}
+	
+	% CP-00: Iniciar sesión con límite de intentos superado. Intento número 6
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Iniciar sesión con límite de intentos superado. Intento número 6}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web bloquea la cuenta de usuario por exceder el límite de 5 intentos} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{La cuenta es bloqueada y se muestra una alerta cuando el usuario intenta iniciar sesión de nuevo} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Iniciar sesión con límite de intentos superado. Intento número 6}
+	\end{longtable}
+	
+	% CP-00: Iniciar sesión con opción Recordarme activada
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Iniciar sesión con opción \textit{Recordarme} activada}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Inicio de sesión automática} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Sesión es iniciada automáticamente sin introducir las credenciales} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Iniciar sesión con opción Recordarme activada}
+	\end{longtable}
+	
+	% CP-00: Iniciar sesión con usuario administrador
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Iniciar sesión con usuario administrador}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Inicio de sesión y redirección al panel de control} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Panel de control es mostrado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Iniciar sesión con usuario administrador}
+	\end{longtable}
+	
+	% CP-00: Iniciar sesión con usuario normal
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Iniciar sesión con usuario normal}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Inicio de sesión y redirección a la página de usuario} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Página de usuario es mostrada} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Iniciar sesión con usuario normal}
+	\end{longtable}
+		
+	% CP-00: Iniciar sesión con usuario sin rol
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Iniciar sesión con usuario sin rol}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Inicio de sesión y redirección a una página informativa} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Redirección a la página \textit{no rol} para informar del problema al usuario} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Iniciar sesión con usuario sin rol}
+	\end{longtable}
+	
+	% CP-00: Iniciar sesión con cuenta bloqueada, inactiva o expirada o contraseña expirada
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Iniciar sesión con cuenta bloqueada, inactiva o expirada o contraseña expirada}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Mensaje de error es mostrado al usuario junto con la posibilidad de contactar con el administrador del sistema web} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario no puede iniciar sesión y es informado del error mediante un mensaje} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Iniciar sesión con cuenta bloqueada, inactiva o expirada o contraseña expirada}
+	\end{longtable}
+	
+	% CP-00: Iniciar sesión con usuario normal existiendo otra sesión ya iniciada
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Iniciar sesión con usuario normal existiendo otra sesión ya iniciada}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web inicia sesión en el nuevo acceso pero invalida el antiguo} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario inicia sesión en un nuevo dispositivo o navegador y la otra sesión es invalidada} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Iniciar sesión con usuario normal existiendo otra sesión ya iniciada}
+	\end{longtable}
+	
+	% CP-00: Iniciar sesión con usuario administrador existiendo otra sesión ya iniciada
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Iniciar sesión con usuario administrador existiendo otra sesión ya iniciada}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web inicia sesión en el nuevo acceso} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario inicia sesión en un nuevo dispositivo o navegador y la otra sesión sigue siendo válida} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Iniciar sesión con usuario administrador existiendo otra sesión ya iniciada}
+	\end{longtable}
+	
+	% CP-00: Cerrar sesión
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Cerrar sesión}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El usuario finaliza su sesión y no puede acceder al sistema web hasta que inicie sesión de nuevo introduciendo sus credenciales} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Sesión de usuario es finalizada redireccionando a la página de inicio} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Cerrar sesión}
+	\end{longtable}
+	
+	% CP-00: Restablecer contraseña
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Restablecer contraseña}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Envío de \textit{email} a la dirección del usuario incluyendo un \textit{\gls{token}} de seguridad válido durante 30 minutos} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario ha recibido un \textit{email} con las instrucciones a seguir} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Restablecer contraseña}
+	\end{longtable}
+	
+	% CP-00: Indicar contraseña válida (p.ej. 8Kio5_ff)
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Indicar contraseña válida (p.ej. 8Kio5\_ff)}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web almacena la nueva contraseña del usuario} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario restaura su contraseña} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Indicar contraseña válida (p.ej. 8Kio5\_ff)}
+	\end{longtable}
+	
+	% CP-00: Indicar contraseña inválida (p.ej. 1234abcd)
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Indicar contraseña inválida (p.ej. 1234abcd)}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web muestra un error indicando que no se cumplen las instrucciones} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario es informado de que su contraseña no cumple el patrón} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Indicar contraseña inválida (p.ej. 1234abcd)}
+	\end{longtable}
+	
+	% CP-00: Restablecer contraseña tras 30 minutos desde que el usuario recibió el email
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Restablecer contraseña tras 30 minutos desde que el usuario recibió el \textit{email}}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web detecta que el \textit{\gls{token}} ha expirado y el usuario es informado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario intenta restablecer su contraseña pero consigue un error 404 (página no encontrada) debido a la expiración del \textit{\gls{token}}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Restablecer contraseña tras 30 minutos desde que el usuario recibió el email}
+	\end{longtable}
+	
+	% CP-00: Introducir directamente en el navegador la dirección para cerrar sesión 	
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Introducir directamente en el navegador la dirección para cerrar sesión}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Página de error 405 es mostrada para informar al usuario} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El cierre de sesión no es efectuada informando de ello al usuario} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Introducir directamente en el navegador la dirección para cerrar sesión}
+	\end{longtable}
+		
+	% TODO - Se va a permitir HTTP?	
+	% CP-00: Introducir dirección con protocolo HTTP
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Introducir dirección con protocolo \gls{http-a} (\textit{\gls{http}})}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web carga la página sobre una comunicación insegura} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{La página se muestra a través de una comunicación insegura} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Introducir dirección con protocolo HTTP (Hypertext Transfer Protocol)}
+	\end{longtable}
+	
+	% CP-00: Introducir dirección con protocolo HTTPS
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Introducir dirección con protocolo \gls{https-a} (\textit{\gls{https}})}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web carga la página sobre una comunicación segura} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{La página se muestra a través de una comunicación segura} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Introducir dirección con protocolo HTTPS (Hypertext Transfer Protocol Secure)}
+	\end{longtable}
+	
+	% CP-00: Introducir dirección inexistente
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Introducir dirección inexistente}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La dirección no existe y el usuario es notificado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Página de error 404 es mostrada al usuario} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Introducir dirección inexistente}
+	\end{longtable}
+	
+	% CP-00: Introducir dirección sin poseer permiso de acceso
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Introducir dirección sin poseer permiso de acceso}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La página solicitada no es mostrada} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Página de error 403 que informa de la denegación de acceso es mostrada} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Introducir dirección sin poseer permiso de acceso}
+	\end{longtable}
+	
+	% CP-00: Acceder al perfil personal del usuario
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Acceder al perfil personal del usuario}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web muestra el perfil personal del usuario para su consulta y/o edición} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario se encuentra en su perfil personal con su información} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Acceder al perfil personal del usuario}
+	\end{longtable}
+	
+	% CP-00: Modificar perfil personal del usuario
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Modificar perfil personal del usuario}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web actualiza el perfil y el usuario es notificado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario actualiza su perfil correctamente (imagen, contraseña, etc.)} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Modificar perfil personal del usuario}
+	\end{longtable}
+	
+	% CP-00: Error al modificar perfil
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Error al modificar perfil}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web no actualiza el perfil personal y el usuario es notificado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario obtiene el mensaje asociado al error producido durante la modificación} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Error al modificar perfil}
+	\end{longtable}
+	
+	% CP-00: Consultar estadísticas
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Consultar estadísticas}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web muestra las estadísticas actualizadas} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador visualiza los gráficos estadísticos} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Consultar estadísticas}
+	\end{longtable}
+	
+	% CP-00: Recargar gráfico estadístico
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Recargar gráfico estadístico}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web recarga solamente el gráfico seleccionado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador visualiza las estadísticas actualizadas} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Recargar gráfico estadístico}
+	\end{longtable}
+	
+	% CP-00: Listar usuarios administradores o usuarios normales
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Listar usuarios administradores o usuarios normales}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El listado de usuarios es mostrado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador ve de forma ordenada y paginada todos los usuarios administradores o usuarios normales existentes en el sistema web} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Listar usuarios administradores o usuarios normales}
+	\end{longtable}
+	
+	% CP-00: Listar usuarios administradores o usuarios normales visualizando determinados campos
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Listar usuarios administradores o usuarios normales visualizando determinados campos}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Solamente los campos (columnas) seleccionados son mostrados en el listado de usuarios} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador ve el listado de usuarios administradores o usuarios normales existentes en el sistema web pero solamente los campos seleccionados} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Listar usuarios administradores o usuarios normales visualizando determinados campos}
+	\end{longtable}
+	
+	% CP-00: Buscar usuario administrador o usuario normal
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Buscar usuario administrador o usuario normal}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web muestra únicamente el usuario buscado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador obtiene la información del usuario buscado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Buscar usuario administrador o usuario normal}
+	\end{longtable}
+	
+	% CP-00: Ordenar usuarios administradores o usuarios normales
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Ordenar usuarios administradores o usuarios normales}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web muestra el listado ordenado de forma ascendente o descendente} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador obtiene la lista de usuarios administradores o usuarios normales ordenada según el campo elegido de forma ascendente o descendente} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Ordenar usuarios administradores o usuarios normales}
+	\end{longtable}
+	
+	% CP-00: Exportar, imprimir o copiar usuarios administradores o usuarios normales
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Exportar, imprimir o copiar usuarios administradores o usuarios normales}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web exporta, imprime o copia todos los usuarios administradores o usuarios normales existentes} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador obtiene un fichero PDF o CSV con todos los usuarios administradores o usuarios normales o presenta la posibilidad de impresión o copiado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Exportar, imprimir o copiar usuarios administradores o usuarios normales}
+	\end{longtable}
+	
+	% CP-00: Crear usuario administrador o usuario normal
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Crear usuario administrador o usuario normal}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web crea un nuevo usuario administrador o usuario normal con los datos introducidos} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador ha creado un nuevo usuario administrador o usuario normal} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Crear usuario administrador o usuario normal}
+	\end{longtable}
+	
+	% CP-00: Crear usuario administrador o usuario normal. Error
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Crear usuario administrador o usuario normal. Error}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web no crea el nuevo usuario debido a un error y el usuario administrador es informado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador es informado del error provocado durante la creación} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Crear usuario administrador o usuario normal. Error}
+	\end{longtable}	
+	
+	% CP-00: Comprobar disponibilidad de nombre de usuario o email
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Comprobar disponibilidad de nombre de usuario o \textit{email}}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web informa al usuario administrador si el nombre de usuario o \textit{email} ha sido utilizado previamente y si está disponible} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrado es informado de la disponibilidad del nombre de usuario o \textit{email}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Comprobar disponibilidad de nombre de usuario o email}
+	\end{longtable}
+	
+	% CP-00: Fortaleza de contraseña
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Fortaleza de contraseña}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web indica la fortaleza de la contraseña presentada} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador es informado de la fortaleza de la contraseña a medida que es introducida} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Fortaleza de contraseña}
+	\end{longtable}
+	
+	% CP-00: Editar usuario administrador o usuario normal
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Editar usuario administrador o usuario normal}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web actualiza la información del usuario administrador o usuario normal} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador ha editado un usuario administrador o usuario normal} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Editar usuario administrador o usuario normal}
+	\end{longtable}
+	
+	% CP-00: Editar usuario administrador o usuario normal. Error
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Editar usuario administrador o usuario normal. Error}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web no edita el usuario debido a un error y el usuario administrador es informado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador es informado del error provocado durante la edición} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Editar usuario administrador o usuario normal. Error}
+	\end{longtable}	
+	
+	% CP-00: Eliminar usuario administrador o usuario normal
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Eliminar usuario administrador o usuario normal}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web elimina el usuario correctamente} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador ha elminado un usuario administrador o usuario normal} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Eliminar usuario administrador o usuario normal}
+	\end{longtable}
+	
+	% CP-00: Eliminar usuario administrador o usuario normal. Error
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Eliminar usuario administrador o usuario normal. Error}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web no elimina el usuario debido a un error y el usuario administrador es informado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador es informado del error provocado durante la eliminación} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Eliminar usuario administrador o usuario normal. Error}
+	\end{longtable}	
+	
+	% CP-00: Importar usuarios administradores o usuario normales
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Importar usuarios administradores o usuario normales}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web almacena los usuarios contenidos en el fichero seleccionado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{Los nuevos usuarios ya tienen disponible su cuenta de usuario en el sistema web} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Importar usuarios administradores o usuario normales}
+	\end{longtable}
+	
+	% CP-00: Importar usuarios administradores o usuario normales
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Importar usuarios administradores o usuario normales. Error}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web no importa los usuarios debido a un error y el usuario administrador es informado } \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador es informado del error provocado durante la importación} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Importar usuarios administradores o usuario normales. Error}
+	\end{longtable}	
+	
+	% CP-00: Probar el sistema web en diferentes navegadores
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Probar el sistema web en diferentes navegadores}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web permite la navegación correcta en navegadores con diferentes motores de renderizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario visualiza correctamente el sistema en diferentes navegadores} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Probar el sistema web en diferentes navegadores}
+	\end{longtable}
+	
+	% CP-00: Probar el sistema web en diferentes dispositivos electrónicos
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Probar el sistema web en diferentes dispositivos electrónicos}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web adapta la interfaz al tamaño de pantalla} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario visualiza correctamente el sistema en el dispositivo} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Probar el sistema web en diferentes dispositivos electrónicos}
+	\end{longtable}
+	
+	% CP-00: Visualizar email
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Visualizar \textit{email} \textbf{\color{black!40!blue}*}}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{\textit{Email} enviado por el sistema web es recibido y visualizado correctamente} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El formato y estilo del \textit{email} es visualizado correctamente en el gestor de correos} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Visualizar email}
 	\end{longtable}
 
 	% Conclusions and future work
