@@ -7261,6 +7261,147 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\caption{Caso de prueba - Visualizar email}
 	\end{longtable}
 
+	% TODO - Query
+	% Subsection
+	\subsection{Componente - Protocolo de registro de incidencias}
+
+	Los casos de prueba a continuación descritos hacen referencia al componente del proyecto Hyot que define el modelo de la red de negocio desplegada en la \gls{blockchain-a} de \gls{hyperledgerfabric-a}. Para la ejecución de estos casos de prueba se utilizó la herramienta \textit{playground} de \gls{hyperledgercomposer-a} \cite{hyperledgercomposer:playground}.
+
+	% CP-00: Registrar transacción PublishAlert con participante de tipo User
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Registrar transacción \textit{PublishAlert} con participante de tipo \textit{User}}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La transacción (\textit{\gls{transaction}}) es registrada en la \gls{blockchain-a}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El participante (\textit{\gls{participant}}) registra una transacción creando un activo (\textit{\gls{asset}}) \textit{Alert}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Registrar transacción PublishAlert con participante de tipo User}
+	\end{longtable}
+	
+	% CP-00: Crear activo Alert con participante de tipo User
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Crear activo \textit{Alert} con participante de tipo \textit{User}}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La operación es denegada} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El participante no puede registrar directamente un activo \textit{Alert}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Crear activo Alert con participante de tipo User}
+	\end{longtable}
+	
+	% CP-00: Obtener activos Alert de los que el participante de tipo User es poseedor
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Obtener activos \textit{Alert} de los que el participante de tipo \textit{User} es poseedor}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La consulta es ejecutada correctamente retornando los activos \textit{Alert}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El participante obtiene todos los activos \textit{Alert} registrados por él mismo en la \gls{blockchain-a}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Obtener activos Alert de los que el participante de tipo User es poseedor}
+	\end{longtable}
+	
+	% CP-00: Obtener activos Alert de los que el participante de tipo User no es poseedor
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Obtener activos \textit{Alert} de los que el participante de tipo \textit{User} no es poseedor}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La operación es denegada} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El participante solamente puede obtener los activos \textit{Alert} cuyo poseedor sea él mismo} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Obtener activos Alert de los que el participante de tipo User no es poseedor}
+	\end{longtable}
+	
+	% CP-00: Editar activo Alert con participante de tipo User
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Editar activo \textit{Alert} con participante de tipo \textit{User}}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La operación es denegada} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El participante no puede editar un activo \textit{Alert} ya sea de su posesión o de posesión de otro participante de tipo \textit{User}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Editar activo Alert con participante de tipo User}
+	\end{longtable}
+	
+	% CP-00: Eliminar activo Alert con participante de tipo User
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Eliminar activo \textit{Alert} con participante de tipo \textit{User}}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La operación es denegada} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El participante no puede eliminar un activo \textit{Alert} ya sea de su posesión o de posesión de otro participante de tipo \textit{User}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Eliminar activo Alert con participante de tipo User}
+	\end{longtable}
+	
+	% CP-00: Crear, editar o eliminar participante de tipo User con un participante de tipo User
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Crear, editar o eliminar participante de tipo \textit{User} con un participante de tipo \textit{User}}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La operación es denegada} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El participante no presenta el privilegio de realizar alguna acción sobre participantes de tipo \textit{User}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Crear, editar o eliminar participante de tipo User con un participante de tipo User}
+	\end{longtable}
+	
+	% CP-00: Gestionar identidades con participante de tipo User
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Gestionar identidades con participante de tipo \textit{User}}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La operación es denegada} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El participante no puede gestionar ni enlazar identidades} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Gestionar identidades con participante de tipo User}
+	\end{longtable}
+	
+	% CP-00: Acciones con participante administrador
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-00}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Acciones con participante administrador}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Cualquier operación -crear, editar y eliminar activos o participantes, registrar transacciones, gestionar y enlazar identidades, desplegar la red de negocio, etc.- realizada por este tipo de participante es realizada correctamente} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El participante de tipo administrador presenta acceso completo a los recursos de sistema y de usuario} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Acciones con participante administrador}
+	\end{longtable}
+	
 	% Conclusions and future work
 	\chapter*{Conclusiones y trabajo futuro} \label{conclusions}
 	\addcontentsline{toc}{chapter}{Conclusiones y trabajo futuro}
