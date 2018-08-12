@@ -8151,11 +8151,10 @@ IP.1			    = [IP Server]
 	
 	\textit{Hyot} es una prueba de concepto (\textit{\gls{poc}} -\gls{poc-a}-) de código abierto para la trazabilidad de un entorno controlado del Internet de las Cosas (\textit{\gls{iot}} -\gls{iot-a}-) mediante la tecnología \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}). El objetivo de esta solución es la monitorización de dicho entorno para el reconocimiento de sucesos anómalos en cuyo caso el propósito es garantizar una prueba irrefutable y veraz de cada incidencia producida. Esto es posible gracias a la constante recolección de sucesos por medio de \glspl{sensor} situados en una \gls{raspberry} (\gls{raspberry-a}) 3 y la inclusión de incidencias en la \Gls{blockchain} (\gls{blockchain-a}) de \gls{hyperledgerfabric-a} aprovechando de tal forma las ventajas que brinda esta tecnología. Asimismo, mediante un sistema web se puede consultar la información recolectada en tiempo real. \\
 	
-	% TODO
 	 Cinco son los componentes que conforman Hyot, y a continuación se detalla el modo de funcionamiento de cada uno -excepto el componente de protocolo de registro de incidencias el cual ya se encuentra embebido en otro componente- y la variedad de funcionalidades que ofrece al usuario.
 	 
 	 % Section
-	 \section{Componente de configuración del dispositivo Raspberry Pi}
+	 \section{Componente de configuración del dispositivo Raspberry Pi} \label{setup_rpi}
 	 
 	 Este componente del proyecto Hyot permite efectuar la configuración inicial del dispositivo \gls{raspberry-a} para posteriormente ejecutar correctamente el componente de monitorización de sucesos del entorno. Su uso es totalmente opcional puesto que los pasos que son efectuados pueden ser ejecutados de forma manual. Sin embargo, con el fin de facilitar la puesta en marcha de Hyot este proceso se automatiza proporcionando un \textit{\gls{script}} desarrollado en el lenguaje \gls{bash-a} (\textit{\gls{bash}}). \\
 	 
@@ -8467,9 +8466,171 @@ IP.1			    = [IP Server]
 	\end{figure}
 
 	 % Section
+	 \section{Componente de monitorización de sucesos del entorno}
+	 
+	 Este componente contiene la funcionalidad principal del proyecto Hyot puesto que permite la monitorización de sucesos del entorno \gls{iot-a} -a través del dispositivo \gls{raspberry-a} y una serie de \glspl{sensor}- y la generación ante un suceso anómalo de una evidencia garante de su veracidad y originación en un instante de tiempo dado. Su uso es de obligatoriedad y requiere de la ejecución previa del componente de configuración del dispositivo \gls{raspberry-a} o por el contrario la ejecución de forma manual de las acciones contenidas\footnote{Las librerías requeridas se encuentran definidas en un fichero de texto (\texttt{requirements.txt}) y pueden ser instaladas ejecutando el comando: \texttt{pip install -r requirements.txt}. Si alguna librería requerida no se encuentra instalada, se muestra un error al inicio de la ejecución al intentar importarla. En el caso de la habilitación de interfaces, el comando \texttt{raspi-config} debe ser utilizado.}, del prototipo correctamente conectado y funcional\footnote{El prototipo construido puede ser consultado en el anexo \ref{prototype}. \nameref{prototype}.} y de la existencia del fichero de configuración \texttt{hyot.yml} en el directorio \texttt{hyot\_raspberrypi/hyot/conf}\footnote{La estructura de este fichero de configuración puede ser consultada en el anexo \ref{install}. \nameref{install}.}. \\
+	 
+	Para iniciar este componente, desarrollado en el lenguaje \gls{python}, basta con ejecutar el fichero \texttt{hyot\_main.py} -ubicado en el directorio \texttt{hyot\_raspberrypi/hyot} según la jerarquía completa del proyecto- en la \gls{raspberry-a} desde un terminal con el comando \texttt{sudo python} y seguir los pasos indicados. La monitorización del entorno se compone de tres fases ejecutadas en el siguiente orden:
+	
+	\begin{enumerate}
+		\item Comprobaciones iniciales.
+		\item Inicialización de servicios y utilidades.
+		\item Monitorización de sucesos del entorno.
+	\end{enumerate}
+	
+	Además, este componente ofrece un menú de ayuda, opción \texttt{-h} o \texttt{--help}, donde se detallan todas las opciones disponibles (Figura \ref{fig:userguide_monitoring_help}), siendo las definidas las mostradas a continuación:
+	
+	\begin{itemize}
+			
+		\item Grupo general:
+		\begin{itemize}
+			\item Opción \texttt{-e} o \texttt{--email}: Dirección de correo electrónico donde enviar notificaciones de alerta y de error en el proceso de medición. Si no se especifica una dirección, por defecto la funcionalidad de notificación se encuentra desactivada.
+			
+			\item Opción \texttt{-m} o \texttt{--maxdistancehcsr}: Distancia máxima\footnote{El rango de distancia máxima de medición definida en la especificación del \gls{sensor} es de 4 metros. Consultar \cite{hcsr04:datasheet} para obtener más información.} a ser medida por el \gls{sensor} HC-SR04. Por defecto, 150 centímetros.
+			
+			\item Opción \texttt{-r} o \texttt{--recordingtime}: Tiempo de grabación del entorno cuando el protocolo de alerta es activado. Por defecto, 10 segundos.
+		
+			\item Opción \texttt{-wt} o \texttt{--waittime}: Tiempo de espera entre una medición y la siguiente -siempre y cuando no se active el protocolo de alerta-. Por defecto, 3 segundos.                          
+		\end{itemize}
+		
+		\item Grupo de pines\footnote{La especificación del número de pin debe ser en modo BCM \cite{pinout:rpi}.}:
+		\begin{itemize}
+			\item Opción \texttt{-dd} o \texttt{--dht11data}: Pin de datos para el \gls{sensor} DHT11. Por defecto, el pin 21 (\gls{gpio-a}21 -\textit{\gls{gpio}}-).
+			
+			\item Opción \texttt{-hce} o \texttt{--hcsrecho}: Pin \textit{Echo} para el \gls{sensor} HC-SR04. Por defecto, el pin 19 (\gls{gpio-a}19).
+			 
+			\item Opción \texttt{-hct} o \texttt{--hcsrtrigger}: Pin \textit{Trigger} para el \gls{sensor} HC-SR04. Por defecto, el pin 26 (\gls{gpio-a}26).
+		
+			\item Opción \texttt{-lp} o \texttt{--ledpin}: Pin para el componente electrónico \gls{led-a} (\textit{\gls{led}}). Por defecto, el pin 13 (\gls{gpio-a}13).
+		\end{itemize}
+		
+		\item Grupo de \gls{i2c-a}:
+		\begin{itemize}
+			\item Opción \texttt{-die} o \texttt{--dhti2cexpander}: Tipo de expansor \gls{i2c-a} -\texttt{MCP23008}, \texttt{MCP23017} o \texttt{PCF8574}- para el componente \gls{lcd-a} asociado al \gls{sensor} DHT11. Por defecto, \texttt{PCF8574}.
+			
+			\item Opción \texttt{-dia} o \texttt{--dhti2caddress}: Dirección \gls{i2c-a}\footnote{Esta dirección puede ser obtenida con el comando \texttt{i2cdetect}, como se indica en la parte final del manual de usuario de \ref{setup_rpi}. \nameref{setup_rpi}.} para el componente \gls{lcd-a} asociado al \gls{sensor} DHT11. Por defecto, \texttt{0x3f}.
+			
+			\item Opción \texttt{-hie} o \texttt{--hcsri2cexpander}: Tipo de expansor \gls{i2c-a} -\texttt{MCP23008}, \texttt{MCP23017} o \texttt{PCF8574}- para el componente \gls{lcd-a} asociado al \gls{sensor} HC-SR04. Por defecto, \texttt{PCF8574}.
+			
+			\item Opción \texttt{-hia} o \texttt{--hcsri2caddress}: Dirección \gls{i2c-a} para el componente \gls{lcd-a} asociado al \gls{sensor} HC-SR04. Por defecto, \texttt{0x38}.
+		\end{itemize}
+		
+		\item Grupo de umbrales:
+		\begin{itemize}
+			\item Opción \texttt{-tt} o \texttt{--tempthreshold}: umbral límite del evento temperatura en el \gls{sensor} DHT11 a partir del cual se activa el protocolo de alerta. Por defecto, 30 $^{\circ}$C.
+			\item Opción \texttt{-ht} o \texttt{--humthreshold}: umbral límite del evento humedad en el \gls{sensor} DHT11 a partir del cual se activa el protocolo de alerta. Por defecto, 80 \%.
+			\item Opción \texttt{-dt} o \texttt{--distancethreshold}: umbral límite del evento distancia en el \gls{sensor} HC-SR04 a partir del cual se activa el protocolo de alerta\footnote{En este caso, el protocolo se activa cuando la distancia es menor al umbral especificado.}. Por defecto, 50 centímetros.
+		\end{itemize}
+	\end{itemize}
+	
+	% TODO
+%	\begin{figure}[!ht]   
+%		\caption{Monitorización de sucesos del entorno - Menú de ayuda.} 
+%		\begin{center} 
+%			\includegraphics[width=16cm,height=10cm]{Images/userGuide/monitoring/help} \\
+%			\label{fig:userguide_monitoring_help} 
+%		\end{center}  
+%	\end{figure}
+	
+	 % Subsection
+	 \subsection{Comprobaciones iniciales}
+	 	 
+	 En esta primera fase se realizan diferentes comprobaciones para garantizar que la posterior ejecución se efectúe de manera correcta y sin ningún contratiempo. Si alguna de estas comprobaciones -similares a las verificadas en la sección \ref{setup_rpi}. \nameref{setup_rpi}- falla ya sea porque no cumple la condición o por cualquier otra causa, se muestra por consola un error al usuario y se finaliza la ejecución. Las comprobaciones incluyen:
+	 
+	 \begin{enumerate}
+	 	\item Verificación de ejecución con un usuario superprivilegiado.
+		\item Verificación de ejecución en una plataforma \gls{gnulinux}. 
+		\item Verificación de ejecución en un dispositivo \gls{raspberry-a}, en cualquiera de sus versiones.
+		\item Verificación de conexión a Internet mediante la ejecución de un comando \textit{ping} al buscador de Google.		
+		\item Verificación de que no existe otra instancia de este componente en ejecución.
+		
+		\item Comprobación de las opciones introducidas, donde se valida entre otros detalles:
+		
+		\begin{itemize}
+			\item El valor asociado 	a cada opción indicada, comprobando:
+			
+				\begin{itemize}
+					\item Opción \texttt{-e} o \texttt{--email}: dirección de correo electrónico válido.
+					\item Opción \texttt{-r} o \texttt{--recordingtime}: tiempo de grabación del entorno mayor o igual a 1 segundo.
+					\item Opción \texttt{-m} o \texttt{--maxdistancehcsr}: distancia máxima mayor que 30 centímetros.
+					\item Opción \texttt{-wt} o \texttt{--waittime}: tiempo de espera entre una medición y la siguiente mayor o igual a 2 segundos.      
+					\item Opciones \texttt{-dd} o \texttt{--dht11data}, \texttt{-hce} o \texttt{--hcsrecho}, \texttt{-hct} o \texttt{--hcsrtrigger} y \texttt{-lp} o \texttt{--ledpin}: número de pin \gls{gpio-a} entre 0-27.      
+					\item Opciones \texttt{-die} o \texttt{--dhti2cexpander} y \texttt{-hie} o \texttt{--hcsri2cexpander}: tipo de expansor entre el rango definido: \texttt{MCP23008}, \texttt{MCP23017} o \texttt{PCF8574}. 
+					\item Opción \texttt{-tt} o \texttt{--tempthreshold}: umbral del evento temperatura mayor o igual a 0 $^{\circ}$C.
+					\item Opción \texttt{-ht} o \texttt{--humthreshold}: umbral del evento humedad entre 0-100 \%.
+					\item Opción \texttt{-dt} o \texttt{--distancethreshold}: umbral del evento distancia entre 0-distancia máxima especificada.
+				\end{itemize}
+			
+			\item El tipo del valor asociado a cada opción indicada (Figura \ref{fig:}). % TODO	
+			
+			\item La validez de cada opción indicada (Figura \ref{fig:}). 
+
+	 	\end{itemize}	
+	 \end{enumerate}
+	Por último mencionar que al igual que en el componente anterior, la señal de terminación (Ctrl + C) del proceso cuando está en ejecución también es capturada, informando al usuario de que no debería finalizar la ejecución si desea continuar con la monitorización. Aun así antes de finalizar por completo la ejecución, se efectúa una salida ordenada liberando todos los recursos de las utilidades y servicios instanciados durante la ejecución y eliminando directorios y ficheros temporales (Figura \ref{fig:}). % TODO
+
+	 % Subsection
+	 \subsection{Inicialización de servicios y utilidades}
+	 
+	 En esta segunda fase se inicializan y configuran todas las utilidades y servicios a emplear durante el proceso de monitorización de sucesos del entorno donde en cada acción ejecutada se comprueba si ocurre un error. En cuyo caso, se notifica al usuario y se finaliza la ejecución del componente. La inicialización incluye:
+	 
+	 \begin{itemize}
+	 	\item Generar el directorio local (\texttt{rutaRepositorio/hyot/logs}) donde el fichero de \textit{log} se almacena. Este fichero contiene la misma información que la mostrada por el terminal y su utilidad es informativa para el usuario cuando se produce un error durante alguna acción de la medición o protocolo de alerta de forma que se adjunta a la notificación enviada (en caso de estar activada la opción \texttt{-e} o \texttt{--email}).
+	 	\item Inicializar los dos \glspl{lcd-a}, cada uno asociado a un \gls{sensor}. La Figura \ref{fig:} detallada el error mostrado en caso de que algún componente de este tipo no esté correctamente conectado o se haya indicado un tipo de expansor o dirección \gls{i2c-a} errónea mientras que la Figura \ref{fig:} muestra el error de la interfaz \gls{i2c-a} no habilitada. % TODO
+	 	\item Inicializar la cámara. La Figura \ref{fig:} hace referencia al error mostrado en caso de que el componente \textit{Picamera} esté conectado de forma errónea o no se halla % TODO habilitado la interfaz específica. % TODO
+	 	\item Inicializar el directorio local donde las evidencias -vídeos capturados sobre el entorno por la cámara- son almacenados temporalmente hasta la finalización de un protocolo de alerta activado. En el caso de que este directorio ya esté creado, ninguna acción es realizada.
+	 	\item Inicializar la utilidad \gls{gpg-a} (\textit{\gls{gpg}}) para el encriptación y firmado de evidencias. En esta inicialización, se solicita la ruta del directorio usado por \gls{gpg-a} para almacenar el almacén de claves y la base de datos (\gls{bbdd-a}) de confianza. Posteriormente, se comprueba si el directorio especificado contiene alguna clave, donde:
+	 		\begin{itemize}
+	 			% TODO Imagen
+	 			\item En caso de no contener ninguna clave, comienza el proceso de generación (Figura \ref{fig:}) donde se solicita al usuario la indicación del nombre y dirección de correo asociada a la identidad\footnote{En el caso de no introducir ningún valor en cualquier solicitud de datos al usuario, se utiliza el valor o valores por defecto definidos en el fichero de configuración.} y la contraseña que protege la clave privada\footnote{El usuario presenta 3 intentos para introducir la contraseña y ésta debe seguir un patrón concreto: poseer una longitud mínima de 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número.}. El par de claves generado se exporta a un fichero externo con extensión \texttt{.asc} para poder ser utilizado durante la desencriptación de la evidencia, generando también un \gls{qr} asociado a esta clave\footnote{Ambos ficheros son renombrados con el patrón  \texttt{\_índice} en caso de existir ya un fichero con dicho nombre.}.
+	 			\item En caso de contener algún par de claves, se ofrece la posibilidad de generar uno nuevo -proceso anterior- o introducir una o varias huellas digitales (\textit{fingerprints}) en cuyo caso es obligatorio que dichos \textit{fingerprints} se asocien a algún par de claves existente. En el caso de introducir solamente un \textit{fingerprint}, éste será el utilizado para el proceso de encriptación y firmado de la evidencia (Figura ). Por contra, si se especifica más de uno la encriptación se realiza para varios destinatarios y se solicita la indicación de que \textit{fingerprint} utilizar para la firma (Figura ).
+	 		\end{itemize} 
+	 	
+	 	\item Inicializar la sesión de \textit{email} para las notificaciones (Figura \ref{fig:}). Este proceso solamente se efectúa si se ha indicado la opción correspondiente a la hora de ejecutar el componente.
+	 	\item Inicializar la plataforma de \gls{iot-a} de IBM Cloud, solicitando el \textit{\gls{token}} de autenticación y otros detalles (Figura \ref{fig:}). Esta plataforma actúa como pasarela de comunicación en tiempo real entre los dispositivos conectados y las aplicaciones que consumen los datos.
+	 	\item Inicializar la \gls{bbdd-a} \gls{cloudant} donde en primer lugar se solicitan las credenciales de autenticación y la dirección donde se ubica la \gls{bbdd-a}. Posteriormente, se pregunta al usuario por el nombre de la \gls{bbdd-a} a utilizar y se comprueba si ésta existe o no, creándola (Figura \ref{fig:}) o (Figura \ref{fig:}) abriéndola según el caso correspondiente.
+	 	\item Inicializar el servicio de almacenamiento en la nube Dropbox solicitando en primer lugar el \textit{\gls{token}} de autenticación (Figura \ref{fig:}). % TODO algun error de token
+	 		Posteriormente, se comprueba si la cuenta de usuario de Dropbox a utilizar dispone de una cantidad mínima de espacio (500 MB) ya que en caso contrario podría verse afectada la monitorización al no presentar espacio disponible para subir las evidencias (Figura \ref{fig:}) y se solicitan los nombres de los subdirectorios asociados a cada sensor donde cada uno de ellos almacenará las evidencias generadas por el sensor asociado. Los subdirectorios son creados bajo el directorio \texttt{Hyot} solamente en caso de no existir.
+	 	\item Inicializar la \gls{blockchain-a} de \gls{hyperledgerfabric-a} por medio de comprobar si el servidor \gls{rest-a} (\textit{\gls{rest}}) \gls{api-a} (\textit{\gls{api}}) de \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a}) se encuentra levantado. Para ello, se solicita la dirección \gls{url-a} (\textit{\gls{url}}) y el puerto donde se ubica con el fin de efectuar un comando \textit{ping} y verificar si efectivamente el servidor se encuentra levantada y ese destino en concreto se corresponde con una red de negocio (Figuras ). Además, se ofrece la posibilidad al usuario de introducir el nombre del poseedor de los activos \textit{Alert} a generar en la \gls{blockchain-a} y de proporcionar una capa de seguridad extra mediante un \textit{api-key} el cual debe ser introducido en cada petición transmitida\footnote{En el caso de no hacer uso de esta opción, el servidor de \gls{hyperledgercomposer-a} puede ser arrancado con anterioridad. En caso contrario, se debe obtener el \textit{api-key} en primer lugar y después arrancar el servidor indicado este valor en la opción correspondiente.} (Figura ).
+	 \end{itemize}
+	 
+	 La Figura \ref{fig:} muestra un ejemplo de una primera ejecución con inicialización correcta de todos las utilidades y servicios. % TODO
+	 
+	 % Subsection
+	 \subsection{Monitorización de sucesos del entorno}
+	 
+	 Esta fase, de ejecución continúa hasta que sea parada explícitamente por el usuario o se produzca un error, permite monitorizar los sucesos que se producen en el entorno \textit{iot-a} en busca de garantizar la veracidad e integridad del hecho de un suceso anómalo. Cada medición conformada por un identificador único, una marca temporal (\textit{timestamp}) y valores de los eventos: temperatura, humedad y distancia, es obtenida en situación normal cada 3 segundos como valor por defecto y es filtrada para determinar si presenta un suceso anómalo o no en base a los umbrales límite indicados para cada evento. En base a esta información:
+	 
+	 \begin{itemize}
+	 	\item La medición actual puede no presentar un caso extraño (Figura \ref{fig:}), activando el protocolo normal de medición:
+	 	
+	 		\begin{enumerate}
+				\item Almacenar la medición en la \gls{bbdd-a} para que quede constancia de que en ese momento temporal el entorno controlado no presenta ninguna incidencia.
+				\item Subir determinada información de la medición a la plataforma de \gls{iot-a}.	
+			\end{enumerate}
+	 	
+	 	\item La medición actual puede presentar un caso extraño (Figura \ref{fig:}), activando el protocolo de alerta:
+	 	 	
+	 	 	\begin{enumerate}
+				\item Captura de un vídeo -por defecto 10 segundos de duración- a través de una cámara (dispositivo Picamera) conectada a la \gls{raspberry-a} que representa la evidencia.
+				\item Cálculo del valor \textit{hash} del contenido de la evidencia. Este valor actúa como prueba de integridad y se almacena únicamente en la \Gls{blockchain}. 
+				\item Encriptación y firmado de la evidencia con la utilidad \gls{gpg-a}.
+				\item Almacenamiento de la evidencia encriptada y firmada en el servicio de almacenamiento en la nube, Dropbox.
+				\item Almacenamiento de la medición con información adicional en la \gls{bbdd-a} para que quede constancia de que en ese momento temporal el entorno vigilado presentó una lectura anómala.				
+				\item Publicación de determinada información de la medición a la plataforma de \gls{iot-a}.
+				\item Registro de la incidencia	en la \gls{blockchain-a} de \gls{hyperledgerfabric-a} con la generación de un activo (\textit{\glspl{asset}}) \textit{Alert}. 		
+				\item Notificación del suceso no controlado mediante el envío de un \textit{email} a la dirección de correo electrónico destino configurada, adjuntando la evidencia encriptada y firmada.
+			\end{enumerate}
+	 \end{itemize}
+	 
+	 Además, en el caso de que algún valor obtenido sea inválido únicamente se comprueba el evento que contenga el valor válido siguiendo el procedimiento anterior (Figura \ref{fig:}). Por el contrario, si ambos valores son inválidos esa medición se omite y se continúa la monitorización (Figura \ref{fig:}). \\
+	 
+	 Si durante alguna acción del protocolo normal de medición o protocolo de alerta se produce un error, la ejecución es finalizada enviando una notificación \textit{email} y adjuntado el fichero de \textit{log} si la opción correspondiente está activada o no (Figuras \ref{fig:} y \ref{fig:}, respectivamente).
+	 	
+	 % Section
 	 \section{Componente de desencriptación de evidencia}
 	 	 
-	 Este componente del proyecto Hyot permite efectuar la desencriptación, la verificación de firma y la comprobación de integridad de contenido de una evidencia previamente encriptada y firmada con la herramienta \gls{gpg-a} (\textit{\gls{gpg}}). Su uso, aunque es totalmente opcional puesto que los pasos que son efectuados pueden ser ejecutados de forma manual ya sea a través de la línea de comandos o con alguna herramienta externa, requiere de la instalación de \gls{python} y de la utilidad \gls{gpg-a} \cite{gpg} en la máquina donde se ejecutará el componente, además de una serie de librerías \gls{python}. Esta configuración puede ser omitida si se ha ejecutado en la \gls{raspberry-a} el componente de configuración y si el componente de desencriptación se va a ejecutar en ese mismo dispositivo lo cual es lo recomendable. En otro caso, requiere de las dependencias mencionadas\footnote{Las librerías se encuentran definidas en un fichero de texto (\texttt{requirements.txt}) y pueden ser instaladas ejecutando el comando: \texttt{pip install -r requirements.txt}.}. \\
+	 Este componente del proyecto Hyot permite efectuar la desencriptación, la verificación de firma y la comprobación de integridad de contenido de una evidencia previamente encriptada y firmada con la herramienta \gls{gpg-a}. Su uso, aunque es totalmente opcional puesto que los pasos que son efectuados pueden ser ejecutados de forma manual ya sea a través de la línea de comandos o con alguna herramienta externa, requiere de la instalación de \gls{python} y de la utilidad \gls{gpg-a} \cite{gpg} en la máquina donde se ejecutará el componente, además de una serie de librerías \gls{python}. Esta configuración puede ser omitida si se ha ejecutado en la \gls{raspberry-a} el componente de configuración y si el componente de desencriptación se va a ejecutar en ese mismo dispositivo lo cual es lo recomendable. En otro caso, requiere de las dependencias mencionadas\footnote{Las librerías se encuentran definidas en un fichero de texto (\texttt{requirements.txt}) y pueden ser instaladas ejecutando el comando: \texttt{pip install -r requirements.txt}. Si alguna librería requerida no se encuentra instalada, se muestra un error al inicio de la ejecución al intentar importarla.}. \\
 	 
 	Para iniciar este componente basta con ejecutar el fichero \texttt{hyot\_decryption.py} -ubicado en el directorio \texttt{hyot\_raspberrypi/hyot\_decryption} según la jerarquía completa del proyecto- en la \gls{raspberry-a} o en cualquier otro dispositivo electrónico –siempre y cuando disponga de las dependencias indicadas anteriormente- desde un terminal con el comando \texttt{sudo python}. \\
 
@@ -8493,7 +8654,7 @@ IP.1			    = [IP Server]
 	\end{itemize}
 
 	\begin{figure}[!ht]   
-		\caption{Desencripcatión de evidencia - Menú de ayuda.} 
+		\caption{Desencriptación de evidencia - Menú de ayuda.} 
 		\begin{center} 
 			\includegraphics[width=16cm,height=10cm]{Images/userGuide/evidence/help} \\
 			\label{fig:userguide_evidence_help} 
@@ -8509,7 +8670,7 @@ IP.1			    = [IP Server]
 	 	\item Verificación de ejecución con un usuario superprivilegiado (Figura \ref{fig:userguide_evidence_root}).
 		
 		\begin{figure}[!ht]   
-			\caption{Desencripcatión de evidencia - Verificación de usuario.} 
+			\caption{Desencriptación de evidencia - Verificación de usuario.} 
 			\begin{center} 
 				\includegraphics[width=14cm,height=0.8cm]{Images/userGuide/evidence/root} \\
 				\label{fig:userguide_evidence_root} 
@@ -8522,7 +8683,7 @@ IP.1			    = [IP Server]
 	 		\item La introducción de las opciones obligatorias (Figuras \ref{fig:userguide_evidence_optionmandatory1} y \ref{fig:userguide_evidence_optionmandatory2}).
 	 		
 	 		\begin{figure}[!ht]   
-				\caption{Desencripcatión de evidencia - Verificación de opción obligatoria -g o --gpghome.} 
+				\caption{Desencriptación de evidencia - Verificación de opción obligatoria -g o --gpghome.} 
 				\begin{center} 
 					\includegraphics[width=16cm,height=2.2cm]{Images/userGuide/evidence/option_mandatory1} \\
 					\label{fig:userguide_evidence_optionmandatory1} 
@@ -8530,7 +8691,7 @@ IP.1			    = [IP Server]
 			\end{figure}
 			
 			\begin{figure}[!ht]   
-				\caption{Desencripcatión de evidencia - Verificación de opción obligatoria -ha o --hash.} 
+				\caption{Desencriptación de evidencia - Verificación de opción obligatoria -ha o --hash.} 
 				\begin{center} 
 					\includegraphics[width=16cm,height=2.2cm]{Images/userGuide/evidence/option_mandatory2} \\
 					\label{fig:userguide_evidence_optionmandatory2} 
@@ -8540,7 +8701,7 @@ IP.1			    = [IP Server]
 	 		\item La introducción de un método para indicar la evidencia a utilizar (Figuras \ref{fig:userguide_evidence_method} y \ref{fig:userguide_evidence_onemethod}).
 	 		
 	 		\begin{figure}[!ht]   
-				\caption{Desencripcatión de evidencia - Verificación de indicación de evidencia.} 
+				\caption{Desencriptación de evidencia - Verificación de indicación de evidencia.} 
 				\begin{center} 
 					\includegraphics[width=18.5cm,height=1.5cm]{Images/userGuide/evidence/evidence_method} \\
 					\label{fig:userguide_evidence_method} 
@@ -8551,7 +8712,7 @@ IP.1			    = [IP Server]
 			\newpage
 			
 			\begin{figure}[!ht]   
-				\caption{Desencripcatión de evidencia - Otra verificación de indicación de evidencia.} 
+				\caption{Desencriptación de evidencia - Otra verificación de indicación de evidencia.} 
 				\begin{center} 
 					\includegraphics[width=18.5cm,height=1.7cm]{Images/userGuide/evidence/evidence_onemethod} \\
 					\label{fig:userguide_evidence_onemethod} 
@@ -8574,7 +8735,7 @@ IP.1			    = [IP Server]
 		\item Verificar si el dispositivo se encuentra conectado a la red mediante la ejecución de un \textit{ping} al buscador de Google (Figura \ref{fig:userguide_evidence_ping}).
 		
 			\begin{figure}[!ht]   
-				\caption{Desencripcatión de evidencia - Verificación de conexión a red.} 
+				\caption{Desencriptación de evidencia - Verificación de conexión a red.} 
 				\begin{center} 
 					\includegraphics[width=16cm,height=6.7cm]{Images/userGuide/evidence/network} \\
 					\label{fig:userguide_evidence_ping} 
@@ -8587,7 +8748,7 @@ IP.1			    = [IP Server]
 		\item Validar el enlace introducido (Figura \ref{fig:userguide_evidence_link}).
 		
 			\begin{figure}[!ht]   
-				\caption{Desencripcatión de evidencia - Validar enlace.} 
+				\caption{Desencriptación de evidencia - Validar enlace.} 
 				\begin{center} 
 					\includegraphics[width=18cm,height=1.5cm]{Images/userGuide/evidence/invalidLink} \\
 					\label{fig:userguide_evidence_link} 
@@ -8597,7 +8758,7 @@ IP.1			    = [IP Server]
 		\item Descargar y almacenar la evidencia encriptada y firmada en el directorio del componente\footnote{El código está adaptado al enlace compartido proporcionado por el servicio Dropbox el cual corresponde con el almacenado en los mecanismos de persistencia. El uso de otros servicios o formatos de enlace podría alterar el funcionamiento normal de este componente.} (Figura \ref{fig:userguide_evidence_download}).	En el caso de producirse algún error durante la descarga o almacenamiento de la evidencia descargada, se notifica al usuario y se finaliza la ejecución. La Figura \ref{fig:userguide_evidence_error_download} muestra un ejemplo de error durante la descarga.
 				
 			\begin{figure}[!ht]   
-				\caption{Desencripcatión de evidencia - Descargar evidencia.} 
+				\caption{Desencriptación de evidencia - Descargar evidencia.} 
 				\begin{center} 
 					\includegraphics[width=8cm,height=1cm]{Images/userGuide/evidence/download} \\
 					\label{fig:userguide_evidence_download} 
@@ -8605,7 +8766,7 @@ IP.1			    = [IP Server]
 			\end{figure}
 			
 			\begin{figure}[!ht]   
-				\caption{Desencripcatión de evidencia - Error al descargar la evidencia.} 
+				\caption{Desencriptación de evidencia - Error al descargar la evidencia.} 
 				\begin{center} 
 					\includegraphics[width=8cm,height=1.5cm]{Images/userGuide/evidence/error_download} \\
 					\label{fig:userguide_evidence_error_download} 
@@ -8620,7 +8781,7 @@ IP.1			    = [IP Server]
 	\newpage
 	
 		\begin{figure}[!ht]   
-			\caption{Desencripcatión de evidencia - Evidencia inexistente.} 
+			\caption{Desencriptación de evidencia - Evidencia inexistente.} 
 			\begin{center} 					\includegraphics[width=15cm,height=1.5cm]{Images/userGuide/evidence/evidence_nonexist} \\
 				\label{fig:userguide_evidence_nonexist} 
 			\end{center}  
@@ -8629,7 +8790,7 @@ IP.1			    = [IP Server]
 	Si esta primera comprobación es correcta, se procede a verificar que la evidencia encriptada y firmada posea la extensión adecuada, \texttt{.gpg} (Figura \ref{fig:userguide_evidence_invalidFormat}). 
 
 		\begin{figure}[!ht]   
-			\caption{Desencripcatión de evidencia - Evidencia con extensión incorrecta.} 
+			\caption{Desencriptación de evidencia - Evidencia con extensión incorrecta.} 
 			\begin{center} 					\includegraphics[width=16cm,height=1.5cm]{Images/userGuide/evidence/evidence_invalidFormat} \\
 				\label{fig:userguide_evidence_invalidFormat} 
 			\end{center}  
@@ -8641,14 +8802,14 @@ IP.1			    = [IP Server]
 		\item Comprobar el \textit{fingerprint} introducido (opción \texttt{-f} o \texttt{--fingerprint}) donde se verifica que el directorio \gls{gpg-a} indicado contenga al menos un par de claves (Figura \ref{fig:userguide_evidence_pairKeys}) y que el \textit{fingerprint} pertenezca a un par de claves existente (Figura \ref{fig:userguide_evidence_fingerprint}). Si ambas comprobaciones son correctas, el par de claves asociado a dicho \textit{fingerprint} será el utilizado para el proceso de desencriptación y verificación de la firma.
 		
 		\begin{figure}[!ht]   
-			\caption{Desencripcatión de evidencia - Directorio GPG no contiene ningún par de claves.} 
+			\caption{Desencriptación de evidencia - Directorio GPG no contiene ningún par de claves.} 
 			\begin{center} 					\includegraphics[width=16cm,height=1.5cm]{Images/userGuide/evidence/pairKeys} \\
 				\label{fig:userguide_evidence_pairKeys} 
 			\end{center}  
 		\end{figure}
 		
 		\begin{figure}[!ht]   
-			\caption{Desencripcatión de evidencia - Fingerprint no pertenece a ningún par de claves existente.} 
+			\caption{Desencriptación de evidencia - Fingerprint no pertenece a ningún par de claves existente.} 
 			\begin{center} 					\includegraphics[width=16cm,height=1.5cm]{Images/userGuide/evidence/fingerprint} \\
 				\label{fig:userguide_evidence_fingerprint} 
 			\end{center}  
@@ -8660,7 +8821,7 @@ IP.1			    = [IP Server]
 		\item Importar el fichero que contenga el par de claves (opción \texttt{-k} o \texttt{--keys}). En caso de no contener una clave pública y privada, se muestra el error de la Figura \ref{fig:userguide_evidence_import}.
 		
 		\begin{figure}[!ht]   
-			\caption{Desencripcatión de evidencia - Fichero no contiene el par de claves.} 
+			\caption{Desencriptación de evidencia - Fichero no contiene el par de claves.} 
 			\begin{center} 					\includegraphics[width=16cm,height=1.5cm]{Images/userGuide/evidence/import} \\
 				\label{fig:userguide_evidence_import} 
 			\end{center}  
@@ -8671,7 +8832,7 @@ IP.1			    = [IP Server]
 	A partir de aquí, y una vez se ha cerciorado que todos los datos introducidos son correctos, ya comienza el proceso de desencriptación en sí donde el primer paso es solicitar al usuario la introducción de la contraseña de protección de la clave privada a usar. Este dato de entrada no puede ser vacío\footnote{Si el dato contuviese espacios al inicio o final, éstos son eliminados.} en cuyo caso el usuario tiene 3 intentos. Agotados el límite de intentos, la ejecución finaliza (Figura \ref{fig:userguide_evidence_attempts}). \\
 
 		\begin{figure}[!ht]   
-			\caption{Desencripcatión de evidencia - Límite de intentos agotado.} 
+			\caption{Desencriptación de evidencia - Límite de intentos agotado.} 
 			\begin{center} 					\includegraphics[width=14cm,height=4.5cm]{Images/userGuide/evidence/attempts} \\
 				\label{fig:userguide_evidence_attempts} 
 			\end{center}  
@@ -8683,14 +8844,14 @@ IP.1			    = [IP Server]
 	\newpage
 	
 		\begin{figure}[!ht]   
-			\caption{Desencripcatión de evidencia correcta.} 
+			\caption{Desencriptación de evidencia correcta.} 
 			\begin{center} 					\includegraphics[width=12cm,height=1.2cm]{Images/userGuide/evidence/decryption} \\
 				\label{fig:userguide_evidence_decryption} 
 			\end{center}  
 		\end{figure}
 	
 		\begin{figure}[!ht]   
-			\caption{Desencripcatión de evidencia - Error en la desencriptación.} 
+			\caption{Desencriptación de evidencia - Error en la desencriptación.} 
 			\begin{center} 					\includegraphics[width=11cm,height=4.5cm]{Images/userGuide/evidence/error_decryption} \\
 				\label{fig:userguide_evidence_error_decryption} 
 			\end{center}  
@@ -8699,7 +8860,7 @@ IP.1			    = [IP Server]
 	Tras desencriptar la evidencia se procede a verificar la firma empleando la clave pública, mostrando la identidad del usuario, la fecha, el \textit{fingerprint} usado para la firma y el nivel de confianza del par de claves utilizado\footnote{En caso de importar el par de claves el nivel de confianza es bajo. Por el contrario, si se emplea un \textit{fingerprint} y el mismo directorio \gls{gpg-a} usado para la encriptación y firmado el nivel de confianza es alto.} (Figura \ref{fig:userguide_evidence_sign}). En caso de que la evidencia no fuese firmada también se notifica al usuario (Figura \ref{fig:userguide_evidence_notsigned}). \\
 	
 		\begin{figure}[!ht]   
-			\caption{Desencripcatión de evidencia - Verificación de firma.} 
+			\caption{Desencriptación de evidencia - Verificación de firma.} 
 			\begin{center} 					\includegraphics[width=11cm,height=4cm]{Images/userGuide/evidence/sign} \\
 				\label{fig:userguide_evidence_sign} 
 			\end{center}  
@@ -8709,8 +8870,9 @@ IP.1			    = [IP Server]
 		\newpage
 		
 		\begin{figure}[!ht]   
-			\caption{Desencripcatión de evidencia - Evidencia no firmada.} 
-			\begin{center} 					\includegraphics[width=6cm,height=1cm]{Images/userGuide/evidence/notsigned} \\
+			\caption{Desencriptación de evidencia - Evidencia no firmada.} 
+			\begin{center} 					
+				\includegraphics[width=6cm,height=1cm]{Images/userGuide/evidence/notsigned} \\
 				\label{fig:userguide_evidence_notsigned} 
 			\end{center}  
 		\end{figure}
@@ -8718,21 +8880,21 @@ IP.1			    = [IP Server]
 	Por último, se comprueba que el contenido de la evidencia original no haya sido alterado por un supuesto intruso no autorizado a través de comparar el valor \textit{hash} almacenado en la \gls{blockchain-a} (introducido con la opción \texttt{-ha} o \texttt{--hash}) con el valor calculado de la evidencia recién desencriptada. La Figura \ref{fig:userguide_evidence_hashes} muestra un ejemplo donde ambos valores son iguales mientras que la Figura \ref{fig:userguide_evidence_different_hashes} muestra el ejemplo contrario. Además, en el caso de producirse un error durante el cálculo de este valor también se notifica al usuario (Figura \ref{fig:userguide_evidence_error_hash}). 
 	
 		\begin{figure}[!ht]   
-			\caption{Desencripcatión de evidencia - Valores hashes iguales.} 
+			\caption{Desencriptación de evidencia - Valores hashes iguales.} 
 			\begin{center} 					\includegraphics[width=14cm,height=1.2cm]{Images/userGuide/evidence/hashes} \\
 				\label{fig:userguide_evidence_hashes} 
 			\end{center}  
 		\end{figure}
 		
 		\begin{figure}[!ht]   
-			\caption{Desencripcatión de evidencia - Valores hashes diferentes.} 
+			\caption{Desencriptación de evidencia - Valores hashes diferentes.} 
 			\begin{center} 					\includegraphics[width=17cm,height=1.2cm]{Images/userGuide/evidence/different_hashes} \\
 				\label{fig:userguide_evidence_different_hashes} 
 			\end{center}  
 		\end{figure}
 		
 		\begin{figure}[!ht]   
-			\caption{Desencripcatión de evidencia - Error al calcular el valor hash.} 
+			\caption{Desencriptación de evidencia - Error al calcular el valor hash.} 
 			\begin{center} 					\includegraphics[width=10cm,height=1.2cm]{Images/userGuide/evidence/error_hash} \\
 				\label{fig:userguide_evidence_error_hash} 
 			\end{center}  
