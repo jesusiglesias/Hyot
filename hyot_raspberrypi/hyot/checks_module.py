@@ -264,13 +264,13 @@ def menu():
         # LCD 16x2 - DHT11 I2C Expander
         i2c_group.add_argument("-die", "--dhti2cexpander",
                                default="PCF8574", required=False, action="store", dest="DHT_I2CEXPANDER",
-                               help="I2C expander type for the LCD 16x2 of the DH11 sensor. One of 'PCF8574', "
+                               help="I2C expander type for the LCD 16x2 of the DHT11 sensor. One of 'PCF8574', "
                                     "'MCP23008', 'MCP23017'. Default: PCF8574.")
 
         # LCD 16x2 - DHT11 I2C address
         i2c_group.add_argument("-dia", "--dhti2caddress",
                                default="0x3f", required=False, action="store", dest="DHT_I2CADDRESS",
-                               help="I2C address for the LCD 16x2 of the DH11 sensor. Type the 'i2cdetect -y 1' "
+                               help="I2C address for the LCD 16x2 of the DHT11 sensor. Type the 'i2cdetect -y 1' "
                                     "(RPi v.3) command to obtain it. Default: 0x3f.")
 
         # LCD 16x2 - HC-SR04 I2C Expander
