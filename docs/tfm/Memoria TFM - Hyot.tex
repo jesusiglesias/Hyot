@@ -3807,7 +3807,7 @@ breaklines=true,
 	% UC-0006 - Gestionar usuario administrador
 	\begin{longtable}{|p{3cm}|p{1cm}|p{12.5cm}|}
 		\hline
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textbf{UC-0006}}{\color{black!40!blue}*}} & \multicolumn{2}{|p{13.5cm}|}{\textbf{Gestionar usuario administrador}}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textbf{UC-0006}}} & \multicolumn{2}{|p{13.5cm}|}{\textbf{Gestionar usuario administrador {\color{black!40!blue}*}}}
 		\\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{2}{p{13.5cm}|}{1.0 - 13/01/2018 (rev. 16/02/2018)} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Autores}} & \multicolumn{2}{p{13.5cm}|}{Jesús Iglesias García} \\ \hline
@@ -4035,7 +4035,7 @@ breaklines=true,
 	% Section
 	\section{Diagramas de secuencia de análisis}
 		
-	En esta sección se muestran los diagramas de secuencia de análisis que representan las interacciones de las entidades del sistema con los casos de uso, ambos detallados en puntos anteriores.
+	En esta sección se muestran los diagramas de secuencia de análisis los cuales representan las interacciones de las entidades del sistema con los casos de uso, ambos detallados anteriormente.
 			
 	\begin{itemize}
 		\item Diagrama de secuencia de análisis: Configurar dispositivo \gls{raspberry-a} (Figura \ref{fig:ds_configurarRPi1} - Parte 1 y Figura \ref{fig:ds_configurarRPi2} - Parte 2).
@@ -4094,6 +4094,11 @@ breaklines=true,
 				\label{fig:ds_iniciarSesion} 
 			\end{center}  
 		\end{figure} 
+
+		% NEW PAGE 
+		\newpage
+		
+		\item Diagrama de secuencia de análisis: Restablecer contraseña (Figura \ref{fig:ds_restablecerContraseña}).
 		
 		% NEW PAGE 
 		\newpage
@@ -4163,19 +4168,17 @@ breaklines=true,
 	% Design
 	\chapter{Diseño} \label{designChapter}
 	
-	\textbf{Resumen:} \textit{Dotar de un diseño y arquitectura al sistema tras haber recabado información durante la etapa de análisis, es esencial para formular y caracterizar la solución propuesta a implementar con el fin de que se ajuste a los requisitos fijados. En este capítulo, se aborda el diseño de la solución sugerida a través de diferentes diagramas.}
+	\textbf{Resumen:} \textit{Dotar de un diseño y una arquitectura al sistema tras haber recabado información durante la etapa de análisis, es esencial para formular y caracterizar la solución propuesta desde el punto de vista de diseño ya que acerca a los \textit{\glspl{stakeholder}} a la implementación final. En este capítulo se muestran diferentes diagramas de diseño.}
 	
 	% Section
 	\section{Modelado de la arquitectura física del sistema}
 	
-	En esta sección se realiza una descripción de la arquitectura \textit{software} que guiará la implementación del proyecto de trazabilidad en entornos \gls{iot-a} (\textit{\gls{iot}}) mediante \gls{hyperledger}, llamado \textbf{Hyot}. La finalidad es detallar con mayor énfasis cómo esta solución se encuentra construida, qué componentes incluye y cómo son las relaciones entre ellos. Para ello, se explican los patrones utilizados y se muestran diferentes diagramas, elaborados con el lenguaje \gls{uml-a} (\textit{\gls{uml}}) \cite{uml}, que permiten modelar el sistema tanto a nivel físico como lógico.
+	En esta sección se realiza una descripción de la arquitectura \textit{software} y \textit{hardware} que guía la implementación del proyecto de trazabilidad en entornos \gls{iot-a} (\textit{\gls{iot}}) mediante \gls{hyperledger}, llamado \textbf{Hyot}. La finalidad es detallar con mayor énfasis cómo esta solución se encuentra construida, qué componentes incluye y cómo son las relaciones entre ellos. Para ello, se explican los patrones utilizados explícitamente y se muestran diferentes diagramas de diseño, elaborados con el lenguaje \gls{uml-a} (\textit{\gls{uml}}) \cite{uml}, que permiten modelar el sistema tanto a nivel físico como lógico.
 		
 	% Subsection
 	\subsection{Descripción de la arquitectura}\label{architectureDescription}
 	
-	% TODO - Indicar también el sistema web en caso de que se ha utilizado ahí.
-
-	El diseño de la arquitectura del sistema tiene como objetivo dotar a la solución de diferentes patrones arquitectónicos que resuelven problemas bien conocidos durante el desarrollo de sistemas \textit{software}, todo ello con el objetivo de favorecer la estructuración, mantenimiento y reutilización de la propia solución. En Hyot, se ha decidido implementar en la medida de lo posible el \gls{patrondiseño} arquitectónico de \textit{software} conocido como \gls{mvc} (\gls{mvc-a}) \cite{buschmann:mvc}, para todos los componentes que lo conforman, aplicando la variante pasiva la cual se caracteriza porque únicamente el controlador manipula el modelo. Dicho de otra forma, la vista no tiene ninguna responsabilidad sobre la lógica de dominio y únicamente se encarga de las tareas relacionadas con la interfaz de usuario (\textit{\gls{ui}} -\gls{ui-a}-). \\
+	El diseño de la arquitectura del sistema tiene como objetivo dotar a la solución de diferentes patrones arquitectónicos que resuelven problemas bien conocidos durante el desarrollo de sistemas \textit{software}, todo ello con el objetivo de favorecer la estructuración, mantenimiento y reutilización de la propia solución. En Hyot, se ha decidido implementar en la medida de lo posible el \gls{patrondiseño} arquitectónico de \textit{software} conocido como \gls{mvc} (\gls{mvc-a}) \cite{buschmann:mvc}, para algunos componentes, aplicando la variante pasiva la cual se caracteriza porque únicamente el controlador manipula el modelo. Dicho de otra forma, la vista no tiene ninguna responsabilidad sobre la lógica de dominio y únicamente se encarga de las tareas relacionadas con la interfaz de usuario (\textit{\gls{ui}} -\gls{ui-a}-). \\
 	
 	En el paradigma \gls{mvc-a}, las entradas del usuario o lógica de negocio, los modelos del mundo exterior y la retroalimentación visual son explícitamente separados y manejados por tres tipos de objetos distintos, cada uno especializado para un conjunto de tareas específicas:
 	
@@ -4185,26 +4188,25 @@ breaklines=true,
 		\item Controlador: actúa como intermediario entre el modelo y la vista y como modificador del primero, gestionando el flujo de información entre ellos y las transformaciones para adaptar los datos a lo solicitado por el usuario a través de la vista.
 	\end{itemize}
 
-	 Este patrón de implementación sencilla y ampliamente utilizado, que se basa en la idea de favorecer el mantenimiento y reutilización de código, y de la separación de conceptos y características, busca facilitar la tarea de desarrollo. Es por ello que se aplicó al proyecto Hyot. La Figura \ref{fig:design_mvc} muestra el esquema de este patrón en su variante pasiva, siendo el flujo de proceso habitual el especificado a continuación:
+	 Este patrón de implementación sencilla y ampliamente utilizado, que se basa en la idea de favorecer el mantenimiento y reutilización de código, y de la separación de conceptos y características, busca facilitar la tarea de desarrollo. La Figura \ref{fig:design_mvc} muestra el esquema de este patrón en su variante pasiva, siendo el flujo de proceso habitual el especificado a continuación:
 	
 	\begin{enumerate}
 		\item El usuario interactúa, de alguna forma, con la interfaz del sistema (interfaz web, terminal...).
-		\item El controlador recibe la entrada del usuario y la gestiona, frecuentemente con un manejador de eventos.
+		\item El controlador recibe la entrada del usuario y la gestiona con un manejador de eventos.
 		\item El controlador accede y notifica al modelo la acción del usuario lo que puede implicar un cambio de estado de éste.
 		\item El controlador notifica a la vista de que el modelo ha sido modificado y delega a los objetos de ésta la tarea de actualizar la información de la interfaz.
 		\item La interfaz del sistema espera nuevas interacciones del usuario, comenzando el ciclo de nuevo. 
 	\end{enumerate}
 	
 	\begin{figure}[!ht]   
-		\caption{Esquema del patrón arquitectónico \gls{mvc-a} pasivo.} 
+		\caption{Esquema del patrón arquitectónico MVC pasivo.} 
 		\begin{center} 
-			\includegraphics[width=8.5cm,height=4cm]{Images/design/mvc.png} \\
+			\includegraphics[width=7cm,height=4.5cm]{Images/design/mvc.png} \\
 			\label{fig:design_mvc} 
 		\end{center}  
 	\end{figure}
 	
-	% TODO - Sistema web. Si se emplea pues mencionarlo aquí
-	A parte de este patrón, también se ha implementado el patrón Singleton \cite{gof95}. Este patrón es un \gls{patrondiseño} creacional ampliamente conocido y utilizado en el desarrollo \textit{software} que está diseñado para garantizar la existencia de una única instancia de un objeto en toda la aplicación proporcionando así un punto único de acceso global. En sí, no se encarga de la creación de objetos sino de aplicar esta restricción durante la creación lo que proporciona los siguientes beneficios: acceso estricto a la instancia única, espacio de nombres reducido al no reservar nombres para variables globales, mayor número de variables de instancia, mayor flexibilidad. Su funcionamiento es sencillo y se reduce a (Figura \ref{fig:design_singleton}):
+	A parte de este patrón, también se ha implementado el patrón Singleton \cite{gof95}. Este patrón es un \gls{patrondiseño} creacional ampliamente conocido y utilizado en el desarrollo \textit{software} que está diseñado para garantizar la existencia de una única instancia de un objeto en toda la aplicación proporcionando así un punto único de acceso global. En sí, no se encarga de la creación de objetos sino de aplicar esta restricción durante la creación lo que proporciona los siguientes beneficios: acceso estricto a la instancia única, espacio de nombres reducido al no reservar nombres para variables globales, mayor número de variables de instancia y mayor flexibilidad. Su funcionamiento es sencillo y se reduce a (Figura \ref{fig:design_singleton}):
 	
 	\begin{enumerate}
 		\item Privatizar el constructor de la clase Singleton, para que los usuarios no puedan crear instancias.
@@ -4213,17 +4215,17 @@ breaklines=true,
 	\end{enumerate}
 	
 	\begin{figure}[h]		
-		\caption{Diagrama de clases y de secuencia del \gls{patrondiseño} creacional Singleton.}
+		\caption{Diagrama de clases y de secuencia del patrón de diseño creacional Singleton.}
  		\begin{subfigure}{0.5\textwidth}
  			\hbox{
  				\hspace{1cm}
- 				\includegraphics[width=5.5cm, height=5cm]{Images/design/singleton_uml.png} 
+ 				\includegraphics[width=5.5cm, height=4.5cm]{Images/design/singleton_uml.png} 
  			}
 		\end{subfigure}
 		\begin{subfigure}{0.5\textwidth}
 			\hbox{
  				\hspace{2cm}
-				\includegraphics[width=6cm, height=7cm]{Images/design/singleton_secuencia}
+				\includegraphics[width=7cm, height=6cm]{Images/design/singleton_secuencia}
 			}
 		\end{subfigure}
 		\label{fig:design_singleton}
@@ -4239,20 +4241,20 @@ breaklines=true,
 	% Subsection
 	\subsection{Diagrama de capas}
 	
-	El diagrama de capas permite describir la arquitectura de la solución a alto nivel segmentando los elementos en grupos abstractos desde el punto de vista lógico, denominados capas -nodos en el diagrama-. Cada una puede describir las tareas principales que realizan los componentes del sistema, limitando el flujo de comunicación solamente a capas contiguas. El objetivo primordial de este modelo es el desacoplamiento de las diferentes partes que componen la solución \textit{software}, de forma que por ejemplo la creación de un nuevo componente visual o su modificación se pueda simplificar de gran manera al no requerir modificación alguna en el resto de capas, salvo la afectada lo que implicaría una reducción del acoplamiento entre componentes. \\
+	El diagrama de capas permite describir la arquitectura de la solución a alto nivel segmentando los elementos en grupos abstractos desde el punto de vista lógico, denominados capas -nodos en el diagrama-. Cada una puede describir las tareas principales que realizan los componentes del sistema, limitando el flujo de comunicación solamente a capas contiguas. El objetivo primordial de este modelo es el desacoplamiento de las diferentes partes que componen la solución \textit{software}, de forma que por ejemplo la creación de un nuevo componente visual o su modificación se pueda simplificar de gran manera al no requerir modificación alguna en el resto de capas, salvo la afectada lo que implica una reducción del acoplamiento entre componentes. \\
 		
-	La división en Hyot se ha realizado en 3 capas (Figura \ref{fig:design_layers}), cada una de ellas con una misión y favoreciendo así un diseño modular y escalable. A continuación, se describe cada capa identificada:
+	La división se ha realizado en 3 capas (Figura \ref{fig:design_layers}), cada una de ellas con una misión y favoreciendo así un diseño modular y escalable. A continuación, se describe cada capa identificada:
 	
 	\begin{itemize}
-		\item Capa de presentación o de usuario: capa que presenta el sistema al usuario comunicándole la información y permitiéndole interactuar con el propio sistema a través de la captura de la información introducida por el usuario. Esta capa se comunica únicamente con la capa de negocio y se corresponde con el componente vista en el patrón \gls{mvc-a}. Debido a que se trata del nivel que expone y visualiza la información al usuario, debe implementar una \gls{ui-a} simple, fácil de usar, que presente claridad, coherencia en los textos y elementos, etc. En Hyot, esta capa estaría representada por el terminal donde se ejecutan los componentes \textit{\gls{script}} y la interfaz del sistema web.
+		\item Capa de presentación o de usuario: capa que presenta el sistema al usuario comunicándole la información y permitiéndole interactuar con el propio sistema a través de la captura de la información introducida por el usuario. Esta capa se comunica únicamente con la capa de negocio y se corresponde con el componente vista en el patrón \gls{mvc-a}. Debido a que se trata del nivel que expone y visualiza la información al usuario, debe implementar una \gls{ui-a} simple y fácil de usar que presente claridad y coherencia en los textos y elementos, etc. En Hyot, esta capa está representada por el terminal o consola y por la interfaz del sistema web.
 	
-		\item Capa de negocio o aplicativa: capa que contiene la lógica de negocio de la solución la cual está compuesta por una serie de reglas que se aplican sobre las peticiones del usuario para originar las respuestas que serán retornadas tras este proceso. Esta capa se comunica con la capa de presentación para recibir solicitudes y presentar los resultados y con la capa de datos para solicitar a los mecanismos de persistencia almacenar, modificar o recuperar información. En el paradigma \gls{mvc-a}, esta capa se corresponde con el componente controlador y haciendo referencia a la solución Hyot, la lógica de negocio comprendería toda aquella codificación, incluyendo módulos, clases, servicios, procesador de transacciones (\textit{\gls{transaction}}), etc., que trata la información introducida por el usuario, ya sea a través del terminal o la interfaz del sistema web o incluso aquella información que es introducida al sistema de manera automática procedente de fuentes de información externa como son los \glspl{sensor}, y genera respuestas.
+		\item Capa de negocio o aplicativa: capa que contiene la lógica de negocio de la solución la cual está compuesta por una serie de reglas que se aplican sobre las peticiones del usuario para originar las respuestas que serán retornadas tras este proceso. Esta capa se comunica con la capa de presentación para recibir solicitudes y presentar los resultados y con la capa de datos para solicitar a los mecanismos de persistencia las acciones de almacenar, modificar o recuperar información. En el paradigma \gls{mvc-a}, esta capa se corresponde con el componente controlador y haciendo referencia a la solución Hyot, la lógica de negocio comprende toda aquella codificación, incluyendo módulos, clases, controladores, servicios, procesador de transacciones (\textit{\glspl{transaction}}), etc., que trata la información introducida por el usuario, ya sea a través del terminal o de la interfaz del sistema web o incluso aquella información que es introducida al sistema de manera automática procedente de fuentes de información externa como son los \glspl{sensor}, y genera respuestas.
 		
-		\item Capa de datos o de persistencia: representa el modelo, es decir, el lugar donde reside la información. Esta capa es la responsable de la gestión y almacenamiento permanente de los datos según las peticiones recibidas de la capa de negocio, correspondiendo al modelo en el paradigma \gls{mvc-a}. En Hyot, estaría formada por los 3 diferentes mecanismos de persistencia implementados (explicados con más detalle en la sección \ref{persistencia}. \nameref{persistencia}).		 
+		\item Capa de datos o de persistencia: representa el modelo, es decir, la información almacenada y tratada. Esta capa es la responsable de la gestión y almacenamiento permanente de los datos según las peticiones recibidas de la capa de negocio, correspondiendo al modelo en el paradigma \gls{mvc-a}. En Hyot, está formada por la información almacenada en los cuatro mecanismos de persistencia empleados.		 
 	\end{itemize} 	
 	
 	\begin{figure}[!ht]   
-		\caption{Hyot - Diagrama de capas.} 
+		\caption{Diagrama de capas de Hyot.} 
 		\begin{center} 
 			\includegraphics[width=12cm,height=15cm]{Images/design/d_layers} \\
 			\label{fig:design_layers} 
@@ -4260,7 +4262,7 @@ breaklines=true,
 	\end{figure}	
 	
 	% Subsection
-	\subsection{Diagrama de despliegue} \label{d_deployment} % TODO - Adaptar con sistema web
+	\subsection{Diagrama de despliegue} \label{d_deployment}
 		El diagrama de despliegue modela la arquitectura en tiempo de ejecución de un sistema, es decir, muestra la topología del sistema, la estructura de los componentes \textit{hardware}, los componentes \textit{software} que se ejecutan en cada nodo y la forma en la que las distintas partes están conectadas entre sí. \\ 			En Hyot, se ha optado por implementar una arquitectura centralizada basada en el \gls{clienteservidor} y en el modelo \textit{3-tier} (3 niveles) lo que significa que las capas lógicas se encuentran distribuidas de forma física en 3 componentes distintos. Este modelo es una extensión del modelo tradicional en 2 niveles que pretende aumentar el desacomplamiento entre servidor/es y clientes a través de la introducción de un nivel intermedio para separar el servidor en dos componentes: servidor que contiene la lógica de negocio y servidores que contienen los mecanismos de persistencia. Además, este modelo presenta mayor flexibilidad y modularidad, escalabilidad, extensibilidad, seguridad, reusabilidad de componentes, aislamiento frente a cambios en otras capas e independencia frente a cambios en los componentes de persistencia. \\
 	
 	El motivo de esta elección se debe a que se trata de la arquitectura que mejor concuerda con el sistema debido a la existencia de un conjunto de clientes que demandan un servicio proporcionado por el conjunto de servidores de la solución. Además, la transferencia de información entre éstos se puede optimizar al recudir la carga de trabajo y el número de peticiones de cada uno de ellos y de utilizar protocolos de comunicación de bajo nivel muy rápidos reduciendo el tráfico de red. Cabe indicar que esta arquitectura favorecerá el rendimiento en situaciones de saturación donde la carga solicitada será mayor que en el contexto y entorno actual de prueba. Desglosando la arquitectura mostrada en el diagrama de despliegue (Figura \ref{fig:design_deployment}), se pueden observar los siguientes niveles:
@@ -4268,45 +4270,45 @@ breaklines=true,
 	\begin{itemize}
 		\item Primer nivel: en este primer nivel se ubica la capa lógica de presentación donde se diferencian dos tipos de dispositivos \textit{hardware}:
 			\begin{itemize}
-				\item Dispositivo que representa un cliente delgado ya que simplemente actúa como intermediario entre el usuario y el servidor web, no implementando ningún aspecto de la lógica de negocio. Este dispositivo puede ser cualquier ordenador o dispositivo móvil con conexión a Internet el cual permitirá a los usuarios interactuar con el sistema web mediante un navegador utilizando los protocolos \gls{http-a} (\textit{\gls{http}}) y \gls{https-a} (\textit{\gls{https}}).
-				\item Dispositivo, \gls{raspberry} (\gls{raspberry-a}), que representa un cliente pesado o grueso ya que presenta carga de cómputo y capacidad de procesamiento de datos en el propio dispositivo, gracias a la ejecución de un componente del proyecto Hyot. Este dispositivo interactúa directamente mediante los protocolos \gls{http-a} y \gls{https-a} con los mecanismos de persistencia desplegados.
+				\item Dispositivo que representa un cliente delgado ya que simplemente actúa como intermediario entre el usuario y el servidor web, no implementando ningún aspecto de la lógica de negocio. Este dispositivo puede ser cualquier ordenador o dispositivo móvil con conexión a Internet el cual permite a los usuarios interactuar con el sistema web mediante un navegador utilizando los protocolos \gls{http-a} (\textit{\gls{http}}) y \gls{https-a} (\textit{\gls{https}}). % TODO Permitir HTTP?
+				\item Dispositivo, \gls{raspberry} (\gls{raspberry-a}), que representa un cliente pesado o grueso ya que presenta carga de cómputo y capacidad de procesamiento de datos en el propio dispositivo, gracias a la ejecución de un componente del proyecto. Este dispositivo interactúa directamente mediante el protocolo \gls{https-a} con los mecanismos de persistencia desplegados.
 			\end{itemize}
 				 		
-		\item Segundo nivel: en este nivel se localiza el servidor del sistema web desplegado en la plataforma como servicio (\textit{\gls{paas}} -\gls{paas-a}-) \cite{gonzalez:2011:TCCS} \gls{cloudfoundry} de IBM Cloud. Este sistema web interactúa directamente mediante los protocolos \gls{http-a} y \gls{https-a} con los mecanismos de persistencia desplegados.
+		\item Segundo nivel: en este nivel se localiza el servidor del sistema web desplegado en la plataforma como servicio (\textit{\gls{paas}} -\gls{paas-a}-) \cite{gonzalez:2011:TCCS} \gls{cloudfoundry} de IBM Cloud. Este sistema web interactúa directamente mediante el protocolo \gls{https-a} con los mecanismos de persistencia desplegados.
 		
-		\item Tercer nivel: en el último nivel se hallan los tres mecanismos de persistencia utilizados: el servicio de almacenamiento en la nube, el gestor de bases de datos desplegado en el servicio IBM Cloud y el servicio de \Gls{blockchain} (\gls{blockchain-a}) desplegado en una máquina virtual (\textit{\gls{vm}} -\gls{vm-a}-) en Microsoft Azure.
+		\item Tercer nivel: en el último nivel se hallan los cuatro mecanismos de persistencia utilizados: el servicio de almacenamiento en la nube, los gestores de bases de datos desplegados en el servicio IBM Cloud y el servicio de \Gls{blockchain} (\gls{blockchain-a}) de \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) desplegado en una máquina virtual (\textit{\gls{vm}} -\gls{vm-a}-) en Microsoft Azure.
 	\end{itemize}
 	  
 	\begin{figure}[!ht]   
-		\caption{Hyot - Diagrama de despliegue.} 
+		\caption{Diagrama de despliegue de Hyot.} 
 		\begin{center} 
-			\includegraphics[width=17.5cm,height=17cm]{Images/design/d_deployment.png} \\
+			\includegraphics[width=18cm,height=18cm]{Images/design/d_deployment.png} \\
 			\label{fig:design_deployment} 
 		\end{center}  
 	\end{figure}	
 
 	% Subsection
-	\subsection{Diagrama de paquetes} % TODO - Adaptar con sistema web
+	\subsection{Diagrama de paquetes}
 	
 	El diagrama de paquetes muestra el sistema dividido en agrupaciones lógicas individuales exponiendo las dependencias existentes entre ellas y proporcionando una descomposición de la jerarquía lógica. Los paquetes, mecanismo de agrupación de elementos modelados con \gls{uml-a}, facilitan el manejo de los modelos en un sistema complejo definiendo un espacio de nombres y están normalmente organizados para maximizar la coherencia interna dentro de cada paquete y minimizar el acoplamiento externo entre los paquetes. La Figura \ref{fig:design_packages} muestra el diagrama de paquetes definido:
 	
 	\begin{figure}[!ht]   
-		\caption{Hyot - Diagrama de paquetes.} 
+		\caption{Diagrama de paquetes de Hyot.} 
 		\begin{center} 
-			\includegraphics[width=18cm,height=18cm]{Images/design/d_packages} \\
+			\includegraphics[width=18cm,height=19cm]{Images/design/d_packages} \\
 			\label{fig:design_packages} 
 		\end{center}  
 	\end{figure}	
 	
 	% Subsection
-	\subsection{Diagrama de vista lógica} % TODO - Adaptar con sistema web
+	\subsection{Diagrama de vista lógica}
 		
 	El diagrama de vista lógica es una abstracción a gran escala del modelado de paquetes, subsistemas y clases, buscando mostrar los requerimientos funcionales del sistema y cómo éste se debe comportar y funcionar. La Figura \ref{fig:design_logicview} muestra el diagrama definido: \\
 	
 	\begin{figure}[!ht]   
-		\caption{Hyot - Diagrama de vista lógica.} 
+		\caption{Diagrama de vista lógica de Hyot.} 
 		\begin{center} 
-			\includegraphics[width=18cm,height=14cm]{Images/design/d_logicview} \\
+			\includegraphics[width=18cm,height=10cm]{Images/design/d_logicview} \\
 			\label{fig:design_logicview} 
 		\end{center}  
 	\end{figure}	
@@ -4332,7 +4334,7 @@ breaklines=true,
 	La Figura \ref{fig:design_er} muestra el diagrama para el proyecto Hyot, donde se diferencian cada uno de los mecanismos de persistencia definidos\footnote{En el caso  del servicio de almacenamiento, al ser un servicio externo no se pueden controlar los atributos que almacena ya que únicamente se envía el fichero. Sin embargo, para hacer entendible el modelo y la información usada en el proyecto se especifican dos atributos y su estereotipo de fichero.} junto con las entidades que lo conforman. Además, cada entidad puede poseer un estereotipo\footnote{Las entidades que conforman el mecanismo de persistencia \gls{blockchain-a} se explicará con más detalle en la sección \ref{businessNetwork}. \nameref{businessNetwork} ya que sus estereotipos coinciden con los elementos del modelo de la red de negocio.}, unos atributos y tipo junto con la especificación en caso de existir del atributo que actuará como clave primaria o PK para identificar un registro único en el mecanismo de persistencia. Como particularidad del diagrama, indicar que la entidad \texttt{AlertDetails} es una entidad débil lo que quiere decir que su existencia depende de otra entidad (\texttt{Alert}) y no posee atributos únicos o clave primarias. Su estereotipo \texttt{<<concept>>} -proveniente de la tecnología \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a})- viene a significar esto mismo.
 	
 	\begin{figure}[!ht]   
-		\caption{Hyot - Diagrama Entidad-Relación.} 
+		\caption{Diagrama Entidad-Relación de Hyot.} 
 		\begin{center} 
 			\includegraphics[width=18cm,height=9cm]{Images/design/p_er} \\
 			\label{fig:design_er} 
@@ -4347,13 +4349,289 @@ breaklines=true,
 	La Figura \ref{fig:design_dsd} muestra el diagrama para el proyecto Hyot donde al igual que en el diagrama Entidad-Relación las entidades están categorizadas según el mecanismo de persistencia al que pertenecen. En este diagrama la particularidad, como su definición indica, se observa en las relaciones donde son los propios atributos los que marcan la relación. El significado que se le ha querido proporcionar a este diagrama en Hyot, es mostrar qué campos son utilizados en cada entidad y cuáles de ellos son compartidos entre diferentes entidades aunque la entidad en sí no esté relacionada, como es el caso de la entidad débil \texttt{AlertDetails} y la entidad \texttt{Measurement} donde no existe una relación explícita en el modelo pero ambas entidades comparten dos atributos que para la misma instancia poseerán el mismo valor.
 	
 	\begin{figure}[!ht]   
-		\caption{Hyot - Diagrama de Estructura de Datos.} 
+		\caption{Diagrama de Estructura de Datos de Hyot.} 
 		\begin{center} 
 			\includegraphics[width=17cm,height=10cm]{Images/design/p_dsd} \\
 			\label{fig:design_dsd} 
 		\end{center}  
 	\end{figure}
+		
+	% Section
+	\section{Diagramas de secuencia de diseño}
+		
+	En esta sección se muestran los diagramas de secuencia de diseño los cuales representan las interacciones de las entidades del sistema con los casos de uso desde el punto de vista de diseño, conteniendo por tanto detalles acerca de la implementación final de la solución. 
+			
+	\begin{itemize}
+		\item Diagrama de secuencia de diseño: Configurar dispositivo \gls{raspberry-a} (Figura \ref{fig:design_configurarRPi1} - Parte 1 y Figura \ref{fig:design_configurarRPi2} - Parte 2).
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Configurar dispositivo RPi - Parte 1.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=20cm]{Images/design/sequence/diseño_secuencia_configurarRPi_parte1} \\
+				\label{fig:design_configurarRPi1} 
+			\end{center}  
+		\end{figure} 
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Configurar dispositivo RPi - Parte 2.} 
+			\begin{center} 
+				\includegraphics[width=17cm,height=21cm]{Images/design/sequence/diseño_secuencia_configurarRPi_parte2} \\
+				\label{fig:design_configurarRPi2} 
+			\end{center}  
+		\end{figure} 
+		
+		% NEW PAGE 
+		\newpage
+		 
+		\item Diagrama de secuencia de diseño: Monitorizar sucesos del entorno (Figura \ref{fig:design_monitorizarEntorno}).
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Monitorizar sucesos del entorno.} 
+			\begin{center} 
+				\includegraphics[width=18cm,height=20.5cm]{Images/design/sequence/diseño_secuencia_monitorizarEntorno} \\
+				\label{fig:design_monitorizarEntorno} 
+			\end{center}  
+		\end{figure} 
 
+		% NEW PAGE 
+		\newpage
+		
+		\item Diagrama de secuencia de diseño: Desencriptar evidencia (Figura \ref{fig:design_desencriptar}).
+
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Desencriptar evidencia.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=20.5cm]{Images/design/sequence/diseño_secuencia_desencriptarEvidencia} \\
+				\label{fig:design_desencriptar} 
+			\end{center}  
+		\end{figure} 
+		
+		% NEW PAGE 
+		\newpage
+		
+		\item Diagrama de secuencia de diseño: Iniciar sesión (Figura \ref{fig:design_iniciarSesion}).
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Iniciar sesión.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=20.5cm]{Images/design/sequence/diseño_secuencia_iniciarSesion} \\
+				\label{fig:design_iniciarSesion} 
+			\end{center}  
+		\end{figure} 
+		
+		% NEW PAGE 
+		\newpage
+		
+		\item Diagrama de secuencia de diseño: Restablecer contraseña (Figura \ref{fig:design_contraseña}).
+
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Restablecer contraseña.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=20.5cm]{Images/design/sequence/diseño_secuencia_restablecerContraseña} \\
+				\label{fig:design_contraseña} 
+			\end{center}  
+		\end{figure} 
+		
+		% NEW PAGE 
+		\newpage
+		
+		\item Diagrama de secuencia de diseño: Gestionar usuario administrador (Figura \ref{fig:design_adminuser1} - Parte 1 y Figura \ref{fig:design_adminuser2} - Parte 2)\footnote{El diagrama de secuencia de diseño para el caso de uso UC-0007: Gestionar usuario normal es similar al presente con la salvedad de adaptar a la entidad correspondiente.}.
+		 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Gestionar usuario administrador - Parte 1.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=18.5cm]{Images/design/sequence/diseño_secuencia_gestionarUsuarioAdministrador_parte1} \\
+				\label{fig:design_adminuser1} 
+			\end{center}  
+		\end{figure} 
+		
+		% NEW PAGE
+		\newpage
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Gestionar usuario administrador - Parte 2.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=21cm]{Images/design/sequence/diseño_secuencia_gestionarUsuarioAdministrador_parte2} \\
+				\label{fig:design_adminuser2} 
+			\end{center}  
+		\end{figure} 
+		
+		% NEW PAGE 
+		\newpage
+		
+		\item Diagrama de secuencia de diseño: Consultar estadísticas (Figura \ref{fig:design_estadisticas}).
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Consultar estadísticas.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=15cm]{Images/design/sequence/diseño_secuencia_consultarEstadisticas} \\
+				\label{fig:design_estadisticas} 
+			\end{center}  
+		\end{figure} 
+		
+		% NEW PAGE 
+		\newpage
+		
+		\item Diagrama de secuencia de diseño: Consultar o modificar perfil personal (Figura \ref{fig:design_perfil}).
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Consultar o modificar perfil personal.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=20cm]{Images/design/sequence/diseño_secuencia_perfilPersonal} \\
+				\label{fig:design_perfil} 
+			\end{center}  
+		\end{figure} 
+		
+		% NEW PAGE 
+		\newpage
+		
+		\item Diagrama de secuencia de diseño: Consumir información sobre la trazabilidad del entorno (Figura \ref{fig:design_consumirInfo}).
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Consumir información sobre la trazabilidad del entorno.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=13cm]{Images/design/sequence/diseño_secuencia_consumirInfo} \\
+				\label{fig:design_consumirInfo} 
+			\end{center}  
+		\end{figure} 
+		
+	\end{itemize}
+	
+	% NEW PAGE
+	\newpage
+	
+	% Section
+	\section{Diagramas de clases de diseño} \label{classes}
+		
+	En esta sección se muestran los diagramas de clases de diseño los cuales permiten obtener una representación del modelo desde el punto de vista de diseño e implementación de un sistema, es decir, a partir del modelo de dominio obtenido durante la etapa de análisis se incorporan todos aquellos componentes y detalles específicos de diseño con vistas a satisfacer los detalles de la implementación. \\
+	
+		\begin{itemize}
+		\item Diagrama de clases de diseño: Configurar dispositivo \gls{raspberry-a} (Figura \ref{fig:classes_configurarRPi1}).
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Configurar dispositivo RPi.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=9cm]{Images/design/classes/classes_configurarRPi} \\
+				\label{fig:classes_configurarRPi1} 
+			\end{center}  
+		\end{figure} 
+		
+		% NEW PAGE 
+		\newpage
+		 
+		\item Diagrama de clases de diseño: Monitorizar sucesos del entorno (Figura \ref{fig:classes_monitorizarEntorno}).
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Monitorizar sucesos del entorno.} 
+			\begin{center} 
+				\includegraphics[width=18cm,height=14cm]{Images/design/classes/classes_monitorizarEntorno} \\
+				\label{fig:classes_monitorizarEntorno} 
+			\end{center}  
+		\end{figure} 
+
+		% NEW PAGE 
+		\newpage
+		
+		\item Diagrama de clases de diseño: Desencriptar evidencia (Figura \ref{fig:design_desencriptar}).
+
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Desencriptar evidencia.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=10cm]{Images/design/classes/classes_desencriptarEvidencia} \\
+				\label{fig:classes_desencriptar} 
+			\end{center}  
+		\end{figure} 
+		
+		% NEW PAGE 
+		\newpage
+		
+		\item Diagrama de clases de diseño: Iniciar sesión (Figura \ref{fig:classes_iniciarSesion}).
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Iniciar sesión.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=6cm]{Images/design/classes/classes_iniciarSesion} \\
+				\label{fig:classes_iniciarSesion} 
+			\end{center}  
+		\end{figure} 
+		
+		\item Diagrama de clases de diseño: Restablecer contraseña (Figura \ref{fig:classes_contraseña}).
+
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Restablecer contraseña.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=8cm]{Images/design/classes/classes_restablecerContraseña} \\
+				\label{fig:classes_contraseña} 
+			\end{center}  
+		\end{figure} 
+		
+		% NEW PAGE 
+		\newpage
+		
+		\item Diagrama de clases de diseño: Gestionar usuario administrador (Figura \ref{fig:classes_adminuser1})\footnote{El diagrama de clases de diseño para el caso de uso UC-0007: Gestionar usuario normal es similar al presente con la salvedad de adaptar a la entidad correspondiente.}.
+		 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Gestionar usuario administrador.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=16cm]{Images/design/classes/classes_gestionarUsuarioAdministrador} \\
+				\label{fig:classes_adminuser1} 
+			\end{center}  
+		\end{figure} 
+				
+		% NEW PAGE 
+		\newpage
+		
+		\item Diagrama de clases de diseño: Consultar estadísticas (Figura \ref{fig:classes_estadisticas}).
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Consultar estadísticas.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=8cm]{Images/design/classes/classes_consultarEstadisticas} \\
+				\label{fig:classes_estadisticas} 
+			\end{center}  
+		\end{figure} 
+			
+		\item Diagrama de clases de diseño: Consultar o modificar perfil personal (Figura \ref{fig:classes_perfil}).
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Consultar o modificar perfil personal.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=6cm]{Images/design/classes/classes_perfilPersonal} \\
+				\label{fig:classes_perfil} 
+			\end{center}
+		\end{figure} 
+		
+		% NEW PAGE 
+		\newpage
+		
+		\item Diagrama de clases de diseño: Consumir información sobre la trazabilidad del entorno (Figura \ref{fig:classes_consumirInfo}).
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Consumir información sobre la trazabilidad del entorno.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=10cm]{Images/design/classes/classes_consumirInfo} \\
+				\label{fig:classes_consumirInfo} 
+			\end{center}  
+		\end{figure} 
+		
+	\end{itemize}
+		
+	% Section
+	\section{Diagrama final de clases de diseño}	
+	
+	El diagrama final de clases de diseño (Figura \ref{fig:classes_final}) contiene la representación completa del modelo desde el punto de vista de diseño e implementación de un sistema, es decir, se trata de la fusión de todos los diagramas de clases de diseño expuestos en la sección anterior \ref{classes}. \nameref{classes}.
+
+	% NEW PAGE
+	\newpage
+	
+	\begin{figure}[!ht]   
+		\caption{Diagrama final de clases de diseño.} 
+		\begin{center} 
+	 		\includegraphics[width=18cm,height=22cm]{Images/design/classes/classes_final} \\
+			\label{fig:classes_final} 
+		\end{center}  
+	\end{figure} 
+	
 	% Implementation
 	\chapter{Implementación} \label{implementationChapter}
 	
@@ -4411,13 +4689,13 @@ breaklines=true,
 				\begin{itemize}
 					\item Identificador de la medición -en este caso también a la alerta-. Coincide con el identificador almacenado en la \gls{bbdd-a}.
 					\item Marca temporal (\textit{timestamp}) en la que ocurrió el suceso. Coincide con la marca temporal almacenada en la \gls{bbdd-a}.
-					\item Sensor que originó el protocolo de alerta.
+					\item Sensor que origina el protocolo de alerta.
 					\item Código \textit{hash} del contenido de la evidencia sin encriptar.
-					\item Link al servicio de almacenamiento en la nube donde se ubica la evidencia encriptada y firmada. Este activo, que también coincide con el almacenado en la \gls{bbdd-a}, evita la dependencia de acceso y de poseer permiso de acceso a la \gls{bbdd-a}.
-					\item Participante que ejecutó la transacción de publicación de una nueva alerta.
+					\item Enlace al servicio de almacenamiento en la nube donde se ubica la evidencia encriptada y firmada. Este activo, que también coincide con el almacenado en la \gls{bbdd-a}, evita la dependencia de acceso y de poseer permiso de acceso a la \gls{bbdd-a}.
+					\item Participante que ejecuta la transacción de publicación de una nueva alerta.
 				\end{itemize}
 
-		\item Notificación del suceso no controlado al usuario administrador del sistema mediante el envío de un \textit{email} a la dirección de correo electrónico destino configurada, adjuntando la evidencia encriptada y firmada. Esta comunicación es importante para que el usuario puede conocer el estado del entorno en todo momento lo antes posible y ver que está sucediendo y poder tomar decisiones en caso necesario.
+		\item Notificación del suceso no controlado mediante el envío de un \textit{email} a la dirección de correo electrónico destino configurada, adjuntando la evidencia encriptada y firmada. Esta comunicación es importante para que el usuario puede conocer el estado del entorno en todo momento lo antes posible y ver que está sucediendo y poder tomar decisiones en caso necesario.
 	
 	\end{enumerate}
 		
@@ -4447,7 +4725,7 @@ breaklines=true,
 	\begin{itemize}
   		\item Configuración inicial de la \gls{raspberry-a} para la posterior ejecución del componente de monitorización de sucesos del entorno. La Figura \ref{fig:hyot_setupflow} muestra el mapa de flujo de forma superficial de este proceso, donde se han omitido acciones y/o comprobaciones de menor importancia  y la gestión de errores por simplicidad, en cuyo caso de reproducción se finaliza la ejecución de manera instantánea notificando al usuario por la interfaz de la terminal.
   		
-  		\item Desencriptación de evidencias previamente encriptadas y firmadas con \gls{gpg-a}. En este proceso, además de mostrar la firma, se verifica la integridad de su contenido a través de la comparación del valor \textit{hash} calculado sobre el contenido de la evidencia tras su descifrado y el valor \textit{hash} que inicialmente se había almacenado en la \gls{blockchain-a} cuando se produjo la incidencia. En este punto de comprobación reside la confianza que se depositó en esta tecnología ya que en caso de diferir los valores, se tiene la certeza de que la evidencia almacenada en la nube fue alterada. % TODO Mapa de flujo Revisar
+  		\item Desencriptación de evidencias previamente encriptadas y firmadas con \gls{gpg-a}. En este proceso, además de mostrar la firma, se verifica la integridad de su contenido a través de la comparación del valor \textit{hash} calculado sobre el contenido de la evidencia tras su descifrado y el valor \textit{hash} que inicialmente se había almacenado en la \gls{blockchain-a} cuando se produjo la incidencia. En este punto de comprobación reside la confianza que se depositó en esta tecnología ya que en caso de diferir los valores, se tiene la certeza de que la evidencia almacenada en la nube fue alterada.
 	\end{itemize}
 	
 	\begin{figure}[!ht]   
