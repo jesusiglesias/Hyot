@@ -4884,27 +4884,110 @@ breaklines=true,
 		\item Los administradores de la red de negocio presentan acceso completo a los recursos de sistema.
 	\end{itemize}
 
-	Hay que tener en cuenta que las reglas definidas son evaluadas en orden de definición (arriba-abajo) de tal manera que cuando una acción cumple una determinada regla, se aplica y el resto de reglas son ignoradas. Para finalizar se muestra el diagrama uml (glosario tiene) generado con la herramienta PlantUML. % TODO
+	Hay que tener en cuenta que las reglas definidas son evaluadas en orden de definición (arriba-abajo) de tal manera que cuando una acción cumple una determinada regla, se aplica y el resto de reglas son ignoradas. Para finalizar se muestra el diagrama UML (glosario tiene) generado con la herramienta PlantUML. % TODO
 	
 	% Section
-	\section{Jerarquía de ficheros} % TODO - Añadir sistema web 
+	\section{Jerarquía de ficheros}
 	
-	En esta sección se desglosa la estructura completa de directorios y ficheros del proyecto Hyot diferenciando los componentes que lo conforman:
+	En esta sección se desglosa la estructura completa de directorios y ficheros del proyecto Hyot -según la jerarquía completa del proyecto situada bajo un directorio llamado \texttt{Hyot}- diferenciando los componentes que lo conforman:
 		
 	\begin{itemize}
 		\item \texttt{.gitignore}: fichero oculto que permite excluir del control de versiones \gls{git} determinados archivos por lo que serán ignorados y por tanto no versionados al repositorio de código.
 		\item \texttt{README.md}: fichero de texto en formato \gls{markdown} que documenta el proyecto Hyot, es decir, contiene información acerca de éste como la descripción, componentes, dependencias, guía de instalación y de uso, autor, etc.
 		
+		\item \textbf{hyot\_app:} componente del proyecto Hyot referido al sistema web desarrollado con el \textit{framework} \gls{grails} para consumir la información monitorizada.
+			
+		% TODO - Especificar más? ficheros de controladores, servicios, etc.
+		\begin{itemize}
+			\item \texttt{application.properties:} fichero de metadatos que contiene la versión de \gls{grails} empleada y el nombre y versión de la aplicación.
+			\item \texttt{grails-app:} directorio que contiene todos los artefactos \gls{groovy} que el entorno genera y que el desarrollador debe modificar para implementar la funcionalidad.
+				 
+			\begin{itemize}
+				\item \texttt{assets:} contiene las hojas de estilo \gls{css-a} (\textit{\gls{css}}) y los ficheros \gls{js} (\gls{js-a}). Estos ficheros también pueden ser situados bajo el directorio \texttt{web-app}. Sin embargo, en el directorio actual son tratados de manera más eficiente. 
+				\item \texttt{conf:} contiene ficheros fuente de configuración de la aplicación.
+						
+				\begin{itemize}
+					\item \texttt{BootStrap.groovy:} fichero que especifica las acciones a ejecutar al arranque y/o destrucción de la aplicación.
+					\item \texttt{BuildConfig.groovy:} fichero que controla distintos aspectos del proceso de compilación como las rutas de trabajo y la resolución de dependencias.
+					\item \texttt{Config.groovy:} fichero contiene los parámetros de configuración general de la aplicación.
+					\item \texttt{DataSource.groovy:} fichero con la configuración de la \gls{bbdd-a}.
+					\item \texttt{hibernate:} directorio con configuración personal de \gls{hibernate}.
+					\item \texttt{spring:} directorio con configuración personal de \gls{spring}.
+					\item \texttt{UrlMappings.groovy:} fichero que contiene el mapeo de las direcciones \glspl{url-a} (\textit{\gls{url}}).
+				\end{itemize}
+						
+		    	\item \texttt{controllers:} directorio que contiene los ficheros correspondientes a los controladores de la aplicación.
+				\item \texttt{domain:} directorio que contiene las clases de dominio mapeadas como tablas en la \gls{bbdd-a}.
+				\item \texttt{i18n:} directorio que contiene los ficheros de mensajes de internacionalización de la aplicación que permiten adaptar el idioma de acuerdo al lenguaje del navegador.
+				\item \texttt{migrations:} directorio que contiene los ficheros que monitorizan los cambios y migraciones de la aplicación.
+				\item \texttt{services:} directorio que contiene las clases que modelan los servicios. Corresponde con la capa de servicio.
+				\item \texttt{taglib:} directorio que contiene las librerías de etiquetas que el desarrollador crea para ser utilizadas en las vistas.
+				\item \texttt{utils:} directorio que contiene clases utilitarias.
+				\item \texttt{views:} directorio que contiene ficheros \gls{gsp-a} (\textit{\gls{gsp}}) que modelan las vistas de la aplicación.
+			\end{itemize}
+		
+			\item \texttt{Ficheros grailsw y grailsw.bat\footnote{Consulte \cite{grails:wrapper} para obtener más información sobre este proceso.}:} ficheros que descargan el \textit{framework} \gls{grails} y lo instalan en el directorio \textit{wrapper} cuando se ejecuta por primera vez.
+			
+			\item \texttt{lib:} directorio que contiene los ficheros \gls{jar-a} (\textit{\gls{jar}}) que la aplicación requiera y no se incluyan por defecto.
+			\item \texttt{README.md:} fichero de texto en formato \gls{markdown} que documenta el sistema web.
+			\item \texttt{scripts:} directorio que contiene clases ejecutadas como \textit{\glspl{script}}.
+			\item \texttt{src:} directorio que contiene otras clases y código fuente \gls{java} y/o \gls{groovy}. También, contiene las plantillas usadas por \gls{grails} para la creación de los diferentes artefactos (\textit{\gls{scaffolding}}).
+			
+			\begin{itemize}
+				\item \texttt{templates/artifacts:} directorio con plantillas para generar los distintos artefactos: controlador, clase de dominio, servicio, etc.
+				\item \texttt{templates/scaffolding:} directorio con plantillas para generar el \textit{\gls{scaffolding}} de una clase de dominio.
+				\item \texttt{templates/war:} directorio que contiene la plantilla para generar el fichero \gls{war-a} (\textit{\gls{war}}).
+			\end{itemize}
+				
+			\item \texttt{target:} directorio que contiene el código compilado, junto con ficheros propios de la aplicación web (recursos estáticos, imágenes, etc.).
+			\item \texttt{test:} directorio que contiene ficheros para la ejecución de casos de pruebas.
+			\item \texttt{web-app:} directorio raíz de la aplicación web. 
+			\item \texttt{wrapper:} directorio que contiene ficheros que permiten construir una aplicación \gls{grails} y ejecutar comandos en un proyecto sin tener instalado el \textit{framework} ni configurada la variable de entorno \texttt{GRAILS\_HOME}.
+		\end{itemize}
+		
+		\item \textbf{hyot\_bnd:} componente del proyecto Hyot que contiene la especificación de la red de negocio desplegada en la \gls{blockchain-a} de \gls{hyperledgerfabric-a}. El desarrollo de este componente se ha realizado con \gls{hyperledgercomposer-a}.
+		\begin{itemize}
+			\item \texttt{dist}: directorio donde se almacena la red de negocio generada (\texttt{hyot-network@version.bna}).
+			\item \texttt{doc}: directorio donde se almacena la documentación generada con el \gls{lenguajemarcado} \gls{jsdoc-a} (\textit{\gls{jsdoc}}).
+			\item \texttt{lib}: directorio donde se ubican los ficheros que permiten implementar los requisitos de la red de negocio.
+			\begin{itemize}
+				\item \texttt{hyot\_logic.js}: fichero \gls{js-a} que define la lógica de las funciones procesadoras de transacciones (\textit{\glspl{transaction}}) para la red de negocio.
+			\end{itemize}
+			\item \texttt{models}: directorio donde se ubican los ficheros que permiten modelar la estructura y dominio de una red de negocio (activos -\textit{\glspl{asset}}-, participantes -\textit{\glspl{participant}}- y transacciones -\textit{\glspl{transaction}}-) y las relaciones entre los elementos.		
+			\begin{itemize}
+				\item \texttt{hyot\_model.cto}: fichero que modela la red de negocio.
+			\end{itemize}
+			\item \texttt{node\_modules}: directorio que contiene los paquetes instalados localmente al proyecto con la herramienta \gls{npm-a} (\textit{\gls{npm}}).	
+			\item \texttt{test}: directorio que contiene la especificación de los tests unitarios.
+			\begin{itemize}
+				\item \texttt{xx}: % TODO
+			\end{itemize}
+			\item \texttt{uml}: directorio que contiene diagramas \gls{uml-a} (\textit{\gls{uml}}) de los modelos de la red de negocio, generados con la herramienta PlantUML\footnote{Extensión para la herramienta Visual Studio Code que requiere tener instalados las herramientas Java y Graphviz. Para obtener más información, consultar \cite{krishnan:uml}.}.
+				\begin{itemize}
+				\item \texttt{hyot\_bnd\_uml.png}: imagen del diagrama \gls{uml-a} del modelo de Hyot.
+				\item \texttt{hyot\_bnd\_uml.puml}: fichero PlantUML del modelo de Hyot.
+			\end{itemize}
+			\item \texttt{.eslintignore}: fichero asociado a la herramienta \textit{\gls{opensource}} \gls{eslint} que permite excluir del proceso del \textit{\gls{linter}} determinados ficheros por lo que serán ignorados.	
+			\item \texttt{.eslintrc.yml}: fichero en formato \gls{yaml-a} que especifica la configuración de la herramienta \gls{eslint}.
+			\item \texttt{jsdoc.json	}: fichero en formato \gls{json-a} (\textit{\gls{json}}) que contiene la configuración para la generación de documentación con \gls{jsdoc-a}.
+			\item \texttt{package.json}: fichero \gls{json-a} donde se especifican metadatos de identificación del proyecto (nombre, versión, descripción, repositorio, autores, licencia, etc.) y de las dependencias necesarias para su funcionamiento.
+			\item \texttt{package-lock.json}: fichero \gls{json-a} que permite mantener un detalle específico de las versiones de dependencias que están instaladas en el proyecto de forma que garantiza que todos los colaboradores presenten las mismas versiones de paquetes.
+			\item \texttt{permissions.acl}: fichero que detalla las reglas de control de acceso para los participantes (\textit{\glspl{participant}}) de la red de negocio.
+			\item \texttt{\glspl{query}.qry}: fichero que contiene la definición de las consultas que se pueden realizar a la \gls{blockchain-a} desplegada.
+			\item \texttt{README.md}: fichero de texto en formato \gls{markdown} que documenta la red de negocio.
+		\end{itemize}	
+		
 		\item \textbf{hyot\_raspberry/setup:} componente del proyecto Hyot, formado por dos ficheros \gls{bash-a} (\textit{\gls{bash}}), que permite configurar el dispositivo \gls{raspberry-a}.
-		\begin{itemize}
-			\item \texttt{raspberrypi\_setup.sh}: fichero que ejecuta una serie de comprobaciones iniciales, instala las dependencias y habilita las interfaces necesarias\footnote{El detalle explícito de las dependencias instaladas e interfaces habilitadas puede obtenerse en el anexo \ref{install}. \nameref{install}.}.
-			\item \texttt{utils.sh}: fichero que contiene funciones para proporcionar formato y estilo al texto mostrado por consola.
-		\end{itemize}
+			\begin{itemize}
+				\item \texttt{raspberrypi\_setup.sh}: fichero que ejecuta una serie de comprobaciones iniciales, instala las dependencias y habilita las interfaces necesarias\footnote{El detalle explícito de las dependencias instaladas e interfaces habilitadas puede obtenerse en el anexo \ref{install}. \nameref{install}.}.
+				\item \texttt{utils.sh}: fichero que contiene funciones para proporcionar formato y estilo al texto mostrado por consola.
+			\end{itemize}
+		
 		\item \textbf{hyot\_raspberry/hyot\_decryption:} componente del proyecto Hyot, formado por dos ficheros \gls{python}, que permite la desencriptación de evidencias previamente encriptadas y firmadas con \gls{gpg-a}.
-		\begin{itemize}
-			\item \texttt{hyot\_decryption.py}: fichero que contiene la funcionalidad principal para efectuar la desencriptación y el resto de comprobaciones.
-			\item \texttt{menu\_module.py}: fichero que parsea el menú y comprueba las opciones introducidas por el usuario.  			
-		\end{itemize}
+			\begin{itemize}
+				\item \texttt{hyot\_decryption.py}: fichero que contiene la funcionalidad principal para efectuar la desencriptación y el resto de comprobaciones.
+				\item \texttt{menu\_module.py}: fichero que parsea el menú y comprueba las opciones introducidas por el usuario.	
+			\end{itemize}
 		
 		\item \textbf{hyot\_raspberry/hyot:} componente del proyecto Hyot, formado por ficheros \gls{python}, que monitoriza sucesos -temperatura, humedad y distancia- del entorno desde sensores conectados a una \gls{raspberry-a} y en caso de producirse una lectura anómala se activa el protocolo de alerta.
 		\begin{itemize}
@@ -4931,43 +5014,11 @@ breaklines=true,
 			\item \texttt{logger.py}: clase que permite redirigir la salida de la ejecución tanto a un fichero de \textit{log} como a la consola.
 			\item \texttt{system\_module.py}: módulo que ejecuta funciones sobre el sistema local, en concreto, la creación, eliminación y establecimiento de permisos de directorios y/o ficheros y la comprobación de existencia de ficheros.
 			\item \texttt{token\_module.py}: módulo que contiene funciones para generar \textit{\glspl{token}} empleados en la securización del servidor \gls{rest-a} \gls{api-a} de \gls{hyperledgercomposer-a}.
-		\end{itemize}
-		
-		\item \textbf{hyot\_bnd:} componente del proyecto Hyot que contiene la especificación de la red de negocio desplegada en la \gls{blockchain-a} de \gls{hyperledgerfabric-a}. El desarrollo de este componente se ha realizado con \gls{hyperledgercomposer-a}.
-		\begin{itemize}
-			\item \texttt{dist}: directorio donde se almacena la red de negocio generada (\texttt{hyot-network@version.bna}).
-			\item \texttt{doc}: directorio donde se almacena la documentación generada con el \gls{lenguajemarcado} \gls{jsdoc-a} (\textit{\gls{jsdoc}}).
-			\item \texttt{lib}: directorio donde se ubican los ficheros que permiten implementar los requisitos de la red de negocio.
-			\begin{itemize}
-				\item \texttt{hyot\_logic.js}: fichero \gls{js} (\gls{js-a}) que define la lógica de las funciones procesadoras de transacciones (\textit{\glspl{transaction}}) para la red de negocio.
-			\end{itemize}
-			\item \texttt{models}: directorio donde se ubican los ficheros que permiten modelar la estructura y dominio de una red de negocio (activos -\textit{\glspl{asset}}-, participantes -\textit{\glspl{participant}}- y transacciones -\textit{\glspl{transaction}}-) y las relaciones entre los elementos.		
-			\begin{itemize}
-				\item \texttt{hyot\_model.cto}: fichero que modela la red de negocio.
-			\end{itemize}
-			\item \texttt{node\_modules}: directorio que contiene los paquetes instalados localmente al proyecto con la herramienta \gls{npm-a} (\textit{\gls{npm}}).	
-			\item \texttt{test}: directorio que contiene la especificación de los tests unitarios.
-			\begin{itemize}
-				\item \texttt{xx}: % TODO
-			\end{itemize}
-			\item \texttt{uml}: directorio que contiene diagramas \gls{uml-a} (\textit{\gls{uml}}) de los modelos de la red de negocio, generados con la herramienta PlantUML\footnote{Extensión para la herramienta Visual Studio Code que requiere tener instalados las herramientas Java y Graphviz. Para obtener más información, consultar \cite{krishnan:uml}.}.
-				\begin{itemize}
-				\item \texttt{hyot\_bnd\_uml.png}: imagen del diagrama \gls{uml-a} del modelo de Hyot.
-				\item \texttt{hyot\_bnd\_uml.puml}: fichero PlantUML del modelo de Hyot.
-			\end{itemize}
-			\item \texttt{.eslintignore}: fichero asociado a la herramienta \textit{\gls{opensource}} \gls{eslint} que permite excluir del proceso del \textit{\gls{linter}} determinados ficheros por lo que serán ignorados.	
-			\item \texttt{.eslintrc.yml}: fichero en formato \gls{yaml-a} que especifica la configuración de la herramienta \gls{eslint}.
-			\item \texttt{jsdoc.json	}: fichero en formato \gls{json-a} (\textit{\gls{json}}) que contiene la configuración para la generación de documentación con \gls{jsdoc-a}.
-			\item \texttt{package.json}: fichero \gls{json-a} donde se especifican metadatos de identificación del proyecto (nombre, versión, descripción, repositorio, autores, licencia, etc.) y de las dependencias necesarias para su funcionamiento.
-			\item \texttt{package-lock.json}: fichero \gls{json-a} que permite mantener un detalle específico de las versiones de dependencias que están instaladas en el proyecto de forma que garantiza que todos los colaboradores presenten las mismas versiones de paquetes.
-			\item \texttt{permissions.acl}: fichero que detalla las reglas de control de acceso para los participantes (\textit{\glspl{participant}}) de la red de negocio.
-			\item \texttt{\glspl{query}.qry}: fichero que contiene la definición de las consultas que se pueden realizar a la \gls{blockchain-a} desplegada.
-			\item \texttt{README.md}: fichero de texto en formato \gls{markdown} que documenta la red de negocio.
-		\end{itemize}
+		\end{itemize}	
 	\end{itemize}
 	
 	% Section
-	\section{Mapeo de URLs} % TODO - Sistema web
+	\section{Mapeo de URLs}
 	
 	En esta sección se documentan las direcciones \gls{url-a} (\textit{\gls{url}}) disponibles en el proyecto Hyot, diferenciando el componente al que pertenecen. \\
 		
@@ -4976,16 +5027,19 @@ breaklines=true,
 	
 	Este servidor, incluido en la tecnología \gls{hyperledgercomposer-a}, expone una \gls{rest-a} \gls{api-a} generada dinámicamente al momento de desplegar la red de negocio en base a su especificación, abstrayendo del bajo nivel de interacción y permitiendo interactuar con dicha red desplegada en la \gls{blockchain-a} de \gls{hyperledgerfabric-a} de una manera directa y sencilla mediante los protocolos \gls{http-a} (\textit{\gls{http}}) o \gls{https-a} (\textit{\gls{https}}) \footnote{Otra forma de interacción sería utilizar directamente \gls{hyperledgerfabric-a} aunque sería más complejo debido a que el código es a más bajo nivel.}. Para el proyecto Hyot, se ha adoptado una política de seguridad estricta por lo que únicamente se puede realizar comunicaciones seguras a este servidor mediante el protocolo \gls{https-a}. \\
 	
-	De esta forma, es requisito indispensable para el funcionamiento correcto que el servidor sea arrancado de forma segura donde la \gls{api-a} generada es expuesta en la siguiente dirección: \texttt{https://localhost:3000/explorer}. Para el despliegue actual realizado, este servidor puede ser accedido desde la dirección: \texttt{https://40.121.15.202:3000/explorer}. A estas direcciones se las debe añadir el espacio de nombres utilizado -\texttt{org.hyot.network.}- en la red de negocio a la hora de realizar cualquier solicitud a uno de los tres elementos que forman el modelo (\textit{\gls{asset}}, \textit{\gls{transaction}} o \textit{\gls{participant}}) como se muestra a continuación en el mapeo. \\
+	De esta forma, es requisito indispensable para el funcionamiento correcto que el servidor sea arrancado de forma segura donde la \gls{api-a} generada es expuesta en la siguiente dirección: \texttt{https://localhost:3000/explorer}. Para el despliegue actual realizado, este servidor puede ser accedido desde la dirección: \texttt{https://40.121.15.202:3000/explorer}. A estas direcciones se las debe añadir el espacio de nombres utilizado -\texttt{org.hyot.network.}- en la red de negocio a la hora de realizar cualquier solicitud a uno de los tres elementos que forman el modelo (\textit{\gls{asset}}, \textit{\gls{transaction}} o \textit{\gls{participant}}) como se muestra a continuación en el mapeo. 
+		% TODO - Add esto aquí para quitarlo del listing.
+		o al \Glspl{query}
+		o \gls{historian}
+		\glspl{identity}
 	 
-% TODO - Quizás eliminar o ponerlos los gls de dentro del listing. Aquí, en el siguiente y en el del manual de instalación	
 \begin{listing}[style=consola, basicstyle=\ttfamily\scriptsize, numbers=none, escapechar=ß]
 ß{\color{ballblue}| \textbf{MAPEO DE URLS DEL SERVIDOR REST API DE HYPERLEDGER COMPOSER}}ß
 ß{\color{ballblue}| \textbf{URL base: /api}}ß
 ß{\color{ballblue}| \textbf{Versión de la API: 1.0.0}}ß
 ß{\color{ballblue}| ----------------------------------------------------}ß
 
-ß\textbf{{\color{maroon} \# \Gls{asset}: Alert}}ß
+ß\textbf{{\color{maroon} \# Asset: Alert}}ß
 | GET    | /org.hyot.network.Alert         | Acción: Retorna todas las instancias de Alerta           |
 | POST   | /org.hyot.network.Alertß{\color{red}*}ß        | Acción: Crea una nueva instancia de Alerta               |
 | GET    | /org.hyot.network.Alert/{id}    | Acción: Retorna la instancia de Alerta que posea ese id  |
@@ -4993,12 +5047,12 @@ breaklines=true,
 | PUT    | /org.hyot.network.Alert/{id}ß{\color{red}*}ß   | Acción: Remplaza propiedades de una instancia de Alerta  |
 | DELETE | /org.hyot.network.Alert/{id}    | Acción: Borra la instancia de Alerta que posea ese id    |
  
- ß\textbf{{\color{maroon} \# \Gls{transaction}: PublishAlert}}ß
+ ß\textbf{{\color{maroon} \# Transaction: PublishAlert}}ß
 | GET    | /org.hyot.network.PublishAlert  | Acción: Retorna todas las instancias de PublishAlert     |
 | POST   | /org.hyot.network.PublishAlertß{\color{red}*}ß | Acción: Crea una nueva instancia de PublishAlert         |
 | GET    | /org.hyot.network.PublishAlert/{id} | Acción: Retorna la instancia de PublishAlert         |
 
-ß\textbf{{\color{maroon} \# \Gls{participant}: User}}ß
+ß\textbf{{\color{maroon} \# Participant: User}}ß
 | GET    | /org.hyot.network.User          | Acción: Retorna todas las instancias User                |
 | POST   | /org.hyot.network.Userß{\color{red}*}ß         | Acción: Crea una nueva instancia User                    |
 | GET    | /org.hyot.network.User/{id}     | Acción: Retorna la instancia User que posea ese id       |
@@ -5006,18 +5060,18 @@ breaklines=true,
 | PUT    | /org.hyot.network.User/{id}ß{\color{red}*}ß    | Acción: Remplaza propiedades de una instancia User       |
 | DELETE | /org.hyot.network.User/{id}     | Acción: Borra la instancia User que posea ese id         |
  
-ß\textbf{{\color{maroon} \# \Glspl{query}}}ß
+ß\textbf{{\color{maroon} \# Queries}}ß
 
-| GET    | /ß\glspl{query}ß/AlertFromSpecificSensor | Acción: Retorna todas las instancias Alerta lanzadas por un determinado sensor |
+| GET    | /queries/AlertFromSpecificSensor | Acción: Retorna todas las instancias Alerta lanzadas por un determinado sensor |
  
 ß\textbf{{\color{maroon} \# System: Métodos generales de la red de negocio}}ß
-| GET    | /system/ß\gls{historian}ß               | Acción: Retorna todos los registros del ß\Gls{historian}ß          |
-| GET    | /system/ß\gls{historian}ß{id}           | Acción: Retorna el registro del ß\Gls{historian}ß con ese id       |
-| GET    | /system/ß\glspl{identity}ß              | Acción: Retorna todas las identidades                     |
-| GET    | /system/ß\glspl{identity}ß{id}          | Acción: Retorna la identidad que posea ese id             |
-| POST   | /system/ß\glspl{identity}ß{id}/revoke   | Acción: Revoca la identidad especificada                  |
-| POST   | /system/ß\glspl{identity}ß/bindß{\color{red}*}ß        | Acción: Enlaza una identidad a un participante existente  |
-| POST   | /system/ß\glspl{identity}ß/issueß{\color{red}*}ß       | Acción: Emite una identidad al participante especificado  |
+| GET    | /system/historian               | Acción: Retorna todos los registros del historian          |
+| GET    | /system/historian{id}           | Acción: Retorna el registro del historian con ese id       |
+| GET    | /system/identity}              | Acción: Retorna todas las identidades                     |
+| GET    | /system/identity{id}          | Acción: Retorna la identidad que posea ese id             |
+| POST   | /system/identity{id}/revoke   | Acción: Revoca la identidad especificada                  |
+| POST   | /system/identity/bindß{\color{red}*}ß        | Acción: Enlaza una identidad a un participante existente  |
+| POST   | /system/identity/issueß{\color{red}*}ß       | Acción: Emite una identidad al participante especificado  |
 | GET    | /system/ping                   | Acción: Prueba la conexión con la red de negocio          |
 
 \end{listing}	
@@ -5027,11 +5081,11 @@ breaklines=true,
 La estructura de la información de cada petición para la red de negocio de Hyot se puede consultar directamente en la dirección web donde se expone la \gls{api-a} (citada anteriormente). Aun así, para evitar que el lector tenga que desplegar este servicio, a continuación se presenta la estructura de datos necesaria para cada petición que deba incluir algún parámetro. \\
 
 \begin{lstlisting}[language=json, basicstyle=\ttfamily\footnotesize, numbers=none, escapechar=ß]
-ß{\color{ballblue}| \textbf{ESTRUCTURA DE PARÁMETROS EN FORMATO \gls{json-a}}}ß
+ß{\color{ballblue}| \textbf{ESTRUCTURA DE PARÁMETROS EN FORMATO JSON}}ß
 ß{\color{ballblue}| \textbf{Versión de la red de negocio Hyot: 1.0.0}}ß
 ß{\color{ballblue}| -----------------------------------}ß
 
-ß\textbf{{\color{maroon} \# \Gls{asset}: Alert - Method: POST, PUT}}ß
+ß\textbf{{\color{maroon} \# Asset: Alert - Method: POST, PUT}}ß
 {
   ß``ß$class": ß``ßorg.hyot.network.PublishAlert",
   ß``ßalert_id": ß``ßuuid",
@@ -5045,7 +5099,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
   }
 }
 
-ß\textbf{{\color{maroon} \# \Gls{transaction}: PublishAlert - Method: POST}}ß
+ß\textbf{{\color{maroon} \# Transaction: PublishAlert - Method: POST}}ß
 {
   ß``ß$class": ß``ßorg.hyot.network.PublishAlert",
   ß``ßalert_id": ß``ßuuid",
@@ -5059,7 +5113,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
   }
 }
             
-ß\textbf{{\color{maroon} \# \Gls{participant}: User - Method: POST, PUT}}ß
+ß\textbf{{\color{maroon} \# Participant: User - Method: POST, PUT}}ß
 {
   ß``ß$class": ß``ßorg.hyot.network.User",
   ß``ßusername": ß``ßstring",
@@ -5068,20 +5122,91 @@ La estructura de la información de cada petición para la red de negocio de Hyo
   ß``ßlast_name": ß``ßstring"
 }
 
-ß\textbf{{\color{maroon} \# System: \Glspl{identity} Bind - Method: POST}}ß
+ß\textbf{{\color{maroon} \# System: Identities Bind - Method: POST}}ß
 {
-  ß``ßß\gls{participant}ß": ß``ßstring",
+  ß``ßparticipant": ß``ßstring",
   ß``ßcertificate": ß``ßstring"
 }
 
-ß\textbf{{\color{maroon} \# System: \Glspl{identity} Issue - Method: POST}}ß
+ß\textbf{{\color{maroon} \# System: Identities Issue - Method: POST}}ß
 {
-  ß``ßß\gls{participant}ß": ß``ßstring",
+  ß``ßparticipant": ß``ßstring",
   ß``ßuserID": ß``ßstring",
   ß``ßoptions": {}
 }
 
 \end{lstlisting}
+
+	% TODO - Completar URLs web
+	% Subsection
+	\subsection{Sistema web}
+	
+	% TODO Add url base.i ndicar la url donde está desplegado o puede ser accedido
+	En esta sección se presentan las diferentes direcciones URLs mapeadas en acciones de controladores. También se debe indicar que existen más acciones en algunos controladores que no han sido mapeadas explícitamente en una dirección URL debido a que se trata de llamadas internas, como por ejemplo: llamadas AJAX, acción de eliminación de una instancia de una entidad (método \textit{HTTP delete}, etc.). \\
+		
+					 
+\begin{listing}[style=consola, basicstyle=\ttfamily\scriptsize, numbers=none, escapechar=ß]
+ß{\color{ballblue}| \textbf{MAPEO DE URLS DEL SISTEMA WEB}}ß
+ß{\color{ballblue}| ----------------------------------------------------}ß
+
+ ß\textbf{{\color{maroon} \# Métodos generales}}ß
+ |  *  | /${controller}/${action}?/${id}?(.${format)?    | Acción: (acción por defecto)               |
+ |  *  | /noRole                                         | Vista:   noRole                         |
+ |  *  | ERROR: 400                                      | Vista:   /error/badRequest              |
+ |  *  | ERROR: 401                                      | Vista:   /error/unauthorized            |
+ |  *  | ERROR: 403                                      | Vista:   /login/denied                  |
+ |  *  | ERROR: 404                                      | Vista:   /error/notFound                |
+ |  *  | ERROR: 405                                      | Vista:   /error/notAllowed              |
+ |  *  | ERROR: 500                                      | Vista:   /error/internalError           |
+ |  *  | ERROR: 503                                      | Vista:   /error/unavailableService      |
+ |  *  | /humans.txt                                     | Vista:   extraInformation/humans        |
+ |  *  | /robots.txt                                     | Vista:   extraInformation/robots        |
+
+ ß\textbf{{\color{maroon} \# Controlador: dashboard}}ß
+ |  *  | /dashboard                                      | Acción: dashboard                      |
+
+ ß\textbf{{\color{maroon} \# Controlador: customTasksNormalUser}}ß
+ |  *  | /home                                           | Acción: home                           |
+ |  *  | /profile                                        | Acción: profile                        |
+ |  *  | /profile-error                                  | Acción: updatePersonalInfo             |
+ |  *  | /profileAvatar                                  | Acción: profileAvatar                  |
+ |  *  | /profileAvatar-error                            | Acción: updateAvatar                   |
+ |  *  | /profilePassword                                | Acción: profilePassword                |
+
+ ß\textbf{{\color{maroon} \# Controlador: customTasksUser}}ß
+ |  *  | /login/loggedIn                                 | Acción: loggedIn                       |
+ |  *  | /concurrentSession                              | Acción: invalidSession                 |
+ |  *  | /authFail                                       | Acción: authFail                       |
+ |  *  | /forgotPassword                                 | Acción: restorePassword                |
+ |  *  | /newPassword                                    | Acción: changePass                     |
+ 
+ß\textbf{{\color{maroon} \# Controlador: dbdoc}}ß                         
+ |  *  | /dbdoc/${section}?/${filename}?/${table}?/${column}?  | Acción: (default action)         |
+
+ ß\textbf{{\color{maroon} \# Controlador: login}}ß
+ |  *  | /                                               | Acción: auth                           |
+
+ ß\textbf{{\color{maroon} \# Controlador: secUser}}ß
+ |  *  | /administrator                                  | Acción: index                          |
+ |  *  | /administrator/create                           | Acción: create                         |
+ |  *  | /administrator/create-error                     | Acción: save                           |
+ |  *  | /administrator/edit/${id}?(.${format)?          | Acción: edit                           |
+ |  *  | /administrator/edit-error/${id}?(.${format)?    | Acción: update                         |
+ |  *  | /administrator/edit/profileImage/${id}?(.${format)?        | Acción: editProfileImage    |
+ |  *  | /administrator/edit-error/profileImage/${id}?(.${format)?  | Acción: updateProfileImage  |
+ |  *  | /administrator/import                           | Acción: importAdmin                    |
+ |  *  | /administrator/uploadFile                       | Acción: uploadFileAdmin                |
+
+ ß\textbf{{\color{maroon} \# Controlador: user}}ß
+ |  *  | /user                                           | Acción: index                          |
+ |  *  | /user/create-error                              | Acción: save                           |
+ |  *  | /user/edit-error/${id}?(.${format)?             | Acción: update                         |
+ |  *  | /user/edit/profileImage/${id}?(.${format)?      | Acción: editProfileImage               |
+ |  *  | /user/edit-error/profileImage/${id}?(.${format)?  | Acción: updateProfileImage           |
+ |  *  | /user/import                                    | Acción: importUser                     |
+ |  *  | /user/uploadFile                                | Acción: uploadFileUser                 |
+\end{listing}	
+
 
 	% Section
 	\section{Seguridad}
