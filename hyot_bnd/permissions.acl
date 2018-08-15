@@ -26,7 +26,7 @@
 *          NOTES:     ---                                                                                              *
 *         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  *
 *   ORGANIZATION:     ---                                                                                              *
-*        VERSION:     1.0.0                                                                                            *
+*        VERSION:     1.0.1                                                                                            *
 *        CREATED:     05/29/18                                                                                         *
 *       REVISION:     ---                                                                                              *
 *                                                                                                                      *

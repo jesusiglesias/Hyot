@@ -15,14 +15,14 @@
 *                                                                                                                      *
 *                                                                                                                      *
 *        PROJECT:     Hyot                                                                                             *
-*           FILE:     hoyt_model.cto                                                                                   *
+*           FILE:     unit.js                                                                                          *
 *                                                                                                                      *
-*          USAGE:     ---                                                                                              *
+*          USAGE:     npm test                                                                                         *
 *                                                                                                                      *
-*    DESCRIPTION:     Defines the different resources using Hyperledger Composer modelling language                    *
+*    DESCRIPTION:     Unit testing                                                                                     *
 *                                                                                                                      *
 *        OPTIONS:     ---                                                                                              *
-*   REQUIREMENTS:     Business network deployed in Hyperledger Fabric                                                  *
+*   REQUIREMENTS:     ---                                                                                              *
 *          NOTES:     ---                                                                                              *
 *         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  *
 *   ORGANIZATION:     ---                                                                                              *
@@ -31,40 +31,18 @@
 *       REVISION:     ---                                                                                              *
 *                                                                                                                      *
 * *********************************************************************************************************************/
- 
-namespace org.hyot.network
 
-// Enumerated type - Sensor type
-enum SensorType {
-  o DHT11
-  o HCSR04
-}
+'use strict';
 
-// Concept - Details of the alert
-concept AlertDetails {
-  o DateTime timestamp
-  o SensorType alert_origin
-  o String hash
-  o String link
-  --> User owner
-}
+// Constants
+const ADMIN_CONNECTION = require('composer-admin').AdminConnection;
+const BUSINESS_NETWORK_CONNECTION = require('composer-client').BusinessNetworkConnection;
 
-// Asset - Alert
-asset Alert identified by alert_id {
-  o String alert_id
-  o AlertDetails alert_details
-}
+require('chai').should();
 
-// Participant - User
-participant User identified by username {
-  o String username
-  o String email optional
-  o String first_name
-  o String last_name
-}
+describe('xx', () => {
 
-// Transaction - Publish alert
-transaction PublishAlert {
-  o String alert_id
-  o AlertDetails alert_details
-}
+    before(() => {
+
+    });
+});
