@@ -662,7 +662,7 @@ breaklines=true,
 	
 	\begin{itemize}
 
-		\item \textbf{Iteración 1:} 24 días en total\footnote{Sin contar los días no laborables: Domingo.} (21 días laborables + 3 días festivos). % TODO Revisar las acciones de cada calendario
+		\item \textbf{Iteración 1:} 24 días en total\footnote{Sin contar los días no laborables: Domingo.} (21 días laborables + 3 días festivos).
 		
 %		\begin{figure}[!ht]   
 %			\caption{Calendario de la fase de inicio - Iteración 1.} 
@@ -1342,7 +1342,7 @@ breaklines=true,
 	\textbf{Resumen:} \textit{Conocer todos y cada uno de los requerimientos de un sistema es fundamental para no caminar a través del camino incorrecto. En este capítulo se aborda el primer contacto con el sistema a través de un completo análisis con el fin de indagar con mayor profundidad en él y de desglosar y definir las necesidades a implementar.}
 
 	% Section
-	\section{Requisitos} % TODO Añadir sistema web
+	\section{Requisitos}
 
 	La especificación de requisitos es una característica esencial a la hora de analizar y diseñar un sistema ya que se puede considerar como la base de todo sistema. Se encarga de proporcionar una descripción del comportamiento y servicios del sistema que se va a desarrollar: funcionalidades que debe implementar, información que debe almacenar y producir, restricciones, etc. Resumidamente, definen las interacciones usuario-sistema y sistema-sistema.\\
 		Los requisitos, que deben ser establecidos durante la fase de elaboración del proyecto, pueden revisarse, modificarse e incluso añadir nuevos durante las iteraciones de la fase de construcción al contextualizar el proyecto en el marco de trabajo \gls{aup-a} (\textit{Agile Unified Process}). Para el presente proyecto, en la primera iteración de la fase de construcción (iteración 3 de la planificación global) se realizó la revisión de los requerimientos junto a otros aspectos de la fase de análisis.
@@ -2927,7 +2927,7 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{12cm}|}{\textbf{Tecnologías de desarrollo}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Versión}} &\multicolumn{1}{p{12cm}|}{1.0 - 05/01/2018} \\ \hline
 
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{12cm}|}{Se emplearán \textit{las tecnologías: \gls{python}, \gls{bash-a} (\gls{bash}), \gls{grails}, \gls{js} (\gls{js-a}), \gls{groovy}, Bootstrap, jQuery, HTML y CSS para el desarrollo de los diferentes componentes del sistema}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{12cm}|}{Se emplearán \textit{las tecnologías: \gls{python}, \gls{bash-a} (\gls{bash}), \gls{grails}, \gls{js} (\gls{js-a}), \gls{groovy}, Bootstrap, jQuery, \gls{html-a} (\gls{html}) y \gls{css-a} (\gls{css}) para el desarrollo de los diferentes componentes del sistema}} \\ \hline
 
 		\caption{RNF.13 - Tecnologías de desarrollo}
 	\end{longtable}
@@ -4333,7 +4333,9 @@ breaklines=true,
 	
 	\begin{itemize}
 		\item Base de datos (\gls{bbdd-a}) distribuida como servicio (\textit{\gls{dbaas}} -\gls{dbaas-a}-) \cite{gonzalez:2011:TCCS} en la nube de tipo no relacional (NoSQL) y orientada a documentos en formato \gls{json-a} (\textit{\gls{json}}) que almacena los valores de cada medición obtenida. La decisión de su elección se tomó en base a las necesidades de escalabilidad y versatilidad de la información almacenada puesto que la principal característica de este tipo de \gls{bbdd-a} es que se encuentran optimizadas para grandes volúmenes de datos con un esquema flexible lo que se alinea con el contexto del proyecto, mediciones constantes y posibilidad de ampliación del proyecto a otros dispositivos \gls{iot-a} lo que ampliaría o modificaría el modelo de información a almacenar. Además, la elección de ser distribuida como un servicio y no usar un despliegue local se debe a facilitar el proceso de puesta en marcha y configuración y la disponibilidad total ya que se encuentra físicamente remota pero lógicamente en local.
-		\item \gls{bbdd-a} de tipo relacional (SQL) y \gls{dbaas-a} que almacena la información que gestiona el sistema web sobre usuarios para proporcionar autenticación y restringir así el libre acceso. La decisión de su elección se tomó en base a la necesidad de requerir  combinar de forma eficiente diferentes tablas para extraer información relacionada sin importar la posible modificación de la estructura de los datos o crecimiento del volumen de éstos puesto que esta información se encuentra bien definida y acotada y no es necesario las ventajas de una \gls{bbdd-a} NoSQL.
+		
+		\item \gls{bbdd-a} de tipo relacional (SQL) y \gls{dbaas-a} que almacena la información que gestiona el sistema web sobre usuarios para proporcionar autenticación y restringir así el libre acceso. Debido a la tecnología utilizada (\gls{grails}), se emplea implícitamente una herramienta de mapeo objeto-relacional (\textit{Grails object relational mapping} -GORM-) construida sobre \gls{hibernate} y escrita en \gls{groovy} para mapear el modelo a tablas de la base de datos y controlar el ciclo de vida de las entidades. La decisión de su elección se tomó en base a la necesidad de requerir combinar de forma eficiente diferentes tablas para extraer información relacionada sin importar la posible modificación de la estructura de los datos o crecimiento del volumen de éstos puesto que esta información se encuentra bien definida y acotada y no es necesario las ventajas de una \gls{bbdd-a} NoSQL. 
+		 
 		\item Servicio de almacenamiento en la nube para almacenar los artefactos -evidencias- encriptados y firmados que son generados por el componente de monitorización de sucesos del entorno. Debido a su tamaño y tipología lo más adecuado es su almacenamiento en un servicio en la nube donde estén siempre disponibles.	
 		\item \Gls{blockchain} (\gls{blockchain-a}): mecanismo de persistencia principal donde se almacena aquella información que se quiera salvaguardar de cualquier posible alteración por una parte no autorizada y cuyo almacenaje en una \gls{bbdd-a} no proporciona la seguridad requerida.
 	\end{itemize}
@@ -4379,7 +4381,7 @@ breaklines=true,
 		\begin{figure}[!ht]   
 			\caption{Diagrama de secuencia de diseño: Configurar dispositivo RPi - Parte 1.} 
 			\begin{center} 
-	 			\includegraphics[width=17cm,height=20cm]{Images/design/sequence/diseño_secuencia_configurarRPi_parte1} \\
+	 			\includegraphics[width=16cm,height=16.5cm]{Images/design/sequence/diseño_secuencia_configurarRPi_parte1} \\
 				\label{fig:design_configurarRPi1} 
 			\end{center}  
 		\end{figure} 
@@ -4800,7 +4802,7 @@ breaklines=true,
 	% Section
 	\section{Tecnologías de desarrollo}
 	
-	% TODO número de tecnologias 3? Añadir el web
+	% TODO número de tecnologias 3? Añadir el web Grails
 	Comentadas ya tanto las herramientas \textit{software} en el punto \ref{tools}. \nameref{tools} como los servicios utilizados -sección anterior-, se pasa a presentar las tecnologías de desarrollo empleadas para la codificación y los componentes donde se utilizaron. En concreto, en Hyot se han empleado tres tecnologías para el desarrollo:
 	
 	\begin{itemize}
