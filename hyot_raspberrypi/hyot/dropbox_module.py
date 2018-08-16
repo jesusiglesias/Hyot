@@ -211,7 +211,7 @@ def __check_space():
     # Notifies the user that the space may be insufficient (< 500 MB)
     if available_space < MIN_SPACE:
         print(Fore.YELLOW + "        Warning!" + Fore.RESET + " The available space may be insufficient (500 MB). "
-              "It is advisable to increase it before continuing the execution due to an error could occur later.")
+              "It is advisable to increase it before continuing the execution because an error could occur later.")
 
         time.sleep(2)
 

@@ -309,9 +309,6 @@ def init():
     # Asks the user for the creation of an API key to provide a first layer of security to access the REST API
     choice = __apikey_yes_no()
 
-    # Asks the user for the owner of the alert assets
-    __owner()
-
     if choice:
         try:
             # Generates a random URL-safe text-string with 32 random bytes
@@ -323,6 +320,9 @@ def init():
             print(Fore.RED + "        ✖ Error to generate the API key. Exception: " + str(tokenError) + "."
                   + Fore.RESET)
             sys.exit(1)
+
+    # Asks the user for the owner of the alert assets
+    __owner()
 
     # Asks the user for the host where Hyperledger Composer REST server is running
     hlc_server_host = raw_input(Fore.BLUE + "        Enter the host (e.g. IP or ngrok address) where Hyperledger "
