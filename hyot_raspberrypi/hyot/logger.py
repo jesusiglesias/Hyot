@@ -55,10 +55,28 @@ except KeyboardInterrupt:
 ########################################
 #                CLASS                 #
 ########################################
+class Singleton(type):
+    """
+    Singleton pattern using metaclass.
+    """
+
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+
 class Logger(object):
     """
     Redirects stdout to both file and console.
     """
+
+    __metaclass__ = Singleton
+
+    terminal = None
+    logfile = None
 
     def __init__(self, filename):
         """
