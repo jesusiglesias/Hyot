@@ -222,33 +222,6 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
     email_instance.attach(MIMEText(message, 'html'))
 
     try:
-        # Opens the file to attach
-        attachment = open(filepath, "rb")
-
-        # Creates an instance of MIMEBase
-        part = MIMEBase('application', 'octet-stream')
-
-        # Steps to convert the file into a Base64
-        part.set_payload(attachment.read())
-        encoders.encode_base64(part)
-        part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-
-        # Closes the open file
-        attachment.close()
-
-        # Attaches the file
-        email_instance.attach(part)
-
-    except IOError as attachedError:                          # Error to open the file
-        print(Fore.RED + " ✖ Could not open the evidence so it is not attached to the email. Exception: " +
-              str(attachedError) + ".\n" + Fore.RESET)
-
-        # Prints a message or sends an email when an error occurs during the alert protocol
-        print_error_notification_or_send_email(mailto, STEP_ALERTEMAIL_ATTACHMENT)
-
-        sys.exit(1)
-
-    try:
         # Sends the message via a SMTP server
         session.sendmail(FROM, mailto, email_instance.as_string())
 
