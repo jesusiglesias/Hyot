@@ -1650,7 +1650,7 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Añadir adjunto en el \textit{email} de notificación}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 13/02/2018} \\ \hline
 
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{el anexo de la evidencia encriptada y firmada o el fichero de log en el email de notificación}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{el anexo del fichero de log en el email de notificación}} \\ \hline
 		
 		\caption{RF.22 - Añadir adjunto en el email de notificación}
 	\end{longtable}
@@ -8332,7 +8332,7 @@ IP.1			    = [IP Server]
 	Para cuestiones directamente relacionadas al proyecto \textbf{Hyot}, puede ponerse en contacto con el autor vía \textit{email} en la siguiente dirección: \href{mailto:jesusgiglesias@gmail.com}{\nolinkurl{jesusgiglesias@gmail.com}}. \\
 	
 	La versión actual del presente documento a fecha de \textsf{\color{red}XX de XX de 2018}: \textbf{1.0.0}.
-
+	
 	% Annexe F
 	\chapter{Manual de usuario}\label{userguide}
 	
@@ -8345,7 +8345,7 @@ IP.1			    = [IP Server]
 	 
 	 Este componente del proyecto Hyot permite efectuar la configuración inicial del dispositivo \gls{raspberry-a} para posteriormente ejecutar correctamente el componente de monitorización de sucesos del entorno. Su uso es totalmente opcional puesto que los pasos que son efectuados pueden ser ejecutados de forma manual. Sin embargo, con el fin de facilitar la puesta en marcha de Hyot este proceso se automatiza proporcionando un \textit{\gls{script}} desarrollado en el lenguaje \gls{bash-a} (\textit{\gls{bash}}). \\
 	 
-	Para iniciar este componente basta con ejecutar el fichero \texttt{raspberrypi\_setup.sh} -ubicado en el directorio \texttt{Hyot/hyot\_raspberrypi/setup} según la jerarquía completa del proyecto- en la \gls{raspberry-a} desde un terminal con el comando \texttt{sudo bash}\footnote{El término \texttt{sudo} permite delegar autoridad a usuarios normales para brindarles la capacidad de ejecutar algunas órdenes (o la totalidad) como usuario superprivilegiado.} y seguir los pasos indicados. La configuración se compone de tres fases ejecutadas en el siguiente orden:
+	Para iniciar este componente basta con ejecutar el fichero \texttt{raspberrypi\_setup.sh} -ubicado en el directorio \texttt{Hyot/hyot\_raspberrypi/setup} según la jerarquía completa del proyecto- en la \gls{raspberry-a} desde un terminal con el comando \texttt{sudo bash}\footnote{El término \texttt{sudo} permite delegar autoridad a usuarios normales para brindarles la capacidad de ejecutar algunas órdenes (o la totalidad) como usuario superprivilegiado.} y seguir los pasos indicados. La configuración, que requiere de conexión a la red, se compone de tres fases ejecutadas en el siguiente orden:
 	
 	\begin{enumerate}
 		\item Comprobaciones iniciales.
@@ -8661,7 +8661,7 @@ IP.1			    = [IP Server]
 	 % Section
 	 \section{Componente de monitorización de sucesos del entorno}
 	 
-	 Este componente contiene la funcionalidad principal del proyecto Hyot puesto que permite la monitorización de sucesos del entorno \gls{iot-a} -a través del dispositivo \gls{raspberry-a} y una serie de \glspl{sensor}- y la generación ante un suceso anómalo de una evidencia garante de su veracidad y originación en un instante de tiempo dado. Su uso es de obligatoriedad y requiere de la ejecución previa del componente de configuración del dispositivo \gls{raspberry-a} o por el contrario la ejecución de forma manual de las acciones contenidas\footnote{Las librerías requeridas se encuentran definidas en un fichero de texto (\texttt{requirements.txt}) y pueden ser instaladas ejecutando el comando: \texttt{pip install -r requirements.txt}. Si alguna librería requerida no se encuentra instalada, se muestra un error al inicio de la ejecución al intentar importarla. En el caso de la habilitación de interfaces, el comando \texttt{raspi-config} debe ser utilizado.}, del prototipo correctamente conectado y funcional\footnote{El prototipo construido puede ser consultado en el anexo \ref{prototype}. \nameref{prototype}.} y de la existencia del fichero de configuración \texttt{hyot.yml} en el directorio \texttt{hyot\_raspberrypi/hyot/conf}\footnote{La estructura de este fichero de configuración puede ser consultada en el anexo \ref{install}. \nameref{install}.}. \\
+	 Este componente contiene la funcionalidad principal del proyecto Hyot puesto que permite la monitorización de sucesos del entorno \gls{iot-a} -a través del dispositivo \gls{raspberry-a} y una serie de \glspl{sensor}- y la generación ante un suceso anómalo de una evidencia garante de su veracidad y originación en un instante de tiempo dado. Su uso es de obligatoriedad y requiere de la ejecución previa del componente de configuración del dispositivo \gls{raspberry-a} o por el contrario la ejecución de forma manual de las acciones contenidas\footnote{Las librerías requeridas se encuentran definidas en un fichero de texto (\texttt{requirements.txt}) y pueden ser instaladas ejecutando el comando: \texttt{pip install -r requirements.txt}. Si alguna librería requerida no se encuentra instalada, se muestra un error al inicio de la ejecución al intentar importarla. En el caso de la habilitación de interfaces, el comando \texttt{raspi-config} debe ser utilizado.}, del prototipo correctamente conectado y funcional\footnote{El prototipo construido puede ser consultado en el anexo \ref{prototype}. \nameref{prototype}.}, de las direcciones \gls{i2c-a} de los dos \glspl{lcd-a} conectados, de conectividad a la red en el dispositivo \gls{raspberry-a} y de la existencia del fichero de configuración \texttt{hyot.yml} en el directorio \texttt{hyot\_raspberrypi/hyot/conf}\footnote{La estructura de este fichero de configuración puede ser consultada en el anexo \ref{install}. \nameref{install}.}. \\
 	 
 	Para iniciar este componente, desarrollado en el lenguaje \gls{python}, basta con ejecutar el fichero \texttt{hyot\_main.py} -ubicado en el directorio \texttt{Hyot/hyot\_raspberrypi/hyot} según la jerarquía completa del proyecto- en la \gls{raspberry-a} desde un terminal con el comando \texttt{sudo python} y seguir los pasos indicados. La monitorización del entorno se compone de tres fases ejecutadas en el siguiente orden:
 	
@@ -8677,35 +8677,35 @@ IP.1			    = [IP Server]
 			
 		\item Grupo general:
 		\begin{itemize}
-			\item Opción \texttt{-e} o \texttt{--email}: Dirección de correo electrónico donde enviar notificaciones de alerta y de error en el proceso de medición. Si no se especifica una dirección, por defecto la funcionalidad de notificación se encuentra desactivada.
+			\item Opción \texttt{-e} o \texttt{--email}: dirección de correo electrónico destino para enviar notificaciones de alerta y de error en el proceso de medición. Si no se especifica una dirección, por defecto la funcionalidad de notificación se encuentra desactivada.
 			
-			\item Opción \texttt{-m} o \texttt{--maxdistancehcsr}: Distancia máxima\footnote{El rango de distancia máxima de medición definida en la especificación del \gls{sensor} es de 4 metros. Consultar \cite{hcsr04:datasheet} para obtener más información.} a ser medida por el \gls{sensor} HC-SR04. Por defecto, 150 centímetros.
+			\item Opción \texttt{-m} o \texttt{--maxdistancehcsr}: distancia máxima\footnote{El rango de distancia máxima de medición definida en la especificación del \gls{sensor} es de 4 metros. Consultar \cite{hcsr04:datasheet} para obtener más información.} a ser medida por el \gls{sensor} HC-SR04. Por defecto, 150 centímetros.
 			
-			\item Opción \texttt{-r} o \texttt{--recordingtime}: Tiempo de grabación del entorno cuando el protocolo de alerta es activado. Por defecto, 10 segundos.
+			\item Opción \texttt{-r} o \texttt{--recordingtime}: tiempo de grabación del entorno cuando el protocolo de alerta es activado. Por defecto, 10 segundos.
 		
-			\item Opción \texttt{-wt} o \texttt{--waittime}: Tiempo de espera entre una medición y la siguiente -siempre y cuando no se active el protocolo de alerta-. Por defecto, 3 segundos.                          
+			\item Opción \texttt{-wt} o \texttt{--waittime}: tiempo de espera entre una medición y la siguiente -siempre y cuando no se active el protocolo de alerta-. Por defecto, 3 segundos.                          
 		\end{itemize}
 		
 		\item Grupo de pines\footnote{La especificación del número de pin debe ser en modo BCM \cite{pinout:rpi}.}:
 		\begin{itemize}
-			\item Opción \texttt{-dd} o \texttt{--dht11data}: Pin de datos para el \gls{sensor} DHT11. Por defecto, el pin 21 (\gls{gpio-a}21 -\textit{\gls{gpio}}-).
+			\item Opción \texttt{-dd} o \texttt{--dht11data}: pin de datos para el \gls{sensor} DHT11. Por defecto, el pin 21 (\gls{gpio-a}21 -\textit{\gls{gpio}}-).
 			
-			\item Opción \texttt{-hce} o \texttt{--hcsrecho}: Pin \textit{Echo} para el \gls{sensor} HC-SR04. Por defecto, el pin 19 (\gls{gpio-a}19).
+			\item Opción \texttt{-hce} o \texttt{--hcsrecho}: pin \textit{Echo} para el \gls{sensor} HC-SR04. Por defecto, el pin 19 (\gls{gpio-a}19).
 			 
-			\item Opción \texttt{-hct} o \texttt{--hcsrtrigger}: Pin \textit{Trigger} para el \gls{sensor} HC-SR04. Por defecto, el pin 26 (\gls{gpio-a}26).
+			\item Opción \texttt{-hct} o \texttt{--hcsrtrigger}: pin \textit{Trigger} para el \gls{sensor} HC-SR04. Por defecto, el pin 26 (\gls{gpio-a}26).
 		
-			\item Opción \texttt{-lp} o \texttt{--ledpin}: Pin para el componente electrónico \gls{led-a} (\textit{\gls{led}}). Por defecto, el pin 13 (\gls{gpio-a}13).
+			\item Opción \texttt{-lp} o \texttt{--ledpin}: pin para el componente electrónico \gls{led-a} (\textit{\gls{led}}). Por defecto, el pin 13 (\gls{gpio-a}13).
 		\end{itemize}
 		
 		\item Grupo de \gls{i2c-a}:
 		\begin{itemize}
-			\item Opción \texttt{-die} o \texttt{--dhti2cexpander}: Tipo de expansor \gls{i2c-a} -\texttt{MCP23008}, \texttt{MCP23017} o \texttt{PCF8574}- para el componente \gls{lcd-a} asociado al \gls{sensor} DHT11. Por defecto, \texttt{PCF8574}.
+			\item Opción \texttt{-die} o \texttt{--dhti2cexpander}: tipo de expansor \gls{i2c-a} -\texttt{MCP23008}, \texttt{MCP23017} o \texttt{PCF8574}- para el componente \gls{lcd-a} asociado al \gls{sensor} DHT11. Por defecto, \texttt{PCF8574}.
 			
-			\item Opción \texttt{-dia} o \texttt{--dhti2caddress}: Dirección \gls{i2c-a}\footnote{Esta dirección puede ser obtenida con el comando \texttt{i2cdetect}, como se indica en la parte final del manual de usuario de \ref{setup_rpi}. \nameref{setup_rpi}.} para el componente \gls{lcd-a} asociado al \gls{sensor} DHT11. Por defecto, \texttt{0x3f}.
+			\item Opción \texttt{-dia} o \texttt{--dhti2caddress}: dirección \gls{i2c-a}\footnote{Esta dirección puede ser obtenida con el comando \texttt{i2cdetect}, como se indica en la parte final del manual de usuario de \ref{setup_rpi}. \nameref{setup_rpi}.} para el componente \gls{lcd-a} asociado al \gls{sensor} DHT11. Por defecto, \texttt{0x3f}.
 			
-			\item Opción \texttt{-hie} o \texttt{--hcsri2cexpander}: Tipo de expansor \gls{i2c-a} -\texttt{MCP23008}, \texttt{MCP23017} o \texttt{PCF8574}- para el componente \gls{lcd-a} asociado al \gls{sensor} HC-SR04. Por defecto, \texttt{PCF8574}.
+			\item Opción \texttt{-hie} o \texttt{--hcsri2cexpander}: tipo de expansor \gls{i2c-a} -\texttt{MCP23008}, \texttt{MCP23017} o \texttt{PCF8574}- para el componente \gls{lcd-a} asociado al \gls{sensor} HC-SR04. Por defecto, \texttt{PCF8574}.
 			
-			\item Opción \texttt{-hia} o \texttt{--hcsri2caddress}: Dirección \gls{i2c-a} para el componente \gls{lcd-a} asociado al \gls{sensor} HC-SR04. Por defecto, \texttt{0x38}.
+			\item Opción \texttt{-hia} o \texttt{--hcsri2caddress}: dirección \gls{i2c-a} para el componente \gls{lcd-a} asociado al \gls{sensor} HC-SR04. Por defecto, \texttt{0x38}.
 		\end{itemize}
 		
 		\item Grupo de umbrales:
@@ -8716,19 +8716,21 @@ IP.1			    = [IP Server]
 		\end{itemize}
 	\end{itemize}
 	
-	% TODO
-%	\begin{figure}[!ht]   
-%		\caption{Monitorización de sucesos del entorno - Menú de ayuda.} 
-%		\begin{center} 
-%			\includegraphics[width=16cm,height=10cm]{Images/userGuide/monitoring/help} \\
-%			\label{fig:userguide_monitoring_help} 
-%		\end{center}  
-%	\end{figure}
+	\begin{figure}[!ht]   
+		\caption{Monitorización de sucesos del entorno - Menú de ayuda.} 
+		\begin{center} 
+			\includegraphics[width=15cm,height=9cm]{Images/userGuide/monitoring/help} \\
+			\label{fig:userguide_monitoring_help} 
+		\end{center}  
+	\end{figure}
+	
+	% NEW PAGE
+	\newpage
 	
 	 % Subsection
 	 \subsection{Comprobaciones iniciales}
 	 	 
-	 En esta primera fase se realizan diferentes comprobaciones para garantizar que la posterior ejecución se efectúe de manera correcta y sin ningún contratiempo. Si alguna de estas comprobaciones -similares a las verificadas en la sección \ref{setup_rpi}. \nameref{setup_rpi}- falla ya sea porque no cumple la condición o por cualquier otra causa, se muestra por consola un error al usuario y se finaliza la ejecución. Las comprobaciones incluyen:
+	 En esta primera fase se realizan diferentes comprobaciones para garantizar que la posterior ejecución se efectúe de manera correcta y sin ningún contratiempo. Si alguna de estas comprobaciones -similares a las verificadas en el manual de usuario de \ref{setup_rpi}. \nameref{setup_rpi}- falla ya sea porque no cumple la condición o por cualquier otra causa, se muestra por consola un error al usuario y se finaliza la ejecución. Las comprobaciones incluyen:
 	 
 	 \begin{enumerate}
 	 	\item Verificación de ejecución con un usuario superprivilegiado.
@@ -8743,7 +8745,7 @@ IP.1			    = [IP Server]
 			\item El valor asociado 	a cada opción indicada, comprobando:
 			
 				\begin{itemize}
-					\item Opción \texttt{-e} o \texttt{--email}: dirección de correo electrónico válido.
+					\item Opción \texttt{-e} o \texttt{--email}: dirección de correo electrónico válido (Figura \ref{fig:userguide_monitoring_invalidMail}).
 					\item Opción \texttt{-r} o \texttt{--recordingtime}: tiempo de grabación del entorno mayor o igual a 1 segundo.
 					\item Opción \texttt{-m} o \texttt{--maxdistancehcsr}: distancia máxima mayor que 30 centímetros.
 					\item Opción \texttt{-wt} o \texttt{--waittime}: tiempo de espera entre una medición y la siguiente mayor o igual a 2 segundos.      
@@ -8754,13 +8756,44 @@ IP.1			    = [IP Server]
 					\item Opción \texttt{-dt} o \texttt{--distancethreshold}: umbral del evento distancia entre 0-distancia máxima especificada.
 				\end{itemize}
 			
-			\item El tipo del valor asociado a cada opción indicada (Figura \ref{fig:}). % TODO	
+			\item El tipo del valor asociado a cada opción indicada (Figura \ref{fig:userguide_monitoring_optionType}).	
 			
-			\item La validez de cada opción indicada (Figura \ref{fig:}). 
-
+			\item La validez de cada opción indicada (Figura \ref{fig:userguide_monitoring_invalidOption}). 
 	 	\end{itemize}	
 	 \end{enumerate}
-	Por último mencionar que al igual que en el componente anterior, la señal de terminación (Ctrl + C) del proceso cuando está en ejecución también es capturada, informando al usuario de que no debería finalizar la ejecución si desea continuar con la monitorización. Aun así antes de finalizar por completo la ejecución, se efectúa una salida ordenada liberando todos los recursos de las utilidades y servicios instanciados durante la ejecución y eliminando directorios y ficheros temporales (Figura \ref{fig:}). % TODO
+	 
+	 \begin{figure}[!ht]   
+		\caption{Monitorización de sucesos del entorno - Email inválido.} 
+		\begin{center} 
+			\includegraphics[width=13cm,height=0.8cm]{Images/userGuide/monitoring/invalidMail} \\
+			\label{fig:userguide_monitoring_invalidMail} 
+		\end{center}  
+	\end{figure}
+	 
+	 \begin{figure}[!ht]   
+		\caption{Monitorización de sucesos del entorno - Valor asociado a la opción inválido.} 
+		\begin{center} 
+			\includegraphics[width=14cm,height=2.5cm]{Images/userGuide/monitoring/valueType} \\
+			\label{fig:userguide_monitoring_optionType} 
+		\end{center}  
+	\end{figure}
+	
+	\begin{figure}[!ht]   
+		\caption{Monitorización de sucesos del entorno - Opción inválida.} 
+		\begin{center} 
+			\includegraphics[width=14cm,height=2.5cm]{Images/userGuide/monitoring/unrecognized} \\
+			\label{fig:userguide_monitoring_invalidOption} 
+		\end{center}  
+	\end{figure}
+	Por último mencionar que al igual que en el componente anterior, la señal de terminación (Ctrl + C) del proceso cuando está en ejecución también es capturada, informando al usuario de que no debe finalizar la ejecución si desea continuar con la monitorización. Aun así antes de finalizar por completo la ejecución, ya sea por una señal de terminación explícita o por un error producido, se efectúa una salida ordenada liberando todos los recursos de las utilidades y servicios instanciados durante la ejecución y eliminando directorios y ficheros temporales (Figura \ref{fig:userguide_monitoring_exit}).
+
+	\begin{figure}[!ht]   
+		\caption{Monitorización de sucesos del entorno - Finalización de ejecución ordenada.} 
+		\begin{center} 
+			\includegraphics[width=14cm,height=2.7cm]{Images/userGuide/monitoring/exit} \\
+			\label{fig:userguide_monitoring_exit} 
+		\end{center}  
+	\end{figure}
 
 	 % Subsection
 	 \subsection{Inicialización de servicios y utilidades}
@@ -8768,58 +8801,285 @@ IP.1			    = [IP Server]
 	 En esta segunda fase se inicializan y configuran todas las utilidades y servicios a emplear durante el proceso de monitorización de sucesos del entorno donde en cada acción ejecutada se comprueba si ocurre un error. En cuyo caso, se notifica al usuario y se finaliza la ejecución del componente. La inicialización incluye:
 	 
 	 \begin{itemize}
-	 	\item Generar el directorio local (\texttt{rutaRepositorio/hyot/logs}) donde el fichero de \textit{log} se almacena. Este fichero contiene la misma información que la mostrada por el terminal y su utilidad es informativa para el usuario cuando se produce un error durante alguna acción de la medición o protocolo de alerta de forma que se adjunta a la notificación enviada (en caso de estar activada la opción \texttt{-e} o \texttt{--email}).
-	 	\item Inicializar los dos \glspl{lcd-a}, cada uno asociado a un \gls{sensor}. La Figura \ref{fig:} detallada el error mostrado en caso de que algún componente de este tipo no esté correctamente conectado o se haya indicado un tipo de expansor o dirección \gls{i2c-a} errónea mientras que la Figura \ref{fig:} muestra el error de la interfaz \gls{i2c-a} no habilitada. % TODO
-	 	\item Inicializar la cámara. La Figura \ref{fig:} hace referencia al error mostrado en caso de que el componente \textit{Picamera} esté conectado de forma errónea o no se halla % TODO habilitado la interfaz específica. % TODO
-	 	\item Inicializar el directorio local donde las evidencias -vídeos capturados sobre el entorno por la cámara- son almacenados temporalmente hasta la finalización de un protocolo de alerta activado. En el caso de que este directorio ya esté creado, ninguna acción es realizada.
-	 	\item Inicializar la utilidad \gls{gpg-a} (\textit{\gls{gpg}}) para el encriptación y firmado de evidencias. En esta inicialización, se solicita la ruta del directorio usado por \gls{gpg-a} para almacenar el almacén de claves y la base de datos (\gls{bbdd-a}) de confianza. Posteriormente, se comprueba si el directorio especificado contiene alguna clave, donde:
+	 	\item Generar el directorio local (\texttt{rutaRepositorio/hyot/logs}) donde el fichero de \textit{log} se almacena. Este fichero contiene la misma información que la mostrada por el terminal y su utilidad es informativa para el usuario cuando se produce un error durante alguna acción del protocolo normal de medición o protocolo de alerta de forma que se adjunta a la notificación enviada (en caso de estar activada la opción \texttt{-e} o \texttt{--email}).
+	 	
+	 	\item Inicializar los dos \glspl{lcd-a}, cada uno asociado a un \gls{sensor}. La Figura \ref{fig:userguide_monitoring_lcdError} detallada el error mostrado en caso de que algún componente de este tipo no esté correctamente conectado, se haya indicado una dirección \gls{i2c-a} errónea o la interfaz \gls{i2c-a} no se encuentre habilitada. En el caso de indicar un tipo de expansor diferente al correcto, el \gls{lcd-a} simplemente no se inicializa y por tanto no funciona pero no produce un error con lo que la ejecución continúa.
+	 	
+	 \begin{figure}[!ht]   
+		\caption{Monitorización de sucesos del entorno - Error al inicializar los componentes LCDs.} 
+		\begin{center} 
+			\includegraphics[width=14cm,height=10cm]{Images/userGuide/monitoring/lcdError} \\
+			\label{fig:userguide_monitoring_lcdError} 
+		\end{center}  
+	\end{figure}
+		 	
+	 	\item Inicializar la cámara. La Figura \ref{fig:userguide_monitoring_cameraError} hace referencia al error mostrado en caso de que el componente \textit{Picamera} esté conectado de forma errónea o no se haya habilitado la interfaz específica.
+	 	
+	 \begin{figure}[!ht]   
+		\caption{Monitorización de sucesos del entorno - Error al inicializar la cámara.} 
+		\begin{center} 
+			\includegraphics[width=14cm,height=1cm]{Images/userGuide/monitoring/cameraError} \\
+			\label{fig:userguide_monitoring_cameraError} 
+		\end{center}  
+	\end{figure}
+	 	
+	 	\item Inicializar el directorio local donde las evidencias -vídeos capturados sobre el entorno por la cámara- son almacenadas temporalmente hasta la finalización de un protocolo de alerta activado. En el caso de que este directorio ya exista, ninguna acción es realizada (Figura \ref{fig:userguide_monitoring_localDir}).
+	 	
+	 		\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Inicializar directorio local.} 
+				\begin{center} 
+					\includegraphics[width=14cm,height=0.8cm]{Images/userGuide/monitoring/localDir} \\
+					\label{fig:userguide_monitoring_localDir} 
+				\end{center}  
+			\end{figure}
+	 	
+	 	\item Inicializar la utilidad \gls{gpg-a} (\textit{\gls{gpg}}) para la encriptación y firmado de evidencias. En esta inicialización se solicita la ruta del directorio (por defecto, \texttt{/root/.gpg/}) usado por \gls{gpg-a} para almacenar el almacén de claves y la base de datos (\gls{bbdd-a}) de confianza. Posteriormente, se comprueba si el directorio especificado contiene alguna clave, donde:
 	 		\begin{itemize}
-	 			% TODO Imagen
-	 			\item En caso de no contener ninguna clave, comienza el proceso de generación (Figura \ref{fig:}) donde se solicita al usuario la indicación del nombre y dirección de correo asociada a la identidad\footnote{En el caso de no introducir ningún valor en cualquier solicitud de datos al usuario, se utiliza el valor o valores por defecto definidos en el fichero de configuración.} y la contraseña que protege la clave privada\footnote{El usuario presenta 3 intentos para introducir la contraseña y ésta debe seguir un patrón concreto: poseer una longitud mínima de 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número.}. El par de claves generado se exporta a un fichero externo con extensión \texttt{.asc} para poder ser utilizado durante la desencriptación de la evidencia, generando también un \gls{qr} asociado a esta clave\footnote{Ambos ficheros son renombrados con el patrón  \texttt{\_índice} en caso de existir ya un fichero con dicho nombre.}.
-	 			\item En caso de contener algún par de claves, se ofrece la posibilidad de generar uno nuevo -proceso anterior- o introducir una o varias huellas digitales (\textit{fingerprints}) en cuyo caso es obligatorio que dichos \textit{fingerprints} se asocien a algún par de claves existente. En el caso de introducir solamente un \textit{fingerprint}, éste será el utilizado para el proceso de encriptación y firmado de la evidencia (Figura ). Por contra, si se especifica más de uno la encriptación se realiza para varios destinatarios y se solicita la indicación de que \textit{fingerprint} utilizar para la firma (Figura ).
+	 			\item En caso de no contener ninguna clave, comienza el proceso de generación (Figura \ref{fig:userguide_monitoring_gpg}) donde se solicita al usuario la indicación del nombre y dirección de correo asociada a la identidad\footnote{En el caso de no introducir ningún valor en cualquier solicitud de datos al usuario, se utiliza el valor o valores por defecto definidos en el fichero de configuración.} y la contraseña que protege la clave privada\footnote{El usuario presenta 3 intentos para introducir la contraseña la cual debe seguir un patrón concreto: poseer una longitud mínima de 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número. Esta contraseña nunca se muestra en texto claro por el terminal.}. El par de claves generado se exporta a un fichero externo con extensión \texttt{.asc} para poder ser utilizado durante la desencriptación de la evidencia, generando también un \gls{qr} asociado a esta clave\footnote{Ambos ficheros son renombrados con el patrón  \texttt{\_índice} en caso de existir ya un fichero con dicho nombre.}.
+	 		% NEW PAGE	
+	 		\newpage
+	 			
+	 		\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Generación del par de claves con GPG.} 
+				\begin{center} 
+					\includegraphics[width=14cm,height=5cm]{Images/userGuide/monitoring/gpg} \\
+					\label{fig:userguide_monitoring_gpg} 
+				\end{center}  
+			\end{figure}
+	 			
+	 			\item En caso de contener algún par de claves, se ofrece la posibilidad de generar uno nuevo -proceso anterior- o introducir una o varias huellas digitales (\textit{fingerprints}) en cuyo caso es obligatorio que dichos \textit{fingerprints} se asocien a algún par de claves existente (Figura \ref{fig:userguide_monitoring_gpg_fingerprintError}). En el caso de introducir solamente un \textit{fingerprint}, éste es el utilizado para el proceso de encriptación y firmado de la evidencia. Por contra, si se especifica más de uno la encriptación se realiza para varios destinatarios y se solicita la indicación de qué \textit{fingerprint} utilizar para la firma, siendo el primero de ellos el establecido como por defecto. Además, la indicación de la contraseña debe ser aquella asociada al par de clave seleccionado para la firma (Figura \ref{fig:userguide_monitoring_gpg_fingerprint_sign}).
+	 			
+	 		\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Fingerprint no asociado a ningún par de claves existente.} 
+				\begin{center} 
+					\includegraphics[width=16cm,height=2cm]{Images/userGuide/monitoring/gpgFingerprintError} \\
+					\label{fig:userguide_monitoring_gpg_fingerprintError} 
+				\end{center}  
+			\end{figure}
+			
+			\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Selección del fingerprint a usar para la firma.} 
+				\begin{center} 
+					\includegraphics[width=16cm,height=2.8cm]{Images/userGuide/monitoring/gpgFingerprintSign} \\
+					\label{fig:userguide_monitoring_gpg_fingerprint_sign} 
+				\end{center}  
+			\end{figure}
+	 			
 	 		\end{itemize} 
 	 	
-	 	\item Inicializar la sesión de \textit{email} para las notificaciones (Figura \ref{fig:}). Este proceso solamente se efectúa si se ha indicado la opción correspondiente a la hora de ejecutar el componente.
-	 	\item Inicializar la plataforma de \gls{iot-a} de IBM Cloud, solicitando el \textit{\gls{token}} de autenticación y otros detalles (Figura \ref{fig:}). Esta plataforma actúa como pasarela de comunicación en tiempo real entre los dispositivos conectados y las aplicaciones que consumen los datos.
-	 	\item Inicializar la \gls{bbdd-a} \gls{cloudant} donde en primer lugar se solicitan las credenciales de autenticación y la dirección donde se ubica la \gls{bbdd-a}. Posteriormente, se pregunta al usuario por el nombre de la \gls{bbdd-a} a utilizar y se comprueba si ésta existe o no, creándola (Figura \ref{fig:}) o (Figura \ref{fig:}) abriéndola según el caso correspondiente.
-	 	\item Inicializar el servicio de almacenamiento en la nube Dropbox solicitando en primer lugar el \textit{\gls{token}} de autenticación (Figura \ref{fig:}). % TODO algun error de token
-	 		Posteriormente, se comprueba si la cuenta de usuario de Dropbox a utilizar dispone de una cantidad mínima de espacio (500 MB) ya que en caso contrario podría verse afectada la monitorización al no presentar espacio disponible para subir las evidencias (Figura \ref{fig:}) y se solicitan los nombres de los subdirectorios asociados a cada sensor donde cada uno de ellos almacenará las evidencias generadas por el sensor asociado. Los subdirectorios son creados bajo el directorio \texttt{Hyot} solamente en caso de no existir.
-	 	\item Inicializar la \gls{blockchain-a} de \gls{hyperledgerfabric-a} por medio de comprobar si el servidor \gls{rest-a} (\textit{\gls{rest}}) \gls{api-a} (\textit{\gls{api}}) de \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a}) se encuentra levantado. Para ello, se solicita la dirección \gls{url-a} (\textit{\gls{url}}) y el puerto donde se ubica con el fin de efectuar un comando \textit{ping} y verificar si efectivamente el servidor se encuentra levantada y ese destino en concreto se corresponde con una red de negocio (Figuras ). Además, se ofrece la posibilidad al usuario de introducir el nombre del poseedor de los activos \textit{Alert} a generar en la \gls{blockchain-a} y de proporcionar una capa de seguridad extra mediante un \textit{api-key} el cual debe ser introducido en cada petición transmitida\footnote{En el caso de no hacer uso de esta opción, el servidor de \gls{hyperledgercomposer-a} puede ser arrancado con anterioridad. En caso contrario, se debe obtener el \textit{api-key} en primer lugar y después arrancar el servidor indicado este valor en la opción correspondiente.} (Figura ).
+	 	\item Inicializar la sesión de \textit{email} para las notificaciones (Figura \ref{fig:userguide_monitoring_mail}). Este proceso, que requiere de la dirección electrónica origen y credencial especificada en el fichero de configuración, solamente se efectúa si se ha indicado la opción correspondiente a la hora de ejecutar el componente.
+	 	
+	 		\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Inicialización de la sesión email.} 
+				\begin{center} 
+					\includegraphics[width=14cm,height=1cm]{Images/userGuide/monitoring/mail} \\
+					\label{fig:userguide_monitoring_mail} 
+				\end{center}  
+			\end{figure}
+	 
+	 	\item Inicializar la plataforma de \gls{iot-a} de IBM Cloud, solicitando el \textit{\gls{token}} de autenticación y otros detalles (Figura \ref{fig:userguide_monitoring_iot}). Esta plataforma actúa como pasarela de comunicación en tiempo real entre los dispositivos conectados y las aplicaciones que consumen los datos.
+	 
+	 	 	\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Inicialización de la plataforma IoT.} 
+				\begin{center} 
+					\includegraphics[width=12cm,height=2cm]{Images/userGuide/monitoring/iotPlatform} \\
+					\label{fig:userguide_monitoring_iot} 
+				\end{center}  
+			\end{figure}
+	 
+	 	\item Inicializar \gls{cloudant} donde en primer lugar se solicitan las credenciales de autenticación y la dirección donde se ubica la \gls{bbdd-a}. Posteriormente, se pregunta al usuario por el nombre de la \gls{bbdd-a}\footnote{El nombre de la \gls{bbdd-a} por defecto -\texttt{sensors\_measurements\_}- contiene una marca temporal o \textit{timestamp} (año-mes) al final.} a utilizar y se comprueba si existe o no, creándola (Figura \ref{fig:userguide_monitoring_dbCreate}) o abriéndola (Figura \ref{fig:userguide_monitoring_dbOpen}) según el caso correspondiente. En este último caso, como la \gls{bbdd-a} ya fue creada con anterioridad puede contener mediciones de otras ejecuciones previas.
+	 	
+	 		 \begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Crear base de datos.} 
+				\begin{center} 
+					\includegraphics[width=13cm,height=2.5cm]{Images/userGuide/monitoring/dbCreate} \\
+					\label{fig:userguide_monitoring_dbCreate} 
+				\end{center}  
+			\end{figure}
+			
+			\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Instanciar base de datos ya creada.} 
+				\begin{center} 
+					\includegraphics[width=13cm,height=3cm]{Images/userGuide/monitoring/dbOpen} \\
+					\label{fig:userguide_monitoring_dbOpen} 
+				\end{center}  
+			\end{figure}
+	 	
+	 	% NEW PAGE
+	 	\newpage
+	 	
+	 	\item Inicializar el servicio de almacenamiento en la nube Dropbox solicitando en primer lugar el \textit{\gls{token}} de autenticación. La Figura \ref{fig:userguide_monitoring_invalidToken} muestra el error cuando el dato introducido no representa un \textit{\gls{token}} mientras que la Figura \ref{fig:userguide_monitoring_wrongToken} muestra el error cuando éste es inválido y no pertenece a ninguna cuenta de usuario del servicio o cuando ha sido revocado.
+	 	 
+	 		\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Inicializar Dropbox con token malformado.} 
+				\begin{center} 
+					\includegraphics[width=13cm,height=1cm]{Images/userGuide/monitoring/invalidToken} \\
+					\label{fig:userguide_monitoring_invalidToken} 
+				\end{center}  
+			\end{figure}
+			
+			\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Inicializar Dropbox con token inválido o revocado.} 
+				\begin{center} 
+					\includegraphics[width=17cm,height=1.2cm]{Images/userGuide/monitoring/wrongToken} \\
+					\label{fig:userguide_monitoring_wrongToken} 
+				\end{center}  
+			\end{figure}
+	 	
+	 		Posteriormente, se comprueba si la cuenta de usuario a utilizar dispone de una cantidad mínima de espacio (500 MB) ya que en caso contrario la monitorización al no presentar suficiente espacio disponible para subir las evidencias puede verse afectada (Figura \ref{fig:userguide_monitoring_space}). A continuación, se solicitan los nombres de los subdirectorios asociados a cada \gls{sensor} (por defecto, \texttt{dht11} y \texttt{hcsr04}) donde cada uno de ellos almacenará las evidencias generadas por el \gls{sensor} asociado. Los subdirectorios son creados bajo el directorio \texttt{Hyot} solamente en caso de no existir (Figura \ref{fig:userguide_monitoring_dropbox}).
+	 	
+	 		\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Advertencia de espacio insuficiente en el servicio Dropbox.} 
+				\begin{center} 
+					\includegraphics[width=17cm,height=1.8cm]{Images/userGuide/monitoring/space} \\
+					\label{fig:userguide_monitoring_space} 
+				\end{center}  
+			\end{figure}	 	
+			
+			\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Directorio y subdirectorios ya existen en el servicio Dropbox.} 
+				\begin{center} 
+					\includegraphics[width=16cm,height=4cm]{Images/userGuide/monitoring/dirDropbox} \\
+					\label{fig:userguide_monitoring_dropbox} 
+				\end{center}  
+			\end{figure}	 	
+	 	
+	 	% NEW PAGE
+	 	\newpage 
+	 	
+	 	\item Comprobar si la \gls{blockchain-a} de \gls{hyperledgerfabric-a} está disponible por medio de verificar si el servidor \gls{rest-a} (\textit{\gls{rest}}) \gls{api-a} (\textit{\gls{api}}) de \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a}) se encuentra levantado. Para ello, se solicita la dirección \gls{url-a} (\textit{\gls{url}}) y el puerto donde se ubica con el fin de efectuar un comando \textit{ping} y verificar si efectivamente el servidor responde y ese destino en concreto se corresponde con una red de negocio. La Figura \ref{fig:userguide_monitoring_hcError} muestra el error cuando el servidor no se encuentra disponible mientras que la Figura \ref{fig:userguide_monitoring_hcBusiness} se corresponde al error mostrado cuando el servidor está disponible en esa dirección pero no despliega una red de negocio de \gls{hyperledgercomposer-a}. Por su parte, la Figura \ref{fig:userguide_monitoring_hcOk} muestra una comprobación correcta de este servicio. \\
+	 	 
+	 		 \begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Servidor HC no disponible.} 
+				\begin{center} 
+					\includegraphics[width=16cm,height=2.8cm]{Images/userGuide/monitoring/hcError} \\
+					\label{fig:userguide_monitoring_hcError} 
+				\end{center}  
+			\end{figure}	 
+			
+			 \begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Servidor HC disponible pero no despliega una red de negocio.} 
+				\begin{center} 
+					\includegraphics[width=16cm,height=3.3cm]{Images/userGuide/monitoring/hcBusiness} \\
+					\label{fig:userguide_monitoring_hcBusiness} 
+				\end{center}  
+			\end{figure}	 
+			
+			\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Comprobación de servidor HC correcta.} 
+				\begin{center} 
+					\includegraphics[width=16cm,height=3.3cm]{Images/userGuide/monitoring/hcOk} \\
+					\label{fig:userguide_monitoring_hcOk} 
+				\end{center}  
+			\end{figure}	 
+	 	
+	 	Además, se ofrece al usuario la posibilidad de introducir el nombre del poseedor (por defecto, \texttt{hyotRPi}) de los activos (\textit{\glspl{asset}}) \textit{Alert} a generar en la \gls{blockchain-a} y de proporcionar una capa de seguridad extra mediante un \textit{api-key} (por defecto, generado) el cual es introducido en cada petición transmitida\footnote{En el caso de no hacer uso de esta opción, el servidor de \gls{hyperledgercomposer-a} puede ser arrancado con anterioridad. En caso contrario, se debe obtener el \textit{api-key} en primer lugar y después arrancar el servidor indicando este valor en la opción correspondiente.}. En caso de securizar el servidor pero no enviar el \textit{api-key} en la petición o enviar uno diferente, ésta es denegada, tal y como muestra la Figura \ref{fig:userguide_monitoring_hcUnauthorized}. \\
+	 			 	 
+	 		\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Petición denegada con servidor HC securizado.} 
+				\begin{center} 
+					\includegraphics[width=16cm,height=3.3cm]{Images/userGuide/monitoring/hcUnauthorized} \\
+					\label{fig:userguide_monitoring_hcUnauthorized} 
+				\end{center}  
+			\end{figure}	 
+			
+			Hay que tener en cuenta que este servidor también requiere de securización mediante \gls{https-a} (\textit{\gls{https}}) -peticiones son efectuadas únicamente a través de este protocolo- por lo que es necesario generar un certificado\footnote{Para el contexto actual se ha generado un \gls{certautofirmado} lo que implica también la indicación de ello en el fichero de configuración.}.	 	
 	 \end{itemize}
-	 
-	 La Figura \ref{fig:} muestra un ejemplo de una primera ejecución con inicialización correcta de todos las utilidades y servicios. % TODO
-	 
+	 	 
 	 % Subsection
 	 \subsection{Monitorización de sucesos del entorno}
 	 
-	 Esta fase, de ejecución continúa hasta que sea parada explícitamente por el usuario o se produzca un error, permite monitorizar los sucesos que se producen en el entorno \textit{iot-a} en busca de garantizar la veracidad e integridad del hecho de un suceso anómalo. Cada medición conformada por un identificador único, una marca temporal (\textit{timestamp}) y valores de los eventos: temperatura, humedad y distancia, es obtenida en situación normal cada 3 segundos como valor por defecto y es filtrada para determinar si presenta un suceso anómalo o no en base a los umbrales límite indicados para cada evento. En base a esta información:
+	 Esta fase, de ejecución continúa hasta que sea parada explícitamente por el usuario o se produzca un error, permite monitorizar los sucesos que se producen en el entorno \gls{iot-a} en busca de garantizar la veracidad e integridad del hecho de un suceso anómalo. Cada medición conformada entre otra información por un identificador único, un \textit{timestamp} y valores de los eventos: temperatura, humedad y distancia, es obtenida en situación normal cada 3 segundos como valor por defecto y es filtrada para determinar si presenta un suceso anómalo o no en base a los umbrales límite indicados para cada evento. En base a esta información:
 	 
 	 \begin{itemize}
-	 	\item La medición actual puede no presentar un caso extraño (Figura \ref{fig:}), activando el protocolo normal de medición:
+	 	\item La medición actual puede no presentar un caso extraño (Figura \ref{fig:userguide_monitoring_measurementOk}), activando el protocolo normal de medición consistente en:
 	 	
 	 		\begin{enumerate}
 				\item Almacenar la medición en la \gls{bbdd-a} para que quede constancia de que en ese momento temporal el entorno controlado no presenta ninguna incidencia.
 				\item Subir determinada información de la medición a la plataforma de \gls{iot-a}.	
 			\end{enumerate}
+			
+			\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Medición normal.} 
+				\begin{center} 
+					\includegraphics[width=12cm,height=7.9cm]{Images/userGuide/monitoring/measurementOk} \\
+					\label{fig:userguide_monitoring_measurementOk} 
+				\end{center}  
+			\end{figure}	 
 	 	
-	 	\item La medición actual puede presentar un caso extraño (Figura \ref{fig:}), activando el protocolo de alerta:
+	 	\item La medición actual puede presentar un caso extraño (Figura \ref{fig:userguide_monitoring_measurementAlert}), activando el protocolo de alerta donde se indica el \gls{sensor} y evento originario. Este protocolo consiste en:
 	 	 	
 	 	 	\begin{enumerate}
-				\item Captura de un vídeo -por defecto 10 segundos de duración- a través de una cámara (dispositivo Picamera) conectada a la \gls{raspberry-a} que representa la evidencia.
-				\item Cálculo del valor \textit{hash} del contenido de la evidencia. Este valor actúa como prueba de integridad y se almacena únicamente en la \Gls{blockchain}. 
+				\item Captura de un vídeo -por defecto 10 segundos de duración- a través de una cámara (dispositivo Picamera) conectada a la \gls{raspberry-a} el cual representa la evidencia.
+				\item Cálculo del valor \textit{hash} del contenido de la evidencia. Este valor actúa como prueba de integridad y se almacena únicamente en la \gls{blockchain-a}. 
 				\item Encriptación y firmado de la evidencia con la utilidad \gls{gpg-a}.
 				\item Almacenamiento de la evidencia encriptada y firmada en el servicio de almacenamiento en la nube, Dropbox.
 				\item Almacenamiento de la medición con información adicional en la \gls{bbdd-a} para que quede constancia de que en ese momento temporal el entorno vigilado presentó una lectura anómala.				
 				\item Publicación de determinada información de la medición a la plataforma de \gls{iot-a}.
-				\item Registro de la incidencia	en la \gls{blockchain-a} de \gls{hyperledgerfabric-a} con la generación de un activo (\textit{\glspl{asset}}) \textit{Alert}. 		
-				\item Notificación del suceso no controlado mediante el envío de un \textit{email} a la dirección de correo electrónico destino configurada, adjuntando la evidencia encriptada y firmada.
+				\item Registro de la incidencia	en la \gls{blockchain-a} de \gls{hyperledgerfabric-a} con la generación de un activo \textit{Alert}. 		
+				\item Notificación del suceso no controlado mediante el envío de un \textit{email} a la dirección de correo electrónico destino configurada en caso de estar activado (Figura \ref{fig:userguide_monitoring_mailAlert}).
 			\end{enumerate}
+			
+			\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Medición anómala.} 
+				\begin{center} 
+					\includegraphics[width=17cm,height=8.5cm]{Images/userGuide/monitoring/measurementAlert} \\
+					\label{fig:userguide_monitoring_measurementAlert} 
+				\end{center}  
+			\end{figure}	 
+		
 	 \end{itemize}
 	 
-	 Además, en el caso de que algún valor obtenido sea inválido únicamente se comprueba el evento que contenga el valor válido siguiendo el procedimiento anterior (Figura \ref{fig:}). Por el contrario, si ambos valores son inválidos esa medición se omite y se continúa la monitorización (Figura \ref{fig:}). \\
+	 		\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Correo electrónico notificando un suceso anómalo.} 
+				\begin{center} 
+					\includegraphics[width=17cm,height=12cm]{Images/userGuide/monitoring/mailAlert} \\
+					\label{fig:userguide_monitoring_mailAlert} 
+				\end{center}  
+			\end{figure}	 
+	
+	% NEW PAGE
+	\newpage
+		 
+	 Además, en el caso de que algún valor obtenido sea inválido únicamente se comprueba el evento que contenga el valor válido siguiendo el procedimiento anterior (Figura \ref{fig:userguide_monitoring_measurementInvalid}). Por el contrario, si ambos valores son inválidos esa medición se omite y se continúa la monitorización. \\
 	 
-	 Si durante alguna acción del protocolo normal de medición o protocolo de alerta se produce un error, la ejecución es finalizada enviando una notificación \textit{email} y adjuntado el fichero de \textit{log} si la opción correspondiente está activada o no (Figuras \ref{fig:} y \ref{fig:}, respectivamente).
-	 	
+	 		\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Medición con eventos del sensor DHT11 inválidos.} 
+				\begin{center} 
+					\includegraphics[width=14cm,height=3cm]{Images/userGuide/monitoring/measurementInvalid} \\
+					\label{fig:userguide_monitoring_measurementInvalid} 
+				\end{center}  
+			\end{figure}	 
+	 
+	 Si durante alguna acción del protocolo normal de medición o protocolo de alerta se produce un error, la ejecución es finalizada enviando una notificación \textit{email} (si la opción correspondiente está activada) y adjuntado el fichero de \textit{log} (Figura \ref{fig:userguide_monitoring_errorMeasurementMail}) o notificando que es recomendable activar dicha opción para conseguir el aviso instantáneo y la traza (Figura \ref{fig:userguide_monitoring_errorMeasurement}). La Figura \ref{fig:userguide_monitoring_errorMail} muestra el correo electrónico recibido con diseño adaptativo para una notificación \textit{email} de este tipo. \\
+	 
+	 	 	\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Error y notificación durante una acción del protocolo normal de medición.} 
+				\begin{center} 
+					\includegraphics[width=15cm,height=4.5cm]{Images/userGuide/monitoring/errorMeasurementMail} \\
+					\label{fig:userguide_monitoring_errorMeasurementMail} 
+				\end{center}  
+			\end{figure}	 
+			
+			\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Error durante una acción del protocolo normal de medición.} 
+				\begin{center} 
+					\includegraphics[width=15cm,height=4.5cm]{Images/userGuide/monitoring/errorMeasurement} \\
+					\label{fig:userguide_monitoring_errorMeasurement} 
+				\end{center}  
+			\end{figure}	 
+			
+			\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Correo electrónico notificando un error durante alguna acción del protocolo de medición.} 
+				\begin{center} 
+					\includegraphics[width=12cm,height=13cm]{Images/userGuide/monitoring/errorMail} \\
+					\label{fig:userguide_monitoring_errorMail} 
+				\end{center}  
+			\end{figure}	 
+	 
+	 % NEW PAGE	
+	 \newpage
+	 
 	 % Section
 	 \section{Componente de desencriptación de evidencia}
 	 	 
@@ -8853,7 +9113,10 @@ IP.1			    = [IP Server]
 			\label{fig:userguide_evidence_help} 
 		\end{center}  
 	\end{figure}
-		 
+	
+	% NEW PAGE	 
+	\newpage
+			 
 	 % Subsection
 	 \subsection{Comprobaciones iniciales}
 	 
@@ -8900,10 +9163,7 @@ IP.1			    = [IP Server]
 					\label{fig:userguide_evidence_method} 
 				\end{center}  
 			\end{figure}
-			
-			% NEW PAGE
-			\newpage
-			
+						
 			\begin{figure}[!ht]   
 				\caption{Desencriptación de evidencia - Otra verificación de indicación de evidencia.} 
 				\begin{center} 
@@ -8969,10 +9229,7 @@ IP.1			    = [IP Server]
 	\end{itemize}
 	
 	Los pasos arriba mencionados son omitidos si la indicación de la evidencia a utilizar se hace a través de la ruta en el sistema local donde se encuentra (opción \texttt{-e} o \texttt{--encryptedfile}). Para ambos casos, la siguiente comprobación consiste en validar la existencia de los directorios y ficheros indicados en las opciones a la hora de la ejecución, es decir, se valida que el directorio \gls{gpg-a}, el fichero del par de claves, la evidencia encriptada y firmada y el directorio de desencriptación existan en el sistema local y sean del tipo correcto, es decir, un directorio o un fichero según corresponda. La Figura \ref{fig:userguide_evidence_nonexist} muestra un ejemplo donde se ha indicado una ruta de evidencia inexistente.
-	
-	% NEW PAGE
-	\newpage
-	
+		
 		\begin{figure}[!ht]   
 			\caption{Desencriptación de evidencia - Evidencia inexistente.} 
 			\begin{center} 					\includegraphics[width=15cm,height=1.1cm]{Images/userGuide/evidence/evidence_nonexist} \\
@@ -9026,16 +9283,13 @@ IP.1			    = [IP Server]
 
 		\begin{figure}[!ht]   
 			\caption{Desencriptación de evidencia - Límite de intentos agotado.} 
-			\begin{center} 					\includegraphics[width=12cm,height=4cm]{Images/userGuide/evidence/attempts} \\
+			\begin{center} 					\includegraphics[width=10cm,height=2.5cm]{Images/userGuide/evidence/attempts} \\
 				\label{fig:userguide_evidence_attempts} 
 			\end{center}  
 		\end{figure}
 	
 	El siguiente paso efectúa la desencriptación de la evidencia utilizando la clave privada. El fichero resultante -evidencia desencriptada en formato \texttt{.h264} (Figura \ref{fig:userguide_evidence_decryption})- se almacena en el mismo directorio donde se encuentra la evidencia encriptada y firmada o en el directorio destino si se introduce un valor para la opción \texttt{-d} o \texttt{--decryptedhome}. La Figura \ref{fig:userguide_evidence_error_decryption} muestra un error durante la desencriptación donde éste puede ser debido a diferentes circunstancias tal como, contraseña de clave privada errónea, diferente par de claves empleado, etc.
 
-	% NEW PAGE
-	\newpage
-	
 		\begin{figure}[!ht]   
 			\caption{Desencriptación de evidencia correcta.} 
 			\begin{center} 					\includegraphics[width=12cm,height=1.1cm]{Images/userGuide/evidence/decryption} \\
@@ -9045,7 +9299,7 @@ IP.1			    = [IP Server]
 	
 		\begin{figure}[!ht]   
 			\caption{Desencriptación de evidencia - Error en la desencriptación.} 
-			\begin{center} 					\includegraphics[width=9cm,height=3.8cm]{Images/userGuide/evidence/error_decryption} \\
+			\begin{center} 					\includegraphics[width=8cm,height=3cm]{Images/userGuide/evidence/error_decryption} \\
 				\label{fig:userguide_evidence_error_decryption} 
 			\end{center}  
 		\end{figure}
@@ -9054,7 +9308,7 @@ IP.1			    = [IP Server]
 	
 		\begin{figure}[!ht]   
 			\caption{Desencriptación de evidencia - Verificación de firma.} 
-			\begin{center} 					\includegraphics[width=11cm,height=4cm]{Images/userGuide/evidence/sign} \\
+			\begin{center} 					\includegraphics[width=10cm,height=3cm]{Images/userGuide/evidence/sign} \\
 				\label{fig:userguide_evidence_sign} 
 			\end{center}  
 		\end{figure}
