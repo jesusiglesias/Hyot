@@ -184,7 +184,7 @@
         <g:link uri="https://www.uam.es/UAM/Home.htm" target="_blank">
             <asset:image src="logo/logo_uam.gif" alt="UAM"/>
         </g:link>
-        <g:link uri="https://www.uam.es/UAM/Home.htm" target="_blank">
+        <g:link uri="http://www.uam.es/ss/Satellite/EscuelaPolitecnica/es/home.htm" target="_blank">
             <asset:image src="logo/logo_eps.png" alt="EPS"/>
         </g:link>
     </div>
