@@ -1,9 +1,57 @@
 /*-------------------------------------------------------------------------------------------*
- *                               GITIGNORE FILE - HYOT APPLICATION                           *
+ *                            GITIGNORE FILE FOR HYOT PROJECT - WEB APP                      *
  *-------------------------------------------------------------------------------------------*/
 
 # Jetbrains IDE
-.idea/*
+.idea/
+*.iml
+*.ipr
 
-# Node modules
-node_modules/*
+# File-based project format
+*.iws
+
+# OS X generated files
+.DS_Store
+
+# Gradle
+.gradle
+
+# Project files
+.classpath
+.project
+.settings/
+
+# Default HSQL database files for production mode
+/prodDb.*
+
+# General HSQL database files
+*Db.properties
+*Db.script
+/*DB.*
+
+# Cache
+.asscache
+.slcache/
+
+# Logs
+stacktrace.log
+/test/reports
+/logs
+/*.log
+
+# Project release file
+/*.war
+
+# Plugin release files
+/*.zip
+/plugin.xml
+
+# Temporary build files
+/out/
+
+# Output directory (classes generated from sources)
+/build/
+
+.metadata/*
+Servers/*
+Thumbs.db
