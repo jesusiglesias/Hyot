@@ -40,7 +40,7 @@ class UrlMappings {
         ======================================================*/
         "400"(view: '/error/badRequest')
         "401"(view: '/error/unauthorized')
-        "403"(view: '/login/denied')
+        "403"(view: '/error/denied')
         "404"(view: '/error/notFound')
         "405"(view: '/error/notAllowed')
         "500"(view: '/error/internalError')

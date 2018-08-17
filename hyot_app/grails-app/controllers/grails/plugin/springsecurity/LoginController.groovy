@@ -65,28 +65,7 @@ class LoginController {
     def denied() {
         log.debug("LoginController:denied()")
 
-        if (springSecurityService.isLoggedIn() &&
-                authenticationTrustResolver.isRememberMe(SCH.context?.authentication)) {
-
-            // Have cookie but the page is guarded with IS_AUTHENTICATED_FULLY
-            redirect uri: '/reauthenticate'
-        }
-    }
-
-    /**
-     * Login page for users with a remember-me cookie but accessing an IS_AUTHENTICATED_FULLY page.
-     */
-    def full() {
-        log.debug("LoginController:full()")
-
-        def config = SpringSecurityUtils.securityConfig
-
-        // TODO
-        flash.reauthenticate = g.message(code: "views.login.auth.warning.reauthentication", default: 'For security reasons, it is necessary to authenticate again to do this action.')
-
-        render view: 'auth',
-                model: [hasCookie: authenticationTrustResolver.isRememberMe(SCH.context?.authentication),
-                        postUrl: "${request.contextPath}${config.apf.filterProcessesUrl}"]
+        response.sendError(403)
     }
 
     /**
