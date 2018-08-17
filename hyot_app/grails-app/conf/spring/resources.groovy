@@ -4,6 +4,9 @@
 
 package spring
 
+import Authentication.CustomAuthenticationSuccessHandler
+import grails.plugin.springsecurity.SpringSecurityUtils
+import Logout.CustomSessionLogoutHandler
 import Security.SecUserPasswordEncoderListener
 import Security.CustomGrailsUserDetailsService
 import Sessions.CustomConcurrentSessionControlAuthenticationStrategy
@@ -11,8 +14,6 @@ import org.springframework.security.core.session.SessionRegistryImpl
 import org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy
 import org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy
-import Logout.CustomSessionLogoutHandler
-
 
 // Place your Spring DSL code here
 beans = {
@@ -20,6 +21,21 @@ beans = {
 
     // Bean registration - Login by email or username
     userDetailsService(CustomGrailsUserDetailsService)
+
+    // Bean registration - Redirect to the user based on the role
+    authenticationSuccessHandler(CustomAuthenticationSuccessHandler) {
+        def conf = SpringSecurityUtils.securityConfig
+        requestCache = ref('requestCache')
+        defaultTargetUrl = conf.successHandler.defaultTargetUrl
+        alwaysUseDefaultTargetUrl = conf.successHandler.alwaysUseDefault
+        targetUrlParameter = conf.successHandler.targetUrlParameter
+        useReferer = conf.successHandler.useReferer
+        redirectStrategy = ref('redirectStrategy')
+        // Admin URL defined in application.groovy
+        adminUrl = application.config.springsecurity.urlredirection.admin
+        // User URL defined in application.groovy
+        userUrl = application.config.springsecurity.urlredirection.user
+    }
 
     // Bean registration - Invalidate concurrent sessions depending on the role
 

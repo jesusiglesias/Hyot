@@ -1,11 +1,11 @@
 package User
 
-import grails.transaction.Transactional
+import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.userdetails.GrailsUser
 import org.springframework.security.core.GrantedAuthority
 
 /**
- * It extends the GrailsUser class to add a new field in the session (email).
+ * It extends the GrailsUser class to add a new field (email) in the session.
  */
 @Transactional
 class CustomUserDetails extends GrailsUser {
