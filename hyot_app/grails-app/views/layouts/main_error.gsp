@@ -77,7 +77,7 @@
     </g:link>
 </div>
 
-<div class="copyright"> 2018 © Jesús Iglesias García </div>
+<div class="copyright"> 2018 © <a href="http://es.linkedin.com/in/jesusgiglesias" target="_blank"> Jes&uacute;s Iglesias Garc&iacute;a </a></div>
 <div class="logoUAM">
     <g:link uri="https://www.uam.es/UAM/Home.htm" target="_blank">
         <asset:image src="logo/logo_uam.gif" alt="UAM"/>
