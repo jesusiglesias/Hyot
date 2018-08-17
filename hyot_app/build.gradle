@@ -63,8 +63,14 @@ dependencies {
     // Spring Security Core
     compile 'org.grails.plugins:spring-security-core:3.2.3'
 
+    // Jasypt encryption
+    compile "org.grails.plugins:jasypt-encryption:2.0.2"
+
     // MySQL
     runtime 'mysql:mysql-connector-java:5.1.37'
+
+    // Mail
+    compile 'org.grails.plugins:mail:2.0.0'
 }
 
 bootRun {
