@@ -24,6 +24,13 @@ class UrlMappings {
         "/login/loggedIn"(controller: 'customUserTasks', action: 'loggedIn')
         // Fail authentication
         "/authFail"(controller: 'customUserTasks', action: 'authFail')
+        /* Information files
+        ======================================================*/
+        // Humans.txt
+        "/humans.txt"(view: '/extraInformation/humans')
+        // Robots.txt
+        "/robots.txt"(view: '/extraInformation/robots')
+
         /* Errors
         ======================================================*/
         "400"(view: '/error/badRequest')

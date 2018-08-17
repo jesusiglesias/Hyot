@@ -31,7 +31,7 @@
     <link rel="shortcut icon" href="${assetPath(src: 'favicon/favicon.ico')}" type="image/x-icon">
     <link rel="icon" href="${assetPath(src: 'favicon/favicon.ico')}" type="image/x-icon">
 
-    <!-- HUMANS.TXT TODO-->
+    <!-- HUMANS.TXT -->
     <link type="text/plain" rel="author" href="${createLink(uri: '/humans.txt')}"/>
 
     <!-- GLOBAL MANDATORY STYLES -->
