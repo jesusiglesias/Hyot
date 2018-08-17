@@ -5,7 +5,7 @@ grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'Security.SecUs
 grails.plugin.springsecurity.authority.className = 'Security.SecRole'
 
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-		[pattern: '/**',                access: ['permitAll']], /** It includes: /humans.txt, /robots.txt TODO **/
+		[pattern: '/**',                access: ['permitAll']], /** It includes: /humans.txt, /robots.txt **/
 		[pattern: '/assets/**',         access: ['permitAll']],
 		[pattern: '/**/js/**',          access: ['permitAll']],
 		[pattern: '/**/css/**',         access: ['permitAll']],
@@ -34,7 +34,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		[pattern: "/customUserTasks/checkEmailRegisteredAvailibility",   	access: ['permitAll']],
 		// Restore password
 		[pattern: "/customUserTasks/restorePassword",   					access: ['permitAll']],
-		// Password TODO
+		// Password
 		[pattern: "/customUserTasks/sendEmail",   							access: ['permitAll']],
 		[pattern: "/customUserTasks/changePass",   							access: ['permitAll']],
 		[pattern: "/customUserTasks/updatePass",   							access: ['permitAll']],
@@ -133,6 +133,8 @@ grails.plugin.springsecurity.rememberMe.parameter = '_hyot_remember_me'
   //      [pattern: '/**',             filters: 'JOINED_FILTERS']
 //]*/
 
+/* Logout handlers
+============================================================================================= */
 grails.plugin.springsecurity.logout.handlerNames = ['customSessionLogoutHandler',
 													'rememberMeServices',
 													'securityContextLogoutHandler']

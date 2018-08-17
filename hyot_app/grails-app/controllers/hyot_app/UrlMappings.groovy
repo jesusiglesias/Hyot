@@ -26,6 +26,9 @@ class UrlMappings {
         "/authFail"(controller: 'customUserTasks', action: 'authFail')
         // Restore password
         "/forgotPassword"(controller: 'customUserTasks', action: 'restorePassword')
+        // Change password
+        "/newPassword"(controller: 'customUserTasks', action: 'changePass')
+
         /* Information files
         ======================================================*/
         // Humans.txt

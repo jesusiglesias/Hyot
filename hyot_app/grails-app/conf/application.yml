@@ -115,6 +115,14 @@ jasypt:
 ---
 
 #############################
+#     TOKEN EXPIRATION      #
+#############################
+# Maximum time of token - Expiration in minutes
+token.expiration: 30
+
+---
+
+#############################
 #          DATABASE         #
 #############################
 

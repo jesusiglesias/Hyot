@@ -3,6 +3,7 @@ package CustomUserTasks
 import grails.gorm.transactions.Transactional
 import org.springframework.beans.factory.annotation.Value
 import grails.plugin.springsecurity.SpringSecurityUtils
+import org.apache.commons.lang.StringUtils
 import org.springframework.security.authentication.AccountExpiredException
 import org.springframework.security.authentication.AuthenticationServiceException
 import org.springframework.security.authentication.CredentialsExpiredException
@@ -181,5 +182,101 @@ class CustomUserTasksController {
             }
         }
         redirect uri: '/forgotPassword'
+    }
+
+    /**
+     * It checks the token. If this is correct, the view to change the password is displayed.
+     *
+     * @param token Token.
+     * @return View If token is correct. If not error page is displayed.
+     */
+    def changePass(String token, Boolean newPasswordAgain) {
+        log.debug("CustomUserTasksController:changePass()")
+
+        if (newPasswordAgain) {
+            render view: '/login/newPassword'
+
+        } else {
+            if (customUserTasksService.check_token(token, 'restorePassword')) {
+                render view: '/login/newPassword'
+            } else {
+                response.sendError(404)
+            }
+        }
+    }
+
+    /**
+     * It checks that token is correct and updates the password if it satisfies the rules.
+     *
+     * @return View Displaying the success or failure of the password update.
+     */
+    @Transactional(readOnly = false)
+    updatePass(){
+        log.debug("CustomUserTasksController:updatePass()")
+
+        if(customUserTasksService.check_token(params.token, 'restorePassword')){ // It checks again the integrity of the token
+
+            // Back-end validation - Password with maxlength
+            if (params.password.length() > 32) {
+
+                flash.errorNewPassword = g.message(code: 'default.myProfile.password.new.match',
+                        default: '<strong>New password</strong> field does not match with the required pattern.')
+                redirect uri: '/newPassword', params: [token: params.token, newPasswordAgain: true]
+                return
+            }
+
+            // Back-end validation - Confirm password
+            if (!StringUtils.isNotBlank(params.passwordConfirm)) {
+
+                flash.errorNewPassword = g.message(code: 'default.password.confirm',
+                        default: '<strong>Confirm password</strong> field cannot be null.')
+                redirect uri: '/newPassword', params: [token: params.token, newPasswordAgain: true]
+                return
+            }
+
+            def update_user = customUserTasksService.update_pass(params) // Password validation
+
+            if(update_user.response){ // Response is true
+                log.debug("CustomTasksUserController:updatePass():successful")
+
+                flash.newPasswordSuccessful = g.message(code: 'views.login.auth.newPassword.successful',
+                        default: 'New password set correctly.')
+
+                redirect uri: '/'
+                return
+            }
+
+            if (!update_user.valid) { // Invalid password
+                log.debug("CustomTasksUserController:updatePass():invalidPassword")
+
+                flash.errorNewPassword = g.message(code: 'default.myProfile.password.new.match',
+                        default: '<strong>New password</strong> field does not match with the required pattern.')
+
+            } else if (!update_user.match) { // Password not equal that passwordConfirm field
+                log.debug("CustomTasksUserController:updatePass():passwordIsDifferent")
+
+                flash.errorNewPassword = g.message(code: 'customUserTasks.updatePassword.differentPassword',
+                        default: 'The passwords you entered do not match.')
+
+            } else if (!update_user.passwordSame) { // Password is not different than the previous
+                log.debug("CustomTasksUserController:updatePass():passwordIsEqualPrevious")
+
+                flash.errorNewPassword = g.message(code: 'customUserTasks.updatePassword.equalPassword',
+                        default: 'The password you entered can not be the same as the current.')
+
+            } else { // Password is equal to username
+                log.debug("CustomTasksUserController:updatePass():passwordIsEqualToUsername")
+
+                flash.errorNewPassword = g.message(code: 'default.password.username',
+                        default: '<strong>Password</strong> field must not be equal to username.')
+            }
+
+        }else{ // Token altered
+            log.debug("CustomTasksUserController:updatePass():tokenAltered")
+
+            flash.errorNewPassword = g.message(code: 'customUserTasks.updatePassword.invalidToken',
+                    default: 'Invalid security token. Please, you enter again your email to send a new email.')
+        }
+        redirect uri: '/newPassword', params: [token: params.token, newPasswordAgain: true]
     }
 }

@@ -180,7 +180,7 @@
                                     <table cellspacing="0" cellpadding="0" border="0" align="center" style="Margin: auto">
                                         <tr>
                                             <td style="border-radius: 3px; background: #4DB3A2; text-align: center;" class="button-td">
-                                                <a href="${createLink(uri: '/newPassword', params: [token:token], absolute: true)}" style="background: #4DB3A2; border: 15px solid #4DB3A2; padding: 0 10px;color: #ffffff; font-family: Roboto, sans-serif; font-size: 13px; line-height: 1.1; text-align: center; text-decoration: none; display: block; border-radius: 3px; font-weight: bold;" class="button-a">
+                                                <a href="${createLink(uri: 'newPassword', params: [token:token], absolute: true)}" style="background: #4DB3A2; border: 15px solid #4DB3A2; padding: 0 10px;color: #ffffff; font-family: Roboto, sans-serif; font-size: 13px; line-height: 1.1; text-align: center; text-decoration: none; display: block; border-radius: 3px; font-weight: bold;" class="button-a">
                                                     <g:message code="resetPassword.email.body.messageTwo" default="RESTORE PASSWORD"/>
                                                 </a>
                                             </td>
@@ -199,7 +199,9 @@
                     <td style="padding: 40px 10px;width: 100%;font-size: 14px; font-family: Roboto, sans-serif; mso-height-rule: exactly; line-height:18px; text-align: center; color: #888888;">
                         <p style="color:#242726 !important; font-weight: bold;">2018 &#x24B8;
                             <a style="text-decoration: none; color:#242726 !important;"
-                               href="http://es.linkedin.com/in/jesusgiglesias"> Jes&uacute;s Iglesias Garc&iacute;a</a></p>
+                               href="http://es.linkedin.com/in/jesusgiglesias"> Jes&uacute;s Iglesias Garc&iacute;a
+                            </a>
+                        </p>
                         <br>
                         <g:link uri="https://www.uam.es/UAM/Home.htm" style="text-decoration: none;" target="_blank">
                             <img src="https://www.dropbox.com/s/pils7dzb4zvfi8f/uam.png?raw=1" id="uam" alt="UAM" width="250" height="85"/>

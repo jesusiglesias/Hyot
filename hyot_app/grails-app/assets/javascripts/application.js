@@ -6,7 +6,6 @@
 // to create separate JavaScript files as needed.
 //
 //= require jquery.min.js
-//= require_tree .
 //= require_self
 
 
