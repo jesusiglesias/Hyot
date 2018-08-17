@@ -83,6 +83,37 @@ endpoints:
         unique-names: true
 
 ---
+
+#############################
+#            MAIL           #
+#############################
+grails:
+    mail:
+        host: smtp.gmail.com
+        port: 465
+        username: hyot.project@gmail.com
+        password: 'hyot2018'
+        props:
+            mail.smtp.auth: true
+            mail.smtp.socketFactory.port: 465,
+            mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+            mail.smtp.socketFactory.fallback: false
+
+---
+
+#############################
+#    JASYPT ENCRYPTATION    #
+#############################
+# Encryptation algorithm - AES256
+# Key generation will also be repeated 1000 times (to slow down any brute force attacks)
+jasypt:
+    algorithm: PBEWITHSHA256AND256BITAES-CBC-BC
+    providerName: BC
+    password: 'hyot2018'
+    keyObtentionIterations: 1000
+
+---
+
 #############################
 #          DATABASE         #
 #############################

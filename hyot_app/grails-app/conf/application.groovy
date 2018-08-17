@@ -33,8 +33,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		[pattern: "/customUserTasks/checkUsernameRegisteredAvailibility",   access: ['permitAll']],
 		[pattern: "/customUserTasks/checkEmailRegisteredAvailibility",   	access: ['permitAll']],
 		// Restore password
-		[pattern: "/customTasksUser/restorePassword",   					access: ['permitAll']],
-		// Password
+		[pattern: "/customUserTasks/restorePassword",   					access: ['permitAll']],
+		// Password TODO
 		[pattern: "/customUserTasks/sendEmail",   							access: ['permitAll']],
 		[pattern: "/customUserTasks/changePass",   							access: ['permitAll']],
 		[pattern: "/customUserTasks/updatePass",   							access: ['permitAll']],
