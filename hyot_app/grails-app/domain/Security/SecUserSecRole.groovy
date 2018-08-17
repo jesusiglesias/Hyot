@@ -1,9 +1,9 @@
 package Security
 
-import grails.gorm.DetachedCriteria
 import groovy.transform.ToString
-import org.codehaus.groovy.util.HashCodeHelper
 import grails.compiler.GrailsCompileStatic
+import grails.gorm.DetachedCriteria
+import org.codehaus.groovy.util.HashCodeHelper
 
 /**
  * It represents the association between SecUser and SecRole.
@@ -19,7 +19,7 @@ class SecUserSecRole implements Serializable {
 	SecRole secRole
 
 	/**
-	 * It checks if the objects are equal (the same SecUserId and SecRoleId).
+	 * It checks if the objects are equal (same SecUserId and SecRoleId).
 	 *
 	 * @param other It represents another entity.
 	 *
@@ -137,8 +137,8 @@ class SecUserSecRole implements Serializable {
 	static int removeAll(SecRole r) {
 		r == null ? 0 : where { secRole == r }.deleteAll() as int
 	}
-    // Restrictions on the attributes of the entity
 
+    // Restrictions on the attributes of the entity
     static constraints = {
 	    secUser nullable: false
 		secRole nullable: false, validator: { SecRole r, SecUserSecRole ur ->

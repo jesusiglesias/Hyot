@@ -4,32 +4,19 @@
 
 package hyot_app
 
+import grails.util.Environment
 import Security.*
 import User.*
-import grails.plugin.springsecurity.SpringSecurityUtils
-import grails.plugin.springsecurity.SecurityFilterPosition
-import grails.util.Environment
 
 /**
  * Configuration during startup and destruction of the application.
  */
 class BootStrap {
 
-    //def authenticationProcessingFilter
-    //def concurrentSessionControlAuthenticationStrategy
-    //def concurrentSessionControlStrategy
-
     /**
      * Initial operations when starting application.
      */
     def init = { servletContext ->
-
-        // It establishes the sessionAuthenticationStrategy, that is, it is enforced at authentication time various TODO
-        // rules about concurrent sessions.
-        // The filter calls the SessionRegistry for the given session ID. If there is a session information and it is
-        // marked as expired, it forces a redirect to the provided 'expiredUrl'
-        //SpringSecurityUtils.clientRegisterFilter('concurrencyFilter', SecurityFilterPosition.CONCURRENT_SESSION_FILTER)
-        //authenticationProcessingFilter.sessionAuthenticationStrategy = concurrentSessionControlAuthenticationStrategy
 
         // Populating the database depending on the environment
         switch (Environment.current) {

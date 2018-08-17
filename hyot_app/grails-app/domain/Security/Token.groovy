@@ -13,7 +13,7 @@ class Token {
 
     // Restrictions on the attributes of the entity
     static constraints = {
-        tokenType inList: ['restore']
+        tokenType inList: ['restorePassword']
         tokenStatus defaultValue:false
         dateCreated blank:false
     }

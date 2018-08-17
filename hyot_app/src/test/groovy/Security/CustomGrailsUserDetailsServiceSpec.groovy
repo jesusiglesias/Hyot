@@ -13,6 +13,6 @@ class CustomGrailsUserDetailsServiceSpec extends Specification implements Servic
 
     void "test something"() {
         expect:"fix me"
-            true == false
+        false
     }
 }

@@ -1,10 +1,9 @@
 package Security
 
-import grails.plugin.springsecurity.SpringSecurityService
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import grails.compiler.GrailsCompileStatic
-
+import grails.plugin.springsecurity.SpringSecurityService
 
 /**
  * It represents the basic information of an user (admin user).
@@ -18,7 +17,7 @@ class SecUser implements Serializable {
 
     transient SpringSecurityService springSecurityService
 
-    // Atributes
+    // Attributes
     UUID id
     Date dateCreated
     String username

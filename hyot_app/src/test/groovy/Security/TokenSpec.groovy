@@ -13,6 +13,6 @@ class TokenSpec extends Specification implements DomainUnitTest<Token> {
 
     void "test something"() {
         expect:"fix me"
-            true == false
+        false
     }
 }
