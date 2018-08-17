@@ -319,7 +319,7 @@ body {
 .form-group.form-md-line-input.has-error .form-control:focus:not([readonly]) ~ .form-control-focus:after,
 .form-group.form-md-line-input.has-error .form-control.focus:not([readonly]) ~ label:after,
 .form-group.form-md-line-input.has-error .form-control.focus:not([readonly]) ~ .form-control-focus:after {
-    background: #C16868;
+    background: #bf3737;
 }
 
 /* Error in icon */
@@ -327,7 +327,7 @@ body {
 .form-group.form-md-line-input.has-error .form-control.form-control-static ~ i,
 .form-group.form-md-line-input.has-error .form-control:focus:not([readonly]) ~ i,
 .form-group.form-md-line-input.has-error .form-control.focus:not([readonly]) ~ i {
-    color: #C16868;
+    color: #bf3737;
 }
 
 /* Error in help block */
@@ -335,7 +335,7 @@ body {
 .form-group.form-md-line-input.has-error .form-control.form-control-static ~ .help-block,
 .form-group.form-md-line-input.has-error .form-control:focus:not([readonly]) ~ .help-block,
 .form-group.form-md-line-input.has-error .form-control.focus:not([readonly]) ~ .help-block {
-    color: #C16868;
+    color: #bf3737;
 }
 
 /* Checkbox

@@ -24,6 +24,8 @@ class UrlMappings {
         "/login/loggedIn"(controller: 'customUserTasks', action: 'loggedIn')
         // Fail authentication
         "/authFail"(controller: 'customUserTasks', action: 'authFail')
+        // Restore password
+        "/forgotPassword"(controller: 'customUserTasks', action: 'restorePassword')
         /* Information files
         ======================================================*/
         // Humans.txt

@@ -117,4 +117,16 @@ class CustomUserTasksController {
         flash.errorSessions = failSessions
         redirect(controller: 'login', action: 'auth')
     }
+
+    /*-------------------------------------------------------------------------------------------*
+     *                                     RESTORE PASSWORD                                      *
+     *-------------------------------------------------------------------------------------------*/
+    /**
+     * It renders the view to restore the password.
+     *
+     * @return restorePassword View to introduce the email of the user account.
+     */
+    def restorePassword(){
+        render view: '/login/restorePassword'
+    }
 }
