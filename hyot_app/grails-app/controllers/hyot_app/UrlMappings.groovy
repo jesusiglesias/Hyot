@@ -12,11 +12,17 @@ class UrlMappings {
     static mappings = {
         "/$controller/$action?/$id?(.$format)?" {
             constraints {
-                // apply constraints here
             }
         }
 
         // Homepage
         "/"(controller: 'login', action: 'auth')
+
+        /* General tasks of unregistered user
+        ======================================================*/
+        // LoggedIn
+        "/login/loggedIn"(controller: 'customUserTasks', action: 'loggedIn')
+        // Fail authentication
+        "/authFail"(controller: 'customUserTasks', action: 'authFail')
     }
 }

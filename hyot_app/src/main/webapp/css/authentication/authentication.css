@@ -1,0 +1,327 @@
+/*-------------------------------------------------------------------------------------------*
+*                                      AUTHENTICATION                                        *
+*-------------------------------------------------------------------------------------------*/
+
+.login {
+    background-color: #6ba597;
+}
+
+/* Sign up button and author link */
+.signup-button,
+.author-link {
+    color: #000000 !important;
+}
+
+/* Logo image */
+.login .logo {
+    padding: 120px 0 0 0;
+    box-shadow: 1px 1px 10px black;
+    background: #4ea57b;
+    text-align: center;
+    font-size: 60px;
+}
+
+.login .logo a {
+    color: rgba(43, 43, 43, 0.84);
+}
+
+.login .logo a:hover,
+.login .logo a:active,
+.login .logo a:focus,
+.login .logo a:visited {
+    text-decoration: none !important;
+}
+
+/* Form box */
+.login .content {
+    width: 450px;
+    margin: 60px auto 60px auto;
+}
+
+/* Title and subtitle */
+.login .content .form-title {
+    margin-bottom: 25px;
+}
+
+/* Title */
+.login .form-title {
+    color: #ffffff;
+    font-size: 25px !important;
+    font-weight: 500 !important;
+    font-variant: small-caps;
+}
+
+/* Subtitle */
+.login .form-subtitle {
+    color: #ECF9EF;
+    font-size: 17px;
+    font-weight: 300 !important;
+    padding-left: 10px;
+}
+
+/* Login and forget form */
+.login .content .login-form,
+.login .content .forget-form {
+    padding: 0;
+    margin: 0;
+}
+
+/* Remember me and password
+======================================================*/
+/* Remember me and forgot password */
+.login .content .form-actions {
+    clear: both;
+    padding: 0 0 20px 0;
+}
+
+/* Remember me and forgot password block */
+.action-remember-password {
+    margin-bottom: 60px;
+}
+
+/* Remember me */
+.form-actions .rememberme {
+    margin: 8px 5px 0 0;
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 400 !important;
+}
+
+.form-actions .rememberme:active,
+.form-actions .rememberme:focus,
+.form-actions .rememberme:hover {
+    color: #105d41 !important;
+}
+
+/* Forgot password */
+.form-actions .forget-password-block {
+    margin-top: 8px;
+}
+
+.login .content .forget-password {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 400 !important;
+    text-decoration: none; /* Delete underline */
+}
+
+.login .content .forget-password:active,
+.login .content .forget-password:focus,
+.login .content .forget-password:hover {
+    color: #105d41 !important;
+}
+
+/* Line */
+.login-options {
+    margin: 20px 0 35px 0;
+    border-top: 1px solid #105d41;
+}
+
+/* Buttons */
+.login .btn {
+    padding: 10px 30px;
+    font-size: 13px;
+}
+
+.login .content .form-actions .btn {
+    margin-top: 1px;
+}
+
+/*  Copyright */
+.login .copyright {
+    text-align: center;
+    margin: 70px auto 0 0;
+    padding: 0;
+    color: black;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Author's name */
+.login .copyright a {
+    text-decoration: none;
+}
+
+.login .copyright a:active,
+.login .copyright a:focus,
+.login .copyright a:hover {
+    color: #EFEFEF !important;
+}
+
+/* Logo */
+.logoUAM {
+    text-align: center;
+    width: 100%;
+    margin: 35px 0 35px 0;
+}
+
+.logoUAM > a:hover{
+    text-decoration: none;
+}
+
+.logoUAM > a:first-child{
+    margin-right: 30px;
+}
+
+.logoUAM > a:nth-child(2){
+    margin-left: 30px;
+}
+
+.logoUAM img {
+    width: 170px;
+    height: 85px;
+}
+
+/* Forget form
+======================================================*/
+/* Buttons block */
+.login .content .forget-form .form-actions {
+    border: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* New password form */
+.newPassword-form {
+    margin-bottom: 50px !important;
+}
+
+/* Position of title and subtitle */
+.login .content .forget-form .form-title {
+    margin-bottom: -15px;
+}
+
+/* Distance between title and subtitle*/
+.login .content .forget-form .form-title p {
+    margin: 5px 0 0 0 !important;
+}
+
+/* Subtitle */
+.login .content .forget-form .form-title .form-subtitle {
+    padding-left: 0;
+}
+
+/* Buttons block */
+.login .content .forget-form .form-actions {
+    margin-top: 50px;
+}
+
+/* Notifications
+======================================================*/
+.alert-notuser-reauth-invalidsession {
+    margin: 35px 0 20px 0;
+}
+
+/* Forgot password alert */
+.alert-restorePassword {
+    margin: 50px 0 -20px 0;
+}
+
+/* New password successful index */
+.alert-restorePasswordSuccessful,
+.alert-newUserRegistered {
+    margin: 30px 0 0 0;
+}
+
+/* New password alert */
+.alert-newPassword {
+    margin: 40px 0 -20px 0;
+}
+
+.alert-danger-custom {
+    background-color: #C16868 !important;
+    border-color: #040202 !important;
+    color: #FFFFFF !important;
+}
+
+.alert-success-custom {
+    background-color: #5F9A75 !important;
+    border-color: #040202 !important;
+    color: #FFFFFF !important;
+}
+
+.alert-warning-custom {
+    color: #76610E;
+}
+
+.alert-warning-custom h5 {
+    color: #534510;
+}
+
+.alert-reauthentication {
+    margin-top: 0 !important;
+}
+
+/* Media queries
+======================================================*/
+
+/* Max-width: 991px */
+@media (max-width: 991px) {
+
+    .form-responsive {
+        margin-top: 70px;
+    }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+
+    /* Form box */
+    .login .content {
+        width: 300px;
+    }
+
+    .form-group.form-md-line-input {
+        position: relative;
+        margin: 35px 0 45px 0;
+        padding-top: 20px;
+    }
+
+    /* Remember me */
+    .form-actions .rememberme {
+        font-size: 14px;
+    }
+
+    /* Forgot password */
+    .login .content .forget-password {
+        font-size: 14px;
+    }
+
+    .login .checkbox {
+        font-size: 13px;
+    }
+
+    .login .form-title {
+        font-size: 24px !important;
+    }
+
+    .logoUAM > a:first-child {
+        margin-right: 20px;
+    }
+
+    .logoUAM > a:nth-child(2) {
+        margin-left: 20px;
+    }
+
+    .logoUAM img {
+        width: 140px;
+        height: 60px;
+    }
+}
+
+/* Max-width: 375px */
+@media (max-width: 375px) {
+
+    /* Form box */
+    .login .content {
+        width: 280px;
+    }
+}
+
+/* Max-width: 320 px */
+@media (max-width: 320px) {
+
+    .login .form-title {
+        font-size: 22px !important;
+    }
+}

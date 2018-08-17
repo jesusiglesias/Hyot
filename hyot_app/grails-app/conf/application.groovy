@@ -26,24 +26,19 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		/* General tasks of unregistered user TODO
         ======================================================*/
 		// LoggedIn
-		[pattern: '/customTasksUser/loggedIn',								access: ['IS_AUTHENTICATED_REMEMBERED']],
-		// Concurrent sessions
-		[pattern: '/customTasksUser/invalidSession',						access: ['permitAll']],
+		[pattern: '/customUserTasks/loggedIn',								access: ['IS_AUTHENTICATED_REMEMBERED']],
 		// Fail authentication
-		[pattern: '/customTasksUser/authFail',								access: ['permitAll']],
+		[pattern: '/customUserTasks/authFail',								access: ['permitAll']],
 		// Register normal user TODO
-		[pattern: "/customTasksUser/registerAccount",   					access: ['permitAll']],
-		[pattern: "/customTasksUser/saveUserRegistered",   					access: ['permitAll']],
-		[pattern: "/customTasksUser/enabledAccount",   						access: ['permitAll']],
-		[pattern: "/customTasksUser/checkUsernameRegisteredAvailibility",   access: ['permitAll']],
-		[pattern: "/customTasksUser/checkEmailRegisteredAvailibility",   	access: ['permitAll']],
+		[pattern: "/customUserTasks/checkUsernameRegisteredAvailibility",   access: ['permitAll']],
+		[pattern: "/customUserTasks/checkEmailRegisteredAvailibility",   	access: ['permitAll']],
 		// Restore password
 		[pattern: "/customTasksUser/restorePassword",   					access: ['permitAll']],
 		// Password
-		[pattern: "/customTasksUser/sendEmail",   							access: ['permitAll']],
-		[pattern: "/customTasksUser/changePass",   							access: ['permitAll']],
-		[pattern: "/customTasksUser/updatePass",   							access: ['permitAll']],
-		[pattern: "/customTasksUser/**",   									access: ['permitAll']],
+		[pattern: "/customUserTasks/sendEmail",   							access: ['permitAll']],
+		[pattern: "/customUserTasks/changePass",   							access: ['permitAll']],
+		[pattern: "/customUserTasks/updatePass",   							access: ['permitAll']],
+		[pattern: "/customUserTasks/**",   									access: ['permitAll']],
 
 		/* Custom tasks of administrator TODO
         ======================================================*/
@@ -138,4 +133,6 @@ grails.plugin.springsecurity.rememberMe.parameter = '_hyot_remember_me'
   //      [pattern: '/**',             filters: 'JOINED_FILTERS']
 //]*/
 
-grails.plugin.springsecurity.logout.handlerNames = ['customSessionLogoutHandler','securityContextLogoutHandler']
+grails.plugin.springsecurity.logout.handlerNames = ['customSessionLogoutHandler',
+													'rememberMeServices',
+													'securityContextLogoutHandler']
