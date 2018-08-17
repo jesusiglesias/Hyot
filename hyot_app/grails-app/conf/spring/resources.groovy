@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.session.CompositeSessionA
 
 // Place your Spring DSL code here
 beans = {
-    
+
     secUserPasswordEncoderListener(SecUserPasswordEncoderListener)
 
     // Bean registration - Login by email or username
