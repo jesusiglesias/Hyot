@@ -31,6 +31,10 @@ class UrlMappings {
         // User without role
         "/noRole"(view: '/login/noRole')
 
+        /* General tasks of administrator
+        ======================================================*/
+        "/dashboard"(controller: 'controlPanel', action: 'dashboard')
+
         /* Information files
         ======================================================*/
         // Humans.txt
