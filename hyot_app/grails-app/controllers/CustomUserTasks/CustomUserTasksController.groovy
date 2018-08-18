@@ -17,15 +17,19 @@ import org.springframework.security.web.WebAttributes
  */
 class CustomUserTasksController {
 
-    static allowedMethods = [sendEmail: "POST", updatePass: "POST"] // TODO
+    static allowedMethods = [sendEmail: "POST", updatePass: "POST"]
 
     def customUserTasksService
+    def springSecurityService
 
     // Obtain the default url of users
     @Value('${springsecurity.urlredirection.admin}')
-            adminUrlRedirection
+            redirectionControlPanel
     @Value('${springsecurity.urlredirection.user}')
-            userUrlRedirection
+            redirectionUserPage
+
+    @Value('${springsecurity.urlredirection.noRole}')
+            redirectionNoRole
 
     /**
      * It obtains the default URL redirection based on role from the call successHandler.defaultTargetUrl.
@@ -35,14 +39,18 @@ class CustomUserTasksController {
     def loggedIn() {
         log.debug("CustomUserTasksController:loggedIn()")
 
-        // Redirection to admin url
+        // Redirection to control panel
         if (SpringSecurityUtils.ifAllGranted('ROLE_ADMIN')) {
             log.debug("CustomUserTasksController:loggedIn():adminRole")
-            redirect uri: adminUrlRedirection
+            redirect uri: redirectionControlPanel
 
-        } else if (SpringSecurityUtils.ifAllGranted('ROLE_USER')) {  // Redirection to user url
+        } else if (SpringSecurityUtils.ifAllGranted('ROLE_USER')) {  // Redirection to user page
             log.debug("CustomUserTasksController:loggedIn():userRole")
-            redirect uri: userUrlRedirection
+            redirect uri: redirectionUserPage
+
+        } else { // Redirection to /noRole
+            log.error("CustomUserTasksController:loggedIn():noRole:User:${springSecurityService.authentication.principal.username}:Email:${springSecurityService.authentication.principal.email}") // It obtains the username and email from cache by principal
+            redirect uri: redirectionNoRole
         }
     }
 

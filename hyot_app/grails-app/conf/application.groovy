@@ -15,7 +15,6 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
 		/* Login controller
         ======================================================*/
-        [pattern: '/login/full',        access: ['IS_AUTHENTICATED_REMEMBERED']], // TODO
         [pattern: '/login/**',          access: ['permitAll']],
 
         /* Domain
@@ -23,24 +22,27 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         [pattern: '/SecUser/**',        access: ['ROLE_ADMIN']],
         [pattern: '/User/**',           access: ['ROLE_ADMIN']],
 
-		/* General tasks of unregistered user TODO
+		/* General tasks of unregistered user
         ======================================================*/
 		// LoggedIn
-		[pattern: '/customUserTasks/loggedIn',								access: ['IS_AUTHENTICATED_REMEMBERED']],
+		// User must be authenticated by explicit login or remember me cookie
+		[pattern: '/customUserTasks/loggedIn',						access: ['IS_AUTHENTICATED_REMEMBERED']],
 		// Fail authentication
-		[pattern: '/customUserTasks/authFail',								access: ['permitAll']],
+		[pattern: '/customUserTasks/authFail',						access: ['permitAll']],
 		// Register normal user TODO
 		[pattern: "/customUserTasks/checkUsernameRegisteredAvailibility",   access: ['permitAll']],
 		[pattern: "/customUserTasks/checkEmailRegisteredAvailibility",   	access: ['permitAll']],
 		// Restore password
-		[pattern: "/customUserTasks/restorePassword",   					access: ['permitAll']],
+		[pattern: "/customUserTasks/restorePassword",   			access: ['permitAll']],
 		// Password
-		[pattern: "/customUserTasks/sendEmail",   							access: ['permitAll']],
-		[pattern: "/customUserTasks/changePass",   							access: ['permitAll']],
-		[pattern: "/customUserTasks/updatePass",   							access: ['permitAll']],
-		[pattern: "/customUserTasks/**",   									access: ['permitAll']],
+		[pattern: "/customUserTasks/sendEmail",   					access: ['permitAll']],
+		[pattern: "/customUserTasks/changePass",   					access: ['permitAll']],
+		[pattern: "/customUserTasks/updatePass",   					access: ['permitAll']],
+		[pattern: "/customUserTasks/**",   							access: ['permitAll']],
+		// No role
+		[pattern: '/noRole', 										access: ['IS_AUTHENTICATED_REMEMBERED']],
 
-		/* Custom tasks of administrator TODO
+		/* Custom tasks of administrator
         ======================================================*/
 	/*	'/customTasksAdmin/dashboard':              ['ROLE_ADMIN'],
 		'/customTasksAdmin/reloadUsers':            ['ROLE_ADMIN'],
@@ -93,6 +95,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 // URL redirection based on role
 springsecurity.urlredirection.admin = '/dashboard'
 springsecurity.urlredirection.user = '/home'
+springsecurity.urlredirection.noRole = '/noRole'
 
 // URL of login page (default: "/login/auth")
 grails.plugin.springsecurity.auth.loginFormUrl = '/'

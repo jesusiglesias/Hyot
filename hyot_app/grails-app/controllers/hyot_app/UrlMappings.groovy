@@ -28,6 +28,8 @@ class UrlMappings {
         "/forgotPassword"(controller: 'customUserTasks', action: 'restorePassword')
         // Change password
         "/newPassword"(controller: 'customUserTasks', action: 'changePass')
+        // User without role
+        "/noRole"(view: '/login/noRole')
 
         /* Information files
         ======================================================*/
