@@ -43,29 +43,6 @@ class SecUser implements Serializable {
         (SecUserSecRole.findAllBySecUser(this) as List<SecUserSecRole>)*.secRole as Set<SecRole>
     }
 
-    /**
-     * It encrypts the password before inserting the entity.
-     */
-    def beforeInsert() {
-        encodePassword()
-    }
-
-    /**
-     * It encrypts the password before updating the entity.
-     */
-    def beforeUpdate() {
-        if (isDirty('password')) {
-            encodePassword()
-        }
-    }
-
-    /**
-     * It encrypts the user's password.
-     */
-    protected void encodePassword() {
-        password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
-    }
-
     // Restrictions on the attributes of the entity
     static constraints = {
         username blank: false, unique: true, maxSize: 30

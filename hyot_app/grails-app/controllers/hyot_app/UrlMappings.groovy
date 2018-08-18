@@ -18,6 +18,13 @@ class UrlMappings {
         // Homepage
         "/"(controller: 'login', action: 'auth')
 
+        /* Domain URLS
+        ======================================================*/
+        // Admin group
+        group("/administrator") {
+            "/"(controller: 'secUser', action: 'index')
+            "/create"(controller: 'secUser', action: 'create')
+            "/create-error"(controller: 'secUser', action: 'save')
         /* General tasks of unregistered user
         ======================================================*/
         // LoggedIn
