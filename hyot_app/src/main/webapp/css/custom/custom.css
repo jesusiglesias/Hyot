@@ -221,8 +221,7 @@ input:-webkit-autofill:active {
 }
 
 .home-icon-hover {
-    color: #6CB191 !important;
-    font-size: 16px !important;
+    color: #1d9292 !important;
 }
 
 .show-title {
@@ -261,11 +260,16 @@ input:-webkit-autofill:active {
     padding: 0;
     color: black;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .copyright a {
     color: black;
+}
+
+.copyright a:hover {
+    color: #4DB3A2 !important;
+    text-decoration: none;
 }
 
 /* Import functionality */
@@ -301,7 +305,6 @@ table.dataTable tbody tr:hover {
 
 .icon-button-mouseOver {
     color: rgb(234, 220, 177);
-    padding-right: 3px;
 }
 
 .iconDelete-button:active,
@@ -378,6 +381,21 @@ table.dataTable tbody tr:hover {
 #container-password {
     margin-top: 30px;
 }
+
+#entity-table_wrapper,
+#entity-table_filter label,
+#entity-table_length label {
+    font-weight: 200 !important;
+}
+
+#entity-table tr td {
+    font-weight: 400 !important;
+}
+
+button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-button:focus:not(.disabled) {
+    text-shadow: 0 0 0 !important;
+}
+
 
 /* Search form in normal user pages
 =================================================================== */
@@ -1088,7 +1106,7 @@ table.dataTable tbody tr:hover {
     float: left;
     margin: -3px 0 10px;
     color: #65A0D0;
-    font-weight: 600;
+    font-weight: 400;
     font-variant: small-caps;
     font-size: 16px;
     word-break: break-all;
@@ -1101,12 +1119,12 @@ table.dataTable tbody tr:hover {
     color: #7B7B7B;
     font-size: 12px;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .mt-comments .mt-comment .mt-comment-body .mt-comment-text{
     color: #777777;
-    font-weight: 600;
+    font-weight: 200;
     word-break: break-all;
     font-size: 13px;
 }

@@ -193,6 +193,7 @@ body {
     width: 195px;
     text-align: left;
     padding: 2px 0 3px 13px;
+    font-weight: 200;
 }
 
 .exit-switch-button i {
@@ -269,7 +270,7 @@ body {
 .page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle > .username {
     display: inline-block;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 200;
     color: #ffffff;
     font-variant: small-caps;
 }
@@ -321,7 +322,7 @@ body {
 /* Open menu - text and icon */
 .page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-menu > li > a {
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 200;
 }
 
 /* Open menu - icon */
@@ -640,6 +641,7 @@ body {
 /* Sidebar box */
 .page-sidebar .page-sidebar-menu,
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu {
+    padding-top: 20px !important;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -692,7 +694,7 @@ body {
     padding: 10px 5px 10px 23px;
     text-decoration: none;
     font-size: 14px;
-    font-weight: 500 !important;
+    font-weight: 200 !important;
     line-height: 1.7;
 }
 
@@ -763,7 +765,7 @@ body {
     margin: 0;
     padding: 0;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .page-sidebar .page-sidebar-menu > li.heading + li > a,
@@ -791,6 +793,7 @@ body {
     background: #4DB3A2;
     border-top-color: transparent;
     color: #ffffff;
+    font-weight: 200 !important;
 }
 
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a:hover,
@@ -863,7 +866,7 @@ body {
 
 .page-sidebar-responsive .page-sidebar-menu > li:hover > a > i,
 .page-sidebar .page-sidebar-menu > li.open > a > i {
-    color: #545454;
+    color: #757575bd;
 }
 
 .page-sidebar .page-sidebar-menu > li.active > a > .selected,
@@ -986,7 +989,7 @@ body {
 .page-sidebar .sidebar-search,
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search {
     padding: 0;
-    margin: 20px 18px 35px 25px;
+    margin: 3px 18px 35px 25px;
 }
 
 .page-sidebar .sidebar-search .remove,
@@ -1053,6 +1056,7 @@ body {
 .page-sidebar .sidebar-search .input-group .form-control {
     background-color: #F6F6F6;
     color: #757575;
+    font-weight: 200;
 }
 
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search .input-group .form-control::-moz-placeholder,
@@ -1528,8 +1532,8 @@ body {
 
 .page-title small {
     font-size: 18px;
-    letter-spacing: 2px;
-    font-weight: 300;
+    letter-spacing: 1px;
+    font-weight: 100;
     color: #666;
 }
 
@@ -1540,8 +1544,7 @@ body {
 }
 
 .page-title a:hover {
-    color: #105D5D !important;
-    font-weight: 400;
+    color: #1d9292 !important;
 }
 
 /* Page title - icon */
@@ -1617,7 +1620,7 @@ body {
     font-size: 14px;
     text-shadow: none;
     text-decoration:none;
-    font-weight: 600;
+    font-weight: 200;
     font-variant: small-caps;
 }
 
@@ -1626,12 +1629,12 @@ body {
     font-size: 14px;
     text-shadow: none;
     text-decoration:none;
-    font-weight: 400;
+    font-weight: 200;
     font-variant: small-caps;
 }
 
 .page-bar .page-breadcrumb > li > a:hover {
-    color: #6CB191;
+    color: #1d9292;
 }
 
 .page-bar .page-breadcrumb > li > i {

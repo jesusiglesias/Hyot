@@ -87,6 +87,7 @@ endpoints:
 #############################
 #            MAIL           #
 #############################
+
 grails:
     mail:
         host: smtp.gmail.com
@@ -104,6 +105,7 @@ grails:
 #############################
 #    JASYPT ENCRYPTATION    #
 #############################
+
 # Encryptation algorithm - AES256
 # Key generation will also be repeated 1000 times (to slow down any brute force attacks)
 jasypt:
@@ -117,6 +119,7 @@ jasypt:
 #############################
 #     TOKEN EXPIRATION      #
 #############################
+
 # Maximum time of token - Expiration in minutes
 token.expiration: 30
 
@@ -176,3 +179,13 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2
+
+---
+
+#############################
+#    OTHER CONFIGURATIONS   #
+#############################
+
+# Default value of pagination
+paginate:
+    defaultValue: 0

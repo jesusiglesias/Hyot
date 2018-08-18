@@ -29,9 +29,6 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		[pattern: '/customUserTasks/loggedIn',						access: ['IS_AUTHENTICATED_REMEMBERED']],
 		// Fail authentication
 		[pattern: '/customUserTasks/authFail',						access: ['permitAll']],
-		// Register normal user TODO
-		[pattern: "/customUserTasks/checkUsernameRegisteredAvailibility",   access: ['permitAll']],
-		[pattern: "/customUserTasks/checkEmailRegisteredAvailibility",   	access: ['permitAll']],
 		// Restore password
 		[pattern: "/customUserTasks/restorePassword",   			access: ['permitAll']],
 		// Password

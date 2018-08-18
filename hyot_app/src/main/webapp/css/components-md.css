@@ -2405,7 +2405,7 @@ fieldset[disabled] .btn.yellow-mint:not(.btn-outline).active {
 
 .btn {
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 200;
     text-transform: uppercase;
     transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
     -webkit-border-radius: 2px;
@@ -3514,12 +3514,12 @@ h6 .label {
     text-transform: uppercase;
     padding: 2px 6px 4px 6px;
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 200;
 }
 
 .label.label-sm {
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 200;
     padding: 3px 6px 3px 6px;
 }
 
@@ -4575,7 +4575,7 @@ h6 .label {
 
 .widget-thumb .widget-thumb-heading {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 200;
     color: #f9f9f9;
     margin: 0 0 20px 0;
 }
@@ -4605,14 +4605,14 @@ h6 .label {
     padding-top: 2px;
     display: block;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 200;
     color: #626262;
 }
 
 .widget-thumb .widget-thumb-body .widget-thumb-body-stat {
     display: block;
     font-size: 30px;
-    font-weight: 600;
+    font-weight: 200;
     color: #3e4f5e;
 }
 

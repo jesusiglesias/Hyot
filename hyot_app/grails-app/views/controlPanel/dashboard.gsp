@@ -122,14 +122,14 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <span><g:message code="layouts.main_auth_admin.pageBreadcrumb.subtitle.dashboard" default="Dashboard & Statistics"/></span>
+                    <span><g:message code="layouts.main_auth_admin.pageBreadcrumb.subtitle.dashboard" default="dashboard & statistics"/></span>
                 </li>
             </ul>
         </div> <!-- /.Page-bar -->
 
     <!-- Page-title -->
         <h3 class="page-title">
-            <g:link controller="controlPanel" action="dashboard"><g:message code="layouts.main_auth_admin.body.title.controlPanel" default="Control panel"/></g:link>
+            <g:link controller="controlPanel" action="dashboard"><g:message code="layouts.main_auth_admin.body.title.controlPanel" default="control panel"/></g:link>
             <i class="icon-arrow-right icon-title-domain"></i>
             <small class="subtitle-inlinePage"><g:message code="layouts.main_auth_admin.body.subtitle.controlPanel" default="Statistics"/></small>
         </h3>
@@ -211,7 +211,7 @@
                         <div class="portlet-title">
                             <div class="caption font-green-dark">
                                 <i class="icon-people font-green-dark"></i>
-                                <span class="caption-subject sbold uppercase"><g:message code="layouts.main_auth_admin.body.portlet.recentUsers" default="Recent users"/></span>
+                                <span class="caption-subject xthin uppercase"><g:message code="layouts.main_auth_admin.body.portlet.recentUsers" default="Recent users"/></span>
                             </div>
                             <div class="tools">
                                 <i class="fa fa-refresh reloadGraph reloadLastUsers"></i>

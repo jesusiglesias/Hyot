@@ -212,5 +212,5 @@
 
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li .sub-menu li > a,
 .page-sidebar .page-sidebar-menu li .sub-menu li > a {
-    font-weight: 400;
+    font-weight: 200;
 }
