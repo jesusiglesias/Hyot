@@ -26,10 +26,48 @@ class ControlPanelController {
         def roleAdminUser = SecRole.findByAuthority("ROLE_ADMIN")
         def adminUsers = SecUserSecRole.findAllBySecRole(roleAdminUser).secUser
 
-        // Obtaining the lastest 10 registered users
+        // Obtaining the last 10 registered users
         def lastUsers = SecUser.executeQuery("from SecUser where id in (select secUser.id from SecUserSecRole where secRole.id = :roleId) order by dateCreated desc", [roleId: roleUser.id], [max: 10])
 
         render view: 'dashboard', model: [normalUsers: normalUsers.size(), adminUsers: adminUsers.size(), lastUsers: lastUsers]
+    }
+
+    /**
+     * It obtains the number of users from the AJAX call.
+     */
+    def reloadNormalUser() {
+        log.debug("ControlPanelController:reloadUsers()")
+
+        def roleUser = SecRole.findByAuthority("ROLE_USER")
+        def normalUsers = SecUserSecRole.findAllBySecRole(roleUser).secUser
+
+        render normalUsers.size()
+    }
+
+    /**
+     * It obtains the number of admin users from the AJAX call.
+     */
+    def reloadAdmin() {
+        log.debug("ControlPanelController:reloadAdmin()")
+
+        def roleAdminUser = SecRole.findByAuthority("ROLE_ADMIN")
+        def adminUsers = SecUserSecRole.findAllBySecRole(roleAdminUser).secUser
+
+        render adminUsers.size()
+    }
+
+    /**
+     * It obtains the lastest 10 registered users from the AJAX call.
+     */
+    def reloadLastUsers() {
+        log.debug("ControlPanelController:reloadLastUsers()")
+
+        def roleUser = SecRole.findByAuthority("ROLE_USER")
+
+        // Obtaining the last 10 registered users
+        def lastUsers = SecUser.executeQuery("from SecUser where id in (select secUser.id from SecUserSecRole where secRole.id = :roleId) order by dateCreated desc", [roleId: roleUser.id], [max: 10])
+
+        render(template:'lastUsers', model: [lastUsers: lastUsers])
     }
 
     /**

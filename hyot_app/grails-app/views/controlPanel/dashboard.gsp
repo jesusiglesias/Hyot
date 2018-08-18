@@ -9,20 +9,14 @@
 <body>
 
 <script type="text/javascript">
-
     // Variables to use in javascript
     var fullscreenTooltip = '${g.message(code:'layouts.main_auth_admin.body.content.tooltip.fullscreen', default:'Fullscreen!')}';
     var removeTooltip = '${g.message(code:'layouts.main_auth_admin.body.content.tooltip.remove', default:'Remove')}';
     var collapseTooltip = '${g.message(code:'layouts.main_auth_admin.body.content.tooltip.collapse', default:'Collapse/Expand')}';
     var reloadTooltip = '${g.message(code:'default.button.reload.tooltip', default:'Reload')}';
-
-    // TODO
     var reloadAjaxError = '${g.message(code:'default.ajax.error', default:'Error on reloading the content. Please, you try again later.')}';
-    var reloadUsersURL = '${g.createLink(controller: "customTasksAdmin", action: 'reloadUsers')}';
-    var reloadAdminURL = '${g.createLink(controller: "customTasksAdmin", action: 'reloadAdmin')}';
-    var reloadEventURL = '${g.createLink(controller: "customTasksAdmin", action: 'reloadEvent')}';
-    var reloadBookingURL = '${g.createLink(controller: "customTasksAdmin", action: 'reloadBookings')}';
-
+    var reloadNormalUserURL = '${g.createLink(controller: "controlPanel", action: 'reloadNormalUser')}';
+    var reloadAdminURL = '${g.createLink(controller: "controlPanel", action: 'reloadAdmin')}';
 </script>
 
 <!-- Page-sidebar-wrapper -->
@@ -32,7 +26,7 @@
         <!-- Page-sidebar-menu -->
         <ul class="page-sidebar-menu page-header-fixed" data-keep-expanded="true" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 30px">
 
-            <!-- Load search action -->
+            <!-- Load search action TODO -->
             <g:render template="./searchControlPanel"/>
 
             <li class="nav-item start active open">
@@ -147,20 +141,6 @@
             <div class="row panel-row-dashboard">
                 <div class="col-md-6">
                     <!-- Widget thumb -->
-                    <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered widget-users">
-                        <h4 class="widget-thumb-heading"><g:message code="layouts.main_auth_admin.body.widget.user" default="Normal users"/></h4>
-                        <i class="fa fa-refresh iconReload reloadUsers"></i>
-                        <div class="widget-thumb-wrap">
-                            <i class="widget-thumb-icon bg-green-dark icon-user"></i>
-                            <div class="widget-thumb-body">
-                                <span class="widget-thumb-subtitle"><g:message code="layouts.main_auth_admin.body.widget.total" default="Total"/></span>
-                                <span class="widget-thumb-body-stat counterUsers" data-counter="counterup" data-value="${normalUsers}">${normalUsers}</span>
-                            </div>
-                        </div>
-                    </div> <!-- /.Widget thumb -->
-                </div>
-                <div class="col-md-6">
-                    <!-- Widget thumb -->
                     <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered widget-admin">
                         <h4 class="widget-thumb-heading"><g:message code="layouts.main_auth_admin.body.widget.admin" default="Admin users"/></h4>
                         <i class="fa fa-refresh iconReload reloadAdmin"></i>
@@ -169,6 +149,20 @@
                             <div class="widget-thumb-body">
                                 <span class="widget-thumb-subtitle"><g:message code="layouts.main_auth_admin.body.widget.total" default="Total"/></span>
                                 <span class="widget-thumb-body-stat counterAdmin" data-counter="counterup" data-value="${adminUsers}">${adminUsers}</span>
+                            </div>
+                        </div>
+                    </div> <!-- /.Widget thumb -->
+                </div>
+                <div class="col-md-6">
+                    <!-- Widget thumb -->
+                    <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered widget-normaluser">
+                        <h4 class="widget-thumb-heading"><g:message code="layouts.main_auth_admin.body.widget.user" default="Normal users"/></h4>
+                        <i class="fa fa-refresh iconReload reloadNormalUser"></i>
+                        <div class="widget-thumb-wrap">
+                            <i class="widget-thumb-icon bg-green-dark icon-user"></i>
+                            <div class="widget-thumb-body">
+                                <span class="widget-thumb-subtitle"><g:message code="layouts.main_auth_admin.body.widget.total" default="Total"/></span>
+                                <span class="widget-thumb-body-stat counterNormalUser" data-counter="counterup" data-value="${normalUsers}">${normalUsers}</span>
                             </div>
                         </div>
                     </div> <!-- /.Widget thumb -->
@@ -207,12 +201,12 @@
 
             </div> <!-- /.Widget -->
 
-        <!-- Graphs -->
+            <!-- Graphs -->
             <div class="row">
 
                 <!-- Last 10 users registered -->
-                <%--<div class="col-md-6">
-                    <!-- Portlet TODO
+                <div class="col-md-6">
+                    <!-- Portlet -->
                     <div class="portlet light bg-inverse portlet-users">
                         <div class="portlet-title">
                             <div class="caption font-green-dark">
@@ -232,8 +226,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div> <!-- /.Portlet
-                </div> --%>
+                    </div> <!-- /.Portlet -->
+                </div>
             </div> <!-- /.Graphs -->
         </div>
     </div> <!-- Page-content -->

@@ -44,16 +44,12 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
 		/* Custom tasks of administrator
         ======================================================*/
-	/*	'/customTasksAdmin/dashboard':              ['ROLE_ADMIN'],
-		'/customTasksAdmin/reloadUsers':            ['ROLE_ADMIN'],
-		'/customTasksAdmin/reloadAdmin':            ['ROLE_ADMIN'],
-		'/customTasksAdmin/reloadEvent':            ['ROLE_ADMIN'],
-		'/customTasksAdmin/reloadBooking':          ['ROLE_ADMIN'],
-		'/customTasksAdmin/reloadLastUsers':        ['ROLE_ADMIN'],
-		'/customTasksAdmin/profileImage':           ['ROLE_ADMIN', 'ROLE_USER'],
-		'/customTasksBackend/**':                   ['ROLE_ADMIN'],*/
-
-		/* Custom tasks of normal user TODO
+		[pattern: '/controlPanel/dashboard',        access: ['ROLE_ADMIN']],
+        [pattern: '/controlPanel/profileImage',     access: ['ROLE_ADMIN', 'ROLE_USER']],
+	    [pattern: '/controlPanel/reloadAdmin',      access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/reloadNormalUser', access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/reloadLastUsers',  access: ['ROLE_ADMIN']],
+        [pattern: '/controlPanel/**',               access: ['ROLE_ADMIN']],
         ======================================================*/
 		/*'/customTasksNormalUser/home':                ['ROLE_USER'],
 		'/customTasksNormalUser/filterEvent':         ['ROLE_USER'],
