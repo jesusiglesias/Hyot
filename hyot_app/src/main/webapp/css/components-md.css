@@ -3309,6 +3309,7 @@ Custom color buttons
 
 .input-icon > .form-control {
     padding-left: 33px;
+    font-weight: 200;
 }
 
 .input-group .input-icon > .form-control {

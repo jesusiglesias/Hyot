@@ -4,6 +4,7 @@ import grails.gorm.transactions.Transactional
 import org.springframework.beans.factory.annotation.Value
 import grails.converters.JSON
 import org.apache.commons.lang.StringUtils
+import org.springframework.dao.DataIntegrityViolationException
 
 /**
  * Class that represents to the SecUser controller (actions for admin user).
@@ -203,6 +204,179 @@ class SecUserController {
                     flash.secUserErrorMessage = g.message(code: 'default.not.created.message', default: 'ERROR! {0} <strong>{1}</strong> was not created.', args: [message(code: 'admin.label', default: 'Administrator'), secUserInstance.username])
                     render view: "create", model: [secUserInstance: secUserInstance]
                 }
+            }
+        }
+    }
+
+    /**
+     * It edits an existing administrator with the new values of each field.
+     *
+     * @param secUserInstance It represents the administrator to edit.
+     * @return secUserInstance It represents the secUser instance.
+     */
+    def edit(SecUser secUserInstance) {
+        respond secUserInstance
+    }
+
+
+    /**
+     * It updates an existing administrator in database.
+     *
+     * @param secUserInstance It represents the administrator information to update.
+     * @return return If the secUser instance is null or has errors.
+     */
+    @Transactional
+    update(SecUser secUserInstance) {
+
+        if (secUserInstance == null) {
+
+            // Roll back in database
+            transactionStatus.setRollbackOnly()
+
+            notFound()
+            return
+        }
+
+        // It checks concurrent updates
+        if (params.version) {
+            def version = params.version.toLong()
+
+            if (secUserInstance.version > version) {
+
+                // Roll back in database
+                transactionStatus.setRollbackOnly()
+
+                // Clear the list of errors
+                secUserInstance.clearErrors()
+                secUserInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [secUserInstance.username] as Object[], "Another user has updated the <strong>{0}</strong> instance while you were editing.")
+
+                respond secUserInstance.errors, view:'edit'
+                return
+            }
+        }
+
+        // Validate the instance
+        if (!secUserInstance.validate()) {
+            respond secUserInstance.errors, view:'edit'
+            return
+        }
+
+        // Back-end validation - Password with maxlength
+        if (secUserInstance.password.length() > 32) {
+
+            // Roll back in database
+            transactionStatus.setRollbackOnly()
+
+            flash.secUserErrorMessage = g.message(code: 'default.password.maxlength', default: '<strong>Password</strong> field does not match with the required pattern.')
+            render view: "edit", model: [secUserInstance: secUserInstance]
+            return
+        }
+
+        // Check if password and username are same
+        if (secUserInstance.password.toLowerCase() == secUserInstance.username.toLowerCase()) {
+
+            // Roll back in database
+            transactionStatus.setRollbackOnly()
+
+            flash.secUserErrorMessage = g.message(code: 'default.password.username', default: '<strong>Password</strong> field must not be equal to username.')
+            render view: "edit", model: [secUserInstance: secUserInstance]
+            return
+        }
+
+        // Back-end validation - Confirm password
+        if (!StringUtils.isNotBlank(secUserInstance.confirmPassword)) {
+
+            // Roll back in database
+            transactionStatus.setRollbackOnly()
+
+            flash.secUserErrorMessage = g.message(code: 'default.password.confirm', default: '<strong>Confirm password</strong> field cannot be null.')
+            render view: "edit", model: [secUserInstance: secUserInstance]
+            return
+        }
+
+        // Check if password and confirm password fields are same
+        if (secUserInstance.password != secUserInstance.confirmPassword) {
+
+            // Roll back in database
+            transactionStatus.setRollbackOnly()
+
+            flash.secUserErrorMessage = g.message(code: 'default.password.notsame', default: '<strong>Password</strong> and <strong>Confirm password</strong> fields must match.')
+            render view: "edit", model: [secUserInstance: secUserInstance]
+            return
+        }
+
+        try {
+
+            // Update admin data
+            secUserInstance.save(flush:true, failOnError: true)
+
+            request.withFormat {
+                form multipartForm {
+                    flash.secUserMessage = g.message(code: 'default.updated.message', default: '{0} <strong>{1}</strong> updated successful.', args: [message(code: 'admin.label', default: 'Administrator'), secUserInstance.username])
+                    redirect view: 'index'
+                }
+                '*' { respond secUserInstance, [status: OK] }
+            }
+
+        } catch (Exception exception) {
+            log.error("SecUserController():update():Exception:Administrator:${secUserInstance.username}:${exception}")
+
+            // Roll back in database
+            transactionStatus.setRollbackOnly()
+
+            request.withFormat {
+                form multipartForm {
+                    flash.secUserErrorMessage = g.message(code: 'default.not.updated.message', default: 'ERROR! {0} <strong>{1}</strong> was not updated.', args: [message(code: 'admin.label', default: 'Administrator'), secUserInstance.username])
+                    render view: "edit", model: [secUserInstance: secUserInstance]
+                }
+            }
+        }
+    }
+
+    /**
+     * It deletes an existing administrator in database.
+     *
+     * @param secUserInstance It represents the administrator information to delete.
+     * @return return If the secUser instance is null, the notFound function is called.
+     */
+    @Transactional
+    delete(SecUser secUserInstance) {
+
+        if (secUserInstance == null) {
+
+            // Roll back in database
+            transactionStatus.setRollbackOnly()
+
+            notFound()
+            return
+        }
+
+        try {
+            // Delete SecUserSecRole relations
+            SecUserSecRole.findAllBySecUser(secUserInstance)*.delete(flush: true, failOnError: true)
+
+            // Delete administrator
+            secUserInstance.delete(flush:true, failOnError: true)
+
+            request.withFormat {
+                form multipartForm {
+                    flash.secUserMessage = g.message(code: 'default.deleted.message', default: '{0} <strong>{1}</strong> deleted successful.', args: [message(code: 'admin.label', default: 'Administrator'), secUserInstance.username])
+                    redirect action: "index", method: "GET"
+                }
+                '*' { render status: NO_CONTENT }
+            }
+        } catch (DataIntegrityViolationException exception) {
+            log.error("SecUserController():delete():DataIntegrityViolationException:Administrator:${secUserInstance.username}:${exception}")
+
+            // Roll back in database
+            transactionStatus.setRollbackOnly()
+
+            request.withFormat {
+                form multipartForm {
+                    flash.secUserErrorMessage = g.message(code: 'default.not.deleted.message', default: 'ERROR! {0} <strong>{1}</strong> was not deleted.', args: [message(code: 'admin.label', default: 'Administrator'), secUserInstance.username])
+                    redirect action: "index", method: "GET"
+                }
+                '*' { render status: NO_CONTENT }
             }
         }
     }

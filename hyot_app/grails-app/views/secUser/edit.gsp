@@ -1,3 +1,4 @@
+<%@ page import="Security.SecUser" %>
 <%@ page import="org.springframework.validation.FieldError" %>
 <!DOCTYPE html>
 <html>
@@ -5,7 +6,6 @@
     <meta name="layout" content="main_controlpanel">
     <title><g:message code="layouts.main_auth_admin.head.title.admin" default="HYOT | Administrators management"/></title>
     <link rel="stylesheet" href="${resource(dir: 'css/iCheck', file: 'green.css')}" type="text/css"/>
-    <link rel="stylesheet" href="${resource(dir: 'css/fileInput', file: 'bootstrap-fileinput.css')}" type="text/css"/>
 
     <script>
         // Variables to use in script
@@ -78,17 +78,17 @@
                     <span class="arrow open"></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="nav-item active open">
+                    <li class="nav-item">
                         <g:link uri="/administrator/create" class="nav-link">
                             <i class="fa fa-user-plus"></i>
                             <span class="title"><g:message code="layouts.main_auth_admin.sidebar.new" default="New"/></span>
-                            <span class="selected"></span>
                         </g:link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active open">
                         <g:link uri="/administrator" class="nav-link">
                             <i class="fa fa-list"></i>
                             <span class="title"><g:message code="layouts.main_auth_admin.sidebar.list" default="List"/></span>
+                            <span class="selected"></span>
                         </g:link>
                     </li>
                 </ul>
@@ -118,7 +118,7 @@
             </li>
             <!-- /.USERS -->
 
-            <!-- GENERAL -->
+            <!-- GENERAL TODO -->
             <li class="heading">
                 <h3 class="uppercase"><g:message code="layouts.main_auth_admin.sidebar.title.general" default="General"/></h3>
             </li>
@@ -149,11 +149,11 @@
         <h3 class="page-title">
             <g:link uri="/administrator"><g:message code="layouts.main_auth_admin.body.title.admin" default="administrators management"/></g:link>
             <i class="icon-arrow-right icon-title-domain"></i>
-            <small><g:message code="layouts.main_auth_admin.body.subtitle.admin.create" default="Create administrator"/></small>
+            <small><g:message code="layouts.main_auth_admin.body.subtitle.admin.edit" default="Edit administrator"/></small>
         </h3>
 
         <!-- Contain page -->
-        <div id="create-domain">
+        <div id="edit-domain">
 
             <!-- Accordion -->
             <div class="portlet-body">
@@ -207,18 +207,33 @@
                 </g:javascript>
             </g:hasErrors>
 
-            <!-- Creation form -->
-            <g:form url="[resource:secUser, action:'save']" enctype="multipart/form-data" autocomplete="on" class="horizontal-form admin-form">
-                <fieldset class="form">
-                    <g:render template="form"/>
-                </fieldset>
+            <!-- Delete button -->
+            <g:form url="[resource:secUser, controller:'secUser', action:'delete']" method="DELETE" class="form-delete">
+                <div class="btn-group delete-confirm-popover">
+                    <button class="btn red-soft btn-block iconDelete-button-container" id="delete-confirm-popover" data-toggle="confirmation" data-placement="rigth" data-popout="true" data-singleton="true"
+                            data-original-title="${message(code: 'layouts.main_auth_admin.content.delete.confirm.message', default: 'Are you sure?')}"
+                            data-btn-cancel-label="${message(code: 'default.button.cancel.label', default: 'Cancel')}"
+                            data-btn-ok-label="${message(code: 'default.button.delete.label', default: 'Delete')}"
+                            data-btnOkIcon="glyphicon glyphicon-ok" data-btnOkClass="btn btn-sm btn-success"
+                            data-btnCancelIcon="glyphicon glyphicon-remove" data-btnCancelClass="btn btn-sm btn-danger">
+                        <i class="fa fa-trash iconDelete-button"></i>
+                        <g:message code="layouts.main_auth_admin.body.content.admin.delete" default="Delete administrator"/>
+                    </button>
+                </div>
+            </g:form>
 
-                <div class="domain-button-group-less">
+            <!-- Edit form -->
+            <g:form url="[resource:secUser, action:'update']" method="PUT" autocomplete="on" class="horizontal-form admin-form">
+                <g:hiddenField name="version" value="${secUser?.version}" />
+                <fieldset class="form">
+                    <g:render template="formEdit"/>
+                </fieldset>
+                <div class="domain-button-group">
                     <!-- Cancel button -->
                     <g:link type="button" uri="/administrator" class="btn grey-mint"><g:message code="default.button.cancel.label" default="Cancel"/></g:link>
-                    <button type="submit" class="btn green-dark icon-button-container" name="create">
+                    <button type="submit" class="btn green-dark icon-button-container" name="update">
                         <i class="fa fa-check icon-button"></i>
-                        <g:message code="default.button.create.label" default="Create"/>
+                        <g:message code="default.button.update.label" default="Update"/>
                     </button>
                 </div>
             </g:form>
@@ -227,13 +242,15 @@
 </div> <!-- /. Page-content-wrapper -->
 
 <!-- LOAD JAVASCRIPT -->
+<asset:javascript src="confirmation/bootstrap-confirmation.min.js"/>
+<asset:javascript src="confirmation/custom-delete.js"/>
 <asset:javascript src="iCheck/icheck.min.js"/>
+<asset:javascript src="maxLength/bootstrap-maxlength.min.js"/>
 <asset:javascript src="password/custom-password.js"/>
 <asset:javascript src="password/pwstrength-bootstrap.min.js"/>
-<asset:javascript src="maxLength/bootstrap-maxlength.min.js"/>
 <asset:javascript src="customIcons/secUser-handler.js"/>
 <asset:javascript src="domain-validation/admin-validation.js"/>
-<asset:javascript src="fileInput/bootstrap-fileinput.js"/>
 
 </body>
 </html>
+
