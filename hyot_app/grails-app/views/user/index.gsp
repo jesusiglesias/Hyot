@@ -1,9 +1,9 @@
-<%@ page import="Security.SecUser" %>
+<%@ page import="User.User" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="layout" content="main_controlpanel">
-    <title><g:message code="layouts.main_auth_admin.head.title.admin" default="HYOT | Administrators management"/></title>
+    <title><g:message code="layouts.main_auth_admin.head.title.user" default="HYOT | Normal users management"/></title>
 
     <!-- LOAD CSS -->
     <link rel="stylesheet" href="${resource(dir: 'css/datatable', file: 'datatables.css')}" type="text/css"/>
@@ -24,6 +24,18 @@
 
 <body>
 
+<!-- Search request from quick search -->
+<g:if test="${params.quickSearch}">
+    <script type="text/javascript">
+        var _textSearch = '${params.quickSearch}'
+    </script>
+</g:if>
+<g:else>
+    <script type="text/javascript">
+        var _textSearch = ''
+    </script>
+</g:else>
+
 <script type="text/javascript">
 
     // Variables to use in javascript
@@ -33,8 +45,8 @@
     var _csv = '${g.message(code: "layouts.main_auth_admin.content.csv", default: "CSV")}';
     var _columns = '${g.message(code: "layouts.main_auth_admin.content.columns", default: "Columns")}';
     var _restore = '${g.message(code: "layouts.main_auth_admin.content.restore", default: "Restore")}';
-    var _adminFile = '${g.message(code: "layouts.main_auth_admin.content.admin.file", default: "HYOT_Administrators")}';
-    var _adminTableTitle = '${g.message(code: "layouts.main_auth_admin.content.admin.tableTitle", default: "HYOT - Administrators management")}';
+    var _userFile = '${g.message(code: "layouts.main_auth_admin.content.user.file", default: "HYOT_NormalUsers")}';
+    var _userTableTitle = '${g.message(code: "layouts.main_auth_admin.content.user.tableTitle", default: "HYOT - Normal users management")}';
     var _search = '${g.message(code: "layouts.main_auth_admin.content.search", default: "Search:")}';
     var _sortAscending = '${g.message(code: "layouts.main_auth_admin.content.sortAscending", default: ": activate to sort column ascending")}';
     var _sortDescending = '${g.message(code: "layouts.main_auth_admin.content.sortDescending", default: ": activate to sort column descending")}';
@@ -90,14 +102,12 @@
             <li class="heading">
                 <h3 class="uppercase"><g:message code="layouts.main_auth_admin.sidebar.title.users" default="Users"/></h3>
             </li>
-
             <!-- Admin user -->
-            <li class="nav-item active open">
+            <li class="nav-item">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="fa fa-user-secret"></i>
                     <span class="title"><g:message code="layouts.main_auth_admin.sidebar.admin" default="Administrator user"/></span>
-                    <span class="selected"></span>
-                    <span class="arrow open"></span>
+                    <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item">
@@ -106,22 +116,22 @@
                             <span class="title"><g:message code="layouts.main_auth_admin.sidebar.new" default="New"/></span>
                         </g:link>
                     </li>
-                    <li class="nav-item active open">
+                    <li class="nav-item">
                         <g:link uri="/administrator" class="nav-link">
                             <i class="fa fa-list"></i>
                             <span class="title"><g:message code="layouts.main_auth_admin.sidebar.list" default="List"/></span>
-                            <span class="selected"></span>
                         </g:link>
                     </li>
                 </ul>
             </li>
 
             <!-- Normal user -->
-            <li class="nav-item">
+            <li class="nav-item active open">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="fa fa-user"></i>
                     <span class="title"><g:message code="layouts.main_auth_admin.sidebar.normalUser" default="Normal user"/></span>
-                    <span class="arrow"></span>
+                    <span class="selected"></span>
+                    <span class="arrow open"></span>
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item">
@@ -130,10 +140,11 @@
                             <span class="title"><g:message code="layouts.main_auth_admin.sidebar.new" default="New"/></span>
                         </g:link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active open">
                         <g:link uri="/user" class="nav-link">
                             <i class="fa fa-list"></i>
                             <span class="title"><g:message code="layouts.main_auth_admin.sidebar.list" default="List"/></span>
+                            <span class="selected"></span>
                         </g:link>
                     </li>
                 </ul>
@@ -161,26 +172,26 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <span><g:message code="layouts.main_auth_admin.pageBreadcrumb.subtitle.admin" default="administrator user"/></span>
+                    <span><g:message code="layouts.main_auth_admin.pageBreadcrumb.subtitle.user" default="normal user"/></span>
                 </li>
             </ul>
         </div> <!-- /.Page-bar -->
 
         <!-- Page-title -->
         <h3 class="page-title">
-            <g:link uri="/administrator"><g:message code="layouts.main_auth_admin.body.title.admin" default="administrators management"/></g:link>
+            <g:link uri="/user"><g:message code="layouts.main_auth_admin.body.title.user" default="normal users management"/></g:link>
             <i class="icon-arrow-right icon-title-domain"></i>
-            <small><g:message code="layouts.main_auth_admin.body.subtitle.admin" default="Administrators list"/></small>
+            <small><g:message code="layouts.main_auth_admin.body.subtitle.user" default="Normal users list"/></small>
         </h3>
 
         <!-- Contain page -->
         <div id="list-domain">
 
             <!-- Alerts -->
-            <g:if test="${flash.secUserMessage}">
+            <g:if test="${flash.userMessage}">
                 <div class='alert alert-info alert-info-custom-backend alert-dismissable alert-entity fade in'>
                     <button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>
-                    <span class="xthin" role="status"> ${raw(flash.secUserMessage)} </span>
+                    <span class="xthin" role="status"> ${raw(flash.userMessage)} </span>
                 </div>
 
                 <g:javascript>
@@ -188,10 +199,10 @@
                 </g:javascript>
             </g:if>
 
-            <g:if test="${flash.secUserErrorMessage}">
+            <g:if test="${flash.userErrorMessage}">
                 <div class='alert alert-error alert-danger-custom-backend alert-dismissable alert-entity fade in'>
                     <button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>
-                    <span class="xthin" role="status"> ${raw(flash.secUserErrorMessage)} </span>
+                    <span class="xthin" role="status"> ${raw(flash.userErrorMessage)} </span>
                 </div>
 
                 <g:javascript>
@@ -206,9 +217,9 @@
                         <div class="portlet-title">
                             <div class="caption font-green-dark">
                                 <div class="btn-group">
-                                    <g:link uri="/administrator/create" class="btn green-dark icon-button-container">
+                                    <g:link uri="/user/create" class="btn green-dark icon-button-container">
                                         <i class="fa fa-plus icon-button"></i>
-                                        <g:message code="layouts.main_auth_admin.body.content.admin.new" default="New administrator"/>
+                                        <g:message code="layouts.main_auth_admin.body.content.user.new" default="New normal user"/>
                                     </g:link>
                                 </div>
                             </div>
@@ -219,72 +230,76 @@
                             <table class="table table-striped table-bordered table-hover table-user" id="entity-table">
                                 <thead>
                                 <tr>
-                                    <td><g:message code="admin.avatar.label" default="Profile image"/></td>
-                                    <td><g:message code="admin.username.label" default="Username"/></td>
-                                    <td><g:message code="admin.email.label" default="Email"/></td>
-                                    <td><g:message code="admin.enabled.label" default="Enabled account"/></td>
-                                    <td><g:message code="admin.locked.label" default="Locked account"/></td>
-                                    <td><g:message code="admin.expired.label" default="Expired account"/></td>
-                                    <td><g:message code="admin.passwordExpired.label" default="Expired password"/></td>
+                                    <td><g:message code="user.avatar.label" default="Profile image"/></td>
+                                    <td><g:message code="user.username.label" default="Username"/></td>
+                                    <td><g:message code="user.email.label" default="Email"/></td>
+                                    <td><g:message code="user.enabled.label" default="Enabled account"/></td>
+                                    <td><g:message code="user.accountLocked.label" default="Locked account"/></td>
+                                    <td><g:message code="user.accountExpired.label" default="Expired account"/></td>
+                                    <td><g:message code="user.passwordExpired.label" default="Expired password"/></td>
+                                    <td><g:message code="user.name.label" default="Name"/></td>
+                                    <td><g:message code="user.surname.label" default="Surname"/></td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <g:each in="${secUserList}" status="i" var="secUserInstance">
+                                <g:each in="${userList}" status="i" var="userInstance">
                                     <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                                         <td>
-                                            <g:if test="${secUserInstance?.avatar}">
-                                                <g:link controller="secUser" action="editProfileImage" id="${secUserInstance.id}">
-                                                    <img class="img-circle profileImage-view" alt="Profile image"  src="${createLink(controller:'controlPanel', action:'profileImage', id:secUserInstance.ident())}" />
+                                            <g:if test="${userInstance?.avatar}">
+                                                <g:link controller="user" action="editProfileImage" id="${userInstance.id}">
+                                                    <img class="img-circle profileImage-view" alt="Profile image"  src="${createLink(controller:'controlPanel', action:'profileImage', id:userInstance.ident())}" />
                                                 </g:link>
                                             </g:if>
                                             <g:else>
-                                                <g:link controller="secUser" action="editProfileImage" id="${secUserInstance.id}">
+                                                <g:link controller="user" action="editProfileImage" id="${userInstance.id}">
                                                     <img class="img-circle profileImage-view" alt="Profile image" src="${resource(dir: 'img/profile', file: 'user_profile.png')}"/>
                                                 </g:link>
                                             </g:else>
                                         </td>
-                                        <td><g:link controller="secUser" action="edit" id="${secUserInstance.id}" class="break-word">${fieldValue(bean: secUserInstance, field: "username")}</g:link></td>
-                                        <td class="break-word">${fieldValue(bean: secUserInstance, field: "email")}</td>
+                                        <td><g:link controller="user" action="edit" id="${userInstance.id}" class="break-word">${fieldValue(bean: userInstance, field: "username")}</g:link></td>
+                                        <td class="break-word">${fieldValue(bean: userInstance, field: "email")}</td>
                                         <td>
-                                            <g:if test="${secUserInstance.enabled}">
+                                            <g:if test="${userInstance.enabled}">
                                                 <span class="label label-sm label-success">
                                             </g:if>
                                             <g:else>
                                                 <span class="label label-sm label-info">
                                             </g:else>
-                                            <g:formatBoolean boolean="${secUserInstance.enabled}" true="${g.message(code: "default.enabled.label.true", default: "Confirmed")}" false="${g.message(code: "default.enabled.label.false", default: "Pending")}"/>
+                                            <g:formatBoolean boolean="${userInstance.enabled}" true="${g.message(code: "default.enabled.label.true", default: "Confirmed")}" false="${g.message(code: "default.enabled.label.false", default: "Pending")}"/>
                                         </span>
                                         </td>
                                         <td>
-                                            <g:if test="${secUserInstance.accountLocked}">
+                                            <g:if test="${userInstance.accountLocked}">
                                                 <span class="label label-sm label-danger">
                                             </g:if>
                                             <g:else>
                                                 <span class="label label-sm label-success">
                                             </g:else>
-                                            <g:formatBoolean boolean="${secUserInstance.accountLocked}" true="${g.message(code: "default.locked.label.true", default: "Locked")}" false="${g.message(code: "default.expiredLocked.label.false", default: "Active")}"/>
+                                            <g:formatBoolean boolean="${userInstance.accountLocked}" true="${g.message(code: "default.locked.label.true", default: "Locked")}" false="${g.message(code: "default.expiredLocked.label.false", default: "Active")}"/>
                                         </span>
                                         </td>
                                         <td>
-                                            <g:if test="${secUserInstance.accountExpired}">
+                                            <g:if test="${userInstance.accountExpired}">
                                                 <span class="label label-sm label-warning">
                                             </g:if>
                                             <g:else>
                                                 <span class="label label-sm label-success">
                                             </g:else>
-                                            <g:formatBoolean boolean="${secUserInstance.accountExpired}" true="${g.message(code: "default.expired.label.true", default: "Expired")}" false="${g.message(code: "default.expiredLocked.label.false", default: "Active")}"/>
+                                            <g:formatBoolean boolean="${userInstance.accountExpired}" true="${g.message(code: "default.expired.label.true", default: "Expired")}" false="${g.message(code: "default.expiredLocked.label.false", default: "Active")}"/>
                                         </span>
                                         </td>
                                         <td>
-                                            <g:if test="${secUserInstance.passwordExpired}">
+                                            <g:if test="${userInstance.passwordExpired}">
                                                 <span class="label label-sm label-warning">
                                             </g:if>
                                             <g:else>
                                                 <span class="label label-sm label-success">
                                             </g:else>
-                                            <g:formatBoolean boolean="${secUserInstance.passwordExpired}" true="${g.message(code: "default.expired.label.true", default: "Expired")}" false="${g.message(code: "default.expiredLocked.label.false", default: "Active")}"/>
+                                            <g:formatBoolean boolean="${userInstance.passwordExpired}" true="${g.message(code: "default.expired.label.true", default: "Expired")}" false="${g.message(code: "default.expiredLocked.label.false", default: "Active")}"/>
                                         </span>
                                         </td>
+                                        <td class="break-word">${fieldValue(bean: userInstance, field: "name")}</td>
+                                        <td class="break-word">${fieldValue(bean: userInstance, field: "surname")}</td>
                                     </tr>
                                 </g:each>
                                 </tbody>
@@ -300,7 +315,7 @@
 <!-- LOAD JAVASCRIPT -->
 <asset:javascript src="datatable/datatables.js"/>
 <asset:javascript src="datatable/datatables.bootstrap.js"/>
-<asset:javascript src="datatable/customAdmin-datatable.js"/>
+<asset:javascript src="datatable/customUser-datatable.js"/>
 
 </body>
 </html>

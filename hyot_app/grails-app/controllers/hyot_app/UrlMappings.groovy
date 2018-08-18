@@ -29,6 +29,9 @@ class UrlMappings {
             "/edit-error/$id?(.$format)?"(controller: 'secUser', action: 'update')
             "/edit/profileImage/$id?(.$format)?"(controller: 'secUser', action: 'editProfileImage')
             "/edit-error/profileImage/$id?(.$format)?"(controller: 'secUser', action: 'updateProfileImage')
+        // User - Grouping URLs
+        group("/user") {
+            "/"(controller: 'user', action: 'index')
         /* General tasks of unregistered user
         ======================================================*/
         // LoggedIn

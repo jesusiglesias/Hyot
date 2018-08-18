@@ -73,7 +73,7 @@
             <li class="nav-item active open">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="fa fa-user-secret"></i>
-                    <span class="title"><g:message code="layouts.main_auth_admin.sidebar.admin" default="Admin user"/></span>
+                    <span class="title"><g:message code="layouts.main_auth_admin.sidebar.admin" default="Administrator user"/></span>
                     <span class="selected"></span>
                     <span class="arrow open"></span>
                 </a>

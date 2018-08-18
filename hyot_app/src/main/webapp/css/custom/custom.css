@@ -387,7 +387,7 @@ table.dataTable tbody tr:hover {
     font-weight: 200 !important;
 }
 
-#entity-table tr td {
+#entity-table thead tr td {
     font-weight: 400 !important;
 }
 
