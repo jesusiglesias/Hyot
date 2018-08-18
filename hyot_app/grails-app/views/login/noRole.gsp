@@ -17,18 +17,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="Smart Testing Tool is a HP CDS solution for online evaluation of different subjects through testing that
-    it intended as a tool for internal qualification of personnel."/>
+    <meta name="description" content="HYOT is a PoC for monitoring IoT environments through Hyperledger"/>
     <meta name="author" content="Jesús Iglesias García"/>
-    <meta name="keywords" content="HP CDS, Smart Testing Tool, online test, evaluation test, english testing tool, test online, evaluacion online, Jesus Iglesias, TFG, Universidad de Valladolid, UVa"/>
+    <meta name="keywords" content="Hyot, Blockchain, Hyperledger, Hyperledger Fabric, Internet of Things, Ledger,
+     Raspberry Pi, Security, Sensor, Smart Contracts, Privacy"/>
     <meta name="dcterms.rightsHolder" content="Jesús Iglesias García">
-    <meta name="dcterms.dateCopyrighted" content="2016">
+    <meta name="dcterms.dateCopyrighted" content="2018">
 
     <!-- Disallow robots -->
     <meta name="robots" content="noindex, nofollow">
 
     <!-- Title -->
-    <title><g:message code="views.noRole.title" default="STT | User without role"/></title>
+    <title><g:message code="views.noRole.title" default="HYOT | User without role"/></title>
 
     <!-- FAVICON -->
     <link rel="shortcut icon" href="${assetPath(src: 'favicon/favicon.ico')}" type="image/x-icon">
