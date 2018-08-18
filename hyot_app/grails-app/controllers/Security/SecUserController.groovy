@@ -333,6 +333,101 @@ class SecUserController {
         }
     }
 
+
+    /**
+     * It edits the profile image of an existing administrator.
+     *
+     * @param secUserInstance It represents the administrator to edit.
+     * @return secUserInstance It represents the secUser instance.
+     */
+    def editProfileImage(SecUser secUserInstance) {
+        respond secUserInstance
+    }
+
+    /**
+     * It updates the profile image of an existing administrator in database.
+     *
+     * @param secUserInstance It represents the administrator information to update.
+     * @return return If the secUser instance is null or has errors.
+     */
+    @Transactional
+    updateProfileImage(SecUser secUserInstance) {
+
+        if (secUserInstance == null) {
+
+            // Roll back in database
+            transactionStatus.setRollbackOnly()
+
+            notFound()
+            return
+        }
+
+        // It checks concurrent updates
+        if (params.version) {
+            def version = params.version.toLong()
+
+            if (secUserInstance.version > version) {
+
+                // Roll back in database
+                transactionStatus.setRollbackOnly()
+
+                // Clear the list of errors
+                secUserInstance.clearErrors()
+                secUserInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [secUserInstance.username] as Object[], "Another user has updated the <strong>{0}</strong> instance while you were editing.")
+
+                respond secUserInstance.errors, view:'editProfileImage'
+                return
+            }
+        }
+
+        // Get the avatar file from the multi-part request
+        def filename = request.getFile('avatar')
+
+        // Validate the instance
+        if (!secUserInstance.validate()) {
+            respond secUserInstance.errors, view:'editProfileImage'
+            return
+        }
+
+        // It checks that mime-types is correct: ['image/png', 'image/jpeg', 'image/gif']
+        if (!filename.empty && !contentsType.contains(filename.getContentType())) {
+            flash.secUserErrorMessage = g.message(code: 'default.validation.mimeType.image', default: 'The profile image must be of type: <strong>.png</strong>, <strong>.jpeg</strong> or <strong>.gif</strong>.')
+            render  view: "editProfileImage", model: [secUserInstance: secUserInstance]
+            return
+        }
+
+        try {
+
+            // Update the image and mime type
+            secUserInstance.avatar = filename.bytes
+            secUserInstance.avatarType = filename.contentType
+
+            // Update data
+            secUserInstance.save(flush:true, failOnError: true)
+
+            request.withFormat {
+                form multipartForm {
+                    flash.secUserMessage = g.message(code: 'default.updated.message', default: '{0} <strong>{1}</strong> updated successful.', args: [message(code: 'admin.label', default: 'Administrator'), secUserInstance.username])
+                    redirect view: 'index'
+                }
+                '*' { respond secUserInstance, [status: OK] }
+            }
+
+        } catch (Exception exception) {
+            log.error("SecUserController():update():Exception:Administrator:${secUserInstance.username}:${exception}")
+
+            // Roll back in database
+            transactionStatus.setRollbackOnly()
+
+            request.withFormat {
+                form multipartForm {
+                    flash.secUserErrorMessage = g.message(code: 'default.not.updated.message', default: 'ERROR! {0} <strong>{1}</strong> was not updated.', args: [message(code: 'admin.label', default: 'Administrator'), secUserInstance.username])
+                    render view: "editProfileImage", model: [secUserInstance: secUserInstance]
+                }
+            }
+        }
+    }
+
     /**
      * It deletes an existing administrator in database.
      *

@@ -27,6 +27,8 @@ class UrlMappings {
             "/create-error"(controller: 'secUser', action: 'save')
             "/edit/$id?(.$format)?"(controller: 'secUser', action: 'edit')
             "/edit-error/$id?(.$format)?"(controller: 'secUser', action: 'update')
+            "/edit/profileImage/$id?(.$format)?"(controller: 'secUser', action: 'editProfileImage')
+            "/edit-error/profileImage/$id?(.$format)?"(controller: 'secUser', action: 'updateProfileImage')
         /* General tasks of unregistered user
         ======================================================*/
         // LoggedIn
