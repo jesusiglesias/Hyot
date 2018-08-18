@@ -57,6 +57,6 @@ class SecUser implements Serializable {
     static mapping = {
         id(generator: "uuid2", type: "uuid-binary", length: 16)
         password column: '`password`'
-        tablePerHierarchy(false)
+        tablePerHierarchy(true)
     }
 }
