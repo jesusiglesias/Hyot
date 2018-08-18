@@ -28,6 +28,30 @@ input:-webkit-autofill:active {
     margin: 35px 0 50px 0 !important;
 }
 
+/* Logo */
+.logoUAM {
+    text-align: center;
+    width: 100%;
+    margin: 35px 0 35px 0;
+}
+
+.logoUAM > a:hover{
+    text-decoration: none;
+}
+
+.logoUAM > a:first-child{
+    margin-right: 30px;
+}
+
+.logoUAM > a:nth-child(2){
+    margin-left: 30px;
+}
+
+.logoUAM img {
+    width: 170px;
+    height: 85px;
+}
+
 /* Index and create views */
 #list-domain,
 #list-panel,
@@ -2061,6 +2085,19 @@ table.dataTable tbody tr:hover {
     .logo-admin img {
         width: 95px;
         height: 95px;
+    }
+
+    .logoUAM > a:first-child {
+        margin-right: 20px;
+    }
+
+    .logoUAM > a:nth-child(2) {
+        margin-left: 20px;
+    }
+
+    .logoUAM img {
+        width: 140px;
+        height: 60px;
     }
 
     /*  Copyright */
