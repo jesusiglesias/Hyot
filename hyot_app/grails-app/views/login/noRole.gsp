@@ -58,93 +58,15 @@
     <!--[if lt IE 9]>
 		<script src="/js/html5shiv.min.js" type="text/javascript"></script>
     <![endif]-->
-
-    <!-- Google Analytics -->
-    <g:render template="/template/googleAnalytics"/>
-
-    <!-- Email notification by means of AJAX -->
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-
-            // Variables to use in javascript
-            var methodUrl = '${g.createLink(controller: "customTasksUser", action: 'statusNotification')}';
-            var _stateErrorAccount = '${g.message(code:'customTasksUser.login.stateAccount', default:'Error!')}';
-            var _okButton = '${g.message(code:'customTasksUser.login.stateAccount.ok', default:'OK')}';
-            var _successEmail = '${g.message(code:'customTasksUser.login.stateAccount.successful', default:'Email sent successfully!')}';
-            var _descriptionSuccessEmail = '${g.message(code:'customTasksUser.login.stateAccount.successful.description', default:'Soon you will receive a response from the administrator.')}';
-            var _errorEmail = '${g.message(code:'customTasksUser.login.stateAccount.failure.description', default:'Email with incorrect format, non-existent in the system or a problem has occurred during sending email.')}';
-            var _internalError = '${g.message(code:'customTasksUser.login.stateAccount.failure.internalError', default:'It has not been able to connect to the internal server. Try again later.')}';
-
-            $('#noRoleEmail-button').click(function (event) {
-
-                var noRoleSendButton = $('#noRoleEmail-button');
-                var refreshIcon = $('.refreshIcon');
-
-                event.preventDefault();
-
-                $.ajax({
-                    url: methodUrl,
-                    data: {email: $('#noRoleEmail').val(), type: 'noRole'},
-                    beforeSend: function(){
-                        noRoleSendButton.attr('disabled', true);
-                        noRoleSendButton.find('span').text('${message(code: "customTasksUser.login.stateAccount.sending", default: "Sending...")}');
-                        refreshIcon.removeClass('refresh-icon-stop');
-                        refreshIcon.addClass('refresh-icon');
-                        $('.i-delete-noRole').css('right', '155px');
-                    },
-                    success: function (data) {
-                        if (data == "sent") {
-                            swal({
-                                title: _successEmail,
-                                text: _descriptionSuccessEmail,
-                                type: 'success',
-                                confirmButtonText: _okButton,
-                                closeOnConfirm: true,
-                                customClass: 'successSweetAlert'
-                            })
-                        } else {
-                            swal({
-                                title: _stateErrorAccount,
-                                text: _errorEmail,
-                                type: 'error',
-                                confirmButtonText: _okButton,
-                                closeOnConfirm: true,
-                                customClass: 'errorSweetAlert'
-                            })
-                        }
-                    },
-                    error: function () {
-                        swal({
-                            title: _stateErrorAccount,
-                            text: _internalError,
-                            type: 'error',
-                            confirmButtonText: _okButton,
-                            closeOnConfirm: true,
-                            customClass: 'errorSweetAlert'
-                        })
-                    },
-                    complete: function(){
-                        noRoleSendButton.removeAttr('disabled');
-                        noRoleSendButton.find('span').text('${message(code: "customTasksUser.login.stateAccount.send", default: "Send")}');
-                        refreshIcon.removeClass('refresh-icon');
-                        refreshIcon.addClass('refresh-icon-stop');
-                        $('.i-delete-noRole').css('right', '100px');
-                    }
-                });
-            });
-        });
-    </script>
-
 </head> <!-- /.HEAD -->
 
 <!-- BODY -->
 <body class="error-page">
 
 <!-- Logo -->
-<div class="logo-error">
+<div class="logo">
     <g:link uri="/">
-        <asset:image src="logo/logo_error_pages.png" alt="SMART TESTING TOOL" class="hvr-wobble-vertical"/>
+        HYOT
     </g:link>
 </div>
 
@@ -154,22 +76,7 @@
         <div class="col-sm-8 col-sm-offset-2 text-center">
             <h1 class="animation-pullDown"><i class="fa fa-exclamation-circle text-danger"></i> <g:message code="views.noRole.error" default="Error!"/> </h1>
             <h3 class="h3 description-error animation-pullDown">
-                <g:message code="views.noRole.description" default="{0} user has no role or is invalid. Please enter your email below to send an email to the administrator and log out." args="${sec.username()}"/>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
-        <div class="input-group noRoleEmail-group">
-            <g:field type="text" class="form-control user-input emptySpaces" name="noRoleEmail"/>
-            <i class="fa fa-times i-delete i-delete-noRole"></i> <!-- Delete text icon -->
-            <span class="input-group-btn">
-                <button name="noRoleEmail-button" id="noRoleEmail-button" class="btn grey-mint noRoleSend-btn">
-                    <i class="fa fa-refresh refresh-icon-stop refreshIcon"></i>
-                    <span><g:message code="customTasksUser.login.stateAccount.send" default="Send"/></span>
-                </button>
-            </span>
+                <g:message code="views.noRole.description" default="User has no role or is invalid. Please, log out."/>
         </div>
     </div>
 </div>
@@ -184,13 +91,13 @@
     </form>
 </div>
 
-<div class="copyright"> 2016 © <g:link uri="http://es.linkedin.com/in/jesusgiglesias"> Jesús Iglesias García </g:link></div>
-<div class="logoHP-error-page">
-    <g:link uri="https://www.hpcds.com/">
-        <asset:image src="logo/logo_hp.png" alt="HP CDS" class="hvr-wobble-vertical"/>
+<div class="copyright"> 2018 © <a href="http://es.linkedin.com/in/jesusgiglesias" target="_blank"> Jes&uacute;s Iglesias Garc&iacute;a </a></div>
+<div class="logoUAM">
+    <g:link uri="https://www.uam.es/UAM/Home.htm" target="_blank">
+        <asset:image src="logo/logo_uam.gif" alt="UAM"/>
     </g:link>
-    <g:link uri="https://www.inf.uva.es/" class="logoEscuela">
-        <asset:image src="logo/logo_escuela.png" alt="UVa" class="hvr-wobble-vertical"/>
+    <g:link uri="http://www.uam.es/ss/Satellite/EscuelaPolitecnica/es/home.htm" target="_blank">
+        <asset:image src="logo/logo_eps.png" alt="EPS"/>
     </g:link>
 </div>
 
@@ -205,8 +112,8 @@
 
 <!-- CORE PLUGINS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
-<g:javascript src="custom/icon.js"/>
-<g:javascript src="custom/custom.js"/>
+<asset:javascript src="custom/icon.js"/>
+<asset:javascript src="custom/custom.js"/>
 
 </body>
 </html>
