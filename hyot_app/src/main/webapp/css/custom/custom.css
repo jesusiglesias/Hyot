@@ -26,6 +26,7 @@ input:-webkit-autofill:active {
 /* Accordion password - Admin management */
 .panel-instruction-create {
     margin: 35px 0 50px 0 !important;
+    font-weight: 200;
 }
 
 /* Logo */
@@ -180,7 +181,7 @@ input:-webkit-autofill:active {
 
 /* Title profile image */
 .title-profileImage {
-    font-weight: 400;
+    font-weight: 100;
     font-variant: small-caps;
 }
 

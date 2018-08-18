@@ -142,7 +142,7 @@ class UserController {
             def normalRole = SecRole.findByAuthority("ROLE_USER")
 
             // Save relation with normal user role
-            SecUserSecRole.create userInstance, normalRole.getAt(0), true
+            SecUserSecRole.create userInstance, normalRole, true
 
             request.withFormat {
                 form multipartForm {

@@ -32,6 +32,8 @@ class UrlMappings {
         // User - Grouping URLs
         group("/user") {
             "/"(controller: 'user', action: 'index')
+            "/create"(controller: 'user', action: 'create')
+            "/create-error"(controller: 'user', action: 'save')
         /* General tasks of unregistered user
         ======================================================*/
         // LoggedIn
