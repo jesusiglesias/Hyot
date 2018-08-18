@@ -4,7 +4,7 @@
     <!-- Row -->
     <div class="row">
         <div class="col-xs-12">
-            <legend class="control-label legend-profileImage"><h4 class="title-profileImage size-legend xthin"><g:message code="default.accountInformation.title" default="user account"/></h4></legend>
+            <legend class="control-label legend-profileImage"><h4 class="title-profileImage size-legend xthin"><g:message code="default.accountInformation.title" default="User account"/></h4></legend>
         </div>
         <!-- Username -->
         <div class="col-md-6">
@@ -63,43 +63,6 @@
 
     <!-- Row -->
     <div class="row space-secondRow">
-        <!-- Password -->
-        <div class="col-md-6">
-            <div class="form-group ${hasErrors(bean: user, field: 'password', 'error')}">
-                <label for="password" class="control-label">
-                    <h5 class="xthin">
-                        <g:message code="user.password.label" default="Password"/>
-                        <span class="required"> * </span>
-                    </h5>
-                </label>
-                <div class="input-icon right">
-                    <i class="fa"></i>
-                    <g:passwordField name="password" class="form-control password-space-progress form-shadow emptySpaces password-user backendPassword-input" maxlength="32" autocomplete="off"/>
-                </div>
-                <i class="fa fa-eye i-show-user-password"></i> <!-- Show password icon -->
-            </div>
-        </div>
-
-        <!-- Confirm password -->
-        <div class="col-md-6 space-betweenCol">
-            <div class="form-group ${hasErrors(bean: user, field: 'confirmPassword', 'error')}">
-                <label for="confirmPassword" class="control-label">
-                    <h5 class="xthin">
-                        <g:message code="user.confirmPassword.label" default="Confirm password"/>
-                        <span class="required"> * </span>
-                    </h5>
-                </label>
-                <div class="input-icon right">
-                    <i class="fa"></i>
-                    <g:passwordField name="confirmPassword" class="form-control form-shadow emptySpaces  passwordConfirm-user backendPassword-input" maxlength="32" autocomplete="off"/>
-                </div>
-                <i class="fa fa-eye i-show-user-confirmPassword"></i> <!-- Show password icon -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Row -->
-    <div class="row">
         <!-- Account expired -->
         <div class="col-sm-6">
             <div class="${hasErrors(bean: user, field: 'accountExpired', 'error')}">
@@ -144,7 +107,7 @@
                 </label>
                 <div class="input-group inputGroup-checkBox">
                     <div class="icheck-list">
-                        <g:checkBox name="enabled" value="True" class="icheck" data-checkbox="icheckbox_line-green" data-label="${g.message(code:'admin.enabled.label', default:'Enabled account')}"/>
+                        <g:checkBox name="enabled" value="${user?.enabled}" class="icheck" data-checkbox="icheckbox_line-green" data-label="${g.message(code:'admin.enabled.label', default:'Enabled account')}"/>
                     </div>
                 </div>
             </div>
@@ -159,7 +122,7 @@
                 </label>
                 <div class="input-group inputGroup-checkBox">
                     <div class="icheck-list">
-                        <g:checkBox name="passwordExpired" value="${xthin?.passwordExpired}" class="icheck" data-checkbox="icheckbox_line-green" data-label="${g.message(code:'admin.passwordExpired.label', default:'Expired password')}"/>
+                        <g:checkBox name="passwordExpired" value="${user?.passwordExpired}" class="icheck" data-checkbox="icheckbox_line-green" data-label="${g.message(code:'admin.passwordExpired.label', default:'Expired password')}"/>
                     </div>
                 </div>
             </div>
@@ -169,7 +132,7 @@
     <!-- Row -->
     <div class="row space-secondRow">
         <div class="col-xs-12">
-            <legend class="control-label legend-profileImage"><h4 class="title-profileImage size-legend"><g:message code="default.privateInformation.title" default="personal information"/></h4></legend>
+            <legend class="control-label legend-profileImage"><h4 class="title-profileImage size-legend"><g:message code="default.privateInformation.title" default="Personal information"/></h4></legend>
         </div>
         <!-- Name -->
         <div class="col-md-6">
@@ -202,43 +165,6 @@
                     <g:textField name="surname" maxlength="40" value="${user?.surname}" class="form-control form-shadow surname-user backend-input"/>
                 </div>
                 <i class="fa fa-times i-delete-without-backend i-delete-user-surname"></i> <!-- Delete text icon -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Row -->
-    <div class="row space-imageRow">
-        <!-- Image profile -->
-        <div class="form-group">
-            <div class="col-sm-12">
-                <legend class="control-label legend-profileImage"><h4 class="title-profileImage size-legend xthin"><g:message code="default.imageProfile.title" default="profile image"/></h4></legend>
-                <div class="fileinput fileinput-new" data-provides="fileinput">
-                    <div class="fileinput-new thumbnail" data-trigger="fileinput" style="max-width: 160px; max-height: 200px;">
-                        <g:if test="${user?.avatar}">
-                            <img name="avatar" alt="Profile image"  src="${createLink(controller:'controlPanel', action:'profileImage', id:user.ident())}" />
-                        </g:if>
-                        <g:else>
-                            <img name="avatar" alt="Profile image" src="${resource(dir: 'img/profile', file: 'user_profile.png')}"/>
-                        </g:else>
-                    </div>
-
-                    <div class="fileinput-preview fileinput-exists thumbnail" data-trigger="fileinput" style="max-width: 160px; max-height: 200px;"></div>
-
-                    <div>
-                        <span class="btn green-dark btn-outline btn-file">
-                            <span class="fileinput-new"><g:message code="default.imageProfile.select" default="Select image"/></span>
-                            <span class="fileinput-exists"><g:message code="default.imageProfile.change" default="Change"/></span>
-                            <input type="file" accept="image/png,image/jpeg,image/gif" name="avatar" id="avatar">
-                        </span>
-                        <a href="javascript:;" class="btn red-soft fileinput-exists" data-dismiss="fileinput"><g:message code="default.imageProfile.remove" default="Remove"/></a>
-                    </div>
-                </div>
-                <div class="clearfix profileImage-note xthin">
-                    <span class="label label-warning"><g:message code="default.imageProfile.note" default="NOTE!"/></span>
-                    <p class="text-justify">
-                        ${raw(g.message(code:"default.imageProfile.note.description", default:"For best results, your profile image should have a width-to-height ratio of 4:5. For example, if your image is 80 pixels wide, it should be 100 pixels high.<br/><span class='thin'>Maximum image size allowed: 1 MB.</span>"))}
-                    </p>
-                </div>
             </div>
         </div>
     </div>

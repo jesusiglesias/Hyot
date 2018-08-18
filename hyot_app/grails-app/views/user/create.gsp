@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="main_controlpanel">
-    <title><g:message code="layouts.main_auth_admin.head.title.user" default="HYOT | Users management"/></title>
+    <title><g:message code="layouts.main_auth_admin.head.title.user" default="HYOT | Normal users management"/></title>
     <link rel="stylesheet" href="${resource(dir: 'css/iCheck', file: 'green.css')}" type="text/css"/>
     <link rel="stylesheet" href="${resource(dir: 'css/fileInput', file: 'bootstrap-fileinput.css')}" type="text/css"/>
 

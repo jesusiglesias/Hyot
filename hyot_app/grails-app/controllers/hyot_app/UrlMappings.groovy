@@ -34,6 +34,8 @@ class UrlMappings {
             "/"(controller: 'user', action: 'index')
             "/create"(controller: 'user', action: 'create')
             "/create-error"(controller: 'user', action: 'save')
+            "/edit/$id?(.$format)?"(controller: 'user', action: 'edit')
+            "/edit-error/$id?(.$format)?"(controller: 'user', action: 'update')
         /* General tasks of unregistered user
         ======================================================*/
         // LoggedIn

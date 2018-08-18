@@ -220,14 +220,6 @@ class UserController {
 
         try {
 
-            // Updating bookings in cascade when username field has been modified
-            if (userInstance.isDirty('username')) {
-                userInstance.bookings.each { booking ->
-                    def bookingInstance = Booking.get(booking.id)
-                    bookingInstance.userName = userInstance.username
-                }
-            }
-
             // Save user data
             userInstance.save(flush:true, failOnError: true)
 
@@ -357,9 +349,6 @@ class UserController {
     @Transactional
     delete(User userInstance) {
 
-        def bookingsUsers = userInstance.bookings
-        def bookingsTotal = null
-
         if (userInstance == null) {
 
             // Roll back in database
@@ -371,50 +360,11 @@ class UserController {
 
         try {
 
-            // Delete the bookings associated
-            if (params.delete_booking) {
+            // Delete SecUserSecRole relations
+            SecUserSecRole.findAllBySecUser(userInstance)*.delete(flush: true, failOnError: true)
 
-                // First, event-booking relations are deleted
-                if (bookingsUsers.size() > 0) {
-
-                    bookingsUsers.each { booking ->
-
-                        // Event relation
-                        def event = Event.findByEventKey(booking.eventKey)
-
-                        if (event != null) {
-                            event.removeFromBookings(booking)
-                        }
-
-                        // Delete all seats of this booking
-                        def seatInstances = Seat.findAllByEventDateAndEventKeyAndTicketKey(booking.eventDate, booking.eventKey, booking.keyTicket)
-                        seatInstances.each { seat ->
-                            seat.delete(flush: true, failOnError: true)
-                        }
-                    }
-
-                    // It obtains all bookings of this user
-                    bookingsTotal = Booking.findAllByUserName(userInstance.username)
-                }
-
-                // Delete SecUserSecRole relations
-                SecUserSecRole.findAllBySecUser(userInstance)*.delete(flush: true, failOnError: true)
-
-                // Delete user
-                userInstance.delete(flush: true, failOnError: true)
-
-                // It deletes the bookings
-                if (bookingsTotal?.size() > 0 && bookingsTotal != null) {
-                    bookingsTotal*.delete(flush: true, failOnError: true)
-                }
-
-            } else {
-                // Delete SecUserSecRole relations
-                SecUserSecRole.findAllBySecUser(userInstance)*.delete(flush: true, failOnError: true)
-
-                // Delete user
-                userInstance.delete(flush: true, failOnError: true)
-            }
+            // Delete user
+            userInstance.delete(flush: true, failOnError: true)
 
             request.withFormat {
                 form multipartForm {
@@ -447,7 +397,7 @@ class UserController {
 
         request.withFormat {
             form multipartForm {
-                flash.userErrorMessage = g.message(code: 'default.not.found.user.message', default:'It has not been able to locate the user with id: <strong>{0}</strong>.', args: [params.id])
+                flash.userErrorMessage = g.message(code: 'default.not.found.user.message', default:'It has not been able to locate the normal user with id: <strong>{0}</strong>.', args: [params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }
