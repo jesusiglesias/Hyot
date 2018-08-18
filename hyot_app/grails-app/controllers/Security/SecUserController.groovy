@@ -12,7 +12,8 @@ import org.springframework.dao.DataIntegrityViolationException
 @Transactional(readOnly = true)
 class SecUserController {
 
-    static allowedMethods = [save: "POST", update: "PUT", updateProfileImage: 'POST', delete: "DELETE"]
+    static allowedMethods = [checkUsernameAvailibility: "POST", checkEmailAvailibility: "POST",
+                             save: "POST", update: "PUT", updateProfileImage: 'POST', delete: "DELETE"]
 
     // Mime-types allowed in image
     private static final contentsType = ['image/png', 'image/jpeg', 'image/gif']
