@@ -90,15 +90,6 @@
         </g:javascript>
     </g:if>
 
-    <!-- Reauthenticate notification TODO -->
-    <g:if test='${flash.reauthenticate}'>
-        <div class="alert alert-block alert-warning alert-warning-custom alert-dismissable alert-notuser-reauth-invalidsession fade in">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden='true'></button>
-            <h5 class="alert-heading alert-reauthentication">${raw(g.message(code:'views.login.auth.warning.title', default:'<strong>Warning!</strong>'))} </h5>
-            <p> ${flash.reauthenticate} </p>
-        </div>
-    </g:if>
-
     <!-- Invalid session notification, authentication service exception -->
     <g:if test='${flash.errorInvalidSessionAuthenticationException}'>
         <div class="alert alert-block alert-danger alert-danger-custom alert-dismissable alert-notuser-reauth-invalidsession fade in">
@@ -110,7 +101,7 @@
         </g:javascript>
     </g:if>
 
-    <!-- New password successful TODO -->
+    <!-- New password successful -->
     <g:if test='${flash.newPasswordSuccessful}'>
         <div class="alert alert-block alert-success alert-success-custom alert-dismissable alert-restorePasswordSuccessful fade in">
             <button type="button" class="close" data-dismiss="alert" aria-hidden='true'></button>
@@ -160,13 +151,10 @@
                 </div>
             </div>
 
-            <!-- Only it shows when is root path. In reauthentication path does not show TODO -->
-            <g:if test='${!flash.reauthenticate}'>
-                <!-- Forgot password -->
-                <div class="pull-right forget-password-block">
-                    <g:link uri="/forgotPassword" id="forget-password" class="forget-password"><g:message code="views.login.auth.form.forgotPassword" default="Forgot Password?"/></g:link>
-                </div>
-            </g:if>
+            <!-- Forgot password -->
+            <div class="pull-right forget-password-block">
+                <g:link uri="/forgotPassword" id="forget-password" class="forget-password"><g:message code="views.login.auth.form.forgotPassword" default="Forgot Password?"/></g:link>
+            </div>
         </div>
 
         <!-- Log in -->
@@ -177,18 +165,15 @@
 
 </div> <!-- /.Authentication -->
 
-<!-- Only it shows when is root path. In reauthentication path is not displayed -->
-<g:if test='${!flash.reauthenticate}'>
-    <div class="copyright"> 2018 © <a href="http://es.linkedin.com/in/jesusgiglesias" target="_blank"> Jes&uacute;s Iglesias Garc&iacute;a </a></div>
-    <div class="logoUAM">
-        <g:link uri="https://www.uam.es/UAM/Home.htm" target="_blank">
-            <asset:image src="logo/logo_uam.gif" alt="UAM"/>
-        </g:link>
-        <g:link uri="http://www.uam.es/ss/Satellite/EscuelaPolitecnica/es/home.htm" target="_blank">
-            <asset:image src="logo/logo_eps.png" alt="EPS"/>
-        </g:link>
-    </div>
-</g:if>
+<div class="copyright"> 2018 © <a href="http://es.linkedin.com/in/jesusgiglesias" target="_blank"> Jes&uacute;s Iglesias Garc&iacute;a </a></div>
+<div class="logoUAM">
+    <g:link uri="https://www.uam.es/UAM/Home.htm" target="_blank">
+        <asset:image src="logo/logo_uam.gif" alt="UAM"/>
+    </g:link>
+    <g:link uri="http://www.uam.es/ss/Satellite/EscuelaPolitecnica/es/home.htm" target="_blank">
+        <asset:image src="logo/logo_eps.png" alt="EPS"/>
+    </g:link>
+</div>
 
 <asset:javascript src="authentication/authentication.js"/>
 <asset:javascript src="overlay/loadingoverlay.min.js"/>
