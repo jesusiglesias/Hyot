@@ -86,7 +86,7 @@ except (KeyError, TypeError) as keyError:
                      "exist in the configuration file (conf/hyot.yml)." + Fore.RESET)
     sys.exit(1)
 
-SENSOR_DB = "sensors_measurements"                  # Name of the database that will stores the values of the sensors
+SENSOR_DB = "hyot_measurements"                     # Name of the database that will stores the values of the sensors
 STEP_ADD_DB = "Add document to Cloudant NoSQL DB"   # Name to identify the step where the error has occurred
 
 
