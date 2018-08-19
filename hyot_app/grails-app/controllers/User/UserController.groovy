@@ -1,14 +1,14 @@
 package User
 
-import Security.SecRole
-import Security.SecUserSecRole
 import grails.gorm.transactions.Transactional
 import org.springframework.beans.factory.annotation.Value
+import Security.SecRole
+import Security.SecUser
+import Security.SecUserSecRole
+import grails.converters.JSON
 import org.apache.commons.lang.StringUtils
 import org.springframework.dao.DataIntegrityViolationException
-import java.text.SimpleDateFormat
 import static org.springframework.http.HttpStatus.*
-import static grails.async.Promises.*
 
 /**
  * Class that represents to the User controller (actions for normal user).
@@ -24,6 +24,10 @@ class UserController {
     // Default value of pagination
     @Value('${paginate.defaultValue:10}')
             defaultPag
+
+    // URL to get the User with an ID
+    @Value('${blockchain.get.userID}')
+            blockchain_getUserID
 
     /**
      * It lists the main data of all normal users of the database.
@@ -57,6 +61,50 @@ class UserController {
     }
 
     /**
+     * It checks the username availability and if exists an User participant with this username in the Blockchain.
+     */
+    def checkUsernameAvailibilityAndBlockchain () {
+
+        def responseData
+
+        try {
+
+            new URL(blockchain_getUserID + params.username).getText(requestProperties: [Accept: 'application/json'])
+
+            if (SecUser.countByUsername(params.username)) { // Username found
+                responseData = [
+                        'status': "ERROR",
+                        'message': g.message(code: 'secUser.checkUsernameAvailibility.notAvailable', default:'Username is not available. Please, choose another one.')
+                ]
+            } else { // Username not found
+                responseData = [
+                        'status': "OK",
+                        'message':g.message(code: 'secUser.checkUsernameAvailibility.available', default:'Username available.')
+                ]
+            }
+
+        } catch (FileNotFoundException exception) {
+            log.error("UserController():checkUsernameAvailibilityAndBlockchain():Exception:NormalUserNotExistBlockchain:${exception}")
+
+            responseData = [
+                    'status': "ERROR",
+                    'message': g.message(code: 'secUser.checkUsernameAvailibility.notAvailable.user.blockchain',
+                            default:'Username does not exist in the Blockchain. Please, create this user before continuing.')
+            ]
+        } catch (ConnectException exception) {
+            log.error("UserController():checkUsernameAvailibilityAndBlockchain():Exception:BlockchainNotAvailable:${exception}")
+
+            responseData = [
+                    'status': "ERROR",
+                    'message': g.message(code: 'secUser.checkUsernameAvailibility.notAvailable.blockchain',
+                            default:'Blockchain of Hyperledger Fabric is not available. Please, run the server before continuing.')
+            ]
+        }
+
+        render responseData as JSON
+    }
+
+    /**
      * It saves a normal user in database.
      *
      * @param userInstance It represents the normal user to save.
@@ -76,6 +124,30 @@ class UserController {
 
         // Get the avatar file from the multi-part request
         def filename = request.getFile('avatar')
+
+        // Back-end validation - Username in Blockchain
+        def blockchainValidation = usernameBlockchainAndDBValidation(userInstance.username)
+
+        // If value is 1 - Username found in BC and not found in DB (OK)
+        // Username found in BC and DB
+        if (blockchainValidation == 0) {
+            flash.userErrorMessage = g.message(code: 'secUser.checkUsernameAvailibility.notAvailable',
+                    default:'Username is not available. Please, choose another one.')
+            render view: "create", model: [userInstance: userInstance]
+            return
+
+        } else if (blockchainValidation == 2) { // Username not found in BC
+            flash.userErrorMessage = g.message(code: 'secUser.checkUsernameAvailibility.notAvailable.user.blockchain',
+                    default:'Username does not exist in the Blockchain. Please, create this user before continuing.')
+            render view: "create", model: [userInstance: userInstance]
+            return
+
+        } else if (blockchainValidation == 3) { // BC is not available
+            flash.userErrorMessage = g.message(code: 'secUser.checkUsernameAvailibility.notAvailable.blockchain',
+                    default:'Blockchain of Hyperledger Fabric is not available. Please, run the server before continuing.')
+            render view: "create", model: [userInstance: userInstance]
+            return
+        }
 
         if (userInstance.hasErrors()) {
             respond userInstance.errors, view: 'create'
@@ -212,9 +284,32 @@ class UserController {
             }
         }
 
+        // Back-end validation - Username in Blockchain
+        def blockchainValidation = usernameBlockchainAndDBValidation(userInstance.username)
+
+        // If value is 1 - Username found in BC and not found in DB (OK)
+        // Username found in BC and DB
+        if (blockchainValidation == 0) {
+            flash.userErrorMessage = g.message(code: 'secUser.checkUsernameAvailibility.notAvailable',
+                    default:'Username is not available. Please, choose another one.')
+            respond userInstance, view: 'edit'
+            return
+        } else if (blockchainValidation == 2) { // Username not found in BC
+            flash.userErrorMessage = g.message(code: 'secUser.checkUsernameAvailibility.notAvailable.user.blockchain',
+                    default:'Username does not exist in the Blockchain. Please, create this user before continuing.')
+            respond userInstance, view: 'edit'
+            return
+
+        } else if (blockchainValidation == 3) { // BC is not available
+            flash.userErrorMessage = g.message(code: 'secUser.checkUsernameAvailibility.notAvailable.blockchain',
+                    default:'Blockchain of Hyperledger Fabric is not available. Please, run the server before continuing.')
+            respond userInstance, view: 'edit'
+            return
+        }
+
         // Validate the instance
         if (!userInstance.validate()) {
-            respond userInstance.errors, view:'edit'
+            respond userInstance.errors, view:''
             return
         }
 
@@ -402,5 +497,34 @@ class UserController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    /**
+     * Back-end validation about the existence of the username in the Blockchain and DB.
+     *
+     * @param username Name of the user.
+     *
+     * @return Number to indicate the success or error.
+     */
+    private usernameBlockchainAndDBValidation (username) {
+
+        def number
+        try {
+            new URL(blockchain_getUserID + username).getText(requestProperties: [Accept: 'application/json'])
+
+            if (SecUser.countByUsername(username)) { // // Username found in BC and DB
+                number = 0
+            } else { // Username found in BC and not found in DB
+                number = 1
+            }
+
+        } catch (FileNotFoundException ignored) { // Username not found in BC
+            number = 2
+
+        } catch (ConnectException ignored) { // BC is not available
+            number = 3
+        }
+
+        return number
     }
 }

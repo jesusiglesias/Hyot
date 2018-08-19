@@ -137,7 +137,7 @@ var DomainUserValidation = function () {
             attr("disabled", true).
             addClass("spinner");
 
-            $.post(_checkUsernameAvailibility, {
+            $.post(_checkUsernameAvailibilityAndBlockchain, {
 
                 // Username value
                 username: username.val()
