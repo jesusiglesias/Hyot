@@ -39,7 +39,7 @@
 #          NOTES:     It must be run with root user on a Raspberry Pi preferably with Raspbian as operating system     #
 #         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  #
 #   ORGANIZATION:     ---                                                                                              #
-#        VERSION:     1.0.0                                                                                            #
+#        VERSION:     1.0.1                                                                                            #
 #        CREATED:     12/27/17                                                                                         #
 #       REVISION:     ---                                                                                              #
 #                                                                                                                      #
@@ -320,7 +320,7 @@ def alert_protocol(sensor, event, temperature, humidity, distance):
     add_cloudant(temperature, humidity, distance)
 
     # Submits the transaction to Hyperledger Fabric to publish a new alert asset
-    hlf.publishAlert_transaction(str(uuid_measurement), datetime_measurement, sensor, hash_code, link, MAILTO)
+    hlf.publishAlert_transaction(str(uuid_measurement), datetime_measurement, sensor, event, hash_code, link, MAILTO)
 
     # Sends an email when an alert is triggered
     if not (MAILTO is None):

@@ -32,6 +32,12 @@
 *                                                                                                                      *
 * *********************************************************************************************************************/
 
+query Alert {
+  description: "Selects all alerts"
+  statement:
+    SELECT org.hyot.network.Alert
+}
+
 query AlertFromSpecificSensor {
   description: "Selects all alerts triggered by a specific sensor"
   statement:
@@ -46,19 +52,6 @@ query AlertFromSpecificEvent {
       WHERE (alert_details.event_origin == _$event)
 }
 
-query User {
-  description: "Selects all users"
-  statement:
-    SELECT org.hyot.network.User
-}
-
-query AlertsOfUser {
-    description: "Selects all alerts of a specific user"
-    statement:
-      SELECT org.hyot.network.Alert
-        WHERE (alert_details.owner == _$username)
-}
-
 query AlertFromSpecificSensorAndUser {
   description: "Selects all alerts of an user triggered by a specific sensor"
   statement:
@@ -71,4 +64,24 @@ query AlertFromSpecificEventAndUser {
   statement:
     SELECT org.hyot.network.Alert
       WHERE ((alert_details.owner == _$username) AND (alert_details.event_origin == _$event))
+}
+
+query User {
+  description: "Selects all users"
+  statement:
+    SELECT org.hyot.network.User
+}
+
+query UserID {
+  description: "Selects the user with a specific ID"
+  statement:
+    SELECT org.hyot.network.User
+    WHERE (username == _$username)
+}
+
+query AlertsOfUser {
+    description: "Selects all alerts of a specific user"
+    statement:
+      SELECT org.hyot.network.Alert
+        WHERE (alert_details.owner == _$username)
 }
