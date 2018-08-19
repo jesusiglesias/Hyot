@@ -5350,7 +5350,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 			\label{fig:handshake} 
 		\end{center}  
 	\end{figure}	
-									
+											
 	% Test cases
 	\chapter{Casos de prueba} \label{testingChapter}
 	
@@ -6764,9 +6764,6 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\caption{Caso de prueba - Ejecución indicando un directorio de desencriptación (opción -d/--decryptedhome)}
 	\end{longtable}
 	
-	% TODO Consumir información
-	% TODO Filtro XSS
-	% TODO Clickjacking - 57 a 89
 	% Subsection
 	\subsection{Componente - Sistema web}
 		
@@ -6780,7 +6777,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Carga inicial de datos en el sistema web}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web carga datos iniciales al arrancar} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El sistema web contiene los usuarios establecidos por defecto} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El sistema web contiene el usuario administrador establecido por defecto} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 							
@@ -6939,7 +6936,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Iniciar sesión con usuario administrador existiendo otra sesión ya iniciada}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web inicia sesión en el nuevo acceso} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador inicia sesión en un nuevo dispositivo o navegador y la anterior sesión sigue siendo válida} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador inicia sesión en el nuevo dispositivo o navegador y la anterior sesión sigue siendo válida} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 							
@@ -7027,19 +7024,19 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\caption{Caso de prueba - Restablecer contraseña tras 30 minutos desde la recepción del email}
 	\end{longtable}
 	
-	% CP-0103: Introducir directamente en el navegador la dirección para cerrar sesión 	
+	% CP-0103: Restablecer contraseña con enlace ya usado
 	\begin{longtable}{|p{3cm}|p{13cm}|}
 		\hline
 		
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0103}}
 		\\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Introducir directamente en el navegador la dirección para cerrar sesión}} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Página de error 405 es mostrada para informar al usuario} \\ \hline
-		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El cierre de sesión no se efectúa informando de ello al usuario} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Restablecer contraseña con enlace ya usado}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web detecta que el \textit{\gls{token}} ha sido usado anteriormente y el usuario es informado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario intenta restablecer su contraseña pero consigue un error 404 (página no encontrada) debido a que el \textit{\gls{token}} ya ha sido usado anteriormente} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 							
-		\caption{Caso de prueba - Introducir directamente en el navegador la dirección para cerrar sesión}
+		\caption{Caso de prueba - Restablecer contraseña con enlace ya usado}
 	\end{longtable}
 		
 	% TODO - Se va a permitir HTTP?	
@@ -7425,11 +7422,44 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\caption{Caso de prueba - Importar usuarios administradores o usuarios normales. Error}
 	\end{longtable}	
 	
-	% CP-128: Sistema web en idioma inglés
+	% CP-128: Visualizar información de monitorización con usuario administrador
 	\begin{longtable}{|p{3cm}|p{13cm}|}
 		\hline
 		
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0128}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Visualizar información de monitorización con usuario administrador}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web muestra la información completa de monitorización} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario administrador obtiene las mediciones y alertas de todos los participantes} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Visualizar información de monitorización con usuario administrador}
+	\end{longtable}
+	
+	% NEW PAGE
+	\newpage
+	
+	% CP-129: Visualizar información de monitorización con usuario normal
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0129}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Visualizar información de monitorización con usuario normal}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web muestra la información de monitorización de la que el usuario normal es poseedor} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El usuario normal obtiene las mediciones y alertas tomadas con ese mismo nombre de usuario como participante} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Visualizar información de monitorización con usuario normal}
+	\end{longtable}
+	
+	% CP-130: Sistema web en idioma inglés
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-130}}
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Sistema web en idioma inglés}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El idioma de la aplicación cambia a inglés} \\ \hline
@@ -7440,11 +7470,11 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\caption{Caso de prueba - Sistema web en idioma inglés}
 	\end{longtable}
 	
-	% CP-0129: Probar el sistema web en diferentes navegadores
+	% CP-0131: Probar el sistema web en diferentes navegadores
 	\begin{longtable}{|p{3cm}|p{13cm}|}
 		\hline
 		
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0129}}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0131}}
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Probar el sistema web en diferentes navegadores}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web permite la navegación correcta en navegadores con diferentes motores de renderizado} \\ \hline
@@ -7455,11 +7485,11 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\caption{Caso de prueba - Probar el sistema web en diferentes navegadores}
 	\end{longtable}
 	
-	% CP-0130: Probar el sistema web en diferentes dispositivos electrónicos
+	% CP-0132: Probar el sistema web en diferentes dispositivos electrónicos
 	\begin{longtable}{|p{3cm}|p{13cm}|}
 		\hline
 		
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0130}}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0132}}
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Probar el sistema web en diferentes dispositivos electrónicos}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{El sistema web adapta la interfaz al tamaño de pantalla} \\ \hline
@@ -7470,11 +7500,14 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\caption{Caso de prueba - Probar el sistema web en diferentes dispositivos electrónicos}
 	\end{longtable}
 	
-	% CP-0131: Visualizar email
+	% NEW PAGE
+	\newpage
+	
+	% CP-0133: Visualizar email
 	\begin{longtable}{|p{3cm}|p{13cm}|}
 		\hline
 		
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0131}}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0133}}
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Visualizar \textit{email} \textbf{\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{\textit{Email} enviado por el sistema web es recibido y visualizado correctamente} \\ \hline
@@ -7485,17 +7518,16 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\caption{Caso de prueba - Visualizar email}
 	\end{longtable}
 			
-	% TODO - Query		
 	% Subsection
 	\subsection{Componente - Protocolo de registro de incidencias}
 	
 	Los casos de prueba a continuación descritos hacen referencia al componente del proyecto Hyot que define el modelo de la red de negocio desplegada en la \gls{blockchain-a} de \gls{hyperledgerfabric-a}. Para la ejecución de estos casos de prueba se utilizó la herramienta \textit{playground} de \gls{hyperledgercomposer-a} \cite{hyperledgercomposer:playground}. \\
 
-	% CP-0132: Registrar transacción PublishAlert con participante de tipo User
+	% CP-0134: Registrar transacción PublishAlert con participante de tipo User
 	\begin{longtable}{|p{3cm}|p{13cm}|}
 		\hline
 		
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0132}}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0134}}
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Registrar transacción \textit{PublishAlert} con participante de tipo \textit{User}}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La transacción se registra en la \gls{blockchain-a}} \\ \hline
@@ -7505,15 +7537,12 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 							
 		\caption{Caso de prueba - Registrar transacción PublishAlert con participante de tipo User}
 	\end{longtable}
-	
-	% NEW PAGE
-	\newpage
-	
-	% CP-0133: Crear activo Alert con participante de tipo User
+		
+	% CP-0135: Crear activo Alert con participante de tipo User
 	\begin{longtable}{|p{3cm}|p{13cm}|}
 		\hline
 		
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0133}}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0135}}
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Crear activo \textit{Alert} con participante de tipo \textit{User}}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La operación se deniega} \\ \hline
@@ -7524,11 +7553,14 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\caption{Caso de prueba - Crear activo Alert con participante de tipo User}
 	\end{longtable}
 	
-	% CP-0134: Obtener activos Alert de los que el participante de tipo User es poseedor
+	% NEW PAGE
+	\newpage
+	
+	% CP-0136: Obtener activos Alert de los que el participante de tipo User es poseedor
 	\begin{longtable}{|p{3cm}|p{13cm}|}
 		\hline
 		
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0134}}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0136}}
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Obtener activos \textit{Alert} de los que el participante de tipo \textit{User} es poseedor}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La consulta se ejecuta correctamente retornando los activos \textit{Alert}} \\ \hline
@@ -7539,11 +7571,11 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\caption{Caso de prueba - Obtener activos Alert de los que el participante de tipo User es poseedor}
 	\end{longtable}
 	
-	% CP-0135: Obtener activos Alert de los que el participante de tipo User no es poseedor
+	% CP-0137: Obtener activos Alert de los que el participante de tipo User no es poseedor
 	\begin{longtable}{|p{3cm}|p{13cm}|}
 		\hline
 		
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0135}}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0137}}
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Obtener activos \textit{Alert} de los que el participante de tipo \textit{User} no es poseedor}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La operación se deniega} \\ \hline
@@ -7554,14 +7586,11 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\caption{Caso de prueba - Obtener activos Alert de los que el participante de tipo User no es poseedor}
 	\end{longtable}
 	
-	% NEW PAGE
-	\newpage
-	
-	% CP-0136: Editar activo Alert con participante de tipo User
+	% CP-0138: Editar activo Alert con participante de tipo User
 	\begin{longtable}{|p{3cm}|p{13cm}|}
 		\hline
 		
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0136}}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0138}}
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Editar activo \textit{Alert} con participante de tipo \textit{User}}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La operación se deniega} \\ \hline
@@ -7572,11 +7601,14 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\caption{Caso de prueba - Editar activo Alert con participante de tipo User}
 	\end{longtable}
 	
-	% CP-0137: Eliminar activo Alert con participante de tipo User
+	% NEW PAGE
+	\newpage
+	
+	% CP-0139: Eliminar activo Alert con participante de tipo User
 	\begin{longtable}{|p{3cm}|p{13cm}|}
 		\hline
 		
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0137}}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0139}}
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Eliminar activo \textit{Alert} con participante de tipo \textit{User}}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La operación se deniega} \\ \hline
@@ -7587,11 +7619,11 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\caption{Caso de prueba - Eliminar activo Alert con participante de tipo User}
 	\end{longtable}
 	
-	% CP-0138: Crear, editar o eliminar participante de tipo User con un participante de tipo User
+	% CP-0140: Crear, editar o eliminar participante de tipo User con un participante de tipo User
 	\begin{longtable}{|p{3cm}|p{13cm}|}
 		\hline
 		
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0138}}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0140}}
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Crear, editar o eliminar participante de tipo \textit{User} con un participante de tipo \textit{User}}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La operación se deniega} \\ \hline
@@ -7601,15 +7633,12 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 							
 		\caption{Caso de prueba - Crear, editar o eliminar participante de tipo User con un participante de tipo User}
 	\end{longtable}
-	
-	% NEW PAGE
-	\newpage
 		
-	% CP-0139: Gestionar identidades con participante de tipo User
+	% CP-0141: Gestionar identidades con participante de tipo User
 	\begin{longtable}{|p{3cm}|p{13cm}|}
 		\hline
 		
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0139}}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0141}}
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Gestionar identidades con participante de tipo \textit{User}}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La operación se deniega} \\ \hline
@@ -7623,11 +7652,11 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 	% NEW PAGE
 	\newpage
 	
-	% CP-0140: Acciones con participante administrador
+	% CP-0142: Acciones con participante administrador
 	\begin{longtable}{|p{3cm}|p{13cm}|}
 		\hline
 		
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0140}}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0142}}
 		\\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Acciones con participante administrador}} \\ \hline
 		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{Cualquier operación -crear, editar y eliminar activos o participantes, registrar transacciones, gestionar y enlazar identidades, desplegar la red de negocio, etc.- realizada por este tipo de participante se procesa correctamente} \\ \hline
@@ -7636,6 +7665,21 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
 							
 		\caption{Caso de prueba - Acciones con participante administrador}
+	\end{longtable}
+	
+	% CP-0143: Enviar consultas con participante administrador para obtener información filtrada
+	\begin{longtable}{|p{3cm}|p{13cm}|}
+		\hline
+		
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textsc{Caso de prueba}} & \multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\textsc{UC-0143}}
+		\\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Descripción} & \multicolumn{1}{p{13cm}|}{\textbf{Enviar consultas con participante administrador para obtener información filtrada}} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida esperada} & \multicolumn{1}{p{13cm}|}{La consulta se ejecuta retornando la información filtrada} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Salida obtenida} & \multicolumn{1}{p{13cm}|}{El participante de tipo administrador obtiene información filtrada (p.ej. alertas originadas por cada sensor y cada evento, alertas originadas por cada usuario, alertas originadas por un determinado sensor y/o evento y usuario, etc.) a partir de enviar una consulta parametrizada} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Estado} & \multicolumn{1}{p{13cm}|}{Finalizado} \\ \hline
+		\multicolumn{1}{|p{3.5cm}|}{Resultado} & \multicolumn{1}{|>{\columncolor{dartmouthgreen!40}}p{13cm}|}{\textbf{Correcto}} \\ \hline
+							
+		\caption{Caso de prueba - Enviar consultas con participante administrador para obtener información filtrada}
 	\end{longtable}
 		
 	% Conclusions and future work
