@@ -26,7 +26,7 @@
 *          NOTES:     ---                                                                                              *
 *         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  *
 *   ORGANIZATION:     ---                                                                                              *
-*        VERSION:     1.1.1                                                                                            *
+*        VERSION:     1.1.2                                                                                            *
 *        CREATED:     05/29/18                                                                                         *
 *       REVISION:     08/19/18                                                                                         *
 *                                                                                                                      *
@@ -42,7 +42,7 @@ query AlertFromSpecificSensor {
   description: "Selects all alerts triggered by a specific sensor"
   statement:
     SELECT org.hyot.network.Alert
-      WHERE (alert_details.alert_origin == _$sensor)
+      WHERE (alert_details.sensor_origin == _$sensor)
 }
 
 query AlertFromSpecificEvent {
@@ -56,7 +56,7 @@ query AlertFromSpecificSensorAndUser {
   description: "Selects all alerts of an user triggered by a specific sensor"
   statement:
     SELECT org.hyot.network.Alert
-      WHERE ((alert_details.owner == _$username) AND (alert_details.alert_origin == _$sensor))
+      WHERE ((alert_details.owner == _$username) AND (alert_details.sensor_origin == _$sensor))
 }
 
 query AlertFromSpecificEventAndUser {

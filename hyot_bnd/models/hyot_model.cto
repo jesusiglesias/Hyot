@@ -26,7 +26,7 @@
 *          NOTES:     ---                                                                                              *
 *         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  *
 *   ORGANIZATION:     ---                                                                                              *
-*        VERSION:     1.1.1                                                                                            *
+*        VERSION:     1.1.2                                                                                            *
 *        CREATED:     05/29/18                                                                                         *
 *       REVISION:     08/19/18                                                                                         *
 *                                                                                                                      *
@@ -50,7 +50,7 @@ enum EventType {
 // Concept - Details of the alert
 concept AlertDetails {
   o DateTime timestamp
-  o SensorType alert_origin
+  o SensorType sensor_origin
   o EventType event_origin
   o String hash
   o String link
