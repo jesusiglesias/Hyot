@@ -99,8 +99,12 @@ HLC_SELFSIGNED_CERT = conf['hl']['selfsignedcert']
 HLC_API_PING = "/api/system/ping"                       # Hyperledger Composer REST server API - Ping
 # Hyperledger Composer REST server API - Publish alert transaction
 HLC_API_PUBLISH_ALERT = "/api/org.hyot.network.PublishAlert"
+# Hyperledger Composer REST server API - Create user
 HLC_API_CREATE_USER = "/api/org.hyot.network.User"
+# Hyperledger Composer REST server API - Check user
+HLC_API_QUERY_USER_ID = "/api/queries/UserID?username="
 KEY_PARTICIPANT = "participant"                         # Key to search in a JSON format file
+KEY_USERNAME = "username"                               # Key to search in a JSON format file
 # Regex of the possible values that the 'participant key should contain
 REGEX_VALUE_PARTICIPANT_USER = "^org\.hyot\.network\.User\#\w+$"
 REGEX_VALUE_PARTICIPANT_NETWORKADMIN = "^org\.hyperledger\.composer\.system\.NetworkAdmin\#\w+$"
@@ -354,6 +358,75 @@ def __createUser_participant(emailbc, firstname, lastname):
         sys.exit(0)
 
 
+def __check_owner():
+    """
+    Checks if the username already exists in the Blockchain.
+
+    :return: True, to indicate that the username already exists. False, otherwise.
+    """
+
+    global owner_alert
+
+    global KEY_USERNAME, HLC_API_QUERY_USER_ID, STEP_SUBMIT_ALERTTRANSACTION_UNAUTHORIZED,\
+        STEP_SUBMIT_ALERTTRANSACTION_NOTFOUND, STEP_SUBMIT_ALERTTRANSACTION, hlc_server_url, hlc_api_key,\
+        verify_requests, owner_alert
+
+    # Headers of the POST request
+    if hlc_api_key:
+
+        # REST server protected with API key
+        headers = {
+            'Accept': 'application/json',
+            'x-api-key': hlc_api_key,
+        }
+    else:
+        headers = {
+            'Accept': 'application/json',
+        }
+
+    try:
+        # POST request - Check user
+        response = requests.get(hlc_server_url + HLC_API_QUERY_USER_ID + owner_alert, headers=headers,
+                                verify=verify_requests)
+
+    except Exception as requestsError:
+        print(Fore.RED + "        ✖ Error in GET request. Exception: " + str(requestsError) + "." + Fore.RESET)
+        sys.exit(1)
+
+    # Request is OK (200)
+    if response.status_code == requests.codes.ok:
+
+        if bool(KEY_USERNAME in response.content):
+
+            print(Fore.GREEN + "        Participant already exists: " + owner_alert + ". Use this username in the web"
+                           " system or to register a normal user in this application." + Fore.RESET)
+
+            return True
+        else:
+            return False
+
+    # Error 401 - Unauthorized request
+    elif response.status_code == requests.codes.unauthorized:
+        print(Fore.RED + "        ✖ Error to check the participant. Error 401: Unauthorized request. Please,"
+                         " enter a valid API key to submit the request to the Hyperledger Composer REST server."
+              + Fore.RESET)
+
+        sys.exit(0)
+
+    # Error 404 - Not found
+    elif response.status_code == requests.codes.not_found:
+        print(Fore.RED + "        ✖ Error to check the participant. Error 404: Not found. Please, verify that the URL"
+                         " is right and can be found on the Hyperledger Composer REST server." + Fore.RESET)
+
+        sys.exit(0)
+
+    else:  # E.g. Participant already exists with same username
+        print(Fore.RED + "        ✖ Error to check the participant (code " + str(response.status_code) + ")."
+                         " Exception: " + str(response.json()['error']['message']) + "." + Fore.RESET)
+
+        sys.exit(0)
+
+
 def __owner():
     """
     Asks the user for the owner of the alert assets and registers a new participant in the Blockchain.
@@ -373,31 +446,35 @@ def __owner():
     # Deletes all spaces
     owner_alert = owner_alert.replace(" ", "")
 
-    # Asks the email for the owner
-    owner_email = raw_input(Fore.BLUE + "        Enter the email for the owner of the alerts: " + Fore.WHITE +
-                            "(optional)" + Fore.RESET) or None
+    # Checks if the username already exists in the Blockchain
+    existence = __check_owner()
 
-    # Asks the first name for the owner
-    owner_firstname = raw_input(Fore.BLUE + "        Enter the first name for the owner of the alerts: " + Fore.WHITE +
-                                "(" + DEFAULT_OWNER_ALERT_FIRST_NAME + ") " + Fore.RESET)\
-                      or DEFAULT_OWNER_ALERT_FIRST_NAME
+    if not existence:
+        # Asks the email for the owner
+        owner_email = raw_input(Fore.BLUE + "        Enter the email for the owner of the alerts: " + Fore.WHITE +
+                                "(optional)" + Fore.RESET) or None
 
-    # Checks if the first name is empty
-    if owner_firstname.isspace():
-        print(Fore.RED + "        ✖ The first name can not be empty." + Fore.RESET)
-        sys.exit(0)
+        # Asks the first name for the owner
+        owner_firstname = raw_input(Fore.BLUE + "        Enter the first name for the owner of the alerts: " + Fore.WHITE +
+                                    "(" + DEFAULT_OWNER_ALERT_FIRST_NAME + ") " + Fore.RESET)\
+                          or DEFAULT_OWNER_ALERT_FIRST_NAME
 
-    # Asks the last name for the owner
-    owner_lastname = raw_input(Fore.BLUE + "        Enter the last name for the owner of the alerts: " + Fore.WHITE +
-                               "(" + DEFAULT_OWNER_ALERT_LAST_NAME + ") " + Fore.RESET) or DEFAULT_OWNER_ALERT_LAST_NAME
+        # Checks if the first name is empty
+        if owner_firstname.isspace():
+            print(Fore.RED + "        ✖ The first name can not be empty." + Fore.RESET)
+            sys.exit(0)
 
-    # Checks if the last name is empty
-    if owner_lastname.isspace():
-        print(Fore.RED + "        ✖ The last name can not be empty." + Fore.RESET)
-        sys.exit(0)
+        # Asks the last name for the owner
+        owner_lastname = raw_input(Fore.BLUE + "        Enter the last name for the owner of the alerts: " + Fore.WHITE +
+                                   "(" + DEFAULT_OWNER_ALERT_LAST_NAME + ") " + Fore.RESET) or DEFAULT_OWNER_ALERT_LAST_NAME
 
-    # Creates a new User participant in the Blockchain
-    __createUser_participant(owner_email, owner_firstname, owner_lastname)
+        # Checks if the last name is empty
+        if owner_lastname.isspace():
+            print(Fore.RED + "        ✖ The last name can not be empty." + Fore.RESET)
+            sys.exit(0)
+
+        # Creates a new User participant in the Blockchain
+        __createUser_participant(owner_email, owner_firstname, owner_lastname)
 
 
 def init():
