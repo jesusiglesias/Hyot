@@ -1695,6 +1695,9 @@ breaklines=true,
 		\caption{RF.25 - Establecer conexión con el servicio de BBDD}
 	\end{longtable}
 	
+	% NEW PAGE
+	\newpage
+	
 	% RF.26 - Introducir credenciales en el servicio de BBDD
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
@@ -1828,17 +1831,17 @@ breaklines=true,
 		\caption{RF.35 - Comprobar disponibilidad del servidor que expone la red de negocio}
 	\end{longtable}
 	
-	% RF.36 - Introducir dirección y puerto del servidor que expone la red de negocio
+	% RF.36 - Introducir dirección y puerto del servidor que expone la red de negocio y poseedor de las evidencias registradas
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
 		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.36}}} \\ \hline
 
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Introducir dirección y puerto del servidor que expone la red de negocio}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Introducir dirección y puerto del servidor que expone la red de negocio y poseedor de las evidencias registradas}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.1 - 03/01/2018 (rev. 13/02/2018)} \\ \hline
 
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación de la \gls{url-a} (\gls{url}) y el puerto donde el servidor se encuentra desplegado}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación de la \gls{url-a} (\gls{url}) y el puerto donde el servidor se encuentra desplegado y la información del poseedor de la evidencia -alerta- registrada, creando además un  participante en la \gls{blockchain-a} con esta información}} \\ \hline
 		
-		\caption{RF.36 - Introducir dirección y puerto del servidor que expone la red de negocio}
+		\caption{RF.36 - Introducir dirección y puerto del servidor que expone la red de negocio y poseedor de las evidencias registradas}
 	\end{longtable}
 	
 	% RF.37 - Securizar servidor que expone la red de negocio
@@ -2379,7 +2382,6 @@ breaklines=true,
 		\caption{RF.76 - Gestionar errores}
 	\end{longtable}
 	
-	% TODO - Sistema web
 	% RF.77 - Identificación de usuario
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
@@ -2718,7 +2720,7 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Visualizar información sobre las mediciones y sucesos anómalos}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{tanto al usuario administrador como al usuario normal visualizar la información en tiempo real sobre las mediciones tomadas y los sucesos anómalos producidos}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{tanto al usuario administrador como al usuario normal visualizar la información completa y filtrada en tiempo real sobre las mediciones tomadas y los sucesos anómalos (alertas) producidos}} \\ \hline
 		
 		\caption{RF.101 - Visualizar información sobre las mediciones y sucesos anómalos}
 	\end{longtable}
@@ -3263,7 +3265,7 @@ breaklines=true,
 		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RNF.36}}} \\ \hline
 	
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Categoría}} &\multicolumn{1}{p{12cm}|}{\textbf{Funcionalidad del sistema}} \\ \hline
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{12cm}|}{\textbf{Limitación de validez temporal del \gls{token} de restablecimiento de contraseña}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{12cm}|}{\textbf{Limitación de validez temporal del \textit{\gls{token}} de restablecimiento de contraseña}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Versión}} &\multicolumn{1}{p{12cm}|}{1.1 - 05/01/2018 (rev. 13/02/2018)} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{12cm}|}{El sistema web limitará \textit{la validez temporal (30 minutos) del \gls{token} de restablecimiento de contraseña}} \\ \hline
@@ -3271,28 +3273,39 @@ breaklines=true,
 		\caption{RNF.36 - Limitación de validez temporal del token de restablecimiento de contraseña}
 	\end{longtable}
 	
-	% RNF.37 - Limitación de acceso a la red de negocio desplegada en la BC
+	% RNF.37 - Limitación de visualización de información en el sistema web sobre la monitorización
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
 		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RNF.37}}} \\ \hline
 	
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Categoría}} &\multicolumn{1}{p{12cm}|}{\textbf{Funcionalidad del sistema}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{12cm}|}{\textbf{Limitación de visualización de información en el sistema web sobre la monitorización}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Versión}} &\multicolumn{1}{p{12cm}|}{1.0 - 05/01/2018} \\ \hline
+
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{12cm}|}{El sistema limitará \textit{a los usuarios normales del sistema web a visualizar únicamente su información monitorizada, es decir, mediciones y sucesos anómalos o alertas de los que sean poseedores}} \\ \hline
+		
+		\caption{RNF.37 - Limitación de visualización de información en el sistema web sobre la monitorización}
+	\end{longtable}
+	
+	% RNF.38 - Limitación de acceso a la red de negocio desplegada en la BC
+	\begin{longtable}{m{5cm}|m{5cm}|}
+		\hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RNF.38}}} \\ \hline
+	
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Categoría}} &\multicolumn{1}{p{12cm}|}{\textbf{Funcionalidad del sistema}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{12cm}|}{\textbf{Limitación de acceso a la red de negocio desplegada en la \gls{blockchain-a}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Versión}} &\multicolumn{1}{p{12cm}|}{1.0 - 05/01/2018} \\ \hline
 
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{12cm}|}{El sistema definirá \textit{una lista de control de acceso sobre la red de negocio}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3.5cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{12cm}|}{El sistema definirá \textit{una lista de control de acceso sobre la red de negocio con la que restringe determinadas acciones según el tipo de participante}} \\ \hline
 		
-		\caption{RNF.37 - Limitación de acceso a la red de negocio desplegada en la BC}
+		\caption{RNF.38 - Limitación de acceso a la red de negocio desplegada en la BC}
 	\end{longtable}
 	
 	% Subsection
 	\subsection{Requisitos de información}
 	
-	Recopilan la información que debe persistir el sistema. Solamente se especifican las entidades principales -la primera de forma completa-, omitiendo aquellas que son secundarias o son establecidas por \textit{\glspl{plugin}} como, por ejemplo la identificada en el sistema web: relación usuario-rol, etc. \\
+	Recopilan la información que debe persistir el sistema. Solamente se especifican las entidades principales -la primera de forma completa-, omitiendo aquellas que son secundarias o son establecidas por \textit{\glspl{plugin}} como, por ejemplo la relación usuario-rol en el sistema web, etc.
 	 	
- 	% NEW PAGE
- 	\newpage
- 	
 	% RI.1 - Medición
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
@@ -3306,11 +3319,13 @@ breaklines=true,
 			\begin{itemize}
 				\item Identificador de la medición
 				\item Dirección email del destinatario para efectos de notificación
+				\item Evento del \gls{sensor} que origina el protocolo de alerta
 				\item Marca temporal (\textit{timestamp})
 				\item Link de la evidencia
-				\item Protocolo de alerta activado
-				\item \Gls{sensor} y evento que originó el protocolo de alerta
-				\item Umbral límite del evento que lanzó el protocolo de alerta
+				\item Protocolo de alerta activado o no
+				\item \Gls{sensor} que origina el protocolo de alerta
+				\item Umbral límite del evento que lanza el protocolo de alerta
+				\item Usuario poseedor de la alerta registrada en la \gls{blockchain-a}
 				\item Valor del evento temperatura 
 				\item Valor del evento humedad 
 				\item Valor del evento distancia 
@@ -3352,10 +3367,11 @@ breaklines=true,
 			\begin{itemize}
 				\item Identificador de la alerta
 				\item Código hash de la evidencia
+				\item Evento del \gls{sensor} que origina la alerta
 				\item Marca temporal (\textit{timestamp})
 				\item Link de la evidencia
-				\item Participante que registró la alerta
-				\item \Gls{sensor} que originó la alerta
+				\item Participante que registra la alerta
+				\item \Gls{sensor} que origina la alerta
 			\end{itemize}}
 			} \\ \hline
 		\caption{RI.3 - Alerta en BC}
@@ -3393,10 +3409,11 @@ breaklines=true,
 			\begin{itemize}
 				\item Identificador de la alerta
 				\item Código hash de la evidencia
+				\item Evento del \gls{sensor} que origina la alerta
 				\item Marca temporal (\textit{timestamp})
 				\item Link de la evidencia
-				\item Participante que registró la alerta
-				\item \Gls{sensor} que originó la alerta
+				\item Participante que registra la alerta
+				\item \Gls{sensor} que origina la alerta
 			\end{itemize}}
 			} \\ \hline
 		\caption{RI.5 - Publicar alerta en BC}
@@ -3999,17 +4016,17 @@ breaklines=true,
 		
 		Pablo, que tiene acceso al sistema web como usuario administrador, decide que es conveniente iniciar sesión en él para examinar que el \gls{prototipo} está funcionando correctamente y por lo tanto seguirá funcionando cuando el horario laboral del día finalice y así asegurarse que podrá trazar el entorno durante la tarde y la noche. \\
 		
-		Para ello, se dirige al formulario de iniciar sesión e introduce las credenciales por defecto del sistema. Además, decide no activar la opción de inicio de sesión automático ya que no quiere que otra persona pueda acceder al sistema web en caso de olvido del cierre de sesión. El sistema comprueba las credenciales introducidas y como éstas son correctas permite el acceso a Pablo.
+		Para ello, se dirige al formulario de iniciar sesión e introduce las credenciales por defecto del sistema. Además, decide no activar la opción de inicio de sesión automático ya que no quiere que otra persona pueda acceder al sistema web en caso de olvido del cierre de sesión. El sistema comprueba las credenciales introducidas y como éstas son correctas permite el acceso a Pablo al panel de control.
 		
-		\item Consumir información sobre la trazabilidad del entorno: % TODO - Sección alerta?
+		\item Consumir información sobre la trazabilidad del entorno:
 
-		Pablo en su afán de comprobar que el sistema está funcionando de forma apropiada quiere asegurarse que el entorno está siendo monitorizado para así no llevarse una sorpresa al día siguiente cuando compruebe si se detectó algún suceso anómalo. Por ello, dentro del sistema web se dirige a la sección donde se muestran las mediciones que se van tomando de los eventos sobre el entorno y comprueba que cada 3 segundos una nueva medición normal se va registrando. Como el aspecto relevante es el registro de incidencias, es decir, sucesos anómalos fuerza una lectura de este tipo entrando en el CPD y acercándose a los servidores. De esta forma, el sistema detecta una entrada y un acercamiento que sobrepasa el umbral límite de distancia -establecido en 2 metros- por lo que activa el protocolo de alerta consistente entre otros pasos de la captura de un vídeo por defecto de 10 segundos, su almacenamiento encriptado y firmado en la nube y su registro en la \gls{blockchain-a} para proporcionar la prueba irrefutable de que esa evidencia sucedió en ese instante temporal. Posteriormente, Pablo visualiza en el sistema web la sección de alertas y observa como una nueva alerta fue registrada en este mecanismo de persistencia. 
+		Pablo en su afán de comprobar que el sistema está funcionando de forma apropiada quiere asegurarse que el entorno está siendo monitorizado para así no llevarse una sorpresa al día siguiente cuando compruebe si se detectó algún suceso anómalo. Por ello, dentro del sistema web se dirige a la sección donde se muestran las mediciones que se van tomando de los eventos sobre el entorno y comprueba que cada 3 segundos una nueva medición normal se va registrando. Como el aspecto relevante es el registro de incidencias, es decir, sucesos anómalos fuerza una lectura de este tipo entrando en el CPD y acercándose a los servidores. De esta forma, el sistema detecta una entrada y un acercamiento que sobrepasa el umbral límite de distancia -establecido en 2 metros- por lo que activa el protocolo de alerta consistente entre otros pasos de la captura de un vídeo por defecto de 10 segundos, su almacenamiento encriptado y firmado en la nube y el registro del valor \textit{hash} -entre otra información- en la \gls{blockchain-a} para proporcionar la prueba irrefutable de que esa evidencia sucedió en ese instante temporal. Posteriormente, Pablo visualiza en el sistema web la sección de alertas y observa como una nueva alerta fue registrada en este mecanismo de persistencia. 
 		
 		\item Desencriptar evidencia:
 
-		Tras provocar controladamente la incidencia, Pablo quiere asegurarse que la evidencia -vídeo capturado- refleja su entrada al habitáculo del CPD y por tanto puede confiar en este sistema. En el sistema web, obtiene el enlace para obtener la evidencia encriptada y firmada y el código \textit{hash} de su contenido desencriptado, este último dato para verificar la integridad del contenido. Ejecuta el componente de desencriptación indicando el enlace de Dropbox que contiene la evidencia, el código \textit{hash}, el directorio destino y el fichero de claves utilizado durante la encriptación y firmado. Tras su ejecución, comprueba que la evidencia fue descargada del sistema de almacenamiento y fue correctamente desencriptada constatando que su contenido no fue alterado y verificando el origen de la firma, el par de claves creado por el mismo y asociado a su nombre e \textit{email} empresarial. \\
+		Tras provocar controladamente la incidencia, Pablo quiere asegurarse que la evidencia -vídeo capturado- refleja su entrada al habitáculo del CPD y por tanto puede confiar en este sistema. En el sistema web, obtiene el enlace para obtener la evidencia encriptada y firmada y el código \textit{hash} de su contenido original, este último dato para verificar la integridad del contenido. Ejecuta el componente de desencriptación indicando el enlace de Dropbox que contiene la evidencia, el código \textit{hash}, el directorio destino y el fichero de claves utilizado durante la encriptación y firmado. Tras su ejecución, comprueba que la evidencia fue descargada del sistema de almacenamiento y fue correctamente desencriptada constatando que su contenido no fue alterado y verificando el origen de la firma, el par de claves creado por el mismo y asociado a su nombre e \textit{email} empresarial. \\
 		
-		Con la evidencia desencriptada, Pablo procede a su visualización y efectivamente la reproducción del vídeo delata a Pablo entrando al CPD por lo que la monitorización del entorno ha sido satisfactoria.
+		Con la evidencia desencriptada, Pablo procede a su visualización y efectivamente la reproducción del vídeo delata a Pablo entrando al CPD por lo que la monitorización del entorno ha sido satisfactoria garantizando además la originalidad del suceso.
 		
 		\item Gestionar usuario administrador:
 		
@@ -4017,11 +4034,11 @@ breaklines=true,
 					
 		\item Gestionar usuario normal:
 		
-		Pablo comenta a Alberto que ya ha puesto en marcha el sistema y que les permitirá intentar resolver el problema que están experimentando casi a diario. Alberto, muy contento con esta noticia pregunta a Pablo si existe alguna forma donde ver los sucesos registrados del entorno en tiempo real así como las alertas lanzadas. Pablo le comenta la existencia de un sistema web y que con un usuario normal podrá iniciar sesión y ver la monitorización. \\
+		Pablo comenta a Alberto que ya ha puesto en marcha el sistema y que les permitirá intentar resolver el problema que están experimentando casi a diario. Alberto, muy contento con esta noticia pregunta a Pablo si existe alguna forma donde ver los sucesos registrados del entorno en tiempo real así como las alertas lanzadas. Pablo le comenta la existencia de un sistema web y que con un usuario normal podrá iniciar sesión y ver la monitorización de la información de la que sea poseedor. \\
 		
-		Entonces, Pablo se dirige a la gestión de usuarios normales y crea una nueva cuenta de usuario activa asociada a su \textit{manager} Alberto. Además, por curiosidad desea mantener una copia externa de estos datos y por ello en el listado selecciona la opción: PDF y posteriormente CSV con la cual obtendrá la descarga de dos ficheros con la información completa. Además, se percata de que existe la opción de imprimir aunque debido a la reciente rotura de la impresora asignada decide no usar esta opción.
+		Entonces, Pablo se dirige a la gestión de usuarios normales y crea una nueva cuenta de usuario activa asociada a su \textit{manager} Alberto cuyo nombre de usuario coincide con el usuario de la \gls{blockchain-a} que registra la información. Además, por curiosidad desea mantener una copia externa de estos datos y por ello en el listado selecciona la opción: PDF y posteriormente CSV con la cual obtendrá la descarga de dos ficheros con la información completa. Además, se percata de que existe la opción de imprimir aunque debido a la reciente rotura de la impresora asignada decide no usar esta opción.
 		
-		\item Consultar estadísticas: % TODO
+		\item Consultar estadísticas:
 		
 		Pablo desde su panel de control observa que existe una sección donde se despliegan estadísticas sobre el propio sistema web, entre ellas, el número total de usuarios que existen en la plataforma diferenciados por rol, últimas cuentas de usuario creadas, número de mediciones, número de sucesos anómalos o alertas producidas, etc. y se percata que la nueva cuenta de Alberto ya se refleja en el sistema.
 		
