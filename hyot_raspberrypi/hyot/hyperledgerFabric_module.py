@@ -30,9 +30,9 @@
 #          NOTES:     It must be loaded by the main traceability script: hyot_main.py                                  #
 #         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  #
 #   ORGANIZATION:     ---                                                                                              #
-#        VERSION:     1.0.0                                                                                            #
+#        VERSION:     1.0.1                                                                                            #
 #        CREATED:     01/18/18                                                                                         #
-#       REVISION:     ---                                                                                              #
+#       REVISION:     08/19/18                                                                                         #
 #                                                                                                                      #
 # =====================================================================================================================#
 
@@ -89,7 +89,9 @@ HTTP = "http://"                                        # HTTP protocol in the U
 HTTPS = "https://"                                      # HTTPS protocol in the URL
 HTTP_PORT = 80                                          # Default HTTP port
 HTTPS_PORT = 443                                        # Default HTTPS port
-DEFAULT_OWNER_ALERT = "hyotRPi"                         # Default owner for the Alert assets
+DEFAULT_OWNER_ALERT_USERNAME = "hyotRPi"                # Default owner for the Alert assets - Username
+DEFAULT_OWNER_ALERT_FIRST_NAME = "Hyot"                 # Default owner for the Alert assets - First name
+DEFAULT_OWNER_ALERT_LAST_NAME = "Raspberry Pi"          # Default owner for the Alert assets - Last name
 HLC_HOST = conf['hl']['host']                           # Default host where Hyperledger Composer REST server is running
 HLC_PORT = conf['hl']['port']                           # Default port where Hyperledger Composer REST server is running
 # Indicates if the certificate used in the Hyperledger Composer REST server is self-signed
@@ -97,6 +99,7 @@ HLC_SELFSIGNED_CERT = conf['hl']['selfsignedcert']
 HLC_API_PING = "/api/system/ping"                       # Hyperledger Composer REST server API - Ping
 # Hyperledger Composer REST server API - Publish alert transaction
 HLC_API_PUBLISH_ALERT = "/api/org.hyot.network.PublishAlert"
+HLC_API_CREATE_USER = "/api/org.hyot.network.User"
 KEY_PARTICIPANT = "participant"                         # Key to search in a JSON format file
 # Regex of the possible values that the 'participant key should contain
 REGEX_VALUE_PARTICIPANT_USER = "^org\.hyot\.network\.User\#\w+$"
@@ -111,7 +114,6 @@ STEP_SUBMIT_ALERTTRANSACTION_UNAUTHORIZED = "Submit alert transaction to Hyperle
 STEP_SUBMIT_ALERTTRANSACTION_NOTFOUND = "Submit alert transaction to Hyperledger Fabric - Not found"
 STEP_SUBMIT_ALERTTRANSACTION = "Submit alert transaction to Hyperledger Fabric"
 STEP_HASH = "Generate hash code"
-
 
 ########################################
 #           GLOBAL VARIABLES           #
@@ -183,8 +185,8 @@ def __hlc_ping():
 
     # Error 401 - Unauthorized request
     if response.status_code == requests.codes.unauthorized:
-        print(Fore.RED + "        ✖ Error 401: Unauthorized request. Please, enter a valid API key or credentials to"
-                         " submit the request to the Hyperledger Composer REST server." + Fore.RESET)
+        print(Fore.RED + "        ✖ Error 401: Unauthorized request. Please, enter a valid API key to submit the"
+                         " request to the Hyperledger Composer REST server." + Fore.RESET)
         sys.exit(0)
 
     # Error 404 - Not found
@@ -276,21 +278,126 @@ def __apikey_yes_no():
                 sys.exit(0)
 
 
+def __createUser_participant(emailbc, firstname, lastname):
+    """
+    Creates a new User participant in the Blockchain.
+
+    :param emailbc: Email of the user to register in the Blockchain.
+    :param firstname: First name of the user to register in the Blockchain.
+    :param lastname: Last name of the user to register in the Blockchain.
+    """
+
+    global owner_alert
+
+    global HLC_API_CREATE_USER, STEP_SUBMIT_ALERTTRANSACTION_UNAUTHORIZED, STEP_SUBMIT_ALERTTRANSACTION_NOTFOUND,\
+        STEP_SUBMIT_ALERTTRANSACTION, hlc_server_url, hlc_api_key, verify_requests, owner_alert
+
+    # Headers of the POST request
+    if hlc_api_key:
+
+        # REST server protected with API key
+        headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'x-api-key': hlc_api_key,
+        }
+    else:
+        headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+
+    # Properties of the transaction in JSON format
+    payload = {
+        "$class": 'org.hyot.network.User',
+        "username": owner_alert,
+        "email": emailbc,
+        "first_name": firstname,
+        "last_name": lastname
+    }
+
+    print("        Creating a new User participant in the Blockchain of Hyperledger Fabric")
+
+    try:
+        # POST request - Create User
+        response = requests.post(hlc_server_url + HLC_API_CREATE_USER, headers=headers, data=json.dumps(payload),
+                                 verify=verify_requests)
+    except Exception as requestsError:
+        print(Fore.RED + "        ✖ Error in POST request. Exception: " + str(requestsError) + "." + Fore.RESET)
+        sys.exit(1)
+
+    # Request is OK (200)
+    if response.status_code == requests.codes.ok:
+
+        print(Fore.GREEN + "        ✓ New participant created successfully: " + owner_alert + ". Use this username in"
+                           " the web system or to register a normal user in this application." + Fore.RESET)
+
+    # Error 401 - Unauthorized request
+    elif response.status_code == requests.codes.unauthorized:
+        print(Fore.RED + "        ✖ Error to create the participant. Error 401: Unauthorized request. Please,"
+                         " enter a valid API key to submit the request to the Hyperledger Composer REST server."
+              + Fore.RESET)
+
+        sys.exit(0)
+
+    # Error 404 - Not found
+    elif response.status_code == requests.codes.not_found:
+        print(Fore.RED + "        ✖ Error to create the participant. Error 404: Not found. Please, verify that the URL"
+                         " is right and can be found on the Hyperledger Composer REST server." + Fore.RESET)
+
+        sys.exit(0)
+
+    else:  # E.g. Participant already exists with same username
+        print(Fore.RED + "        ✖ Error to create the participant (code " + str(response.status_code) + ")."
+                         " Exception: " + str(response.json()['error']['message']) + "." + Fore.RESET)
+
+        sys.exit(0)
+
+
 def __owner():
     """
-    Asks the user for the owner of the alert assets.
+    Asks the user for the owner of the alert assets and registers a new participant in the Blockchain.
     """
 
-    global DEFAULT_OWNER_ALERT, owner_alert
+    global DEFAULT_OWNER_ALERT_USERNAME, DEFAULT_OWNER_ALERT_FIRST_NAME, DEFAULT_OWNER_ALERT_LAST_NAME, owner_alert
 
-    # Asks the user for the owner
-    owner_alert = raw_input(Fore.BLUE + "        Enter the owner for the alerts: " + Fore.WHITE + "(" +
-                                DEFAULT_OWNER_ALERT + ") " + Fore.RESET) or DEFAULT_OWNER_ALERT
+    # Asks the username for the owner
+    owner_alert = raw_input(Fore.BLUE + "        Enter the username for the owner of the alerts: " + Fore.WHITE + "(" +
+                            DEFAULT_OWNER_ALERT_USERNAME + ") " + Fore.RESET) or DEFAULT_OWNER_ALERT_USERNAME
 
-    # Checks if the owner is empty
+    # Checks if the username is empty
     if owner_alert.isspace():
         print(Fore.RED + "        ✖ The owner can not be empty." + Fore.RESET)
         sys.exit(0)
+
+    # Deletes all spaces
+    owner_alert = owner_alert.replace(" ", "")
+
+    # Asks the email for the owner
+    owner_email = raw_input(Fore.BLUE + "        Enter the email for the owner of the alerts: " + Fore.WHITE +
+                            "(optional)" + Fore.RESET) or None
+
+    # Asks the first name for the owner
+    owner_firstname = raw_input(Fore.BLUE + "        Enter the first name for the owner of the alerts: " + Fore.WHITE +
+                                "(" + DEFAULT_OWNER_ALERT_FIRST_NAME + ") " + Fore.RESET)\
+                      or DEFAULT_OWNER_ALERT_FIRST_NAME
+
+    # Checks if the first name is empty
+    if owner_firstname.isspace():
+        print(Fore.RED + "        ✖ The first name can not be empty." + Fore.RESET)
+        sys.exit(0)
+
+    # Asks the last name for the owner
+    owner_lastname = raw_input(Fore.BLUE + "        Enter the last name for the owner of the alerts: " + Fore.WHITE +
+                               "(" + DEFAULT_OWNER_ALERT_LAST_NAME + ") " + Fore.RESET) or DEFAULT_OWNER_ALERT_LAST_NAME
+
+    # Checks if the last name is empty
+    if owner_lastname.isspace():
+        print(Fore.RED + "        ✖ The last name can not be empty." + Fore.RESET)
+        sys.exit(0)
+
+    # Creates a new User participant in the Blockchain
+    __createUser_participant(owner_email, owner_firstname, owner_lastname)
 
 
 def init():
@@ -320,9 +427,6 @@ def init():
             print(Fore.RED + "        ✖ Error to generate the API key. Exception: " + str(tokenError) + "."
                   + Fore.RESET)
             sys.exit(1)
-
-    # Asks the user for the owner of the alert assets
-    __owner()
 
     # Asks the user for the host where Hyperledger Composer REST server is running
     hlc_server_host = raw_input(Fore.BLUE + "        Enter the host (e.g. IP or ngrok address) where Hyperledger "
@@ -406,14 +510,18 @@ def init():
     finally:
         sock.close()                                               # Closes the socket
 
+    # Asks the user for the owner of the alert assets and registers a new participant in the Blockchain
+    __owner()
 
-def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, mailto):
+
+def publishAlert_transaction(uuid, timestamp, sensor_origin, event_origin, hash_video, link, mailto):
     """
     Submits a transaction to publish a new alert asset in the Blockchain of Hyperledger Fabric.
 
     :param uuid: Identifier of the alert.
     :param timestamp: Datetime of the alert.
-    :param alert_origin: Indicates the sensor that triggered the alert.
+    :param sensor_origin: Indicates the sensor that triggered the alert.
+    :param event_origin: Indicates the event of the sensor that triggered the alert.
     :param hash_video: Hash of the content of the video.
     :param link: Link to the Cloud (e.g. Dropbox) where the file was uploaded.
     :param mailto: Email address where to send the error notification if it occurs.
@@ -444,7 +552,8 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
         "alert_details": {
             "$class": 'org.hyot.network.AlertDetails',
             "timestamp": str(timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")),
-            "alert_origin": alert_origin,
+            "sensor_origin": sensor_origin,
+            "event_origin": event_origin.upper(),
             "hash": hash_video,
             "link": link,
             "owner": 'resource:org.hyot.network.User#' + owner_alert,
@@ -470,7 +579,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
     # Error 401 - Unauthorized request
     elif response.status_code == requests.codes.unauthorized:
         print(Fore.RED + " ✖ Error to submit the transaction. Error 401: Unauthorized request. Please, enter a valid"
-                         " credentials to submit the request to the Hyperledger Composer REST server.\n" + Fore.RESET)
+                         " API key to submit the request to the Hyperledger Composer REST server.\n" + Fore.RESET)
 
         # Prints a message or sends an email when an error occurs during the alert protocol
         email.print_error_notification_or_send_email(mailto, STEP_SUBMIT_ALERTTRANSACTION_UNAUTHORIZED)
@@ -485,7 +594,7 @@ def publishAlert_transaction(uuid, timestamp, alert_origin, hash_video, link, ma
         email.print_error_notification_or_send_email(mailto, STEP_SUBMIT_ALERTTRANSACTION_NOTFOUND)
         sys.exit(0)
 
-    else:
+    else:  # E.g. Transaction already exists with same ID (Alert)
         print(Fore.RED + " ✖ Error to submit the transaction (code " + str(response.status_code) + "). Exception: "
               + str(response.json()['error']['message']) + ".\n" + Fore.RESET)
 
