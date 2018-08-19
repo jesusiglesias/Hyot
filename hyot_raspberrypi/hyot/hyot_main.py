@@ -138,7 +138,6 @@ video_filename = None                       # Name of the video file
 video_filefullpath = None                   # Full path of the recording
 recording_time = None                       # Time that the recording will take
 alert_triggered = None                      # Indicates if an alert has been triggered
-alert_origin = None                         # Indicates which event triggered the alert
 threshold_value = None                      # Indicates the value of the event threshold that triggers the alert
 link = None                                 # Link of the uploaded file to the Cloud (e.g. Dropbox)
 hash_code = None                            # Hash code of the video file
@@ -219,27 +218,29 @@ def reset_values():
     Resets the value of the global variables.
     """
 
-    global video_filename, video_filefullpath, alert_triggered, alert_origin, threshold_value, link, hash_code
+    global video_filename, video_filefullpath, alert_triggered, threshold_value, link, hash_code
 
     video_filename = None
     video_filefullpath = None
     alert_triggered = False
-    alert_origin = None
     threshold_value = None
     link = None
     hash_code = None
 
 
-def add_cloudant(temperature, humidity, distance):
+def add_cloudant(sensor, event, temperature, humidity, distance, owner):
     """
     Adds the data to the Cloudant NoSQL database.
 
+    :param sensor: Indicates the sensor that triggered the alert.
+    :param event: Indicates the event that triggered the alert.
     :param temperature: Indicates the value of measured temperature.
     :param humidity: Indicates the value of measured humidity.
     :param distance: Indicates the value of measured distance.
+    :param owner: Indicates the participant who registers the transaction in the Blockchain.
     """
 
-    global MAILTO, uuid_measurement, datetime_measurement, alert_triggered, alert_origin, threshold_value, link
+    global MAILTO, uuid_measurement, datetime_measurement, alert_triggered, threshold_value, link
 
     # Creates a JSON document content data
     data = {
@@ -249,10 +250,12 @@ def add_cloudant(temperature, humidity, distance):
         "humidity_field": humidity,
         "distance_field": distance,
         "alert_triggered": alert_triggered,
-        "alert_origin": alert_origin,
+        "sensor_origin": sensor,
+        "event_origin": event,
         "threshold_value": threshold_value,
         "link": link,
-        "mailto": MAILTO
+        "mailto": MAILTO,
+        "owner_alert": owner
     }
 
     # Adds the document to the database of the Cloudant NoSQL service
@@ -271,7 +274,7 @@ def alert_protocol(sensor, event, temperature, humidity, distance):
     """
 
     global MAILTO, ALERT_LED, EXT, uuid_measurement, datetime_measurement, video_filename, video_filefullpath,\
-        recording_time, alert_triggered, alert_origin, threshold_value, link, hash_code
+        recording_time, alert_triggered, threshold_value, link, hash_code
 
     # Name of the video file
     video_filename = sensor.lower() + '_' + event.lower() + '_' + str(datetime_measurement.strftime("%d%m%Y_%H%M%S")) \
@@ -281,7 +284,6 @@ def alert_protocol(sensor, event, temperature, humidity, distance):
     video_filefullpath = system.tempfiles_path + '/' + video_filename
 
     alert_triggered = True                                              # Marks the alert like triggered
-    alert_origin = sensor + ' - ' + event                               # Saves the event which triggers the alert
     time.sleep(1)
     lcd.clear_lcd(sensor)                                               # Clears the LCD
     time.sleep(1)
@@ -317,15 +319,15 @@ def alert_protocol(sensor, event, temperature, humidity, distance):
     iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance, MAILTO)
 
     # Adds the current measurement to the database
-    add_cloudant(temperature, humidity, distance)
+    add_cloudant(sensor, event, temperature, humidity, distance, hlf.owner_alert)
 
     # Submits the transaction to Hyperledger Fabric to publish a new alert asset
     hlf.publishAlert_transaction(str(uuid_measurement), datetime_measurement, sensor, event, hash_code, link, MAILTO)
 
     # Sends an email when an alert is triggered
     if not (MAILTO is None):
-        email.send_email(MAILTO, final_path, video_filename, str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")),
-                         str(uuid_measurement), temperature, humidity, distance, link, alert_origin, threshold_value)
+        email.send_email(MAILTO, str(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p")), str(uuid_measurement),
+                         temperature, humidity, distance, link, sensor, event, threshold_value)
 
     # Removes the temporary file (original evidence)
     system.remove_file(video_filefullpath, False)
@@ -369,7 +371,7 @@ def no_alert_protocol(temperature, humidity, distance):
     iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance, MAILTO)
 
     # Adds the measurement to the database
-    add_cloudant(temperature, humidity, distance)
+    add_cloudant(None, None, temperature, humidity, distance, None)
 
 
 def check_invalid_values_dht11(temperature, humidity, distance):
