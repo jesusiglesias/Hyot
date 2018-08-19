@@ -26,9 +26,9 @@
 *          NOTES:     ---                                                                                              *
 *         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  *
 *   ORGANIZATION:     ---                                                                                              *
-*        VERSION:     1.0.1                                                                                            *
+*        VERSION:     1.1.0                                                                                            *
 *        CREATED:     05/29/18                                                                                         *
-*       REVISION:     ---                                                                                              *
+*       REVISION:     08/19/18                                                                                         *
 *                                                                                                                      *
 * *********************************************************************************************************************/
 
@@ -37,4 +37,24 @@ query AlertFromSpecificSensor {
   statement:
     SELECT org.hyot.network.Alert
       WHERE (alert_details.alert_origin == _$sensor)
+}
+
+query AlertFromSpecificEvent {
+  description: "Selects all alerts triggered by a specific event"
+  statement:
+    SELECT org.hyot.network.Alert
+      WHERE (alert_details.event_origin == _$event)
+}
+
+query User {
+  description: "Selects all users"
+  statement:
+    SELECT org.hyot.network.User
+}
+
+query AlertsOfUser {
+    description: "Selects all alerts of a specific user"
+    statement:
+      SELECT org.hyot.network.Alert
+        WHERE (alert_details.owner == _$username)
 }
