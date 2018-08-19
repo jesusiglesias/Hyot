@@ -156,33 +156,27 @@ def __read_template(filename):
     return Template(template_file_content)
 
 
-def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, humidity, distance, link,
-               alert_origin, threshold_value):
+def send_email(mailto, timestamp, alert_id, temperature, humidity, distance, link,
+               sensor_origin, event_origin, threshold_value):
     """
     Sends an email to the recipient to notify a triggered alert.
 
     :param mailto: Recipient's email address.
-    :param filepath: Path of the file to attach.
-    :param filename: Name of the file to attach.
     :param timestamp: Datetime of the alert.
     :param alert_id: Identifier of the alert.
     :param temperature: Value of this parameter in the measurement.
     :param humidity: Value of this parameter in the measurement.
     :param distance: Value of this parameter in the measurement.
     :param link: Link of the Cloud (e.g. Dropbox) where the file was uploaded.
-    :param alert_origin: Contains the sensor and the event that triggered the alert.
+    :param sensor_origin: Sensor that triggered the alert.
+    :param event_origin: Event that triggered the alert.
     :param threshold_value: Indicates the value of the event threshold that triggered the alert.
     """
 
     global TEMPLATEPATH, STEP_ALERTEMAIL_TEMPLATE, STEP_ALERTEMAIL_ATTACHMENT, STEP_ALERTEMAIL_SEND, FROM, session
 
-    # Extracts the sensor and the event
-    sensor, event = alert_origin.split('-')
-    sensor = sensor.strip()
-    event = event.strip()
-
     # Subject of the email
-    subject = "HYOT - Alert notification: {0:s} | {1:s} | {2:s}".format(sensor, event, timestamp)
+    subject = "HYOT - Alert notification: {0:s} | {1:s} | {2:s}".format(sensor_origin, event_origin, timestamp)
 
     print(Fore.LIGHTBLACK_EX + "     -- Sending alert notification to the following email address: " + mailto
           + Fore.RESET),
@@ -190,8 +184,8 @@ def send_email(mailto, filepath, filename, timestamp, alert_id, temperature, hum
     # Message of the email in HTML format
     try:
         message = __read_template(os.path.dirname(os.path.abspath(__file__)) + "/" + TEMPLATEPATH).substitute(
-            EVENT=event,
-            SENSOR=sensor,
+            EVENT=event_origin,
+            SENSOR=sensor_origin,
             DATETIME=timestamp,
             THRESHOLD=threshold_value,
             ID=alert_id,
