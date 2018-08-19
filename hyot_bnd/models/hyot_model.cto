@@ -26,9 +26,9 @@
 *          NOTES:     ---                                                                                              *
 *         AUTHOR:     Jesús Iglesias García, jesusgiglesias@gmail.com                                                  *
 *   ORGANIZATION:     ---                                                                                              *
-*        VERSION:     1.0.1                                                                                            *
+*        VERSION:     1.1.0                                                                                            *
 *        CREATED:     05/29/18                                                                                         *
-*       REVISION:     ---                                                                                              *
+*       REVISION:     08/19/18                                                                                         *
 *                                                                                                                      *
 * *********************************************************************************************************************/
  
@@ -40,10 +40,18 @@ enum SensorType {
   o HCSR04
 }
 
+// Enumerated type - Event type
+enum EventType {
+  o TEMPERATURE
+  o HUMIDITY
+  o DISTANCE
+}
+
 // Concept - Details of the alert
 concept AlertDetails {
   o DateTime timestamp
   o SensorType alert_origin
+  o EventType event_origin
   o String hash
   o String link
   --> User owner
