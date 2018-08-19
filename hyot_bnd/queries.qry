@@ -58,3 +58,17 @@ query AlertsOfUser {
       SELECT org.hyot.network.Alert
         WHERE (alert_details.owner == _$username)
 }
+
+query AlertFromSpecificSensorAndUser {
+  description: "Selects all alerts of an user triggered by a specific sensor"
+  statement:
+    SELECT org.hyot.network.Alert
+      WHERE ((alert_details.owner == _$username) AND (alert_details.alert_origin == _$sensor))
+}
+
+query AlertFromSpecificEventAndUser {
+  description: "Selects all alerts of an user triggered by a specific event"
+  statement:
+    SELECT org.hyot.network.Alert
+      WHERE ((alert_details.owner == _$username) AND (alert_details.event_origin == _$event))
+}
