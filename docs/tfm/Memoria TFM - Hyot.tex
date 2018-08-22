@@ -286,7 +286,7 @@ breaklines=true,
 
 	Currently, a significant number of companies have a special interest in developing a new generation of transactional applications which establish trust, responsibility and transparency in their core, together with an open and distributed architecture. Of particular relevance here it is the non-centralized payment system \gls{bitcoin} \cite{bitcoin}, which is based on the \Gls{blockchain} (\gls{blockchain-a}) \cite{iansiti:2017:ttab} technology that enables the creation of an immutable system of event registration. Since its inception, it has led to a whole set of initiatives that, regardless of the existence of a trusted third party (\gls{tpc-a}), can provide protocols for the protection of the integrity of information. \\
 		
-	One of these initiatives is \gls{hyperledger} \cite{hyperledger:url} -\gls{opensource} standard of research and evolution of the permissive \gls{blockchain-a} technology announced by the Linux Foundation in 2015-, focuses on supporting this type of business \glspl{transaction} to improve numerous aspects of performance and business. \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) \cite{hyperledgerfabric:url}, is the most well-known project within this consortium. It implements the \gls{dlt} (\gls{dlt-a}) \cite{wattenhofer:DLT} in a permissive \gls{blockchain-a} where inserting information requires entities to be previously authenticated. This model of access control is of high interest in the context of resource traceability, since it limits who can access and what resources thanks to the existence of roles. \\
+	One of these initiatives is \gls{hyperledger} \cite{hyperledger:url} -\gls{opensource} standard of research and evolution of the permissive \gls{blockchain-a} technology announced by the Linux Foundation in 2015-, focuses on supporting this type of business \glspl{transaction} to improve numerous aspects of performance and business. \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) \cite{hyperledgerfabric:url}, is the most well-known project within this consortium. It implements the \gls{dlt} (\gls{dlt-a}) \cite{wattenhofer:DLT} in a permissioned \gls{blockchain-a} where inserting information requires entities to be previously authenticated. This model of access control is of high interest in the context of resource traceability, since it limits who can access and what resources thanks to the existence of roles. \\
 	
 	The emergence of new paradigms, such as the \gls{iot} (\gls{iot-a}) \cite{christidis:2016:bsciot}, \cite{dorri:2017:TOBI} where any real-world object can be totally connected to the network, have evolved the way of using, communication and transmission of information through the Internet. Until recently, these devices were mere data consumers. Currently, they expose services and data collected from the environment on a permanent basis, which apart from bringing numerous benefits, also open the door to numerous security and privacy problems. The importance of maintaining a record of immutable and confidential information is essential to guarantee the veracity and integrity of the events and the information collected. This project addresses the development of a \gls{poc} (\gls{poc-a}) to implement \gls{hyperledgerfabric-a} in the \gls{iot-a}. The objective will be the collection of events using sensors located on a \gls{raspberry} 3 (\gls{raspberry-a}), and the inclusion of incidents in the \gls{blockchain-a} of \gls{hyperledgerfabric-a}. Likewise, the information collected may be consumed in real time through a web system.
 	
@@ -347,7 +347,7 @@ breaklines=true,
 	% Start arabic numerals
 	\pagenumbering{arabic}
 	
-	\textbf{Resumen:} \textit{Todo proyecto requiere de una descripción previa que empape al lector en el panorama general del mismo con el fin de que éste llegue a comprender con perfección las ideas y metas que se persiguen con su desarrollo. En este capítulo se aborda de forma general los principales rasgos de este documento.}
+	Todo proyecto requiere de una descripción previa que empape al lector en el panorama general del mismo con el fin de que éste llegue a comprender con perfección las ideas y metas que se persiguen con su desarrollo. En este capítulo se aborda de forma general los principales rasgos de este documento.
 		
 	% Section
 	\section{Definición del problema}
@@ -363,10 +363,17 @@ breaklines=true,
 	Motivado por la reciente explosión de interés de esta tecnología y este ámbito, en este proyecto se examina si la combinación de \gls{blockchain-a}-\gls{iot-a} proporciona ventajas frente a otras combinaciones a la hora de la securización de un entorno \gls{iot-a} ya que no siempre la transición o uso de una red descentralizada tiene sentido y aunque tuviese sentido podría darse el caso de que los requerimientos de la aplicación no se adaptasen a una red de este tipo. La securización del entorno se efectúa mediante la trazabilidad de los sucesos que se produzcan en él de forma que si ocurre un suceso no previsto pueda ser detectado el motivo y origen de éste. Esta prueba o evidencia, consistente de una grabación del entorno en el momento en el que se produjo la incidencia y que permite detectar falsos positivos, debe ser salvaguardada de cualquier alteración no autorizada y para ello se utiliza el método de almacenamiento de \gls{blockchain-a}. Otra solución podría ser utilizar un método tradicional de almacenamiento como, una base de datos (\gls{bbdd-a}) aunque en esta situación no se podría garantizar la integridad del contenido original de la evidencia.
 	
 	% Section
+	\section{Estudio de implementaciones similares}
+	
+	El contexto en el que se ubica el presente proyecto, aunque es de un amplio interés, es tan novedoso y concreto que actualmente no existe o no se ha encontrado una implementación final o \gls{poc-a} con las mismas o similares líneas de trabajo -securización de un entorno con \gls{blockchain-a}- y tecnologías. \\
+	
+	Sí es verdad, que a raíz de este enorme interés por parte del ecosistema tecnológico y empresarial, han surgido y están surgiendo numerosas soluciones ubicadas en muy diferentes sectores, algunas de ellas propietarias mientras que otras \textit{\gls{opensource}}, que aplican \gls{blockchain-a} al entorno \gls{iot-a}. Entre ellas, se pueden encontrar soluciones para gestionar el acceso a dispositivos \gls{iot-a} \cite{blockchain:iot:novo}, para preservar la privacidad en transacciones de sistemas energéticos \cite{blockchain:iot:laszka}, para comunicar los \textit{Smart Things} -pequeñas cosas inteligentes situadas en dispositivos \gls{iot-a}- \cite{blockchain:iot:iost}, para trazar productos de una cadena de suministro (calidad del mismo, prueba de origen, etc.) \cite{blockchain:iot:ambrosus}, para proveer analíticas inteligentes y datos del entorno en tiempo real con el objetivo de conocer, por ejemplo si se está realizando una construcción ilegal o existen partículas inusuales en el aire \cite{blockchain:iot:nokia}, para digitalizar el mundo físico y poder llevar un control de personas y activos, de experiencia del cliente, etc. \cite{blockchain:iot:kontakt}.
+	
+	% Section
 	\section{Objetivo general}
 
-	Todos los objetivos a satisfacer con la elaboración de este proyecto se pueden resumir a continuación: 
-	
+	A resultas de la actual carencia de implementaciones existentes que abordan la problemática de cómo asegurar la veracidad de una manera irrefutable de sucesos no controlados en entornos \gls{iot-a} se propone el proyecto actual con el que se consigue satisface los siguientes objetivos:
+		
 	\begin{itemize}
 		\item Comprender el concepto de \gls{blockchain-a} (origen, conceptos clave, modo de funcionamiento, taxonomía, beneficios frente al almacenamiento de información tradicional, etc.) y todo el ecosistema que engloba. 
 		\item Revisión del estado actual de la tecnología \gls{blockchain-a} y qué ha supuesto en los diferentes sectores.
@@ -380,13 +387,6 @@ breaklines=true,
 		\item Desarrollar una prueba de concepto (\textit{\gls{poc}} -\gls{poc-a}-) sobre \gls{hyperledgerfabric-a} que permita garantizar la veracidad e integridad de sucesos anómalos registrados en entornos \gls{iot-a}.
 	\end{itemize}
 		
-	% Section
-	\section{Estudio de implementaciones similares}
-	
-	El contexto en el que se ubica el presente proyecto, aunque es de un amplio interés, es tan novedoso y concreto que actualmente no existe o no se ha encontrado una implementación final o \gls{poc-a} con las mismas o similares líneas de trabajo -securización de un entorno con \gls{blockchain-a}- y tecnologías. \\
-	
-	Sí es verdad, que a raíz de este enorme interés por parte del ecosistema tecnológico y empresarial, han surgido y están surgiendo numerosas soluciones ubicadas en muy diferentes sectores, algunas de ellas propietarias mientras que otras \textit{\gls{opensource}}, que aplican \gls{blockchain-a} al entorno \gls{iot-a}. Entre ellas, se pueden encontrar soluciones para gestionar el acceso a dispositivos \gls{iot-a} \cite{blockchain:iot:novo}, para preservar la privacidad en transacciones de sistemas energéticos \cite{blockchain:iot:laszka}, para comunicar los \textit{Smart Things} -pequeñas cosas inteligentes situadas en dispositivos \gls{iot-a}- \cite{blockchain:iot:iost}, para trazar productos de una cadena de suministro (calidad del mismo, prueba de origen, etc.) \cite{blockchain:iot:ambrosus}, para proveer analíticas inteligentes y datos del entorno en tiempo real con el objetivo de conocer, por ejemplo si se está realizando una construcción ilegal o existen partículas inusuales en el aire \cite{blockchain:iot:nokia}, para digitalizar el mundo físico y poder llevar un control de personas y activos, de experiencia del cliente, etc. \cite{blockchain:iot:kontakt}.
-
 	% Section
 	\section{Material empleado}\label{tools}
 	
@@ -455,12 +455,13 @@ breaklines=true,
 	
 	% State of the art
 	\chapter{Estado del arte} \label{stateArtChapter}
-	\textbf{Resumen:} \textit{Conocer los inicios, pilares y fundamentos básicos sobre los que se sustenta la tecnología principal del proyecto es esencial para entender el contexto y la jerga que engloba. En este capítulo se aborda un breve estudio sobre la tecnología Blockchain para que el lector pueda adquirir un conocimiento general y superficial.}
+	
+	Conocer los inicios, pilares y fundamentos básicos sobre los que se sustenta la tecnología principal del proyecto es esencial para entender el contexto y la jerga que engloba. En este capítulo se aborda un breve estudio sobre la tecnología Blockchain para que el lector pueda adquirir un conocimiento general y superficial.
 	
 	% Planning of the project
 	\chapter{Planificación del proyecto} \label{planningChapter}
 	
-	\textbf{Resumen:} \textit{Un adecuado proceso de desarrollo software y gestión del proyecto son esenciales en la actualidad para incrementar la probabilidad de éxito y la calidad final de un proyecto. En este capítulo se define la planificación y organización del presente proyecto junto con la estimación de costes y la evaluación de riesgos.}
+	Un adecuado proceso de desarrollo software y gestión del proyecto son esenciales en la actualidad para incrementar la probabilidad de éxito y la calidad final de un proyecto. En este capítulo se define la planificación y organización del presente proyecto junto con la estimación de costes y la evaluación de riesgos.
 	
 	% Section
 	\section{Proceso de desarrollo software}
@@ -505,7 +506,7 @@ breaklines=true,
 		\end{center}  
 	\end{figure}
 	
-	Cada una de las fases descritas anteriormente se puede dividir en iteraciones. Las iteraciones son una secuencia planificada de actividades (en cascada) ubicada dentro de una fase que finaliza en una versión (interna/externa). En la sección \ref{phases}. \nameref{phases}, se acometerá la división en iteraciones.			
+	Cada una de las fases descritas anteriormente se puede dividir en iteraciones. Las iteraciones son una secuencia planificada de actividades (en cascada) ubicada dentro de una fase que finaliza en una versión (interna/externa). En la sección \ref{phases} se acometerá la división en iteraciones.			
 			
 	% Section
 	\section{Organización del proyecto. Estructura interna}
@@ -605,7 +606,7 @@ breaklines=true,
 		\multicolumn{1}{|p{3cm}|}{\textbf{Elaboración}} & \multicolumn{1}{p{13cm}|}{Una vez definido con mayor exactitud el proyecto en sí, se ha realizado todo el proceso de análisis y diseño del mismo para identificar los requisitos, actores, casos de uso, modelo de dominio, diseño de la arquitectura física del sistema, etc. La finalización de esta fase corresponde al \textbf{hito 2}.}
 		\\ \hline
 		
-		\multicolumn{1}{|p{3cm}|}{\textbf{Construcción}} & \multicolumn{1}{p{13cm}|}{Dos iteraciones componen esta fase en la cual al final de cada una se produce una versión funcional e incremental del sistema. Durante la primera iteración se ha revisado y completado la definición de requisitos y casos de uso así como el diseño. En esta iteración\footnote{El anexo \ref{trello}. \nameref{trello} muestra la gestión de tareas para la codificación del proyecto.}, en primer lugar se preparó el entorno de trabajo y se definieron las diferentes partes de las que iba a constar el proyecto, implementando el componente de configuración de la \gls{raspberry} (\gls{raspberry-a}), de monitorización de sucesos y de desencriptación. En la segunda iteración, se revisaron algunos errores que aparecieron a causa de la implementación durante la primera iteración y se desplegó la \gls{blockchain-a} de \gls{hyperledgerfabric-a} definiendo la red de negocio y el sistema web. El \textbf{hito 3} y el \textbf{hito 4} se corresponden con el final de cada iteración, marcando también este último el final de fase.} 
+		\multicolumn{1}{|p{3cm}|}{\textbf{Construcción}} & \multicolumn{1}{p{13cm}|}{Dos iteraciones componen esta fase en la cual al final de cada una se produce una versión funcional e incremental del sistema. Durante la primera iteración se ha revisado y completado la definición de requisitos y casos de uso así como el diseño. En esta iteración\footnote{El anexo \ref{trello} muestra la gestión de tareas para la codificación del proyecto.}, en primer lugar se preparó el entorno de trabajo y se definieron las diferentes partes de las que iba a constar el proyecto, implementando el componente de configuración de la \gls{raspberry} (\gls{raspberry-a}), de monitorización de sucesos y de desencriptación. En la segunda iteración, se revisaron algunos errores que aparecieron a causa de la implementación durante la primera iteración y se desplegó la \gls{blockchain-a} de \gls{hyperledgerfabric-a} definiendo la red de negocio y el sistema web. El \textbf{hito 3} y el \textbf{hito 4} se corresponden con el final de cada iteración, marcando también este último el final de fase.} 
 		\\ \hline
 		
 		\multicolumn{1}{|p{3cm}|}{\textbf{Transición}} & \multicolumn{1}{p{13cm}|}{En esta última fase se han solucionado aquellos errores presentados en la segunda iteración (hito 4) de la fase de construcción y se ha llevado a cabo la ejecución de la batería de pruebas final. Además, se ha redactado la memoria, se han finalizado los manuales de usuario y de configuración del sistema y se ha preparado la versión definitiva del proyecto. La finalización de esta fase se corresponde con el \textbf{hito 5} donde se entrega el producto final junto con la documentación adicional.}
@@ -767,7 +768,7 @@ breaklines=true,
 		
 	Otro aspecto importante a la hora de planificar y gestionar un proyecto es la elaboración de una estimación de costes totales que puede suponer el desarrollo de éste. En un proyecto real con uno o varios clientes y equipos de trabajo, la definición de estos costes debe aproximarse lo máximo posible a la realidad necesitada ya que puede conllevar al éxito o fracaso del proyecto. Estos costes a estimar incluyen tanto el coste de los recursos humanos involucrados (responsable del proyecto, equipo de desarrollo, equipo de aseguramiento de la calidad (\textit{Quality Assurance} -QA-), analistas, diseñadores, etc.) como de herramientas \textit{hardware} y \textit{software} así como los costes de infraestructura, instalaciones y servicios consumibles. \\
 	
-	Para realizar la estimación del coste de este proyecto se estimará como si se hubiera desarrollado profesionalmente a excepción de algunas salvedades citadas a continuación. En este caso, se va a suponer que determinados dispositivos \textit{hardware} mencionados en la sección \ref{tools}. \nameref{tools} han sido adquiridos para este proyecto con el fin de una estimación más realista y los costes de infraestructura e instalación se obvian por el carácter de este trabajo: \gls{tfm-a}. Con respecto a los servicios consumibles, se tendrán en cuenta los cuantificables de una manera directa y obviando aquellos como por ejemplo: electricidad, material de oficina, etc. El desglose de costes es el siguiente: \\
+	Para realizar la estimación del coste de este proyecto se estimará como si se hubiera desarrollado profesionalmente a excepción de algunas salvedades citadas a continuación. En este caso, se va a suponer que determinados dispositivos \textit{hardware} mencionados en la sección \ref{tools} han sido adquiridos para este proyecto con el fin de una estimación más realista y los costes de infraestructura e instalación se obvian por el carácter de este trabajo: \gls{tfm-a}. Con respecto a los servicios consumibles, se tendrán en cuenta los cuantificables de una manera directa y obviando aquellos como por ejemplo: electricidad, material de oficina, etc. El desglose de costes es el siguiente: \\
 	
 	% New page
 	\newpage
@@ -919,7 +920,7 @@ breaklines=true,
 		
 		\multicolumn{1}{|l|}{Texpad} & \multicolumn{1}{c|}{24.99 \euro} & \multicolumn{1}{c|}{1ud} & \multicolumn{1}{c|}{24.99 \euro} \\ \hline
 		
-		\multicolumn{1}{|l|}{Resto de herramientas\color{red}*\footnote{Todo el \textit{software} utilizado ha sido el mencionado en la sección \ref{tools}. \nameref{tools}. Su licencia ha sido obtenida gratuitamente por ser estudiante, por ser \textit{software} libre o bien se ha utilizado la versión gratuita.}} & \multicolumn{1}{c|}{0 \euro} & \multicolumn{1}{c|}{1ud} & \multicolumn{1}{c|}{0 \euro} 
+		\multicolumn{1}{|l|}{Resto de herramientas\color{red}*\footnote{Todo el \textit{software} utilizado ha sido el mencionado en la sección \ref{tools}. Su licencia ha sido obtenida gratuitamente por ser estudiante, por ser \textit{software} libre o bien se ha utilizado la versión gratuita.}} & \multicolumn{1}{c|}{0 \euro} & \multicolumn{1}{c|}{1ud} & \multicolumn{1}{c|}{0 \euro} 
 		\\ \hline
 			
 		\multicolumn{3}{|l|}{\textbf{Coste total de \textit{software}}} & \multicolumn{1}{c|}{\textbf{24.99 \euro}} 
@@ -1340,7 +1341,7 @@ breaklines=true,
 	% Analysis
 	\chapter{Análisis} \label{analysisChapter}
 	
-	\textbf{Resumen:} \textit{Conocer todos y cada uno de los requerimientos de un sistema es fundamental para no caminar a través del camino incorrecto. En este capítulo se aborda el primer contacto con el sistema a través de un completo análisis con el fin de indagar con mayor profundidad en él y de desglosar y definir las necesidades a implementar.}
+	Conocer todos y cada uno de los requerimientos de un sistema es fundamental para no caminar a través del camino incorrecto. En este capítulo se aborda el primer contacto con el sistema a través de un completo análisis con el fin de indagar con mayor profundidad en él y de desglosar y definir las necesidades a implementar.
 
 	% Section
 	\section{Requisitos}
@@ -1349,7 +1350,7 @@ breaklines=true,
 		Los requisitos, que deben ser establecidos durante la fase de elaboración del proyecto, pueden revisarse, modificarse e incluso añadir nuevos durante las iteraciones de la fase de construcción al contextualizar el proyecto en el marco de trabajo \gls{aup-a} (\textit{Agile Unified Process}). Para el presente proyecto, en la primera iteración de la fase de construcción (iteración 3 de la planificación global) se realizó la revisión de los requerimientos junto a otros aspectos de la fase de análisis.
 
 	% Subsection
-	\subsection[Requisitos funcionales (RF)]{Requisitos funcionales (RF)\footnote{Los RF identificados hacen referencia al sistema en general sin especificar al componente en concreto al que pertenecen. En el capítulo \ref{implementationChapter}. \nameref{implementationChapter} se detalla con profundidad la arquitectura y los componentes del proyecto.}}
+	\subsection[Requisitos funcionales (RF)]{Requisitos funcionales (RF)\footnote{Los RF identificados hacen referencia al sistema en general sin especificar al componente en concreto al que pertenecen. En el capítulo \ref{implementationChapter} se detalla con profundidad la arquitectura y los componentes del proyecto.}}
 	
 	Expresan y definen las funcionalidades que el sistema debe proporcionar y ejecutar, es decir, qué debe hacer el sistema. \\
 	
@@ -4213,7 +4214,7 @@ breaklines=true,
 	% Design
 	\chapter{Diseño} \label{designChapter}
 	
-	\textbf{Resumen:} \textit{Dotar de un diseño y una arquitectura al sistema tras haber recabado información durante la etapa de análisis, es esencial para formular y caracterizar la solución propuesta desde el punto de vista de diseño ya que acerca a los \textit{\glspl{stakeholder}} a la implementación final. En este capítulo se muestran diferentes diagramas de diseño.}
+	Dotar de un diseño y una arquitectura al sistema tras haber recabado información durante la etapa de análisis, es esencial para formular y caracterizar la solución propuesta desde el punto de vista de diseño ya que acerca a los \textit{\glspl{stakeholder}} a la implementación final. En este capítulo se muestran diferentes diagramas de diseño.
 	
 	% Section
 	\section{Modelado de la arquitectura física del sistema}
@@ -4316,12 +4317,13 @@ breaklines=true,
 		\item Primer nivel: en este primer nivel se ubica la capa lógica de presentación donde se diferencian dos tipos de dispositivos \textit{hardware}:
 			\begin{itemize}
 				\item Dispositivo que representa un cliente delgado ya que simplemente actúa como intermediario entre el usuario y el servidor web, no implementando ningún aspecto de la lógica de negocio. Este dispositivo puede ser cualquier ordenador o dispositivo móvil con conexión a Internet el cual permite a los usuarios interactuar con el sistema web mediante un navegador utilizando los protocolos \gls{http-a} (\textit{\gls{http}}) y \gls{https-a} (\textit{\gls{https}}). % TODO Permitir HTTP?
-				\item Dispositivo, \gls{raspberry} (\gls{raspberry-a}), que representa un cliente pesado o grueso ya que presenta carga de cómputo y capacidad de procesamiento de datos en el propio dispositivo, gracias a la ejecución de un componente del proyecto. Este dispositivo interactúa directamente mediante el protocolo \gls{https-a} con los mecanismos de persistencia desplegados.
+				\item Dispositivo, \gls{raspberry} (\gls{raspberry-a}), que representa un cliente pesado o grueso ya que presenta carga de cómputo y capacidad de procesamiento de datos en el propio dispositivo, gracias a la ejecución de un componente del proyecto. Este dispositivo interactúa directamente mediante los protocolos \gls{http-a} y \gls{https-a} con los mecanismos de persistencia desplegados. % TODO - Añadir HTTP al diagrama. P.ej. la BBDD usa HTTP. No se importa el certificado.
 			\end{itemize}
 				 		
-		\item Segundo nivel: en este nivel se localiza el servidor del sistema web desplegado en la plataforma como servicio (\textit{\gls{paas}} -\gls{paas-a}-) \cite{gonzalez:2011:TCCS} \gls{cloudfoundry} de IBM Cloud. Este sistema web interactúa directamente mediante el protocolo \gls{https-a} con los mecanismos de persistencia desplegados.
+		% TODO Servidor o contenedor de aplicaciones?		 		
+		\item Segundo nivel: en este nivel se localiza el servidor donde se despliega el sistema web en la nube. Este sistema web interactúa directamente mediante los protocolos \gls{http-a} y \gls{https-a} con algunos mecanismos de persistencia.
 		
-		\item Tercer nivel: en el último nivel se hallan los cuatro mecanismos de persistencia utilizados: el servicio de almacenamiento en la nube, los gestores de bases de datos desplegados en el servicio IBM Cloud y el servicio de \Gls{blockchain} (\gls{blockchain-a}) de \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) desplegado en una máquina virtual (\textit{\gls{vm}} -\gls{vm-a}-) en Microsoft Azure.
+		\item Tercer nivel: en el último nivel se hallan los cuatro mecanismos de persistencia utilizados: el servicio de almacenamiento en la nube, los gestores de bases de datos y el servicio de \Gls{blockchain} (\gls{blockchain-a}).
 	\end{itemize}
 	  
 	\begin{figure}[!ht]   
@@ -4382,7 +4384,7 @@ breaklines=true,
 	
 	El diagrama Entidad-Relación es un modelo de datos basado en una percepción del mundo real que consiste en un conjunto de objetos básicos llamados entidades y relaciones entre ellos para representar las entidades relevantes de un sistema así como sus interrelaciones y propiedades. Se puede obtener con la técnica, ingeniería inversa la cual permite conseguir información y su diseño a partir de un sistema y por tanto poder determinar el esquema lógico y conceptual de la \gls{bbdd-a}. \\
 	
-	La Figura \ref{fig:design_er} muestra este diagrama donde se diferencian cada uno de los mecanismos de persistencia definidos\footnote{En el caso  del servicio de almacenamiento en la nube, al ser un servicio externo no se pueden controlar los atributos que almacena ya que únicamente se envía el fichero. Sin embargo, para hacer entendible el modelo y la información usada en el proyecto se especifican dos atributos y su estereotipo.} junto con las entidades que lo conforman. Además, cada entidad puede poseer un estereotipo\footnote{Las entidades que conforman el mecanismo de persistencia \gls{blockchain-a} se explican en la sección \ref{businessNetwork}. \nameref{businessNetwork} ya que sus estereotipos coinciden con los elementos del modelo de la red de negocio.}, unos atributos y tipo junto con la especificación en caso de existir del atributo que actuará como clave primaria o PK (\textit{Public Key}) para identificar un registro único en el mecanismo de persistencia. Como particularidad del diagrama, indicar que la entidad \texttt{AlertDetails} es una entidad débil lo que quiere decir que su existencia depende de otra entidad (\texttt{Alert}) y no posee atributos únicos o clave primaria. Su estereotipo \texttt{<<concept>>} -proveniente de la tecnología \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a})- viene a significar esto mismo.
+	La Figura \ref{fig:design_er} muestra este diagrama donde se diferencian cada uno de los mecanismos de persistencia definidos\footnote{En el caso  del servicio de almacenamiento en la nube, al ser un servicio externo no se pueden controlar los atributos que almacena ya que únicamente se envía el fichero. Sin embargo, para hacer entendible el modelo y la información usada en el proyecto se especifican dos atributos y su estereotipo.} junto con las entidades que lo conforman. Además, cada entidad puede poseer un estereotipo\footnote{Las entidades que conforman el mecanismo de persistencia \gls{blockchain-a} se explican en la sección \ref{businessNetwork} ya que sus estereotipos coinciden con los elementos del modelo de la red de negocio.}, unos atributos y tipo junto con la especificación en caso de existir del atributo que actuará como clave primaria o PK (\textit{Public Key}) para identificar un registro único en el mecanismo de persistencia. Como particularidad del diagrama, indicar que la entidad \texttt{AlertDetails} es una entidad débil lo que quiere decir que su existencia depende de otra entidad (\texttt{Alert}) y no posee atributos únicos o clave primaria. Su estereotipo \texttt{<<concept>>} -proveniente de la tecnología \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a})- viene a significar esto mismo.
 	
 	\begin{figure}[!ht]   
 		\caption{Diagrama Entidad-Relación.} 
@@ -4671,7 +4673,7 @@ breaklines=true,
 	% Section
 	\section{Diagrama final de clases de diseño}	
 	
-	El diagrama final de clases de diseño (Figura \ref{fig:classes_final}) contiene la representación completa del modelo desde el punto de vista de diseño e implementación de un sistema, es decir, se trata de la fusión de todos los diagramas de clases de diseño expuestos en la sección anterior \ref{classes}. \nameref{classes}.
+	El diagrama final de clases de diseño (Figura \ref{fig:classes_final}) contiene la representación completa del modelo desde el punto de vista de diseño e implementación de un sistema, es decir, se trata de la fusión de todos los diagramas de clases de diseño expuestos en la sección anterior \ref{classes}.
 
 	% NEW PAGE
 	\newpage
@@ -4687,71 +4689,65 @@ breaklines=true,
 	% Implementation
 	\chapter{Implementación} \label{implementationChapter}
 	
-	\textbf{Resumen:} \textit{Todo sistema software se encuentra respaldado por un trabajo previo que lo conforma. Un aspecto importante es mostrar al lector la información interna más destacada sobre la implementación tecnológica llevada a cabo ya que de esta manera podrá conocer de una forma más concreta los entresijos del sistema, la funcionalidad, etc.}
+	Todo sistema software se encuentra respaldado por un trabajo previo que lo conforma. Un aspecto importante es mostrar al lector la información interna más destacada sobre la implementación tecnológica llevada a cabo ya que de esta manera podrá conocer de una forma más concreta los entresijos del sistema, la funcionalidad, etc.
 	
 	% Section
 	\section{Hyot}
 		
-	Hyot es la prueba de concepto (\textit{\gls{poc}} -\gls{poc-a}-) de código abierto\footnote{Consulte el anexo \ref{install}. \nameref{install} para saber cómo conseguir el código.} desarrollada para llevar a cabo la trazabilidad de un entorno controlado de \gls{iot-a} (\textit{\gls{iot}}) mediante la tecnología \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}). Si bien es cierto que esta trazabilidad se puede realizar utilizando metodologías tradicionales, como son bases de datos o ficheros de \textit{logs} para almacenar la información, también es evidente que se carece de una falta de seguridad y garantía de que esta información ha perdurado inmutable desde su registro. \\
-			
-	Aprovechando el respaldo de todas las ventajas que proporciona el concepto de \Gls{blockchain} (\gls{blockchain-a}), Hyot mantiene parte de su persistencia en una \gls{blockchain-a} de carácter permisionada lo cual incrementa favorablemente la seguridad frente a las públicas ya que se puede controlar quién puede acceder y con qué privilegios al existir varios niveles de privacidad y de membresía proporcionando así mayor confidencialidad. De esta forma, la información no es expuesta públicamente a cualquier usuario ajeno a la misma y siempre estará identificada al participante que la añadió al registro por lo que favorece la trazabilidad de los datos. Pero solamente una parte de toda la información trazada del entorno es registrada en la \gls{blockchain-a}, en concreto aquella que interesa salvaguardar de una posible alteración ya que es la que proporcionará el resguardo y la prueba de que un suceso irregular realmente sucedió en un marco temporal. El suceso registrado -evidencia- en sí se guarda en una tercera parte de confianza (\gls{tpc-a}), como puede ser un servicio de almacenamiento en la nube, debido a su tamaño y al formato que presenta -fichero de vídeo-. Este agente externo puede no encontrarse 100\% securizado por lo que la evidencia almacenada debe ser protegida mediante el cifrado de su contenido y posterior firmado. La encriptación proporciona al contenido una codificación de tal manera que la información no sea legible de forma directa otorgando así confidencialidad y privacidad. Por su parte, el firmado ayuda a asegurar:
-	
+	Hyot es la prueba de concepto (\textit{\gls{poc}} -\gls{poc-a}-) de código abierto\footnote{Consulte el anexo \ref{install} para saber cómo conseguir el código.} desarrollada para llevar a cabo la trazabilidad de un entorno controlado de \gls{iot-a} (\textit{\gls{iot}}) mediante la tecnología \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}). Si bien es cierto que esta trazabilidad se puede realizar utilizando metodologías tradicionales, como son bases de datos o ficheros de \textit{logs} para almacenar la información, también es evidente que se carece de una falta de seguridad y garantía de que esta información ha perdurado inmutable desde su registro. \\
+				
+	Aprovechando el respaldo de todas las ventajas que proporciona el concepto de \Gls{blockchain} (\gls{blockchain-a}), Hyot mantiene parte de su persistencia en una \gls{blockchain-a} de carácter permisionada lo cual incrementa favorablemente la seguridad frente a las públicas ya que se puede controlar quién puede acceder y con qué privilegios al existir varios niveles de privacidad y de membresía proporcionando así mayor confidencialidad. De esta forma la información no es expuesta públicamente a cualquier usuario ajeno a la misma y siempre está identificada al participante que la registra por lo que favorece la trazabilidad de los datos. Pero solamente una parte de toda la información trazada del entorno es registrada en la \gls{blockchain-a}, en concreto aquella que interesa salvaguardar de una posible alteración ya que es la que proporcionará el resguardo y la prueba de que un suceso irregular realmente sucedió en un marco temporal. El suceso registrado a partir del cual se genera una evidencia -vídeo del entorno- se guarda en una tercera parte de confianza (\gls{tpc-a}), como puede ser un servicio de almacenamiento en la nube, debido a su tamaño y al formato que presenta. Este agente externo puede no encontrarse 100\% securizado por lo que la evidencia almacenada debe ser protegida mediante el cifrado de su contenido y posterior firmado. La encriptación proporciona al contenido una codificación de tal manera que la información no sea legible de forma directa otorgando así confidencialidad y privacidad. Por su parte, el firmado ayuda a asegurar:
+		
 	\begin{itemize}
 		\item Integridad de los datos: la evidencia no ha sido alterada de su forma original.
 		\item Mensaje de autenticación o prueba de origen: la evidencia en realidad procede del supuesto remitente.
-		\item No repudio: el emisor no puede negar la autenticidad de la evidencia que enviaron y firmaron con \gls{gpg-a} (\textit{\gls{gpg}}).
+		\item No repudio: el emisor no puede negar la autenticidad de la evidencia que envió y firmó.
 	\end{itemize}
 		
-	El resto de información que es meramente informativa y permite ampliar el contexto de la trazabilidad efectuada es almacenada en una base de datos (\gls{bbdd-a}). También, cabe destacar que es fácilmente escalable a ampliar a un mayor rango de cobertura en cuanto a \gls{iot-a} se refiere, indistintamente de usar dispositivos del mismo tipo o variedad en ellos. \\
+	El resto de información que es meramente informativa y que permite ampliar el contexto de la trazabilidad efectuada es almacenada en una base de datos (\gls{bbdd-a}). También, cabe destacar que es fácilmente escalable a ampliar a un mayor rango de cobertura en cuanto a \gls{iot-a} se refiere, indistintamente de usar dispositivos del mismo tipo o variedad en ellos. \\
 	
-	Esta solución, que es altamente configurable por el usuario mediante una inicialización preliminar, gestiona de forma transparente para el usuario una serie de sucesos -temperatura, humedad y distancia- del entorno que son monitorizados constantemente con una frecuencia por defecto de 3 segundos y en tiempo real desde fuentes de entradas de datos, como son los \glspl{sensor}, conectados a un ordenador de placa reducida (\textit{\gls{sbc}} -\gls{sbc-a}-) como es la \gls{raspberry} (\gls{raspberry-a}), siendo la última versión disponible (versión 3) la utilizada en el proyecto. Esta información recogida es analizada para determinar si es un instante concreto de tiempo los valores leídos son anómalos o no y por tanto decretar si en el entorno se está produciendo un acontecimiento desautorizado. En todo momento, las acciones ejecutadas y las mediciones efectuadas se notifican al usuario tanto a través del terminal como a través de los dispositivos de salida con los que cuenta el \gls{prototipo} \textit{hardware}\footnote{Consultar los anexos \ref{prototype}. \nameref{prototype} y \ref{prototypeGPIO}. \nameref{prototypeGPIO} para obtener más información sobre la implementación \textit{hardware} de Hyot.}, como son los \glspl{lcd-a} (\textit{\gls{lcd}}) y el \gls{led-a} (\textit{\gls{led}}), el cual se activa solamente en caso de accionar el protocolo de alerta. \\		 
-			
-	En el caso de que la medición actual no reporte ningún caso extraño, únicamente se realizan dos acciones: 
+	Esta solución, que es altamente parametrizable y configurable por el usuario, gestiona de forma transparente éste una serie de sucesos -temperatura, humedad y distancia- del entorno que son monitorizados constantemente con una frecuencia por defecto de 3 segundos y en tiempo real desde fuentes de entradas de datos, como son los \glspl{sensor}, conectados a un ordenador de placa reducida (\textit{\gls{sbc}} -\gls{sbc-a}-) como es la \gls{raspberry} (\gls{raspberry-a}), siendo la última versión disponible (versión 3) la utilizada en el proyecto. Esta información recogida es analizada para determinar si es un instante concreto de tiempo los valores leídos son anómalos o no y por tanto decretar si en el entorno se está produciendo un acontecimiento desautorizado. En todo momento, las acciones ejecutadas y las mediciones efectuadas se notifican al usuario tanto a través del terminal como a través de los dispositivos de salida con los que cuenta el \gls{prototipo} \textit{hardware}\footnote{Consultar los anexos \ref{prototype} y \ref{prototypeGPIO} para obtener más información sobre la implementación \textit{hardware} de Hyot.}, como son los \glspl{lcd-a} (\textit{\gls{lcd}}) y el \gls{led-a} (\textit{\gls{led}}), este último activándose solamente en caso de accionar el protocolo de alerta. \\	
+	
+	En el caso de que la medición actual no reporte ningún caso anómalo, se procede con el protocolo de medición normal compuesto por las siguientes dos acciones:
 	
 	\begin{enumerate}
-		\item Almacenar la medición en la \gls{bbdd-a} para que quede constancia de que en ese momento temporal el entorno controlado no presenta ninguna incidencia. Para cada medición, se almacenan los siguientes campos:
+		\item Almacenar la medición en la \gls{bbdd-a} para que quede constancia de que en ese momento temporal el entorno controlado no presenta ninguna incidencia. Para cada medición se almacenan los siguientes campos:
 		
 			\begin{itemize}
 				\item Identificador de la medición.
-				\item Marca temporal (\textit{timestamp}) en la que ocurrió el suceso.
-				\item Valor de la temperatura en la medición actual.
-				\item Valor de la humedad en la medición actual.
-				\item Valor de la distancia en la medición actual.
-				\item Indicación de si se produjo un suceso anómalo y se activo el protocolo de alerta.
-				\item Sensor y evento que originó el protocolo de alerta.
-				\item Umbral límite del evento que lanzó el protocolo de alerta.
-				\item Link al servicio de almacenamiento en la nube donde se ubica la evidencia encriptada y firmada.
-				\item Dirección \textit{email} del destinatario para la notificación de la alerta.
+				\item Marca temporal (\textit{timestamp}) en la que ocurre el suceso.
+				\item Valor del evento temperatura en la medición actual.
+				\item Valor del evento humedad en la medición actual.
+				\item Valor del evento distancia en la medición actual.
+				\item Indicación de si se produce un suceso anómalo y por tanto se activa o no el protocolo de alerta.
+				\item \Gls{sensor} que origina el protocolo de alerta.
+				\item Evento del \gls{sensor} que origina el protocolo de alerta.
+				\item Umbral límite del evento que lanza el protocolo de alerta.
+				\item Enlace al servicio de almacenamiento en la nube donde se ubica la evidencia encriptada y firmada.
+				\item Dirección \textit{email} del destinatario para efectos de notificación.
+				\item Usuario que registra la alerta en la \gls{blockchain-a}.
 			\end{itemize}
 				
-		\item Subir determinada información de la medición a una plataforma de \gls{iot-a} que actúa como pasarela de comunicación en tiempo real entre los dispositivos conectados y las aplicaciones que consumen los datos.		
+		\item Subir determinada información de la medición a una plataforma de \gls{iot-a} que actúa como pasarela de comunicación en tiempo real entre los dispositivos conectados y las aplicaciones que consumen los datos.	% TODO - IOT	
 	\end{enumerate}
-	
-	Por contra, si la lectura actual de valores presenta datos infrecuentes que superan unos umbrales preestablecidos considerados como posible indicio de una incidencia en el entorno, el procedimiento a seguir es más exhaustivo debido a que esta situación es la se quiere certificar que ha sucedido. Una incidencia no es sino una acción no controlada que tiene lugar en el entorno que se está vigilando, y origina la ejecución de un protocolo de alerta que comprende:
-	
+		
+	Por contra, si la lectura actual de valores presenta datos anómalos que superan unos umbrales preestablecidos considerados como posible indicio de una incidencia en el entorno, el procedimiento a seguir es más exhaustivo debido a que esta situación es la se quiere certificar su originalidad. Una incidencia no es sino una acción no controlada que tiene lugar en el entorno que se está vigilando, y origina la ejecución de un protocolo de alerta que comprende:
+		
 	\begin{enumerate}
-		\item Captura de un vídeo -por defecto 10 segundos de duración- a través de una cámara (dispositivo Picamera) conectada a la \gls{raspberry-a} que representará la evidencia
-		\item Cálculo del valor \textit{hash} del contenido de la evidencia, aplicando la última \gls{hash} \gls{sha-a}-3 definida (anteriormente conocido como \textit{keccak}), que actuará como prueba de integridad y se almacenará únicamente en la \Gls{blockchain}. 
+		\item Captura de un vídeo -por defecto 10 segundos de duración- a través de una cámara (dispositivo Picamera) conectada a la \gls{raspberry-a} que representará la evidencia.
+		\item Cálculo del valor \textit{hash} del contenido original de la evidencia, aplicando la \gls{hash} \gls{sha-a}-3 (anteriormente conocido como \textit{keccak}), que actúa como prueba de integridad y por tanto se almacena únicamente en la \Gls{blockchain}. 
 		\item Encriptación y firmado de la evidencia con la utilidad \gls{gpg-a} puesto que se ha asumido un modelo de confianza nula en el cual toda la información debe ser protegida.
-		\item Almacenamiento en la nube de la evidencia (p. ej. Dropbox). Este tipo de servicios son considerados \gls{tpc-a} que pueden poner en riesgo la privacidad de las evidencias, por lo que es necesario el paso anterior de cifrado y firmado.
-		\item Volcado de la incidencia con información adicional (sensor de la alerta, umbrales de alerta, link apuntado al vídeo en la nube, etc.) en la \gls{bbdd-a} para que quede constancia de que en ese momento temporal el entorno vigilado presentó una lectura no controlada. En este método de almacenamiento se guardan los mismos campos mencionados anteriormente y como no garantiza la no alteración, la propiedad de prueba (código \textit{hash}) no es almacenada.
-		\item Subida de determinada información de la medición a una plataforma de \gls{iot-a} que actúa como pasarela de comunicación en tiempo real entre los dispositivos conectados y las aplicaciones que consumen los datos.
-		\item Registro de la incidencia	en \gls{hyperledgerfabric-a}. El punto central de Hyot es garantizar que el registro de un suceso anómalo no ha sido indebidamente modificado, de forma que una vez registrada una incidencia se tenga total certeza respecto a su integridad y veracidad. Este objetivo se consigue con esta tecnología, ya que proporciona un protocolo de consenso distribuido para la protección de integridad y un control de acceso que permite identificar a los agentes que introducen datos en la \Gls{blockchain-a}. En el dominio de nuestro caso de uso, se establecen los roles y permisos de los participantes (\textit{\glspl{participant}}), las transacciones (\textit{\glspl{transaction}}) posibles a ejecutar junto con el activo (\textit{\glspl{asset}}) \texttt{Alert} el cual contiene los siguientes atributos: 
-		
-				\begin{itemize}
-					\item Identificador de la medición -en este caso también a la alerta-. Coincide con el identificador almacenado en la \gls{bbdd-a}.
-					\item Marca temporal (\textit{timestamp}) en la que ocurrió el suceso. Coincide con la marca temporal almacenada en la \gls{bbdd-a}.
-					\item Sensor que origina el protocolo de alerta.
-					\item Código \textit{hash} del contenido de la evidencia sin encriptar.
-					\item Enlace al servicio de almacenamiento en la nube donde se ubica la evidencia encriptada y firmada. Este activo, que también coincide con el almacenado en la \gls{bbdd-a}, evita la dependencia de acceso y de poseer permiso de acceso a la \gls{bbdd-a}.
-					\item Participante que ejecuta la transacción de publicación de una nueva alerta.
-				\end{itemize}
+		\item Almacenamiento en la nube de la evidencia. Este tipo de servicios son considerados \gls{tpc-a} que pueden poner en riesgo la privacidad de las evidencias por lo que es necesario el paso anterior de cifrado y firmado.	
+		\item Volcado de la incidencia con información adicional -medición- en la \gls{bbdd-a} para que quede constancia de que en ese momento temporal el entorno vigilado presenta una lectura no controlada. Este método de almacenamiento como no garantiza la no alteración, la propiedad de prueba que se quiere garantizar la originalidad (código \textit{hash}) no es almacenada.
+		\item Subida de determinada información de la medición a una plataforma de \gls{iot-a} que actúa como pasarela de comunicación en tiempo real entre los dispositivos conectados y las aplicaciones que consumen los datos. % TODO - IOT
+		\item Registro de la incidencia	en \gls{hyperledgerfabric-a}. El punto central de Hyot es garantizar que el registro de un suceso anómalo no ha sido indebidamente modificado, de forma que una vez registrada una incidencia se tenga total certeza respecto a su integridad y veracidad. Este objetivo se consigue con esta tecnología, ya que proporciona un protocolo de consenso distribuido para la protección de integridad y un control de acceso que permite identificar a los agentes que introducen datos en la \Gls{blockchain-a}. Por ese motivo, en este método de persistencia se almacena de forma exclusiva el valor \textit{hash}.
 
-		\item Notificación del suceso no controlado mediante el envío de un \textit{email} a la dirección de correo electrónico destino configurada, adjuntando la evidencia encriptada y firmada. Esta comunicación es importante para que el usuario puede conocer el estado del entorno en todo momento lo antes posible y ver que está sucediendo y poder tomar decisiones en caso necesario.
+		\item Notificación del suceso no controlado mediante el envío de un \textit{email} a la dirección de correo electrónico destino configurada. Esta comunicación es importante para que el usuario pueda conocer el estado del entorno en todo momento lo antes posible y ver que está sucediendo y poder tomar decisiones en caso necesario.
 	
 	\end{enumerate}
 		
-	La Figura \ref{fig:hyot_flow} muestra el mapa de flujo de forma superficial de la monitorización de sucesos del entorno en Hyot donde durante su ejecución, indistintamente de la activación o no del protocolo de alerta, se gestiona exhaustivamente cualquier error que se pueda producir, finalizando la ejecución de manera instantánea y notificando al usuario por la interfaz de la terminal. Además, si el error se produce durante la etapa de monitorización de sucesos el usuario de Hyot tendrá la certeza de que si algo no funciona correctamente se le notificará instantáneamente mediante el envío de un \textit{email} adjuntando el \textit{log} con los pasos ejecutados hasta el momento.
+	% TODO - IOT	
+	La Figura \ref{fig:hyot_flow} muestra el mapa de flujo de forma superficial de la monitorización de sucesos del entorno donde durante su ejecución, indistintamente de la activación o no del protocolo de alerta, se gestiona exhaustivamente cualquier error que se pueda producir, finalizando la ejecución de manera instantánea y notificando al usuario por la interfaz de la terminal. Además, si el error se produce durante la etapa de monitorización de sucesos, el usuario tiene la certeza de que si algo no funciona correctamente se le notifica instantáneamente mediante el envío de un \textit{email} adjuntando el \textit{log} con los pasos ejecutados hasta el momento -si dicha funcionalidad está habilitada-.
 	
 	% NEW PAGE
 	\newpage
@@ -4775,9 +4771,9 @@ breaklines=true,
 	A mayores de los componentes principales, dos componentes adicionales son ofrecidos con el fin de completar el proyecto y facilitar las tareas de:
 
 	\begin{itemize}
-  		\item Configuración inicial de la \gls{raspberry-a} para la posterior ejecución del componente de monitorización de sucesos del entorno. La Figura \ref{fig:hyot_setupflow} muestra el mapa de flujo de forma superficial de este proceso, donde se han omitido acciones y/o comprobaciones de menor importancia  y la gestión de errores por simplicidad, en cuyo caso de reproducción se finaliza la ejecución de manera instantánea notificando al usuario por la interfaz de la terminal.
+  		\item Configuración inicial del dispositivo \gls{raspberry-a} para la posterior ejecución del componente de monitorización de sucesos del entorno. La Figura \ref{fig:hyot_setupflow} muestra el mapa de flujo de forma superficial de este proceso donde se han omitido acciones y/o comprobaciones de menor importancia y la gestión de errores por simplicidad, en cuyo caso de reproducción se finaliza la ejecución de manera instantánea notificando al usuario por la interfaz del terminal.
   		
-  		\item Desencriptación de evidencias previamente encriptadas y firmadas con \gls{gpg-a}. En este proceso, además de mostrar la firma, se verifica la integridad de su contenido a través de la comparación del valor \textit{hash} calculado sobre el contenido de la evidencia tras su descifrado y el valor \textit{hash} que inicialmente se había almacenado en la \gls{blockchain-a} cuando se produjo la incidencia. En este punto de comprobación reside la confianza que se depositó en esta tecnología ya que en caso de diferir los valores, se tiene la certeza de que la evidencia almacenada en la nube fue alterada.
+  		\item Desencriptación de evidencia previamente encriptada y firmada con \gls{gpg-a}. En este proceso, además del proceso de desencriptación, se muestra la firma y se verifica la integridad del contenido de la evidencia obtenida a través de la comparación del valor \textit{hash} calculado sobre el contenido de la evidencia tras su descifrado y el valor \textit{hash} que inicialmente se había almacenado en la \gls{blockchain-a} cuando se produjo la incidencia. En este punto de comprobación reside la confianza que se deposita en esta tecnología ya que en caso de diferir los valores, se tiene la certeza de que la evidencia almacenada en la nube fue alterada.
 	\end{itemize}
 	
 	\begin{figure}[!ht]   
@@ -4799,7 +4795,7 @@ breaklines=true,
 	% Section
 	\section{Arquitectura de Hyot}
 	
-	La arquitectura de Hyot, mencionada anteriormente en la sección \ref{d_deployment}. \nameref{d_deployment}, se compone de 3 niveles y diferentes servicios y plataformas. En esta sección, se detallará de forma más completa esta disposición enfatizando y concretando las herramientas empleadas y desplegadas (Figura \ref{fig:hyot_architecture}).
+	La arquitectura de Hyot para la solución actual se compone de dos entornos y de diferentes servicios y plataformas. La Figura \ref{fig:hyot_architecture} detalla de forma más exhaustiva esta disposición enfatizando y concretando las herramientas empleadas y desplegadas.
 	
 		\begin{figure}[!ht]   
 			\caption{Arquitectura de Hyot.} 
@@ -4808,28 +4804,31 @@ breaklines=true,
 				\label{fig:hyot_architecture} 
 			\end{center}  
 		\end{figure}
-		
-	Observando la arquitectura se diferencian claramente dos entornos donde los diversos componentes están desplegados:
-	
-	\begin{itemize}
-		\item Entorno de ámbito local donde se despliega el componente de monitorización de sucesos del propio entorno. Se compone del prototipo \textit{hardware}\footnote{Consultar los anexos \ref{prototype}. \nameref{prototype} y \ref{prototypeGPIO}. \nameref{prototypeGPIO} para obtener más información.}: \gls{raspberry-a}, sensores, \gls{lcd-a}, \gls{led-a}, etc y se corresponde con el cliente pesado.
-		\item Entorno en la nube donde se despliegan el resto de componentes principales de Hyot\footnote{Consulte los anexos \ref{install}. \nameref{install} y \ref{userguide}. \nameref{userguide} para obtener más información sobre la instalación y uso de estos componentes y servicios.} y servicios utilizados por éstos. Aquí, se puede diferenciar:
-		% TODO Dependiendo de donde se indica la configuración de Gmail, Cloudant, platform IOT, IBM CLoud, etc. incluir el anexo o no en el footnote anterior.
-		\begin{itemize}
-			\item La capa de persistencia que engloba los tres mecanismos para persistir toda la información utilizada en Hyot.
 			
+	Observando la arquitectura se diferencian claramente dos entornos donde los diversos componentes están desplegados:
+
+	\begin{itemize}
+		\item Entorno de ámbito local donde se ubica el \gls{prototipo} \textit{hardware} elaborado correspondiente a un cliente pesado. En él se despliega el componente de monitorización de sucesos, el componente de configuración del dispositivo \gls{raspberry-a} y el componente de desencriptación de evidencia. Este último pudiendo ser desplegado en cualquier otro dispositivo siempre y cuando se disponga de todas las dependencias necesarias.
+	
+		\item Entorno en la nube donde se despliegan los dos componentes restantes: protocolo de registro de incidencias en la \gls{blockchain-a} de \gls{hyperledgerfabric-a} y sistema web y los servicios empleados. Aquí, se puede diferenciar:
+
+		\begin{itemize}
+			\item La capa de persistencia que engloba los cuatro mecanismos utilizados para persistir toda la información gestionada en el proyecto.
+						
 			\begin{itemize}
-				\item Por un lado, se encuentran la \gls{bbdd-a} como servicio (\textit{\gls{dbaas}} -\gls{dbaas-a}-) \gls{cloudant} la cual pertenece a su vez al servicio de IBM Cloud y el servicio de almacenamiento en la nube Dropbox (\textit{\gls{saas}} -\gls{saas-a}-) \cite{gonzalez:2011:TCCS}.
-				
-				\item Y por otro lado y dentro de la capa de persistencia, se encuentra la capa de control formada por el despliegue de la \gls{blockchain-a} permisionada. Esta denominación se debe a que la información aquí guardada permite controlar y garantizar la veracidad de la trazabilidad registrada. En este caso, se desplegó una (\textit{\gls{vm}} -\gls{vm-a}-) Ubuntu en el servicio Microsoft Azure con dirección IP: \texttt{40.121.15.202} y en dicha máquina se localiza \gls{hyperledgerfabric-a} y el servidor \gls{rest-a} (\textit{\gls{rest}}) \gls{api-a} (\textit{\gls{api}}) de \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a}), el cual recibe peticiones securizadas por parte del sistema web y del componente de monitorización de sucesos e interactúa con la fábrica \gls{blockchain-a} de \gls{hyperledgerfabric-a}.				
+				\item Por un lado, se encuentran las \gls{bbdd-a} como servicio (\textit{\gls{dbaas}} -\gls{dbaas-a}-) \gls{cloudant} y Compose for MySQL pertenecientes ambas al servicio IBM Cloud y el servicio de almacenamiento en la nube Dropbox (\textit{\gls{saas}} -\gls{saas-a}-) \cite{gonzalez:2011:TCCS}.
+			
+				\item Por otro lado y dentro de la capa de persistencia se encuentra la capa de control formada por la \gls{blockchain-a} permisionada desplegada en \gls{hyperledgerfabric-a}. Esta denominación se debe a que la información aquí guardada permite controlar y garantizar la veracidad de la trazabilidad registrada. Este despliegue se ha efectuado en una máquina virtual (\textit{\gls{vm}} -\gls{vm-a}-) Ubuntu en el servicio Microsoft Azure y en dicha máquina se localiza tanto \gls{hyperledgerfabric-a} como el servidor \gls{rest-a} (\textit{\gls{rest}}) \gls{api-a} (\textit{\gls{api}}) de \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a}). Este servidor recibe peticiones securizadas por parte del componente de monitorización de sucesos y del sistema web e interactúa con la \gls{blockchain-a} a través del nodo conectado.								
 			\end{itemize}  
 		 				 		
-			\item Los servicios desplegados en la nube pertenecientes a IBM Cloud, donde se localizan:
-			
+			\item Los servicios pertenecientes a IBM Cloud donde se localizan:
+						
 			\begin{itemize}
-				\item La ya mencionada \gls{bbdd-a}.
-				\item La plataforma como servicio (\textit{\gls{paas}} -\gls{paas-a}-) de \gls{iot-a} para enviar datos de forma sencilla desde dispositivos y permitir la comunicación entre éstos y las aplicaciones. 
-				\item El sistema web, desarrollado en {\color{red}XX}, que actuará como cliente delgado para consumir la información. Esta aplicación es desplegada en el servicio de \gls{cloudfoundry}, considerado un \gls{paas-a}, de tal manera que se garantiza, con respecto a un sistema local, una rápida provisión y despliegue de la aplicación junto con una total disponibilidad. % TODO Indicar la tecnología y añadir la imagen en el Figura. Esa tecnología también debe ir en el diagrama de despliegue. Añadir la dirección web donde se puede acceder.
+				\item La plataforma como servicio (\textit{\gls{paas}} -\gls{paas-a}-) de \gls{iot-a} para enviar datos de forma sencilla desde dispositivos y permitir la comunicación entre éstos y las aplicaciones. % TODO - IOT
+				\item El sistema web que actúa como cliente delgado para consumir la información. Esta aplicación es desplegada en  en la plataforma como servicio (\textit{\gls{paas}} -\gls{paas-a}-) \cite{gonzalez:2011:TCCS} \gls{cloudfoundry} de tal manera que se garantiza, con respecto a un sistema local, una rápida provisión y despliegue de la aplicación junto con una total disponibilidad.  
+				% TOMCAT o CloudFoundry?
+				% TODO Esa tecnología también debe ir en el diagrama de despliegue. Añadir la dirección web donde se puede acceder en el diagrama. Si no quito IOT, el gls{pass} debe ir en IOT.
+				
 			\end{itemize}
 			
 			\item El servicio para el envío de notificaciones mediante \textit{emails}, siendo Gmail (\gls{saas-a}) el configurado y utilizado.
@@ -4839,31 +4838,31 @@ breaklines=true,
 	% Section
 	\section{Tecnologías de desarrollo}
 	
-	% TODO número de tecnologias 3? Añadir el web Grails
-	Comentadas ya tanto las herramientas \textit{software} en el punto \ref{tools}. \nameref{tools} como los servicios utilizados -sección anterior-, se pasa a presentar las tecnologías de desarrollo empleadas para la codificación y los componentes donde se utilizaron. En concreto, en Hyot se han empleado tres tecnologías para el desarrollo:
+	La codificación de los componentes de Hyot se ha llevado a cabo con diversas tecnologías de desarrollo. El empleo de varias, en concreto 4, se debe a las necesidades requeridas por cada componente ya sea por su grado de adaptación o porque se encuentre impuesto por la propia herramienta y a la experiencia de uso. A continuación, se indican cada una de ellas referenciando el componente o componentes donde se emplean y la justificación de ello:
 	
 	\begin{itemize}
-		\item GNU Bash \cite{bash}: es un intérprete y procesador de comandos de \textit{\gls{shell}} que permite ejecutar \textit{\glspl{script}} simples por consola con la finalidad de automatizar tareas que puede desempeñar un administrador de sistemas como puede ser la configuración de un sistema. Fue desarrollado para el proyecto GNU en el año 1987 como la versión libre del hasta entonces intérprete más importante de \gls{unix}: \gls{bourneshell} (\gls{bourneshell-a}) y actualmente es el estándar de todas las distribuciones \gls{gnulinux}. Esta tecnología ha sido usada para codificar el componente de configuración de la \gls{raspberry-a} debido a que es al no requerir un código demasiado complejo en cuyo caso hubiese que haber trabajo con otras tecnologías más potentes de \textit{scripting} como \gls{perl} o \gls{python}.
-	
-		% TODO – Sistema web
-		\item Javascript (JS) \cite{javascript}: es un  lenguaje de programación ligero e interpretado -orientado a objetos, basado en prototipos, imperativo, débilmente tipado y dinámico, entre otras características- que surgió debido a la necesidad de ampliar las posibilidades de desarrollar sistemas web del lado del cliente (\textit{\gls{frontend}}) con contenido más complejo, dinámico y funcional ya que hasta entonces las prestaciones de estos sitios se encontraba limitada exclusivamente a funcionalidades básicas sobre los elementos de texto, estilos y formatos, es decir, a contenido estático. Iniciado originalmente por Brendan Eich de la compañía de \textit{software} Netscape Communications Corporation con el nombre de Mocha, el cual fue renombrado posteriormente a LiveScript, para finalmente quedar como JavaScript y continuado por la alianza entre Netscape y Sun, se ha popularizado enormemente hasta convertirse es un estándar basado en \gls{ecmascript} y soportado por todos los navegadores actuales. El uso de este lenguaje se ha centrado en el desarrollo de la red de negocio con la tecnología \gls{hyperledgercomposer-a} ya que es el lenguaje definido por defecto para describir la estructura de los recursos que participan en la \gls{blockchain-a}. Aun así, esta tecnología presenta su propia sintaxis basada en este lenguaje.
+		\item GNU Bash \cite{bash}: intérprete y procesador de comandos de \textit{\gls{shell}} que permite ejecutar \textit{\glspl{script}} simples por consola con la finalidad de automatizar tareas que puede desempeñar un administrador de sistemas como puede ser la configuración de un sistema. Fue desarrollado para el proyecto GNU en el año 1987 como la versión libre del hasta entonces intérprete más importante de \gls{unix}: \gls{bourneshell} (\gls{bourneshell-a}) y actualmente es el estándar de todas las distribuciones \gls{gnulinux}. Esta tecnología es usada para codificar el componente de configuración del dispositivo \gls{raspberry-a} debido a que es la más idónea para automatizar las acciones de configuración inicial al no requerir demasiada complejidad en cuyo caso hubiese que haber empleado otros lenguajes de \textit{scripting} más potentes como por ejemplo, \gls{perl} o \gls{python}.
+		 	
+		\item Javascript (JS) \cite{javascript}: lenguaje de programación ligero e interpretado -orientado a objetos, basado en prototipos, imperativo, débilmente tipado y dinámico, entre otras características- que surge debido a la necesidad de ampliar las posibilidades de desarrollar sistemas web del lado del cliente (\textit{\gls{frontend}}) con contenido más complejo, dinámico y funcional ya que hasta entonces las prestaciones de estos sitios se encontraban limitadas exclusivamente a funcionalidades básicas sobre los elementos de texto, estilos y formatos, es decir, a contenido estático. Iniciado originalmente por Brendan Eich de la compañía de \textit{software} Netscape Communications Corporation con el nombre de Mocha, el cual fue renombrado posteriormente a LiveScript, para finalmente quedar como JavaScript y continuado por la alianza entre Netscape y Sun, se ha popularizado enormemente hasta convertirse es un estándar basado en \gls{ecmascript} y soportado por todos los navegadores actuales. El uso de este lenguaje se ha centrado en el desarrollo de la red de negocio con la tecnología \gls{hyperledgercomposer-a} ya que es el lenguaje impuesto para describir la estructura de los recursos que participan en la \gls{blockchain-a}. Aun así, esta tecnología presenta su propia sintaxis basada en este lenguaje. También, se ha empleado para definir la funcionalidad del lado de cliente del sistema web mediante la librería jQuery y otras librerías de funcionalidad específica.
 		
-		\item Python \cite{python}: es un lenguaje de \textit{scripting} de código abierto interpretado, interactivo y orientado a objetos creado por Guido van Rossum, preparado para desarrollar independientemente de la plataforma y sistema operativo desde aplicaciones de escritorio, \textit{\glspl{script}} o incluso, sistemas web. En este tipo de lenguajes, que son más flexibles y portables que los lenguajes compilados, se emplea un programa intermedio llamado intérprete donde se traduce el código fuente a un pseudo código llamado \textit{bytecode} la primera vez que se ejecuta, generando archivos \texttt{.pyc} o \texttt{.pyo}, que son los que se ejecutarán en sucesivas ocasiones directamente en la computadora, en lugar de compilar el código a lenguaje máquina comprensible por este dispositivo. En los últimos años el lenguaje se ha hecho muy popular, debido a todas las características que proporciona. Debido a esto, a la facilidad de interacción con componentes electrónicos gracias a las librerías existentes y al contexto y necesidades -rapidez y sencillez de desarrollo junto con existencia de librerías auxiliares- de los componentes que se desarrollaron se ha usado para:
+		\item Python \cite{python}: lenguaje de \textit{scripting} de código abierto interpretado, interactivo y orientado a objetos creado por Guido van Rossum, preparado para desarrollar independientemente de la plataforma y sistema operativo desde aplicaciones de escritorio, \textit{\glspl{script}} o incluso, sistemas web. En este tipo de lenguajes, que son más flexibles y portables que los lenguajes compilados, se emplea un programa intermedio llamado intérprete donde se traduce el código fuente a un pseudo código llamado \textit{bytecode} la primera vez que se ejecuta, generando archivos \texttt{.pyc} o \texttt{.pyo}, que son los que se ejecutarán en sucesivas ocasiones directamente en la computadora, en lugar de compilar el código a lenguaje máquina comprensible por este dispositivo. En los últimos años el lenguaje se ha hecho muy popular debido a todas las características que proporciona. Gracias a esto, a la facilidad de interacción con componentes electrónicos y al contexto y necesidades de desarrollo rápido y sencillo se ha empleado en:
 		
 		\begin{itemize}
 			\item El componente de monitorización de sucesos del entorno.
-			\item El componente de desencriptación de evidencias previamente encriptadas  y firmadas con \gls{gpg-a}.
+			\item El componente de desencriptación de evidencia.
 		\end{itemize}
+
+		\item Grails \cite{grails}: anteriormente llamado \textit{Groovy on Rails}, surge en el año 2006 como respuesta a la necesidad de agilizar, automatizar y simplificar el desarrollo de aplicaciones web en JEE, evitando así el esfuerzo impuesto en la configuración inicial del entorno y proyecto. Se define como un \textit{\gls{framework}} \textit{full-stack} -lado cliente y lado servidor- para aplicaciones web de propósito general, desarrollado sobre el lenguaje de programación \gls{groovy} (basado a su vez en el lenguaje \gls{java}), que permite la construcción de proyectos desde una filosofía ágil y sólida gracias al seguimiento de paradigmas como convención sobre configuración, \textit{Don’t repeat yourself} (DRY), \textit{\gls{scaffolding}} o inversión de control (IoC) y a la implementación del \gls{patrondiseño} \gls{mvc} (\gls{mvc-a}) donde prima minimizar el tiempo de configuración inicial y posterior desarrollo. Debido a todas estas características y a la experiencia de uso previa, esta tecnología se ha empleado para desarrollar el sistema web.
 	\end{itemize}
-		
+			
 	% Section
 	\section{Red de negocio de Hyperledger Composer} \label{businessNetwork}
 	
 	% TODO - Peer node?
-	La especificación de la red de negocio es un concepto clave en \gls{blockchain-a} puesto que representa la digitalización de los elementos que la conforman junto con la lógica de negocio. En Hyot, se ha empleado la herramienta \gls{hyperledgercomposer-a} para la definición de esta red la cual es desplegada a través de un fichero \texttt{.bna} y mantenida por cada nodo conectado a la \gls{blockchain-a} de \gls{hyperledgerfabric-a}\footnote{En el contexto actual del Trabajo Fin de Máster (\gls{tfm-a}) y debido a las limitaciones existentes, la red estará formada por un único nodo, en concreto, aquel desplegado en \gls{hyperledgerfabric-a} de la \gls{vm-a} establecida en el servicio Microsoft Azure.}. Aunque \gls{hyperledgercomposer-a} no aprovecha aun todas las características que ofrece el \textit{\gls{framework}} \gls{hyperledgerfabric-a}, las necesidades actuales son cubiertas con creces con esta herramienta\footnote{\gls{hyperledgercomposer-a} se encuentra bajo constante desarrollo y respaldada por una fuerte comunidad de desarrolladores, hecho contrastado por la liberación constante de nuevas \textit{releases}. Consultar \cite{hyperledgercomposer:releases} para obtener más información.} y su uso se debe a los beneficios que proporciona:
-
+	La especificación de la red de negocio es un concepto clave en \gls{blockchain-a} puesto que representa la digitalización de los elementos que la conforman junto con la lógica de negocio. En Hyot, se ha empleado la herramienta \gls{hyperledgercomposer-a} para la definición de esta red la cual es desplegada a través de un fichero \texttt{.bna} y mantenida por cada nodo conectado a la \gls{blockchain-a} de \gls{hyperledgerfabric-a}\footnote{En el contexto actual del Trabajo Fin de Máster (\gls{tfm-a}) y debido a las limitaciones existentes, la red está formada por un único nodo, en concreto, aquel desplegado en \gls{hyperledgerfabric-a} de la \gls{vm-a} establecida en el servicio Microsoft Azure.}. Aunque \gls{hyperledgercomposer-a} no aprovecha aun todas las características que ofrece el \textit{\gls{framework}} \gls{hyperledgerfabric-a}, las necesidades actuales son cubiertas con creces con esta herramienta\footnote{\gls{hyperledgercomposer-a} se encuentra bajo continuo desarrollo y está respaldado por una fuerte comunidad de desarrolladores, hecho contrastado por la liberación constante de nuevas \textit{releases}. Consultar \cite{hyperledgercomposer:releases} para obtener más información.} y su uso se debe a los beneficios que proporciona:
+	
 	\begin{itemize}
-		\item Simplificación del proceso de implementación de la \gls{blockchain-a} ya que abstrae al desarrollador de numerosos procesos y conceptos lo cuales son generados automáticamente a más bajo nivel al usar dicha herramienta.
+		\item Simplificación del proceso de implementación de la \gls{blockchain-a} ya que abstrae al desarrollador de numerosos procesos y conceptos los cuales son generados automáticamente a más bajo nivel al usar dicha herramienta.
 		\item Aceleración de la creación de aplicaciones eliminando el esfuerzo requerido si se hiciese a un más bajo nivel de codificación -utilizando directamente \gls{hyperledgerfabric-a}-.
 		\item Posibilidad de prueba de la definición de la red realizada antes de ser desplegada en un entorno de producción lo que ayuda a reducir riesgos.
 	\end{itemize}
@@ -4871,58 +4870,68 @@ breaklines=true,
 	La solución de la red de negocio construida es muy simple y se detalla a continuación para un pleno entendimiento. En primer lugar, se van a definir los conceptos claves que conforman una red los cuales corresponden a definiciones de clases instanciables:
 	
 	\begin{itemize}
-		\item Activo o \textit{asset}: hace referencia a los bienes, servicios o propiedades tanto tangibles como intangibles que son almacenados en registros en la \gls{blockchain-a}. Dicho de otra forma, es cualquier cosa del mundo real que pueda ser representado y utilizado en una red de negocio.
-		\item Participante: representa los miembros de una red de negocio los cuales poseen activos y envían transacciones para intercambiar activos o para modificar sus propiedades.
-		\item Transacción: simbolizan las reglas de negocio permitidas, es decir, los procedimientos por el cual los participantes interactúan con los activos.
+		\item Activo o \textit{\gls{asset}}: hace referencia a los bienes, servicios o propiedades tanto tangibles como intangibles que son almacenados en registros en la \gls{blockchain-a}. Dicho de otra forma, es cualquier cosa del mundo real que pueda ser representado y utilizado en una red de negocio.
+		\item Participante o \textit{\gls{participant}}: representa los miembros de una red de negocio los cuales poseen activos y envían transacciones para intercambiarlos o para modificar sus propiedades.
+		\item Transacción o \textit{\gls{transaction}}: simbolizan las reglas de negocio permitidas, es decir, los procedimientos por el cual los participantes interactúan con los activos.
 	\end{itemize}
-
-	Para la red actual de Hyot -versión 1.0.0- se ha determinado el siguiente espacio de nombres \texttt{org.hyot.network.} y se ha definido únicamente un tipo de activo (estereotipo \texttt{<<asset>>}) con nombre \texttt{Alert} que representa la alerta de un suceso anómalo ocurrido en el entorno monitorizado. Este activo, que ha sido especificado utilizando a mayores un tipo enumerado y una clase abstracta\footnote{Indica que el tipo no puede ser instanciado.} \texttt{concept}\footnote{Clase que no representa ni un activo, ni un participante ni una transacción y típicamente son contenidos por alguno de ellos.} como objetivo meramente de aprendizaje\footnote{El foco también ha sido aprender la sintaxis disponible por lo que se que han definido propiedades que a priori no proporcionan valor.}, se compone de:
+	
+	En el dominio de nuestro caso de uso -versión actual de la red 1.1.2- se ha determinado el siguiente espacio de nombres \texttt{org.hyot.network.} y se ha definido únicamente un tipo de activo o \textit{\glspl{asset}} (estereotipo \texttt{<<asset>>}) con nombre \texttt{Alert} que representa una incidencia en el entorno monitorizado, es decir, la alerta de un suceso anómalo y contiene un dato clave de la evidencia, valor \textit{hash}. Este activo, que ha sido especificado utilizando a mayores dos tipos enumerados y una clase abstracta\footnote{Indica que el tipo no puede ser instanciado.} \texttt{concept}\footnote{Clase que no representa ni un activo, ni un participante ni una transacción y típicamente son contenidos por alguno de ellos.} como objetivo meramente de aprendizaje\footnote{El foco también ha sido aprender la sintaxis de la tecnología por lo que se que han definido entidades y propiedades adicionales o de la forma menos directa.}, se compone de:
 	
 		\begin{itemize}
-			\item Identificador de la alerta (tipo \texttt{String}).
+			\item Identificador de la alerta (tipo \texttt{String}) que actúa como clave primaria, es decir, valor único. Coincide con el identificador de la medición almacenada en la \gls{bbdd-a} a la que está asociada.
 			\item Clase \texttt{AlertDetails} con estereotipo \texttt{<<concept>>} que contiene los detalles de la alerta:
 			
 			\begin{itemize}
-				\item Marca temporal (\textit{timestamp}) en la que ocurrió el suceso (tipo \texttt{DateTime}).
-				\item Sensor que originó el protocolo de alerta de tipo \texttt{SensorType} el cual representa una enumeración.
-				\item Valor \textit{hash} del contenido de la evidencia sin encriptar (tipo \texttt{String}).
-				\item Link al servicio de almacenamiento en la nube donde se ubica la evidencia encriptada y firmada (tipo \texttt{String}).
-				\item Participante que ejecutó la transacción de publicación de una nueva alerta de tipo \texttt{User}.
+				\item Marca temporal (\textit{timestamp}) en la que ocurre el suceso (tipo \texttt{DateTime}), coincidiendo de nuevo con la almacenada en la medición.
+				\item \Gls{sensor} que origina el protocolo de alerta de tipo \texttt{SensorType} el cual representa una enumeración.
+				\item Evento del \gls{sensor} que origina el protocolo de alerta de tipo \texttt{EventType} el cual representa una enumeración.
+				\item Valor \textit{hash} del contenido de la evidencia original -sin encriptar ni firmar- (tipo \texttt{String}).
+				\item Enlace al servicio de almacenamiento en la nube donde se ubica la evidencia encriptada y firmada (tipo \texttt{String}).
+				\item Participante de tipo \texttt{User} que ejecuta la transacción de publicación de una nueva alerta (activo \texttt{Alert}).
 			\end{itemize}
+		\end{itemize}
+		
+		Cada enumerado contiene a su vez los posibles valores para los campos que hacen referencia al \gls{sensor} y evento que lanzan la alerta, siendo éstos los siguientes:
+		
+		\begin{itemize}
+			\item Enumerado \texttt{SensorType}: DHT11 y HCSR04.
+			\item Enumerado \texttt{EventType}: TEMPERATURE, HUMIDITY, DISTANCE.
+		\end{itemize}
+	
+	Con respecto a los participantes (\textit{\glspl{participant}}) se ha definido al participante \texttt{User} -estereotipo \texttt{<<participant>>}- que representa el usuario o dispositivo que registra una alerta en la \gls{blockchain-a} y contiene las siguientes propiedades:
 			
-			\item Enumerado con los nombres de los posibles sensores que pueden originar la alerta: DHT11 y HCSR04.
-		\end{itemize}
-		
-	En cuanto a los participantes se ha definido al participante \texttt{User} (estereotipo \texttt{<<participant>>}) que representa el usuario o dispositivo que registra una alerta en la \gls{blockchain-a} y contiene las siguientes propiedades: 	
-		
 		\begin{itemize}
-			\item Identificador de la alerta (tipo \texttt{String}).
-			\item Clase \texttt{AlertDetails} con estereotipo \texttt{<<concept>>} que contiene los detalles de la alerta.
+			\item Nombre de usuario que actúa como clave primaria debiendo ser único su valor (tipo \texttt{String}). 
+			\item Dirección de correo electrónico el cual es una propiedad opcional (tipo \texttt{String}).
+			\item Nombre real (tipo \texttt{String}).
+			\item Apellidos (tipo \texttt{String}).
 		\end{itemize}
-		
-	La lógica de negocio viene definida por la especificación de una transacción \texttt{PublishAlert} (estereotipo \texttt{<<transaction>>}) que contiene dos propiedades:
-	
-		\begin{itemize}
-			\item Nombre de usuario (tipo \texttt{String}). Esta propiedad actuará como identificador único.
-			\item Dirección \textit{email} (tipo \texttt{String}). Esta propiedad es opcional.
-			\item Primer apellido (tipo \texttt{String}).
-			\item Segundo apellido (tipo \texttt{String}).
-		\end{itemize}
-	
-	% TODO - Querys completar
-	Esta transacción es ejecutada por una función procesadora de transacciones (\texttt{publish}) cuya función es el registro de un nuevo activo \texttt{Alert} en la \gls{blockchain-a}. Además, en la red de negocio se pueden especificar las consultas (\textit{querys}) que se pueden ejecutar contra la \gls{blockchain-a} y definir los privilegios de acceso para los participantes y activos. Para el primer caso, se definió una consulta que permite obtener todas las alertas generadas por un determinado sensor. Con respecto a la lista de control de acceso, ésta contiene la siguientes reglas:
+			
+	La lógica de negocio está definida por la especificación de la transacción o \textit{\glspl{transaction}} \texttt{PublishAlert} (estereotipo \texttt{<<transaction>>}) que contiene los mismos campos que los del activo \texttt{User}. Esta transacción es ejecutada por una función procesadora de transacciones cuyo propósito es el registro de un nuevo activo \texttt{User} en la \gls{blockchain-a}. Además, en la red de negocio se pueden especificar consultas (\textit{querys}) que se ejecutan contra la \gls{blockchain-a} y definir los privilegios de acceso para los participantes y activos. Para el primer caso, se han definido las siguientes consultas algunas de ellas parametrizadas\footnote{Cabe indicar que la obtención de la información también puede realizarse mediante llamadas directas a la entidad, aunque de esta forma únicamente se puede obtener información simple y no filtrada. Además, con el formato de consulta se evita la dependencia de indicar el \textit{namespace} la de la red.}.
 	
 	\begin{itemize}
-		\item Todos los participantes de tipo \texttt{User} pueden subir transacciones \texttt{PublishAlert}.
-		\item Únicamente se crearán activos de tipo \texttt{Alert} cuando se suban transacciones \texttt{PublishAlert}, es decir, un nuevo activo \texttt{Alert} no puede ser creado directamente.
-		\item Todos los participantes de tipo \texttt{User} pueden obtener el registro de los  activos \texttt{Alert} cuyo poseedor sean ellos mismos lo que implica que los registros una vez registrados no puedan ser modificados ni borrados proporcionando así una capa extra de seguridad al asegurar que si una alerta fue almacenada fue porque realmente sucedió. Esta regla además implica que un determinado participante \texttt{User} no puede ver los registros de alerta de otros participantes de este tipo.
-		\item Todos los participantes poseen acceso a los recursos de sistema.
-		\item Los administradores de la red de negocio presentan acceso completo a los recursos de usuario.
-		\item Los administradores de la red de negocio presentan acceso completo a los recursos de sistema.
+		\item Seleccionar todas las alertas.
+		\item Seleccionar las alertas generadas por un determinado sensor.
+		\item Seleccionar las alertas generadas por un determinado evento.
+		\item Seleccionar las alertas generadas por un determinado sensor y registradas por un usuario específico.
+		\item Seleccionar las alertas generadas por un determinado evento y registradas por un usuario específico.
+		\item Seleccionar todos los usuarios.
+		\item Seleccionar el usuario con un identificador concreto.
+		\item Seleccionar las alertas registradas por un usuario específico.
 	\end{itemize}
 
-	Hay que tener en cuenta que las reglas definidas son evaluadas en orden de definición (arriba-abajo) de tal manera que cuando una acción cumple una determinada regla, se aplica y el resto de reglas son ignoradas. Para finalizar se muestra el diagrama UML (glosario tiene) generado con la herramienta PlantUML. % TODO
+	Con respecto a la lista de control de acceso, ésta contiene las siguientes reglas:
 	
+	\begin{itemize}
+		\item Todos los participantes de tipo \texttt{User} pueden registrar transacciones \texttt{PublishAlert}.
+		\item Todos los participantes de tipo \texttt{User} pueden crear activos de tipo \texttt{Alert} cuando se registren transacciones \texttt{PublishAlert}. Esto quiere decir que este tipo de activos no pueden ser creados directamente con este tipo de participante.
+		\item Todos los participantes de tipo \texttt{User} pueden obtener el registro de los activos \texttt{Alert} cuyo poseedor sean ellos mismos lo que implica que los registros una vez almacenados no puedan ser modificados ni eliminados, proporcionando así una capa extra de seguridad al asegurar que si una alerta fue almacenada es porque realmente sucedió. Esta regla implica también que un determinado participante \texttt{User} no puede consultar los activos de alerta registrados por otros participantes de este tipo.
+		\item Los administradores de la red de negocio presentan acceso completo a los recursos de usuario por lo que pueden realizar directamente cualquier tipo de operación sobre las entidades participante, activo y transacción lo cual es denegado al participante de tipo \texttt{User} en algunos casos.
+		\item Los administradores de la red de negocio presentan acceso completo a los recursos de sistema lo que permite por ejemplo, desplegar la red de negocio, gestionar identidades, etc.
+	\end{itemize}
+
+	Hay que tener en cuenta que las reglas definidas son evaluadas en orden de definición (arriba-abajo) de tal manera que cuando una acción cumple una determinada regla, ésta se aplica y el resto de reglas son ignoradas.
+
 	% Section
 	\section{Jerarquía de ficheros}
 	
@@ -4997,7 +5006,7 @@ breaklines=true,
 			\item \texttt{node\_modules}: directorio que contiene los paquetes instalados localmente al proyecto con la herramienta \gls{npm-a} (\textit{\gls{npm}}).	
 			\item \texttt{test}: directorio que contiene la especificación de los tests unitarios.
 			\begin{itemize}
-				\item \texttt{xx}: % TODO
+				\item \texttt{xx}: % TODO -- aa
 			\end{itemize}
 			\item \texttt{uml}: directorio que contiene diagramas \gls{uml-a} (\textit{\gls{uml}}) de los modelos de la red de negocio, generados con la herramienta PlantUML\footnote{Extensión para la herramienta Visual Studio Code que requiere tener instalados las herramientas Java y Graphviz. Para obtener más información, consultar \cite{krishnan:uml}.}.
 				\begin{itemize}
@@ -5016,7 +5025,7 @@ breaklines=true,
 		
 		\item \textbf{hyot\_raspberry/setup:} componente del proyecto Hyot, formado por dos ficheros \gls{bash-a} (\textit{\gls{bash}}), que permite configurar el dispositivo \gls{raspberry-a}.
 			\begin{itemize}
-				\item \texttt{raspberrypi\_setup.sh}: fichero que ejecuta una serie de comprobaciones iniciales, instala las dependencias y habilita las interfaces necesarias\footnote{El detalle explícito de las dependencias instaladas e interfaces habilitadas puede obtenerse en el anexo \ref{install}. \nameref{install}.}.
+				\item \texttt{raspberrypi\_setup.sh}: fichero que ejecuta una serie de comprobaciones iniciales, instala las dependencias y habilita las interfaces necesarias\footnote{El detalle explícito de las dependencias instaladas e interfaces habilitadas puede obtenerse en el anexo \ref{install}.}.
 				\item \texttt{utils.sh}: fichero que contiene funciones para proporcionar formato y estilo al texto mostrado por consola.
 			\end{itemize}
 		
@@ -5256,7 +5265,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 	% Section
 	\subsection{Medidas implementadas}
 	
-	 % TODO
+	 % TODO - aaa
 	%En este apartado se indican algunas de las medidas más relevantes de seguridad implementadas en \textsf{Smart testing tool} clasificadas según funcionalidad. Éstas están basadas en las recomendaciones de OWASP\footnote{Puede ampliar la información en la siguiente dirección: \url{https://www.owasp.org/}.} (\textit{Open web application security project}).
 	
 	% Section
@@ -5279,7 +5288,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\item Los datos cifrados se comparten entre el cliente y el servidor.
 	\end{enumerate}
 
-	En Hyot se ha implementado el protocolo \gls{https-a} en ambos servidores \footnote{Por razones de seguridad se recomienda desplegar ambos servidores con este protocolo.} para proporcionar seguridad a los usuarios. Debido al carácter del trabajo y al coste que presentan los certificados firmados por una \gls{ca-a} se ha utilizado un \gls{certautofirmado}\footnote{En el anexo \ref{install}. \nameref{install} se detallan los pasos para su generación.}. La única diferencia que presentan este tipo de certificados es que son firmados por uno mismo con la clave privada generada previamente. Debido a ello, su uso únicamente se recomienda para situaciones de desarrollo y/o pruebas. \\
+	En Hyot se ha implementado el protocolo \gls{https-a} en ambos servidores \footnote{Por razones de seguridad se recomienda desplegar ambos servidores con este protocolo.} para proporcionar seguridad a los usuarios. Debido al carácter del trabajo y al coste que presentan los certificados firmados por una \gls{ca-a} se ha utilizado un \gls{certautofirmado}\footnote{En el anexo \ref{install} se detallan los pasos para su generación.}. La única diferencia que presentan este tipo de certificados es que son firmados por uno mismo con la clave privada generada previamente. Debido a ello, su uso únicamente se recomienda para situaciones de desarrollo y/o pruebas. \\
 
 	Con el fin de analizar de forma superficial la seguridad, a continuación se presenta una serie de pruebas que se han realizado sobre el servidor \gls{rest-a} \gls{api-a} de \gls{hyperledgercomposer-a}\footnote{Estas pruebas son también reproducibles para el servidor del sistema web.}. La Figura \ref{fig:digicert} muestra el análisis realizado con una herramienta \textit{online} donde se observa información sobre el certificado, la fecha de validez, el algoritmo de firma utilizado, si el certificado es confiable o no, etc. En este caso, el certificado es marcado como no confiable porque es de tipo autofirmado. Sin embargo, se trata de un aviso ya que el funcionamiento es correcto por lo que no afecta a la seguridad. La Figura \ref{fig:digicert_sha1} muestra la advertencia si se hubiese empleado el algoritmo de firma por defecto \gls{sha-a}-1 el cual se considera inseguro hoy en día.	
 		
@@ -5354,7 +5363,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 	% Test cases
 	\chapter{Casos de prueba} \label{testingChapter}
 	
-	\textbf{Resumen:} \textit{Toda implementación software requiere de varias fases de pruebas previas a la liberación de la versión de producción con el fin de garantizar la calidad en términos funcionales, de diseño, de seguridad, de rendimiento, etc. La información obtenida de este proceso es de vital importancia debido a que brinda la posibilidad de una detección temprana de errores e implicará en gran medida en el éxito o no del proyecto.}
+	Toda implementación software requiere de varias fases de pruebas previas a la liberación de la versión de producción con el fin de garantizar la calidad en términos funcionales, de diseño, de seguridad, de rendimiento, etc. La información obtenida de este proceso es de vital importancia debido a que brinda la posibilidad de una detección temprana de errores e implicará en gran medida en el éxito o no del proyecto.
 	
 		% Section
 	\section{Introducción a los casos de prueba}
@@ -7690,8 +7699,8 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 	
 	El camino hacia la Industria 4.0 o \textit{Industria inteligente} llevada de la mano por el Internet de las Cosas (\textit{\gls{iot}} -\gls{iot-a}-) entre otras áreas, pasa por digitalizar y sustentar las necesidades reales de los clientes con las nuevas tecnologías. Esta rápida evolución del mercado del \gls{iot-a} ha provocado una explosión en cuanto al número y variedad de soluciones \gls{iot-a} se refiere, lo que ha creado grandes desafíos a medida que la industria evoluciona. Principalmente, la necesidad urgente de un modelo seguro y con un grado creciente de confianza y protección de la privacidad para realizar tareas tan comunes como detección, almacenamiento y comunicación de información. La prueba de la existencia, de la originación o de un registro consecuente de la pista en un marco temporal gana la importancia y es por ello que la aplicación de la tecnología \Gls{blockchain} (\gls{blockchain-a}) puede favorecer el despliegue de soluciones y arquitecturas más seguras, confiables y sin intermediación de terceros frente a otros mecanismos tradicionales de persistencia. \\
 	
-	Con este objetivo surge Hyot, un proyecto \textit{software} de código abierto\footnote{El código fuente se encuentra liberado en la plataforma Github. Consulte el anexo \ref{install}. \nameref{install} para obtener más información.} que propone una prueba de concepto (\textit{\gls{poc}} -\gls{poc-a}-) simple y novedosa sobre conceptos y tecnologías en auge como la \gls{blockchain-a}. Con ello, se pretende mostrar las ventajas de las arquitecturas basadas en esta tecnología a la hora de diseñar e implementar protocolos de control y auditoría en \gls{iot-a} y cómo mediante este mecanismo se puede preservar la autenticidad de ocurrencia de un hecho en un instante temporal dado. \\
-
+	Con este objetivo surge Hyot, un proyecto \textit{software} de código abierto\footnote{El código fuente se encuentra liberado en la plataforma Github. Consulte el anexo \ref{install} para obtener más información.} que propone una prueba de concepto (\textit{\gls{poc}} -\gls{poc-a}-) simple y novedosa sobre conceptos y tecnologías en auge como la \gls{blockchain-a}. Con ello, se pretende mostrar las ventajas de las arquitecturas basadas en esta tecnología a la hora de diseñar e implementar protocolos de control y auditoría en \gls{iot-a} y cómo mediante este mecanismo se puede preservar la autenticidad de ocurrencia de un hecho en un instante temporal dado. \\
+	
 	Por último, mencionar que se trata de un proyecto englobado dentro de un área con gran interés puesto que fue aceptado en la categoría de \textit{Investigación en desarrollo} de las \textbf{IV Jornadas Nacionales de Investigación en Ciberseguridad}\footnote{Puede consultar el artículo enviado en las actas del congreso en \cite{jnic2018}.}, celebradas en los días 13-15 de junio de 2018, en Donostia-San Sebastián. Además, el ciclo de vida de este proyecto no pretende ser el habitual de un trabajo final de universidad ya que la idea principal es continuar con su desarrollo una vez presentado -siguiendo las líneas de trabajo futuro propuestas a continuación- y poder presentarlo a otros congresos y/o publicarlo en alguna revista científica. \\
 				
 	{\Large\textbf{Trabajo futuro}} \\
@@ -7709,7 +7718,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 				\item Intercomunicación entre el componente de monitorización de sucesos del entorno y el sistema web a través de la plataforma \gls{iot-a} de IBM Cloud para la emisión y suscripción de comandos tal como, encendido y apagado de la monitorización.
 				\item Notificación de alertas por otros medios, tal como SMS, Telegram, etc.
 				\item Uso del \gls{qr} para la desencriptación.
-				\item Autenticación en el servidor expuesto por \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a}).
+				\item Autenticación multiusuario en el servidor expuesto por \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a}) para que cada transacción se encuentre firmada por el propio poseedor.
 				\item Ampliar la funcionalidad incluyendo nuevos componentes electrónicos en el \gls{prototipo}: sensor de movimiento, zumbador (\textit{buzzer}), etc.
 			\end{itemize}
 	\end{itemize} 
@@ -7980,16 +7989,14 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 	\chapter{Manual de instalación y configuración}\label{install}
 	
 	\textbf{Resumen:} \textit{Todo proyecto requiere de un procedimiento de instalación y configuración previa para su puesta en marcha. Este manual expone el proceso para ejecutar Hyot así como los requerimientos necesarios para ello y las diferentes opciones de configuración.}
-	
-	% TODO Donde poner el clonar el repositorio
-	
+		
 	% Section
 	\section{Introducción}
 	
 	La ejecución del proyecto Hyot conlleva la disposición de los siguientes entornos:
 	
 	\begin{itemize}
-		\item Dispositivo \gls{raspberry}\footnote{Para el presente proyecto se ha utilizado la versión 3 de este tipo de computador de placa reducida (\textit{\gls{sbc}} -\gls{sbc-a}-).} (\gls{raspberry-a}) junto con los diferentes componentes electrónicos que conforman el prototipo\footnote{Ver el anexo \ref{prototype}. \nameref{prototype} para más información.}.
+		\item Dispositivo \gls{raspberry}\footnote{Para el presente proyecto se ha utilizado la versión 3 de este tipo de computador de placa reducida (\textit{\gls{sbc}} -\gls{sbc-a}-).} (\gls{raspberry-a}) junto con los diferentes componentes electrónicos que conforman el prototipo\footnote{Ver el anexo \ref{prototype} para más información.}.
 		\item Computador con \gls{so} (\gls{so-a}) \gls{gnulinux} o \gls{macos-a} (\textit{\gls{macos}}) para desplegar determinados componentes de Hyot de forma local.
 		\item Cuenta de usuario en el servicio IBM Cloud\footnote{Si se posee el rol de estudiante puede adquirirse un código promocional de 6 meses en la siguiente \gls{url-a} (\textit{\gls{url}}): \url{https://ibm.onthehub.com/}} \cite{ibmcloud:url} para desplegar diferentes servicios de computación en la nube.
 	\end{itemize}
@@ -8019,7 +8026,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 	% Section
 	\section{Configuración e instalación}
 	
-	A continuación, se expone el procedimiento para configurar cada entorno empleado. En el anexo \ref{userguide}. \nameref{userguide} puede encontrar la especificación de la funcionalidad y las opciones de configuración de cada \textit{\gls{script}} que componen Hyot.
+	A continuación, se expone el procedimiento para configurar cada entorno empleado. En el anexo \ref{userguide} puede encontrar la especificación de la funcionalidad y las opciones de configuración de cada \textit{\gls{script}} que componen Hyot.
 	
 	% Subsection
 	\subsection{Raspberry Pi}
@@ -8443,7 +8450,7 @@ IP.1			    = [IP Server]
 	
 	\begin{enumerate}
 		\item Comprobaciones iniciales.
-		\item Instalación de dependencias requeridas\footnote{En el anexo \ref{install}. \nameref{install} se especifican las dependencias instaladas y sus versiones.} (paquetes y librerías \gls{python}).
+		\item Instalación de dependencias requeridas\footnote{En el anexo \ref{install} se especifican las dependencias instaladas y sus versiones.} (paquetes y librerías \gls{python}).
 		\item Activación de interfaces.
 	\end{enumerate}
 	
