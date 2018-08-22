@@ -31,7 +31,7 @@
 #                     sensors, Modules:                                                                                #
 #                           - camera_module.py                  - gpg_module.py                                        #
 #                           - checks_module.py                  - hyperledgerFabric_module.py                          #
-#                           - cloudantdb_module.py              - iot_module.py                                        #
+#                           - cloudantdb_module.py              - iot_module.py TODO IBM Cloud - IoT Platform          #
 #                           - dropbox_module.py                 - lcd_module.py                                        #
 #                           - email_module.py                   - system_module.py                                     #
 #                           - logger.py                                                                                #
@@ -62,7 +62,7 @@ try:
     import email_module as email                    # Module to send emails
     import gpg_module as gpg                        # Module that contains the logic of the functionality of GPG
     import hyperledgerFabric_module as hlf          # Module that contains the logic to use Hyperledger Fabric
-    import iot_module as iot                        # Module that contains the logic of the IoT platform
+    # import iot_module as iot                      # Module that contains the logic of the IoT platform TODO IBM Cloud - IoT Platform
     import lcd_module as lcd                        # Module to handle the LCDs
     import logger as logger                         # Class to redirect stdout to both file and console
     import system_module as system                  # Module that performs functions in the local operating system
@@ -315,8 +315,8 @@ def alert_protocol(sensor, event, temperature, humidity, distance):
     # Uploads the encrypted evidence to the Cloud (e.g. Dropbox)
     link = dropbox.upload_file(final_path, sensor, MAILTO)
 
-    # Publishes the event in the IoT platform
-    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance, MAILTO)
+    # Publishes the event in the IoT platform TODO IBM Cloud - IoT Platform
+    # iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance, MAILTO)
 
     # Adds the current measurement to the database
     add_cloudant(sensor, event, temperature, humidity, distance, hlf.owner_alert)
@@ -367,8 +367,8 @@ def no_alert_protocol(temperature, humidity, distance):
 
     global MAILTO, datetime_measurement
 
-    # Publishes the event in the IoT platform
-    iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance, MAILTO)
+    # Publishes the event in the IoT platform TODO IBM Cloud - IoT Platform
+    # iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance, MAILTO)
 
     # Adds the measurement to the database
     add_cloudant(None, None, temperature, humidity, distance, None)
@@ -460,8 +460,8 @@ def main(user_args):
         if not (MAILTO is None):
             email.init()                            # Initializes the mail session
 
-        # ############### Initializing IoT Platform ###############
-        iot.connect()                               # Creates the IoT client and establishes a connection
+        # ############### Initializing IoT Platform TODO IBM Cloud - IoT Platform ###############
+        # iot.connect()                             # Creates the IoT client and establishes a connection
 
         # ############### Initializing databases (Cloudant NoSQL DB) ###############
         cloudantdb.connect()                        # Creates a Cloudant DB client and establishes a connection
@@ -650,7 +650,7 @@ def main(user_args):
             system.remove_localdir()                    # Removes the temporary local directory
             gpg.clean()                                 # Cleans the GPG instance
             email.disconnect()                          # Disconnects the mail session
-            iot.disconnect()                            # Disconnects the IoT client
+            # iot.disconnect()                          # Disconnects the IoT client TODO IBM Cloud - IoT Platform
             cloudantdb.disconnect()                     # Disconnects the Cloudant client
             dropbox.disconnect()                        # Disables the access token used to authenticate the calls
             print("\r")

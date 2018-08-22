@@ -50,7 +50,8 @@ COMMANDLINETOOL="apt-get apt-cache dpkg"                # Tools: apt-get, apt-ca
 PACKAGESTOINSTALL="python2.7 build-essential python-dev python-smbus python-pip gnupg
 rng-tools i2c-tools"                                    # Packages to install
 LIBRARYTOINSTALL="Adafruit-DHT PyYAML psutil colorama RPi.GPIO gpiozero RPLCD pysha3 python-gnupg qrcode picamera
-ibmiotf cloudant dropbox requests"                      # Libraries to install
+cloudant dropbox requests"                              # Libraries to install
+#ibmiotf cloudant dropbox requests" TODO IBM Cloud - IoT Platform
 RASPICONFIGCOMMAND="raspi-config"                       # Command: raspi-config
 INTERFACES="i2c camera"                                 # Interfaces to enable
 REBOOTCOMMAND="reboot"                                  # Command: reboot
