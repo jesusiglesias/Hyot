@@ -66,6 +66,9 @@ dependencies {
     // Jasypt encryption
     compile "org.grails.plugins:jasypt-encryption:2.0.2"
 
+    // Cloudant NoSQL
+    compile group: 'com.cloudant', name: 'cloudant-client', version: '2.12.0'
+
     // MySQL
     runtime 'mysql:mysql-connector-java:5.1.37'
 
