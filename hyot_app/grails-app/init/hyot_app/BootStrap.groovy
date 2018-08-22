@@ -13,10 +13,16 @@ import User.*
  */
 class BootStrap {
 
+    def verificationCertificateService
+
     /**
      * Initial operations when starting application.
      */
     def init = { servletContext ->
+
+
+        // Skips the validation of the certificate in the requests to the Blockchain (fail with self-signed certificate)
+        verificationCertificateService.skipValidation()
 
         // Populating the database depending on the environment
         switch (Environment.current) {
@@ -61,6 +67,7 @@ class BootStrap {
                     password: 'Qwerty321!',
                     email: 'hyot.project@gmail.com')
 
+            // TODO Eliminar usuario normal para la demo y entrega final
             /*-------------------------------------------------------------------------------------------*
              *                                          USER                                             *
              *-------------------------------------------------------------------------------------------*/
