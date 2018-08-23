@@ -255,7 +255,7 @@ def add_cloudant(sensor, event, temperature, humidity, distance, owner):
         "threshold_value": threshold_value,
         "link": link,
         "mailto": MAILTO,
-        "owner_alert": owner
+        "owner": owner
     }
 
     # Adds the document to the database of the Cloudant NoSQL service
@@ -371,7 +371,7 @@ def no_alert_protocol(temperature, humidity, distance):
     # iot.publish_event(datetime_measurement.strftime("%d-%m-%Y %H:%M:%S %p"), temperature, humidity, distance, MAILTO)
 
     # Adds the measurement to the database
-    add_cloudant(None, None, temperature, humidity, distance, None)
+    add_cloudant(None, None, temperature, humidity, distance, hlf.owner_alert)
 
 
 def check_invalid_values_dht11(temperature, humidity, distance):
