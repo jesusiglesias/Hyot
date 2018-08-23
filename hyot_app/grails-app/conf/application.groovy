@@ -41,12 +41,18 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
 		/* Custom tasks of administrator
         ======================================================*/
-		[pattern: '/controlPanel/dashboard',        access: ['ROLE_ADMIN']],
-        [pattern: '/controlPanel/profileImage',     access: ['ROLE_ADMIN', 'ROLE_USER']],
-	    [pattern: '/controlPanel/reloadAdmin',      access: ['ROLE_ADMIN']],
-	    [pattern: '/controlPanel/reloadNormalUser', access: ['ROLE_ADMIN']],
-	    [pattern: '/controlPanel/reloadLastUsers',  access: ['ROLE_ADMIN']],
-        [pattern: '/controlPanel/**',               access: ['ROLE_ADMIN']],
+		[pattern: '/controlPanel/dashboard',        		access: ['ROLE_ADMIN']],
+        [pattern: '/controlPanel/profileImage',     		access: ['ROLE_ADMIN', 'ROLE_USER']],
+	    [pattern: '/controlPanel/reloadAdmin',      		access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/reloadNormalUser', 		access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/reloadLastUsers',  		access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/reloadAlert',  			access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/reloadUserBC',  			access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/alertBySensor',  			access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/alertByEvent',  			access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/measurementAlertByUser',  	access: ['ROLE_ADMIN']],
+        [pattern: '/controlPanel/**',               		access: ['ROLE_ADMIN']],
+
         ======================================================*/
 		/*'/customTasksNormalUser/home':                ['ROLE_USER'],
 		'/customTasksNormalUser/filterEvent':         ['ROLE_USER'],
@@ -117,17 +123,6 @@ grails.plugin.springsecurity.rememberMe.tokenValiditySeconds = 604800
 grails.plugin.springsecurity.rememberMe.key = 'hyot_remember_me'
 // Login form cookie parameter
 grails.plugin.springsecurity.rememberMe.parameter = '_hyot_remember_me'
-
-// TODO
-
-//grails.plugin.springsecurity.filterChain.chainMap = [
-  //      [pattern: '/assets/**',      filters: 'none'],
-    //    [pattern: '/**/js/**',       filters: 'none'],
-  //      [pattern: '/**/css/**',      filters: 'none'],
-  //      [pattern: '/**/images/**',   filters: 'none'],
-  //      [pattern: '/**/favicon.ico', filters: 'none'],
-  //      [pattern: '/**',             filters: 'JOINED_FILTERS']
-//]*/
 
 /* Logout handlers
 ============================================================================================= */

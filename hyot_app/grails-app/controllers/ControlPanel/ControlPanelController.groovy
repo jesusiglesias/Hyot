@@ -1,6 +1,8 @@
 package ControlPanel
 
 import Security.*
+import grails.converters.JSON
+import groovy.json.JsonSlurper
 import org.grails.core.io.ResourceLocator
 import org.springframework.core.io.Resource
 
@@ -10,6 +12,7 @@ import org.springframework.core.io.Resource
 class ControlPanelController {
 
     def springSecurityService
+    def hyperledgerFabricService
     ResourceLocator grailsResourceLocator
 
     /**
@@ -18,18 +21,23 @@ class ControlPanelController {
     def dashboard() {
         log.debug("ControlPanelController:dashboard()")
 
-        // Obtaining number of normal users
+        // It obtains the number of normal users
         def roleUser = SecRole.findByAuthority("ROLE_USER")
         def normalUsers = SecUserSecRole.findAllBySecRole(roleUser).secUser
 
-        // Obtaining number of admin users
+        // It obtains the number of admin users
         def roleAdminUser = SecRole.findByAuthority("ROLE_ADMIN")
         def adminUsers = SecUserSecRole.findAllBySecRole(roleAdminUser).secUser
 
-        // Obtaining the last 10 registered users
+        // Queries to the Blockchain
+        def totalAlerts = hyperledgerFabricService.countAlerts()
+        def totalUsers = hyperledgerFabricService.countUsers()
+
+        // It obtains the the last 10 registered users
         def lastUsers = SecUser.executeQuery("from SecUser where id in (select secUser.id from SecUserSecRole where secRole.id = :roleId) order by dateCreated desc", [roleId: roleUser.id], [max: 10])
 
-        render view: 'dashboard', model: [normalUsers: normalUsers.size(), adminUsers: adminUsers.size(), lastUsers: lastUsers]
+        render view: 'dashboard', model: [normalUsers: normalUsers.size(), adminUsers: adminUsers.size(),
+                                          totalAlerts: totalAlerts, totalUsers: totalUsers, lastUsers: lastUsers]
     }
 
     /**
@@ -68,6 +76,95 @@ class ControlPanelController {
         def lastUsers = SecUser.executeQuery("from SecUser where id in (select secUser.id from SecUserSecRole where secRole.id = :roleId) order by dateCreated desc", [roleId: roleUser.id], [max: 10])
 
         render(template:'lastUsers', model: [lastUsers: lastUsers])
+    }
+
+    /**
+     * It obtains the number of alerts registered in the BC.
+     */
+    def reloadAlert() {
+        log.debug("ControlPanelController:reloadAlert()")
+
+        render hyperledgerFabricService.countAlerts()
+    }
+
+    /**
+     * It obtains the number of users registered in the BC.
+     */
+    def reloadUserBC() {
+        log.debug("ControlPanelController:reloadUserBC()")
+
+        render hyperledgerFabricService.countUsers()
+    }
+
+
+    /**
+     * It obtains the number of alerts triggered by each sensor.
+     */
+    def alertBySensor() {
+        log.debug("ControlPanelController:alertBySensor()")
+
+        def totalAlertsSensorDHT11 = hyperledgerFabricService.countAlertsDHT11()
+        def totalAlertsSensorHCSR04 = hyperledgerFabricService.countAlertsHCSR04()
+
+        def data = [
+                'dht': totalAlertsSensorDHT11,
+                'hcsr': totalAlertsSensorHCSR04,
+        ]
+
+        // Avoid undefined function (Google chart)
+        sleep(100)
+
+        render data as JSON
+    }
+
+    /**
+     * It obtains the number of alerts triggered by each event.
+     */
+    def alertByEvent() {
+        log.debug("ControlPanelController:alertByEvent()")
+
+        def totalAlertsEventTEMPERATURE = hyperledgerFabricService.countAlertsTemperature()
+        def totalAlertsEventHUMIDITY = hyperledgerFabricService.countAlertsHumidity()
+        def totalAlertsEventDISTANCE = hyperledgerFabricService.countAlertsDistance()
+
+        def data = [
+                'temperature': totalAlertsEventTEMPERATURE,
+                'humidity': totalAlertsEventHUMIDITY,
+                'distance': totalAlertsEventDISTANCE,
+        ]
+
+        // Avoid undefined function (Google chart)
+        sleep(100)
+
+        render data as JSON
+    }
+
+    /**
+     * It obtains the number of measurements and alerts of an user.
+     */
+    def measurementAlertByUser() {
+        log.debug("ControlPanelController:measurementAlertByUser()")
+
+        def measurementAlertMap = [[g.message(code: 'layouts.main_auth_admin.controller.datatable.user', default:'User'),
+                                    g.message(code: 'layouts.main_auth_admin.controller.datatable.measurements', default:'Number of measurements'),
+                                    g.message(code: 'layouts.main_auth_admin.controller.datatable.alerts', default:'Number of alerts'),
+                                   ]]
+
+        // It obtains all users
+        def users = hyperledgerFabricService.getUsers()
+
+        // It parses the users
+        def userList = new JsonSlurper().parseText(users)
+
+        // Number of measurements and alerts for each user
+        userList.each { // TODO
+            measurementAlertMap.push([it.username, 17, hyperledgerFabricService.countAlertsUser(it.username)])
+        }
+
+        // Avoid undefined function (Google chart)
+        sleep(100)
+
+        render measurementAlertMap as JSON
     }
 
     /**

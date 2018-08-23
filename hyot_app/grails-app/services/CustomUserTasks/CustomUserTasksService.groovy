@@ -8,14 +8,6 @@ import org.springframework.context.i18n.LocaleContextHolder
 import Security.SecUser
 import Security.Token
 
-import User.*
-import grails.transaction.Transactional
-import org.apache.commons.validator.routines.EmailValidator
-import org.springframework.context.MessageSource
-import org.springframework.context.i18n.LocaleContextHolder
-import groovy.time.TimeCategory
-
-
 /**
  * Service that contains some utilities for the tasks of a unregistered used.
  */

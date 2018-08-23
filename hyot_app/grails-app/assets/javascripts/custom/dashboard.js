@@ -165,6 +165,106 @@ var CustomDashboardScript = function () {
                 }, 500);
             });
         });
+
+        // Call AJAX to upload the number of alerts in the Blockchain
+        $('.reloadAlert').click(function () {
+
+            var counterAlert = $('.counterAlert');
+            var widgetAlert = $('.widget-alert');
+
+            $.ajax({
+                url: reloadAlertURL,
+                beforeSend: function () {
+
+                    widgetAlert.LoadingOverlay("show", {
+                        image: "",
+                        fontawesome: "fa fa-spinner fa-spin"
+                    });
+                },
+                success: function (data) {
+                    counterAlert.attr('data-value', data);
+                    counterAlert.text(data);
+
+                    counterAlert.counterUp({});
+                },
+                error: function () {
+                    toastr["error"](reloadAjaxError);
+
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                },
+                complete: function () {
+                    setTimeout(function () {
+                        widgetAlert.LoadingOverlay("hide");
+                    }, 500);
+                }
+            });
+        });
+
+        // Call AJAX to upload the number of users in the Blockchain
+        $('.reloadUserBC').click(function () {
+
+            var counterUserBC = $('.counterUserBC');
+            var widgetUserBC = $('.widget-userBC');
+
+            $.ajax({
+                url: reloadUserBCURL,
+                beforeSend: function () {
+
+                    widgetUserBC.LoadingOverlay("show", {
+                        image: "",
+                        fontawesome: "fa fa-spinner fa-spin"
+                    });
+                },
+                success: function (data) {
+                    counterUserBC.attr('data-value', data);
+                    counterUserBC.text(data);
+
+                    counterUserBC.counterUp({});
+                },
+                error: function () {
+                    toastr["error"](reloadAjaxError);
+
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                },
+                complete: function () {
+                    setTimeout(function () {
+                        widgetUserBC.LoadingOverlay("hide");
+                    }, 500);
+                }
+            });
+        });
     };
 
     /**

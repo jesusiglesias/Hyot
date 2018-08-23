@@ -133,7 +133,20 @@ token:
 # GET - Alerts
 blockchain:
   get:
-    userID: https://40.121.15.202:3000/api/org.hyot.network.User/
+    users: https://40.121.15.202:3000/api/queries/User
+    userID: https://40.121.15.202:3000/api/queries/UserID?username=
+    alerts: https://40.121.15.202:3000/api/queries/Alert
+    alertsUser: https://40.121.15.202:3000/api/queries/AlertsOfUser?username=
+    alertsSensor:
+      dht11: https://40.121.15.202:3000/api/queries/AlertFromSpecificSensor?sensor=DHT11
+      hcsr04: https://40.121.15.202:3000/api/queries/AlertFromSpecificSensor?sensor=HCSR04
+    alertsEvent:
+      temperature: https://40.121.15.202:3000/api/queries/AlertFromSpecificEvent?event=TEMPERATURE
+      humidity: https://40.121.15.202:3000/api/queries/AlertFromSpecificEvent?event=HUMIDITY
+      distance: https://40.121.15.202:3000/api/queries/AlertFromSpecificEvent?event=DISTANCE
+
+---
+
 #############################
 #          DATABASE         #
 #############################
