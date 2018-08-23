@@ -13,6 +13,7 @@ class ControlPanelController {
 
     def springSecurityService
     def hyperledgerFabricService
+    def cloudantDBService
     ResourceLocator grailsResourceLocator
 
     /**
@@ -157,8 +158,9 @@ class ControlPanelController {
         def userList = new JsonSlurper().parseText(users)
 
         // Number of measurements and alerts for each user
-        userList.each { // TODO
-            measurementAlertMap.push([it.username, 17, hyperledgerFabricService.countAlertsUser(it.username)])
+        userList.each {
+            def docsUser = cloudantDBService.getAllDocsUser(it.username)
+            measurementAlertMap.push([it.username, docsUser.size(), hyperledgerFabricService.countAlertsUser(it.username)])
         }
 
         // Avoid undefined function (Google chart)
