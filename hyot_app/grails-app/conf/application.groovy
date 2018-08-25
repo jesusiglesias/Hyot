@@ -41,17 +41,19 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
 		/* Custom tasks of administrator
         ======================================================*/
-		[pattern: '/controlPanel/dashboard',        		access: ['ROLE_ADMIN']],
-        [pattern: '/controlPanel/profileImage',     		access: ['ROLE_ADMIN', 'ROLE_USER']],
-	    [pattern: '/controlPanel/reloadAdmin',      		access: ['ROLE_ADMIN']],
-	    [pattern: '/controlPanel/reloadNormalUser', 		access: ['ROLE_ADMIN']],
-	    [pattern: '/controlPanel/reloadLastUsers',  		access: ['ROLE_ADMIN']],
-	    [pattern: '/controlPanel/reloadAlert',  			access: ['ROLE_ADMIN']],
-	    [pattern: '/controlPanel/reloadUserBC',  			access: ['ROLE_ADMIN']],
-	    [pattern: '/controlPanel/alertBySensor',  			access: ['ROLE_ADMIN']],
-	    [pattern: '/controlPanel/alertByEvent',  			access: ['ROLE_ADMIN']],
-	    [pattern: '/controlPanel/measurementAlertByUser',  	access: ['ROLE_ADMIN']],
-        [pattern: '/controlPanel/**',               		access: ['ROLE_ADMIN']],
+		[pattern: '/controlPanel/dashboard',        				access: ['ROLE_ADMIN']],
+        [pattern: '/controlPanel/profileImage',     				access: ['ROLE_ADMIN', 'ROLE_USER']],
+	    [pattern: '/controlPanel/reloadAdmin',      				access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/reloadNormalUser', 				access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/reloadLastUsers',  				access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/reloadAlert',  					access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/reloadUserBC',  					access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/alertBySensor',  					access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/alertByEvent',  					access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/measurementAlertByUser',  			access: ['ROLE_ADMIN']],
+        [pattern: '/controlPanel/**',               				access: ['ROLE_ADMIN']],
+		[pattern: '/alert/getAllAlerts',        					access: ['ROLE_ADMIN']],
+		[pattern: '/measurement/getAllMeasurements/getAllAlerts',   access: ['ROLE_ADMIN']],
 
         ======================================================*/
 		/*'/customTasksNormalUser/home':                ['ROLE_USER'],

@@ -107,6 +107,40 @@
             <li class="heading">
                 <h3 class="uppercase"><g:message code="layouts.main_auth_admin.sidebar.title.general" default="General"/></h3>
             </li>
+
+            <!-- Measurements -->
+            <li class="nav-item">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-archive"></i>
+                    <span class="title"><g:message code="layouts.main_auth_admin.sidebar.measurement" default="Measurement"/></span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item">
+                        <g:link uri="/measurement" class="nav-link">
+                            <i class="fa fa-list"></i>
+                            <span class="title"><g:message code="layouts.main_auth_admin.sidebar.list" default="List"/></span>
+                        </g:link>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Alerts -->
+            <li class="nav-item">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-bell"></i><span class="title"><g:message code="layouts.main_auth_admin.sidebar.alert" default="Alert"/></span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item">
+                        <g:link uri="/alert" class="nav-link">
+                            <i class="fa fa-list"></i>
+                            <span class="title"><g:message code="layouts.main_auth_admin.sidebar.list" default="List"/></span>
+                        </g:link>
+                    </li>
+                </ul>
+            </li>
+
         </ul> <!-- /.Page-sidebar-menu -->
     </div> <!-- Page-sidebar -->
 </div> <!-- Page-sidebar-wrapper -->

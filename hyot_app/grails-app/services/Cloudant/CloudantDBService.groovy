@@ -44,11 +44,27 @@ class CloudantDBService {
     }
 
     /**
+     * Gets all documents
+     *
+     * @return List<HashMap> with all documents
+     */
+    def getAllDocs() {
+
+        init()
+
+        String selector="\"selector\": { \"_id\": { \"\$gt\": \"0\" }}"
+
+        List<HashMap> alldocs = db.findByIndex(selector, HashMap.class)
+
+        return alldocs
+    }
+
+    /**
      * Gets all documents of a specific user
      *
      * @param username Name of the user
      *
-     * @return List<HashMap> with all documents
+     * @return List<HashMap> with all documents of this user
      */
     def getAllDocsUser(username) {
 
@@ -56,9 +72,9 @@ class CloudantDBService {
 
         String selector="\"selector\": { \"_id\": { \"\$gt\": \"0\" }, \"owner\": { \"\$eq\": \"" + username + "\" }}"
 
-        List<HashMap> alldocs = db.findByIndex(selector, HashMap.class)
+        List<HashMap> alldocsUser = db.findByIndex(selector, HashMap.class)
 
-        return alldocs
+        return alldocsUser
     }
 
 

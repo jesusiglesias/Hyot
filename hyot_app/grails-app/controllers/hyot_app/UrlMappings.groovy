@@ -54,6 +54,9 @@ class UrlMappings {
         /* General tasks of administrator
         ======================================================*/
         "/dashboard"(controller: 'controlPanel', action: 'dashboard')
+        "/alert"(controller: 'alert', action: 'getAllAlerts')
+        "/measurement"(controller: 'measurement', action: 'getAllMeasurements')
+
 
         /* Information files
         ======================================================*/

@@ -13,6 +13,16 @@ class HyperledgerFabricService {
     def namespaceUser = "resource%3Aorg.hyot.network.User%23"
 
     /**
+     * Gets the alerts.
+     *
+     * @return List of alerts.
+     */
+    def getAlerts() {
+
+        return new URL(grailsApplication.config.blockchain.get.alerts).getText(requestProperties: [Accept: 'application/json'])
+    }
+
+    /**
      * Gets the users.
      *
      * @return List of users.
