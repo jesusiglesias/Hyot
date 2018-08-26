@@ -37,8 +37,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="${resource(dir: 'css/custom', file: 'custom.css')}" type="text/css"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'icofont.min.css')}" type="text/css"/>
-
-    <!-- Notification switch user -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/toastr/2.1.2/toastr.min.css">
 
     <!-- THEME GLOBAL STYLES -->
@@ -52,7 +50,6 @@
     <!-- LOAD JS -->
     <asset:javascript src="application.js"/>
 
-    <!-- Notification switch user -->
     <script src="https://cdn.jsdelivr.net/toastr/2.1.2/toastr.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
 

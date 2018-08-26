@@ -144,6 +144,8 @@ blockchain:
       temperature: https://40.121.15.202:3000/api/queries/AlertFromSpecificEvent?event=TEMPERATURE
       humidity: https://40.121.15.202:3000/api/queries/AlertFromSpecificEvent?event=HUMIDITY
       distance: https://40.121.15.202:3000/api/queries/AlertFromSpecificEvent?event=DISTANCE
+    alertsSensorUser: https://40.121.15.202:3000/api/queries/AlertFromSpecificSensorAndUser?username=defaultUsername&sensor=defaultSensor
+    alertsEventUser: https://40.121.15.202:3000/api/queries/AlertFromSpecificEventAndUser?username=defaultUsername&event=defaultEvent
 
 ---
 

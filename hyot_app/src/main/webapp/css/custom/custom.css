@@ -400,8 +400,8 @@ button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-
 /* Search form in normal user pages
 =================================================================== */
 
-.searchForm-home{
-    margin: 35px 0 35px 0;
+.graphs-home{
+    margin: 70px 0 35px 0;
 }
 
 .searchForm-home > div > label > span {

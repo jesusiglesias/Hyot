@@ -109,7 +109,7 @@ class BootStrap {
                 }
 
                 log.debug("BootStrap:init():createInitialData():Initial data has been created")
-                log.info("Configuration - Admin user: hyot_admin/Qwerty321!; Normal user: hyot/Qwerty321!")
+                log.info("Configuration - Admin user: hyot_admin/Qwerty321!")
             } else {
                 log.error("BootStrap:init():createInitialData():Initial data has not been created. Verify the " +
                         "constraints of the data")

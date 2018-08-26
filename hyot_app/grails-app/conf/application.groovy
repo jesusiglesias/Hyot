@@ -59,6 +59,10 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		/* Tasks of the normal user
         ======================================================*/
 		[pattern: '/userPage/home',               					access: ['ROLE_USER']],
+		[pattern: '/userPage/reloadMymeasurement',          		access: ['ROLE_USER']],
+		[pattern: '/userPage/reloadMyalert',               			access: ['ROLE_USER']],
+		[pattern: '/userPage/myalertBySensor',               		access: ['ROLE_USER']],
+		[pattern: '/userPage/myalertByEvent',               		access: ['ROLE_USER']],
 		[pattern: '/userPage/**',               					access: ['ROLE_USER']],
 
 		/*'

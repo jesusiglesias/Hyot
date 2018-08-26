@@ -103,6 +103,48 @@ class HyperledgerFabricService {
     }
 
     /**
+     * Gets the count of the alerts of an user and specific sensor.
+     *
+     * @param username Name of the user.
+     * @param sensor Name of the sensor.
+     *
+     * @return Total number of the alerts.
+     */
+    def countAlertsSensorUser (String username, String sensor) {
+
+        def url = grailsApplication.config.blockchain.get.alertsSensorUser
+
+        // Replaces the username
+        url = url.replace("defaultUsername", namespaceUser + username)
+
+        // Replaces the sensor
+        url = url.replace("defaultSensor", sensor)
+
+        return count(new URL(url).getText(requestProperties: [Accept: 'application/json']))
+    }
+
+    /**
+     * Gets the count of the alerts of an user and specific event.
+     *
+     * @param username Name of the user.
+     * @param event Name of the event.
+     *
+     * @return Total number of the alerts.
+     */
+    def countAlertsEventUser (String username, String event) {
+
+        def url = grailsApplication.config.blockchain.get.alertsEventUser
+
+        // Replaces the username
+        url = url.replace("defaultUsername", namespaceUser + username)
+
+        // Replaces the sensor
+        url = url.replace("defaultEvent", event)
+
+        return count(new URL(url).getText(requestProperties: [Accept: 'application/json']))
+    }
+
+    /**
      * Gets the total users.
      *
      * @return Total number of users.

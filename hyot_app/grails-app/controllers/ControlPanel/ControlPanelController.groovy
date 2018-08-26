@@ -110,7 +110,6 @@ class ControlPanelController {
         render hyperledgerFabricService.countUsers()
     }
 
-
     /**
      * It obtains the number of alerts triggered by each sensor.
      */
