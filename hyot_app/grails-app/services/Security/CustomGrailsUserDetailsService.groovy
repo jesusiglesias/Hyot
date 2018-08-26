@@ -53,7 +53,7 @@ class CustomGrailsUserDetailsService implements GrailsUserDetailsService {
             SecUser user = SecUser.findByUsernameOrEmail(username, username)
 
             // User doesn't exist
-            if (!user) throw new UsernameNotFoundException('User not found', username)
+            if (!user) throw new UsernameNotFoundException('User not found')
 
             def authorities = user.authorities.collect {new SimpleGrantedAuthority(it.authority)}
 
