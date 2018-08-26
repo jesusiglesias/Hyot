@@ -34,11 +34,15 @@ class ControlPanelController {
         def totalAlerts = hyperledgerFabricService.countAlerts()
         def totalUsers = hyperledgerFabricService.countUsers()
 
+        // Query to Cloudant NoSQL DB
+        def totalMeasurements = cloudantDBService.getAllDocs().size()
+
         // It obtains the the last 10 registered users
         def lastUsers = SecUser.executeQuery("from SecUser where id in (select secUser.id from SecUserSecRole where secRole.id = :roleId) order by dateCreated desc", [roleId: roleUser.id], [max: 10])
 
         render view: 'dashboard', model: [normalUsers: normalUsers.size(), adminUsers: adminUsers.size(),
-                                          totalAlerts: totalAlerts, totalUsers: totalUsers, lastUsers: lastUsers]
+                                          totalMeasurements: totalMeasurements, totalAlerts: totalAlerts,
+                                          totalUsers: totalUsers, lastUsers: lastUsers]
     }
 
     /**
@@ -77,6 +81,15 @@ class ControlPanelController {
         def lastUsers = SecUser.executeQuery("from SecUser where id in (select secUser.id from SecUserSecRole where secRole.id = :roleId) order by dateCreated desc", [roleId: roleUser.id], [max: 10])
 
         render(template:'lastUsers', model: [lastUsers: lastUsers])
+    }
+
+    /**
+     * It obtains the number of measurements registered in Cloudant NoSQL DB.
+     */
+    def reloadMeasurement() {
+        log.debug("ControlPanelController:reloadMeasurement()")
+
+        render cloudantDBService.getAllDocs().size()
     }
 
     /**

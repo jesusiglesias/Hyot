@@ -29,6 +29,8 @@ class UrlMappings {
             "/edit-error/$id?(.$format)?"(controller: 'secUser', action: 'update')
             "/edit/profileImage/$id?(.$format)?"(controller: 'secUser', action: 'editProfileImage')
             "/edit-error/profileImage/$id?(.$format)?"(controller: 'secUser', action: 'updateProfileImage')
+        }
+
         // User - Grouping URLs
         group("/user") {
             "/"(controller: 'user', action: 'index')
@@ -38,6 +40,8 @@ class UrlMappings {
             "/edit-error/$id?(.$format)?"(controller: 'user', action: 'update')
             "/edit/profileImage/$id?(.$format)?"(controller: 'user', action: 'editProfileImage')
             "/edit-error/profileImage/$id?(.$format)?"(controller: 'user', action: 'updateProfileImage')
+        }
+
         /* General tasks of unregistered user
         ======================================================*/
         // LoggedIn

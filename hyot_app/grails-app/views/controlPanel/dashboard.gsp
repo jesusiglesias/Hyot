@@ -14,10 +14,10 @@
         var _sensorTEM = '${g.message(code: "layouts.main_auth_admin.body.portlet.alertEvent.temperature", default: "Temperature")}';
         var _sensorHUM = '${g.message(code: "layouts.main_auth_admin.body.portlet.alertEvent.humidity", default: "Humidity")}';
         var _sensorDIS = '${g.message(code: "layouts.main_auth_admin.body.portlet.alertEvent.distance", default: "Distance")}';
+        var _measurementsTitle = '${g.message(code: "layouts.main_auth_admin.body.portlet.measurements.title", default: "Measurements")}';
+        var _measurementsSubtitle = '${g.message(code: "layouts.main_auth_admin.body.portlet.measurements.title", default: "Total of measurements")}';
         var _alertsTitle = '${g.message(code: "layouts.main_auth_admin.body.portlet.alerts.title", default: "Alerts")}';
         var _alertsSubtitle = '${g.message(code: "layouts.main_auth_admin.body.portlet.alerts.subtitle", default: "Total of alerts")}';
-        var _measurementsTitle = '${g.message(code: "layouts.main_auth_admin.body.portlet.measurements.title", default: "Measurements")}';
-        var _measurementsSubtitle = '${g.message(code: "layouts.main_auth_admin.body.portlet.measurements.subtitle", default: "Total of measurements")}';
 
         // Load the Visualization API and the piechart package.
         google.charts.load("current", {packages:['corechart']});
@@ -429,8 +429,9 @@
     var reloadTooltip = '${g.message(code:'default.button.reload.tooltip', default:'Reload')}';
     var reloadAjaxError = '${g.message(code:'default.ajax.error', default:'Error on reloading the content. Please, you try again later.')}';
     var reloadNormalUserURL = '${g.createLink(controller: "controlPanel", action: 'reloadNormalUser')}';
-    var reloadAdminURL = '${g.createLink(controller: "controlPanel", action: 'reloadAdmin')}';
+    var reloadMeasurementURL = '${g.createLink(controller: "controlPanel", action: 'reloadMeasurement')}';
     var reloadAlertURL = '${g.createLink(controller: "controlPanel", action: 'reloadAlert')}';
+    var reloadAdminURL = '${g.createLink(controller: "controlPanel", action: 'reloadAdmin')}';
     var reloadUserBCURL = '${g.createLink(controller: "controlPanel", action: 'reloadUserBC')}';
 </script>
 
@@ -574,7 +575,7 @@
             </ul>
         </div> <!-- /.Page-bar -->
 
-    <!-- Page-title -->
+        <!-- Page-title -->
         <h3 class="page-title">
             <g:link controller="controlPanel" action="dashboard"><g:message code="layouts.main_auth_admin.body.title.controlPanel" default="control panel"/></g:link>
             <i class="icon-arrow-right icon-title-domain"></i>
@@ -615,6 +616,23 @@
                     </div> <!-- /.Widget thumb -->
                 </div>
             </div>
+
+            <div class="row panel-row-dashboard">
+                <div class="col-md-12">
+                    <!-- Widget thumb -->
+                    <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered widget-measurement">
+                        <h4 class="widget-thumb-heading"><g:message code="layouts.main_auth_admin.body.widget.measurements" default="Measurements"/></h4>
+                        <i class="fa fa-refresh iconReload reloadMeasurement"></i>
+                        <div class="widget-thumb-wrap">
+                            <i class="widget-thumb-icon bg-blue-soft fa fa-archive"></i>
+                            <div class="widget-thumb-body">
+                                <span class="widget-thumb-subtitle"><g:message code="layouts.main_auth_admin.body.widget.total" default="Total"/></span>
+                                <span class="widget-thumb-body-stat counterMeasurement" data-counter="counterup" data-value="${totalMeasurements}">${totalMeasurements}</span>
+                            </div>
+                        </div>
+                    </div> <!-- /.Widget thumb -->
+                </div>
+            </div> <!-- /.Widget -->
 
             <div class="row panel-row-dashboard">
                <div class="col-md-6">

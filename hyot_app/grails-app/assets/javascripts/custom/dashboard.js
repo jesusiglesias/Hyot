@@ -166,6 +166,56 @@ var CustomDashboardScript = function () {
             });
         });
 
+        // Call AJAX to upload the number of measurements
+        $('.reloadMeasurement').click(function () {
+
+            var counterMeasurement = $('.counterMeasurement');
+            var widgetMeasurement = $('.widget-measurement');
+
+            $.ajax({
+                url: reloadMeasurementURL,
+                beforeSend: function () {
+
+                    widgetMeasurement.LoadingOverlay("show", {
+                        image: "",
+                        fontawesome: "fa fa-spinner fa-spin"
+                    });
+                },
+                success: function (data) {
+                    counterMeasurement.attr('data-value', data);
+                    counterMeasurement.text(data);
+
+                    counterMeasurement.counterUp({});
+                },
+                error: function () {
+                    toastr["error"](reloadAjaxError);
+
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                },
+                complete: function () {
+                    setTimeout(function () {
+                        widgetMeasurement.LoadingOverlay("hide");
+                    }, 500);
+                }
+            });
+        });
+
         // Call AJAX to upload the number of alerts in the Blockchain
         $('.reloadAlert').click(function () {
 

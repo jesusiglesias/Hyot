@@ -77,8 +77,7 @@ class CloudantDBService {
         return alldocsUser
     }
 
-
-    /*
+    /*TODO
 
      def measurements = db.findAll()
      System.out.println("medidas " + measurements)

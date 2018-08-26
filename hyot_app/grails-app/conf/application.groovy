@@ -46,6 +46,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	    [pattern: '/controlPanel/reloadAdmin',      				access: ['ROLE_ADMIN']],
 	    [pattern: '/controlPanel/reloadNormalUser', 				access: ['ROLE_ADMIN']],
 	    [pattern: '/controlPanel/reloadLastUsers',  				access: ['ROLE_ADMIN']],
+	    [pattern: '/controlPanel/reloadMeasurement',  				access: ['ROLE_ADMIN']],
 	    [pattern: '/controlPanel/reloadAlert',  					access: ['ROLE_ADMIN']],
 	    [pattern: '/controlPanel/reloadUserBC',  					access: ['ROLE_ADMIN']],
 	    [pattern: '/controlPanel/alertBySensor',  					access: ['ROLE_ADMIN']],
@@ -55,8 +56,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		[pattern: '/alert/getAllAlerts',        					access: ['ROLE_ADMIN']],
 		[pattern: '/measurement/getAllMeasurements/getAllAlerts',   access: ['ROLE_ADMIN']],
 
-        ======================================================*/
 		/*'/customTasksNormalUser/home':                ['ROLE_USER'],
+        /*======================================================*/
 		'/customTasksNormalUser/filterEvent':         ['ROLE_USER'],
 		'/customTasksNormalUser/allEvents':           ['ROLE_USER'],
 		'/customTasksNormalUser/eventSelected':       ['ROLE_USER'],
