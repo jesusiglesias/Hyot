@@ -64,6 +64,8 @@ class UrlMappings {
         /* General tasks of the normal user
         ======================================================*/
         "/home"(controller: 'userPage', action: 'home')
+        "/mymeasurements"(controller: 'userPage', action: 'myMeasurements')
+        "/myalerts"(controller: 'userPage', action: 'myalerts')
 
         /* Information files
         ======================================================*/

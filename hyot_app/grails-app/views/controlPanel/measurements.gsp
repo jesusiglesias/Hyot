@@ -230,7 +230,16 @@
                                         <td class="break-word">${measurement?.temperature_field}</td>
                                         <td class="break-word">${measurement?.humidity_field}</td>
                                         <td class="break-word">${measurement?.distance_field}</td>
-                                        <td class="break-word">${measurement?.alert_triggered}</td>
+                                        <td>
+                                        <g:if test="${measurement?.alert_triggered == true}">
+                                            <span class="label label-sm label-success">
+                                        </g:if>
+                                        <g:else>
+                                            <span class="label label-sm label-warning">
+                                        </g:else>
+                                            ${measurement?.alert_triggered}
+                                            </span>
+                                        </td>
                                         <td class="break-word">${measurement?.sensor_origin}</td>
                                         <td class="break-word">${measurement?.event_origin}</td>
                                         <td class="break-word">${measurement?.threshold_value}</td>

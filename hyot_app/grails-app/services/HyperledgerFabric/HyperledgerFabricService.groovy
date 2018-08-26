@@ -23,6 +23,17 @@ class HyperledgerFabricService {
     }
 
     /**
+     * Gets the alerts of an user.
+     *
+     * @param username Name of the user.
+     * @return List of alerts.
+     */
+    def getAlertsUser(String username) {
+
+        return new URL(grailsApplication.config.blockchain.get.alertsUser + namespaceUser + username).getText(requestProperties: [Accept: 'application/json'])
+    }
+
+    /**
      * Gets the users.
      *
      * @return List of users.

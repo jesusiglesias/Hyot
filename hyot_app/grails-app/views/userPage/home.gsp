@@ -3,7 +3,6 @@
 <head>
     <meta name="layout" content="main_userpage">
     <title><g:message code="layouts.main_userpage.head.title.home" default="HYOT | Home page"/></title>
-    <link rel="stylesheet" href="${resource(dir: 'css/select', file: 'bootstrap-select.min.css')}" type="text/css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/toastr/2.1.2/toastr.min.css">
     <script src="https://cdn.jsdelivr.net/toastr/2.1.2/toastr.min.js"></script>
 
@@ -290,7 +289,7 @@
     <content tag="horizontalMenu">
         <div class="hor-menu hidden-sm hidden-xs">
             <ul class="nav navbar-nav">
-                <li> <!-- TODO -->
+                <li>
                     <g:link uri="/mymeasurements"><g:message code="layout.main_userpage.horizontal.menu.measurement" default="My measurements"/></g:link>
                 </li>
                 <li>
@@ -300,18 +299,18 @@
         </div>
     </content>
 
-    <!-- Responsive horizontal menu TODO -->
+    <!-- Responsive horizontal menu -->
     <content tag="responsiveHorizontalMenu">
         <li class="nav-item">
             <g:link uri="/mymeasurements" class="nav-link">
-                <i class="icofont icofont-info"></i>
+                <i class="fa fa-archive"></i>
                 <span class="title"><g:message code="layout.main_userpage.horizontal.menu.measurement" default="My measurements"/></span>
                 <span class="arrow"></span>
             </g:link>
         </li>
         <li class="nav-item">
             <g:link uri="/myalerts" class="nav-link">
-                <i class="icofont icofont-speech-comments"></i>
+                <i class="fa fa-bell"></i>
                 <span class="title"><g:message code="layout.main_userpage.horizontal.menu.alert" default="My alerts"/></span>
                 <span class="arrow"></span>
             </g:link>
@@ -362,7 +361,7 @@
         <div class="col-md-5 col-xs-offset-1 col-xs-10">
             <!-- Widget thumb -->
             <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered widget-mymeasurement">
-                <h4 class="widget-thumb-heading"><g:message code="layouts.main_auth_admin.body.widget.measurements" default="Measurements"/></h4>
+                <h4 class="widget-thumb-heading"><g:message code="layout.main_userpage.horizontal.menu.measurement" default="My measurements"/></h4>
                 <i class="fa fa-refresh iconReload reloadMymeasurement"></i>
                 <div class="widget-thumb-wrap">
                     <i class="widget-thumb-icon bg-green-dark icofont icon-user"></i>
@@ -377,7 +376,7 @@
         <div class="col-md-5 col-md-offset-0 col-xs-offset-1 col-xs-10">
             <!-- Widget thumb -->
             <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered widget-myalert">
-                <h4 class="widget-thumb-heading"><g:message code="layouts.main_auth_admin.body.widget.bc.alerts" default="Hyperledger Fabric - Alerts"/></h4>
+                <h4 class="widget-thumb-heading"><g:message code="layouts.main_auth_admin.body.widget.bc.myalerts" default="Hyperledger Fabric - My alerts"/></h4>
                 <i class="fa fa-refresh iconReload reloadMyalert"></i>
                 <div class="widget-thumb-wrap">
                     <i class="widget-thumb-icon bg-red-sunglo icofont icofont-alarm"></i>

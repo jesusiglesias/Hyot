@@ -63,31 +63,9 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		[pattern: '/userPage/reloadMyalert',               			access: ['ROLE_USER']],
 		[pattern: '/userPage/myalertBySensor',               		access: ['ROLE_USER']],
 		[pattern: '/userPage/myalertByEvent',               		access: ['ROLE_USER']],
+		[pattern: '/userPage/mymeasurements',               		access: ['ROLE_USER']],
+		[pattern: '/userPage/myalerts',			               		access: ['ROLE_USER']],
 		[pattern: '/userPage/**',               					access: ['ROLE_USER']],
-
-		/*'
-		'/customTasksNormalUser/filterEvent':         ['ROLE_USER'],
-		'/customTasksNormalUser/allEvents':           ['ROLE_USER'],
-		'/customTasksNormalUser/eventSelected':       ['ROLE_USER'],
-		'/customTasksNormalUser/updateAvailableTickets':  ['ROLE_USER'],
-		'/customTasksNormalUser/buyTickets':          ['ROLE_USER'],
-		'/customTasksNormalUser/bookTickets':         ['ROLE_USER'],
-		'/customTasksNormalUser/tickets':             ['ROLE_USER'],
-		'/customTasksNormalUser/profile':             ['ROLE_USER'],
-		'/customTasksNormalUser/updatePersonalInfo':  ['ROLE_USER'],
-		'/customTasksNormalUser/notFound':            ['ROLE_USER'],
-		'/customTasksNormalUser/creditCard':          ['ROLE_USER'],
-		'/customTasksNormalUser/updateCreditCard':    ['ROLE_USER'],
-		'/customTasksNormalUser/profileAvatar':       ['ROLE_USER'],
-		'/customTasksNormalUser/updateAvatar':        ['ROLE_USER'],
-		'/customTasksNormalUser/notFoundAvatar':      ['ROLE_USER'],
-		'/customTasksNormalUser/profilePassword':     ['ROLE_USER'],
-		'/customTasksNormalUser/updatePassword':      ['ROLE_USER'],
-		'/customTasksNormalUser/notFoundPassword':    ['ROLE_USER'],
-		'/customTasksNormalUser/bookings':            ['ROLE_USER'],
-		'/customTasksNormalUser/payBooking':          ['ROLE_USER'],
-		'/customTasksNormalUser/cancelBooking':       ['ROLE_USER'],
-		*/
 ]
 
 // URL redirection based on role

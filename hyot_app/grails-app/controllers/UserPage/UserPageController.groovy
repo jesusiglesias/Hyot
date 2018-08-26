@@ -2,6 +2,7 @@ package UserPage
 
 import grails.converters.JSON
 import grails.plugin.springsecurity.SpringSecurityService
+import groovy.json.JsonSlurper
 
 /**
  * It contains tasks of the normal user.
@@ -25,6 +26,26 @@ class UserPageController {
         def totalAlerts = hyperledgerFabricService.countAlertsUser(springSecurityService.principal.username)
 
         render view: 'home', model: [totalMeasurements: totalMeasurements, totalAlerts: totalAlerts]
+    }
+
+    /**
+     * Gets the own measurements.
+     */
+    def myMeasurements () {
+
+        def mymeasurements = cloudantDBService.getAllDocsUser(springSecurityService.principal.username)
+
+        render view: 'mymeasurements', model: [mymeasurements: mymeasurements]
+    }
+
+    /**
+     * Gets the own alerts.
+     */
+    def myalerts () {
+
+        def myalerts = hyperledgerFabricService.getAlertsUser(springSecurityService.principal.username)
+
+        render view: 'myalerts', model: [myalerts: new JsonSlurper().parseText(myalerts)]
     }
 
 
