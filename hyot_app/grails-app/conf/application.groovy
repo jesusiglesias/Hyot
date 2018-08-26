@@ -54,10 +54,14 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	    [pattern: '/controlPanel/measurementAlertByUser',  			access: ['ROLE_ADMIN']],
         [pattern: '/controlPanel/**',               				access: ['ROLE_ADMIN']],
 		[pattern: '/alert/getAllAlerts',        					access: ['ROLE_ADMIN']],
-		[pattern: '/measurement/getAllMeasurements/getAllAlerts',   access: ['ROLE_ADMIN']],
+		[pattern: '/measurement/getAllMeasurements',   				access: ['ROLE_ADMIN']],
 
-		/*'/customTasksNormalUser/home':                ['ROLE_USER'],
-        /*======================================================*/
+		/* Tasks of the normal user
+        ======================================================*/
+		[pattern: '/userPage/home',               					access: ['ROLE_USER']],
+		[pattern: '/userPage/**',               					access: ['ROLE_USER']],
+
+		/*'
 		'/customTasksNormalUser/filterEvent':         ['ROLE_USER'],
 		'/customTasksNormalUser/allEvents':           ['ROLE_USER'],
 		'/customTasksNormalUser/eventSelected':       ['ROLE_USER'],
@@ -79,19 +83,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		'/customTasksNormalUser/bookings':            ['ROLE_USER'],
 		'/customTasksNormalUser/payBooking':          ['ROLE_USER'],
 		'/customTasksNormalUser/cancelBooking':       ['ROLE_USER'],
-		'/customTasksNormalUser/faq':                 ['ROLE_USER'],
-		'/customTasksNormalUser/cookiesPolicy':       ['permitAll'],
-		'/customTasksNormalUser/contact':             ['ROLE_USER'],
-		'/customTasksNormalUser/contactForm':         ['ROLE_USER'],
-		'/customTasksNormalUser/**':                  ['ROLE_USER'],*/
-
-		/* Information tasks of normal user TODO
-        ======================================================*/
-	/*	'/customTasksUserInformation/cookiesPolicy':       ['permitAll'],
-		'/customTasksUserInformation/contact':             ['ROLE_USER'],
-		'/customTasksUserInformation/contactForm':         ['ROLE_USER'],
-		'/customTasksUserInformation/faq':                 ['ROLE_USER'],
-		'/customTasksUserInformation/**':                  ['ROLE_USER'],*/
+		*/
 ]
 
 // URL redirection based on role

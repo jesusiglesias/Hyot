@@ -578,7 +578,7 @@ button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-
     letter-spacing: -1px;
     text-align: center;
     font-size: 27px;
-    font-variant: small-caps;
+    font-variant: all-small-caps;
     padding: 20px 25px 20px 16px;
     margin: 0;
     background-color: rgba(212, 174, 59, 0.37);

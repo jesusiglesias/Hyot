@@ -80,6 +80,10 @@ body {
     padding-right: 20px;
 }
 
+.page-logo-normaluser {
+    width: 152px !important;
+}
+
 .page-sidebar-closed.page-sidebar-closed-hide-logo .page-header.navbar .page-logo {
     padding: 0;
 }
@@ -272,7 +276,7 @@ body {
     font-size: 16px;
     font-weight: 200;
     color: #ffffff;
-    font-variant: small-caps;
+    font-variant: all-small-caps;
 }
 
 .page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle > .username:hover {
@@ -357,7 +361,7 @@ body {
     font-size: 15px;
     color: #ffffff;
     font-weight: 500;
-    font-variant: small-caps;
+    font-variant: all-small-caps;
 }
 
 .page-header.navbar .hor-menu .navbar-nav > li > a:hover,
@@ -431,7 +435,7 @@ body {
 
     /* Logo */
     .page-header.navbar .page-logo {
-        width: auto;
+        width: auto !important;
         padding: 0 !important;
         margin: 0 10px 0 0;
     }
@@ -497,7 +501,7 @@ body {
     }
 
     .page-header.navbar .page-logo {
-        width: auto;
+        width: auto !important;
     }
 
     .navbar-nav > li {
