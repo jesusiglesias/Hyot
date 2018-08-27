@@ -4214,12 +4214,12 @@ breaklines=true,
 	% Design
 	\chapter{Diseño} \label{designChapter}
 	
-	Dotar de un diseño y una arquitectura al sistema tras haber recabado información durante la etapa de análisis, es esencial para formular y caracterizar la solución propuesta desde el punto de vista de diseño ya que acerca a los \textit{\glspl{stakeholder}} a la implementación final. En este capítulo se muestran diferentes diagramas de diseño.
+	Dotar de un diseño y una arquitectura al sistema tras haber recabado información durante la etapa de análisis, es esencial para formular y caracterizar la solución propuesta desde el punto de vista de diseño ya que acerca a los \textit{\glspl{stakeholder}} a la implementación final. En este capítulo se muestran diferentes diagramas de diseño. 
 	
 	% Section
 	\section{Modelado de la arquitectura física del sistema}
 	
-	En esta sección se realiza una descripción de la arquitectura \textit{software} y \textit{hardware} que guía la implementación del proyecto de trazabilidad en entornos \gls{iot-a} (\textit{\gls{iot}}) mediante \gls{hyperledger}, llamado \textbf{Hyot}. La finalidad es detallar con mayor énfasis cómo esta solución se encuentra construida, qué componentes incluye y cómo son las relaciones entre ellos. Para ello, se explican los patrones implementados explícitamente\footnote{Aquellos patrones implementados de forma implícita por las propias tecnologías no son mencionados (p.ej. patrón decorador, patrón de inyección de dependencias -DI-).} y se muestran diferentes diagramas de diseño, elaborados con el lenguaje \gls{uml-a} (\textit{\gls{uml}}) \cite{uml}, que permiten modelar el sistema tanto a nivel físico como lógico.
+	En esta sección se realiza una descripción de la arquitectura \textit{software} y \textit{hardware} que guía la implementación del proyecto de trazabilidad en entornos \gls{iot-a} (\textit{\gls{iot}}) mediante \gls{hyperledger}, llamado \textbf{Hyot}. La finalidad es detallar con mayor énfasis cómo esta solución se encuentra construida, qué componentes incluye y cómo son las relaciones entre ellos. Para ello, se explican los patrones implementados explícitamente\footnote{Aquellos patrones implementados de forma implícita por las propias tecnologías no son mencionados (p.ej. patrón decorador o patrón de inyección de dependencias -DI-).} y se muestran diferentes diagramas de diseño, elaborados con el lenguaje \gls{uml-a} (\textit{\gls{uml}}) \cite{uml}, que permiten modelar el sistema tanto a nivel físico como lógico.
 		
 	% Subsection
 	\subsection{Descripción de la arquitectura}\label{architectureDescription}
@@ -4281,7 +4281,7 @@ breaklines=true,
 
 	\begin{itemize}
 		\item El \textit{logger} para controlar el número de instancias que se generan de esta clase.
-		\item En las importaciones de módulos. Por naturaleza, todos los módulos en \gls{python} se comportan como un patrón Singleton ya que se comprueba si el módulo ya ha sido importado. En caso afirmativo, lo retorna. En caso contrario, busca el módulo, lo inicializa y lo retorna por lo que únicamente se inicializa una vez definiendo un nombre o nombres en el espacio de nombres local.
+		\item En las importaciones de módulos. Por naturaleza, todos los módulos en \gls{python} se comportan como un patrón Singleton ya que se comprueba si el módulo ya ha sido importado con anterioridad. En caso afirmativo, lo retorna. En caso contrario, busca el módulo, lo inicializa y lo retorna por lo que únicamente se inicializa una vez definiendo un nombre o nombres en el espacio de nombres local.
 	\end{itemize}
 		
 	% Subsection
@@ -4314,22 +4314,21 @@ breaklines=true,
 	El motivo de esta elección se debe a que se trata de la arquitectura que mejor concuerda con el sistema debido a la existencia de un conjunto de clientes que demandan un servicio proporcionado por el conjunto de servidores de la solución. Además, la transferencia de información entre éstos se puede optimizar al recudir la carga de trabajo y el número de peticiones de cada uno de ellos y de utilizar protocolos de comunicación de bajo nivel muy rápidos reduciendo el tráfico de red. Cabe indicar que esta arquitectura favorecerá el rendimiento en situaciones de saturación donde la carga solicitada será mayor que en el contexto y entorno actual de prueba. Desglosando la arquitectura mostrada en el diagrama de despliegue (Figura \ref{fig:design_deployment}), se pueden observar los siguientes niveles:
 	
 	\begin{itemize}
-		\item Primer nivel: en este primer nivel se ubica la capa lógica de presentación donde se diferencian dos tipos de dispositivos \textit{hardware}:
+		\item Primer nivel: en este primer nivel se ubica la capa de presentación donde se diferencian dos tipos de dispositivos \textit{hardware}.
 			\begin{itemize}
-				\item Dispositivo que representa un cliente delgado ya que simplemente actúa como intermediario entre el usuario y el servidor web, no implementando ningún aspecto de la lógica de negocio. Este dispositivo puede ser cualquier ordenador o dispositivo móvil con conexión a Internet el cual permite a los usuarios interactuar con el sistema web mediante un navegador utilizando los protocolos \gls{http-a} (\textit{\gls{http}}) y \gls{https-a} (\textit{\gls{https}}). % TODO Permitir HTTP?
-				\item Dispositivo, \gls{raspberry} (\gls{raspberry-a}), que representa un cliente pesado o grueso ya que presenta carga de cómputo y capacidad de procesamiento de datos en el propio dispositivo, gracias a la ejecución de un componente del proyecto. Este dispositivo interactúa directamente mediante los protocolos \gls{http-a} y \gls{https-a} con los mecanismos de persistencia desplegados. % TODO - Añadir HTTP al diagrama. P.ej. la BBDD usa HTTP. No se importa el certificado.
+				\item Dispositivo que representa un cliente delgado ya que simplemente actúa como intermediario entre el usuario y el sistema web, no implementando ningún aspecto de la lógica de negocio. Este dispositivo puede ser cualquier ordenador o dispositivo móvil con conexión a Internet el cual permite a los usuarios interactuar con el sistema web mediante un navegador utilizando el protocolo \gls{https-a} (\textit{\gls{https}}).
+				\item Dispositivo, \gls{raspberry} (\gls{raspberry-a}), que representa un cliente pesado o grueso ya que presenta carga de cómputo y capacidad de procesamiento de datos en el propio dispositivo, gracias a la ejecución de un componente del proyecto. Este dispositivo interactúa directamente mediante los protocolos \gls{http-a} (\textit{\gls{http}}) y \gls{https-a} con los mecanismos de persistencia desplegados.
 			\end{itemize}
 				 		
-		% TODO Servidor o contenedor de aplicaciones?		 		
-		\item Segundo nivel: en este nivel se localiza el servidor donde se despliega el sistema web en la nube. Este sistema web interactúa directamente mediante los protocolos \gls{http-a} y \gls{https-a} con algunos mecanismos de persistencia.
+		\item Segundo nivel: en este nivel se localiza el contenedor de aplicaciones (\textit{Liberty for Java}) donde se despliega el sistema web en la plataforma como servicio (\textit{\gls{paas}} -\gls{paas-a}-) \cite{gonzalez:2011:TCCS} \gls{cloudfoundry} de IBM Cloud. Este sistema web interactúa directamente mediante los protocolos \gls{http-a} y  \gls{https-a} con los mecanismos de persistencia desplegados.
 		
-		\item Tercer nivel: en el último nivel se hallan los cuatro mecanismos de persistencia utilizados: el servicio de almacenamiento en la nube, los gestores de bases de datos y el servicio de \Gls{blockchain} (\gls{blockchain-a}).
+		\item Tercer nivel: en el último nivel se hallan los cuatro mecanismos de persistencia utilizados, el servicio de almacenamiento en la nube, los gestores de bases de datos desplegados en el servicio IBM Cloud y el servicio de \Gls{blockchain} (\gls{blockchain-a}) de \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) desplegado en una máquina virtual (\textit{\gls{vm}} -\gls{vm-a}-) en Microsoft Azure.
 	\end{itemize}
 	  
 	\begin{figure}[!ht]   
 		\caption{Diagrama de despliegue.} 
 		\begin{center} 
-			\includegraphics[width=18cm,height=18cm]{Images/design/d_deployment.png} \\
+			\includegraphics[width=17cm,height=18cm]{Images/design/d_deployment.png} \\
 			\label{fig:design_deployment} 
 		\end{center}  
 	\end{figure}	
@@ -4372,10 +4371,11 @@ breaklines=true,
 	
 	\begin{itemize}
 		\item Base de datos (\gls{bbdd-a}) distribuida como servicio (\textit{\gls{dbaas}} -\gls{dbaas-a}-) \cite{gonzalez:2011:TCCS} en la nube de tipo no relacional (NoSQL) y orientada a documentos en formato \gls{json-a} (\textit{\gls{json}}) que almacena los valores de cada medición obtenida. La decisión de su elección se tomó en base a las necesidades de escalabilidad y versatilidad de la información almacenada puesto que la principal característica de este tipo de \gls{bbdd-a} es que se encuentran optimizadas para grandes volúmenes de datos con un esquema flexible lo que se alinea con el contexto del proyecto, mediciones constantes y posibilidad de ampliación del proyecto a otros dispositivos \gls{iot-a} lo que ampliaría o modificaría el modelo de información a almacenar. Además, la elección de ser distribuida como un servicio y no usar un despliegue local se debe a facilitar el proceso de puesta en marcha y configuración y la disponibilidad total ya que se encuentra físicamente remota pero lógicamente en local.
+
+		\item \gls{bbdd-a} de tipo relacional (SQL) y \gls{dbaas-a} que almacena la información que gestiona el sistema web sobre usuarios y \textit{\glspl{token}} para proporcionar autenticación y restringir así el libre acceso a la información monitorizada. Debido a la tecnología utilizada (\gls{grails}), se emplea implícitamente una herramienta de mapeo objeto-relacional (\textit{Grails object relational mapping} -GORM-) construida sobre \gls{hibernate} y escrita en \gls{groovy} para mapear el modelo a tablas de la base de datos y controlar el ciclo de vida de las entidades. La decisión de su elección se tomó en base a la necesidad de requerir combinar de forma eficiente diferentes tablas para extraer información relacionada sin importar la posible modificación de la estructura de los datos o crecimiento del volumen de éstos puesto que esta información se encuentra bien definida y acotada y no es necesario las ventajas de una \gls{bbdd-a} NoSQL. 
+		 	
+		\item Servicio de almacenamiento en la nube para almacenar los artefactos -evidencias- encriptados y firmados que son generados por el componente de monitorización de sucesos del entorno. Debido a su tamaño y tipología lo más adecuado es su almacenamiento en un servicio en la nube donde estén siempre disponibles, siempre y cuando este almacenamiento se realice con algún tipo de seguridad.
 		
-		\item \gls{bbdd-a} de tipo relacional (SQL) y \gls{dbaas-a} que almacena la información que gestiona el sistema web sobre usuarios  y \textit{\glspl{token}} para proporcionar autenticación y restringir así el libre acceso. Debido a la tecnología utilizada (\gls{grails}), se emplea implícitamente una herramienta de mapeo objeto-relacional (\textit{Grails object relational mapping} -GORM-) construida sobre \gls{hibernate} y escrita en \gls{groovy} para mapear el modelo a tablas de la base de datos y controlar el ciclo de vida de las entidades. La decisión de su elección se tomó en base a la necesidad de requerir combinar de forma eficiente diferentes tablas para extraer información relacionada sin importar la posible modificación de la estructura de los datos o crecimiento del volumen de éstos puesto que esta información se encuentra bien definida y acotada y no es necesario las ventajas de una \gls{bbdd-a} NoSQL. 
-		 
-		\item Servicio de almacenamiento en la nube para almacenar los artefactos -evidencias- encriptados y firmados que son generados por el componente de monitorización de sucesos del entorno. Debido a su tamaño y tipología lo más adecuado es su almacenamiento en un servicio en la nube donde estén siempre disponibles.	
 		\item \Gls{blockchain} (\gls{blockchain-a}): mecanismo de persistencia principal donde se almacena aquella información que se quiera salvaguardar de cualquier posible alteración por una parte no autorizada y cuyo almacenaje en una \gls{bbdd-a} no proporciona la seguridad requerida.
 	\end{itemize}
 	
@@ -4384,7 +4384,7 @@ breaklines=true,
 	
 	El diagrama Entidad-Relación es un modelo de datos basado en una percepción del mundo real que consiste en un conjunto de objetos básicos llamados entidades y relaciones entre ellos para representar las entidades relevantes de un sistema así como sus interrelaciones y propiedades. Se puede obtener con la técnica, ingeniería inversa la cual permite conseguir información y su diseño a partir de un sistema y por tanto poder determinar el esquema lógico y conceptual de la \gls{bbdd-a}. \\
 	
-	La Figura \ref{fig:design_er} muestra este diagrama donde se diferencian cada uno de los mecanismos de persistencia definidos\footnote{En el caso  del servicio de almacenamiento en la nube, al ser un servicio externo no se pueden controlar los atributos que almacena ya que únicamente se envía el fichero. Sin embargo, para hacer entendible el modelo y la información usada en el proyecto se especifican dos atributos y su estereotipo.} junto con las entidades que lo conforman. Además, cada entidad puede poseer un estereotipo\footnote{Las entidades que conforman el mecanismo de persistencia \gls{blockchain-a} se explican en la sección \ref{businessNetwork} ya que sus estereotipos coinciden con los elementos del modelo de la red de negocio.}, unos atributos y tipo junto con la especificación en caso de existir del atributo que actuará como clave primaria o PK (\textit{Public Key}) para identificar un registro único en el mecanismo de persistencia. Como particularidad del diagrama, indicar que la entidad \texttt{AlertDetails} es una entidad débil lo que quiere decir que su existencia depende de otra entidad (\texttt{Alert}) y no posee atributos únicos o clave primaria. Su estereotipo \texttt{<<concept>>} -proveniente de la tecnología \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a})- viene a significar esto mismo.
+	La Figura \ref{fig:design_er} muestra este diagrama donde se diferencian cada uno de los mecanismos de persistencia definidos\footnote{En el caso  del servicio de almacenamiento en la nube, al ser un servicio externo no se pueden controlar los atributos que almacena ya que únicamente se envía el fichero. Sin embargo, para hacer entendible el modelo y la información usada en el proyecto se especifican dos atributos y su estereotipo.} junto con las entidades que lo conforman. Además, cada entidad puede poseer un estereotipo\footnote{Las entidades que conforman el mecanismo de persistencia \gls{blockchain-a} se explican con más detalle en la sección \ref{businessNetwork}.}, unos atributos y tipo junto con la especificación en caso de existir del atributo que actuará como clave primaria o PK (\textit{Public Key}) para identificar un registro único en el mecanismo de persistencia. Como particularidad del diagrama, indicar que la entidad \texttt{AlertDetails} es una entidad débil lo que quiere decir que su existencia depende de otra entidad (\texttt{Alert}) y no posee atributos únicos o clave primaria. Su estereotipo \texttt{<<concept>>} -proveniente de la tecnología \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a})- viene a significar esto mismo.
 	
 	\begin{figure}[!ht]   
 		\caption{Diagrama Entidad-Relación.} 
@@ -4399,7 +4399,7 @@ breaklines=true,
 	
 	El diagrama de Estructura de Datos es un modelo conceptual del sistema similar al diagrama Entidad-Relación con la salvedad de que se centra en las relaciones de los elementos dentro de las entidades, en lugar de las relaciones entre las propias entidades. \\
 	
-	La Figura \ref{fig:design_dsd} muestra este diagrama donde al igual que en el diagrama Entidad-Relación las entidades están categorizadas según el mecanismo de persistencia al que pertenecen. En este diagrama la particularidad, como su definición indica, se observa en las relaciones donde son los propios atributos los que las marcan. El significado que se ha querido proporcionar a este diagrama en Hyot, es mostrar qué campos están definidos en cada entidad y cuáles de ellos son compartidos entre diferentes entidades aunque la entidad en sí no esté relacionada, como es el caso de la entidad débil \texttt{AlertDetails} y la entidad \texttt{Measurement} donde no existe una relación explícita en el modelo pero ambas comparten dos atributos que para la misma instancia poseerán el mismo valor.
+	La Figura \ref{fig:design_dsd} muestra este diagrama donde al igual que en el diagrama Entidad-Relación las entidades están categorizadas según el mecanismo de persistencia al que pertenecen. En este diagrama la particularidad, como su definición indica, se observa en las relaciones donde son los propios atributos los que las marcan. El significado que se ha querido proporcionar a este diagrama en Hyot, es mostrar qué campos están definidos en cada entidad y cuáles de ellos son compartidos entre diferentes entidades aunque la entidad en sí no esté relacionada, como es el caso de la entidad débil \texttt{AlertDetails} y la entidad \texttt{Measurement} donde no existe una relación explícita en el modelo pero ambas comparten dos atributos que para la misma instancia poseen el mismo valor.
 	
 	\begin{figure}[!ht]   
 		\caption{Diagrama de Estructura de Datos.} 
@@ -4512,7 +4512,7 @@ breaklines=true,
 		% NEW PAGE 
 		\newpage
 		
-		\item Diagrama de secuencia de diseño: Consultar estadísticas (Figura \ref{fig:design_estadisticas}).
+		\item Diagrama de secuencia de diseño: Consultar estadísticas globales (Figura \ref{fig:design_estadisticas}).
 		
 		\begin{figure}[!ht]   
 			\caption{Diagrama de secuencia de diseño: Consultar estadísticas.} 
@@ -4635,7 +4635,7 @@ breaklines=true,
 		% NEW PAGE 
 		\newpage
 		
-		\item Diagrama de clases de diseño: Consultar estadísticas (Figura \ref{fig:classes_estadisticas}).
+		\item Diagrama de clases de diseño: Consultar estadísticas globales (Figura \ref{fig:classes_estadisticas}).
 		
 		\begin{figure}[!ht]   
 			\caption{Diagrama de clases de diseño: Consultar estadísticas.} 
@@ -4673,7 +4673,7 @@ breaklines=true,
 	% Section
 	\section{Diagrama final de clases de diseño}	
 	
-	El diagrama final de clases de diseño (Figura \ref{fig:classes_final}) contiene la representación completa del modelo desde el punto de vista de diseño e implementación de un sistema, es decir, se trata de la fusión de todos los diagramas de clases de diseño expuestos en la sección anterior \ref{classes}.
+	El diagrama final de clases de diseño (Figura \ref{fig:classes_final}) contiene la representación completa del modelo desde el punto de vista de diseño e implementación de un sistema, es decir, se trata de la fusión de todos los diagramas de clases de diseño expuestos en la sección anterior.
 
 	% NEW PAGE
 	\newpage
