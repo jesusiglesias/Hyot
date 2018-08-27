@@ -67,28 +67,13 @@ class BootStrap {
                     password: 'Qwerty321!',
                     email: 'hyot.project@gmail.com')
 
-            // TODO Eliminar usuario normal para la demo y entrega final
-            /*-------------------------------------------------------------------------------------------*
-             *                                          USER                                             *
-             *-------------------------------------------------------------------------------------------*/
-
-            // Normal user
-            def normalUser = User.findByUsername('hyot') ?: new User( // Normal user
-                    username: 'hyot',
-                    password: 'Qwerty321!',
-                    email: 'jesus.iglesiasg@estudiante.uam.es',
-                    name: 'Jesús',
-                    surname: 'Iglesias'
-            )
-
             /*-------------------------------------------------------------------------------------------*
              *                                        VALIDATION                                         *
              *-------------------------------------------------------------------------------------------*/
 
             def validation_adminUser = adminUser.validate()
-            def validation_normalUser = normalUser.validate()
 
-            if (validation_adminUser & validation_normalUser) {
+            if (validation_adminUser) {
 
                 // It saves the roles
                 adminRole.save(flush: true, failOnError: true)
@@ -96,16 +81,10 @@ class BootStrap {
 
                 // It saves the users
                 adminUser.save(flush: true, failOnError: true)
-                normalUser.save(flush: true, failOnError: true)
 
                 // It assigns the role to the admin user
                 if (!adminUser.authorities.contains(adminRole)) {
                     SecUserSecRole.create adminUser, adminRole, true
-                }
-
-                // It assigns the role to the normal user
-                if (!normalUser.authorities.contains(userRole)) {
-                    SecUserSecRole.create normalUser, userRole, true
                 }
 
                 log.debug("BootStrap:init():createInitialData():Initial data has been created")
