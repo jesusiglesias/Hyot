@@ -94,7 +94,7 @@
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <!-- Profile TODO -->
+                                <!-- Profile -->
                                 <li class="li-iconId-user">
                                     <g:link uri="/profile" id="${sec.loggedInUserInfo(field:"id")}">
                                         <i class="icofont icofont-id iconId-user"></i> <g:message code="layouts.main_auth_admin.head.profile" default="My profile"/>

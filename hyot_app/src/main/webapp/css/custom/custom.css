@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------*
-*                                 CUSTOM CSS - GENERAL ELEMENTS      TODO                        *
-*-------------------------------------------------------------------------------------------*/
+*                                 CUSTOM CSS - GENERAL ELEMENTS                              *
+*--------------------------------------------------------------------------------------------*/
 
 /* Autofill Chrome without style */
 .autofill-input:-webkit-autofill,
@@ -418,16 +418,6 @@ button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-
     top: -3px;
 }
 
-/* Filter events by dates
-=================================================================== */
-.filter {
-    margin-bottom: 50px;
-}
-
-.filter-select {
-    margin-top: 20px;
-}
-
 /* Multi-select - Create view
 =================================================================== */
 .ms-container {
@@ -477,7 +467,7 @@ button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-
     color: #000;
 }
 
-/* User pages TODO
+/* User pages
 =================================================================== */
 
 /* Main title */
@@ -492,17 +482,6 @@ button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-
     font-size: 16px;
 }
 
-.page-title-user-event {
-    letter-spacing: -1px;
-    display: block;
-    font-weight: 400;
-    margin: 0;
-    padding: 40px 0 0 0;
-    background: white;
-    font-size: 16px;
-}
-
-.page-title-user-faq-title,
 .page-title-user-home-title,
 .page-title-user-profile-title {
     margin-top: 0;
@@ -510,48 +489,6 @@ button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-
     font-size: 33px;
     font-variant: all-small-caps;
     font-weight: 400;
-}
-
-.banner-event {
-    text-align: center;
-    margin-top: 35px;
-    padding: 20px;
-    color: #f1f1f1;
-    background-color: #6cb191;
-}
-
-.banner-event-ticket {
-    text-align: center;
-    margin-top: 35px;
-    padding: 20px;
-    color: #e8e8e8;
-    background-color: #747e88;
-}
-
-.banner-eventSelected {
-    text-align: center;
-    margin: 35px 0 35px 0;
-    padding: 20px;
-    color: #e8e8e8;
-    background-color: #747e88;
-}
-
-.banner-tickets {
-    text-align: center;
-    margin: 0;
-    padding: 20px;
-}
-
-
-.ad-event {
-    margin: 50px 20px 40px 20px;
-    font-size: 14px;
-}
-
-.ad-event-buy {
-    margin: -25px 20px 40px 20px;
-    font-size: 14px;
-    color: #e26a6a;
 }
 
 .page-title-user-home-title > span {
@@ -600,11 +537,6 @@ button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-
 
 .col-userLayoutTitle {
     padding-right: 0 !important;
-}
-
-.col-userLayoutTitle-faq {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
 }
 
 .colLine-rowLeft {
@@ -2013,11 +1945,6 @@ button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-
         font-size: 15px;
     }
 
-    .page-title-user-event {
-        padding: 60px 0 0 0;
-        font-size: 15px;
-    }
-
     .page-title-user-profile-title {
         font-size: 32px;
     }
@@ -2036,20 +1963,6 @@ button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-
     .page-title-user-home-description {
         margin-left: 35px;
         margin-right: 35px;
-    }
-
-    .page-title-user-faq-section-description {
-        text-align: justify;
-        margin-left: 50px;
-        margin-right: 35px;
-    }
-
-    .page-title-user-show-section-description {
-        text-align: justify;
-    }
-
-    .page-title-user-show-section-title {
-        font-size: 26px;
     }
 }
 
@@ -2184,18 +2097,8 @@ button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-
         padding: 46px 0 27px 0;
     }
 
-    .page-title-user-event {
-        padding: 46px 0 0 0;
-    }
-
     .page-title-user-profile-title {
         font-size: 31px;
-    }
-
-    .page-title-user-faq-title {
-        font-size: 31px;
-        margin-left: 20px;
-        margin-right: 20px;
     }
 
     .page-title-user-profile-description {
@@ -2207,21 +2110,6 @@ button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-
         text-align: justify;
         margin-left: 25px;
         margin-right: 25px;
-    }
-
-    .page-title-user-show-section-description {
-        padding-left: 25px;
-        padding-right: 25px;
-        font-size: 14px;
-    }
-
-    .page-title-user-faq-section-description {
-        margin-left: 40px;
-        margin-right: 35px;
-    }
-
-    .page-title-user-show-section-title {
-        font-size: 25px;
     }
 }
 
@@ -2356,25 +2244,12 @@ button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-
         font-size: 13px;
     }
 
-    .page-title-user-contact,
-    .page-title-user-cookie,
-    .page-title-user-faq,
-    .page-title-user-bookings,
     .page-title-user-profile {
         padding: 20px 0 25px 0;
     }
 
     .page-title-user-home {
         padding: 40px 0 25px 0;
-    }
-
-    .page-title-user-event {
-        padding: 40px 0 0 0;
-    }
-
-    .page-title-user-show-section-description {
-        padding-left: 20px;
-        padding-right: 20px;
     }
 
     .page-title-user-home-title,
@@ -2385,11 +2260,6 @@ button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-
     .page-title-user-home-description,
     .page-title-user-profile-description {
         margin-left: 20px;
-        margin-right: 20px;
-    }
-
-    .page-title-user-faq-section-description {
-        margin-left: 35px;
         margin-right: 20px;
     }
 }
