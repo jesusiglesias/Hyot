@@ -443,7 +443,7 @@
         <ul class="page-sidebar-menu page-header-fixed" data-keep-expanded="true" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 30px">
 
             <!-- Load search action -->
-            <g:render template="./searchControlPanel"/>
+            <g:render template="searchControlPanel"/>
 
             <li class="nav-item start active open">
                 <a href="javascript:;" class="nav-link nav-toggle">
