@@ -90,6 +90,9 @@
                 <g:link uri="/"><g:message code="layouts.main_auth_admin.pageBreadcrumb.title" default="Homepage"/></g:link>
                 <i class="fa fa-circle"></i>
             </li>
+            <li>
+                <span><g:message code="layout.main_userpage.horizontal.menu.alert" default="My alerts"/></span>
+            </li>
         </ul>
     </div> <!-- /.Page-bar -->
 

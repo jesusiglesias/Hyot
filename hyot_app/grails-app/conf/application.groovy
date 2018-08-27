@@ -19,8 +19,9 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
         /* Domain
         ======================================================*/
-        [pattern: '/SecUser/**',        access: ['ROLE_ADMIN']],
-        [pattern: '/User/**',           access: ['ROLE_ADMIN']],
+        [pattern: '/SecUser/checkEmailAvailibility',   				access: ['ROLE_ADMIN', 'ROLE_USER']],
+        [pattern: '/SecUser/**',       	 							access: ['ROLE_ADMIN']],
+        [pattern: '/User/**',           							access: ['ROLE_ADMIN']],
 
 		/* General tasks of unregistered user
         ======================================================*/
@@ -65,6 +66,15 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		[pattern: '/userPage/myalertByEvent',               		access: ['ROLE_USER']],
 		[pattern: '/userPage/mymeasurements',               		access: ['ROLE_USER']],
 		[pattern: '/userPage/myalerts',			               		access: ['ROLE_USER']],
+		[pattern: '/userPage/profile',			               		access: ['ROLE_USER']],
+		[pattern: '/userPage/updatePersonalInfo',			        access: ['ROLE_USER']],
+		[pattern: '/userPage/notFound',			               		access: ['ROLE_USER']],
+		[pattern: '/userPage/profilePassword',			            access: ['ROLE_USER']],
+		[pattern: '/userPage/updatePassword',			      		access: ['ROLE_USER']],
+		[pattern: '/userPage/notFoundPassword',	            		access: ['ROLE_USER']],
+		[pattern: '/userPage/profileAvatar',	            		access: ['ROLE_USER']],
+		[pattern: '/userPage/updateAvatar',		            		access: ['ROLE_USER']],
+		[pattern: '/userPage/notFoundAvatar',	            		access: ['ROLE_USER']],
 		[pattern: '/userPage/**',               					access: ['ROLE_USER']],
 ]
 

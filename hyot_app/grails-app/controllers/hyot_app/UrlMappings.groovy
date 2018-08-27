@@ -66,6 +66,12 @@ class UrlMappings {
         "/home"(controller: 'userPage', action: 'home')
         "/mymeasurements"(controller: 'userPage', action: 'myMeasurements')
         "/myalerts"(controller: 'userPage', action: 'myalerts')
+        "/profile"(controller: 'userPage', action: 'profile')
+        "/profile-error"(controller: 'userPage', action: 'updatePersonalInfo')
+        "/profilePassword"(controller: 'userPage', action: 'profilePassword')
+        "/profilePassword-error"(controller: 'userPage', action: 'profilePassword')
+        "/profileAvatar"(controller: 'userPage', action: 'profileAvatar')
+        "/profileAvatar-error"(controller: 'userPage', action: 'updateAvatar')
 
         /* Information files
         ======================================================*/

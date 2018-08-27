@@ -1,0 +1,191 @@
+/*-------------------------------------------------------------------------------------------*
+*                                     PROFILE USER PAGE                                      *
+*-------------------------------------------------------------------------------------------*/
+
+.profile-sidebar {
+    float: left;
+    width: 310px;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.profile-content,
+.profile-content-password {
+    overflow: hidden;
+    margin: 20px 20px 0 0;
+}
+
+/* Sidebar */
+.profile-sidebar-portlet {
+    padding: 0 !important;
+}
+
+.profile-userpic img {
+    float: none;
+    margin: 0 auto;
+    width: 100%;
+    height: 300px;
+    display: block;
+}
+
+.profile-usertitle {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.profile-usertitle-name {
+    color: #333333;
+    font-size: 20px;
+    letter-spacing: -1px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.profile-usertitle-department {
+    text-transform: uppercase;
+    color: #6FB494;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 7px;
+}
+
+.profile-userExtraInformation {
+    text-align: center;
+    margin-top: 11px;
+    color: #545454;
+}
+
+.profile-usermenu {
+    margin-top: 32px;
+}
+
+.profile-usermenu ul li {
+    border-bottom: 1px solid #f0f4f7;
+}
+
+.profile-usermenu ul li:last-child {
+    border-bottom: none;
+}
+
+.profile-usermenu ul li a {
+    color: #545454;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.profile-usermenu ul li a i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.profile-usermenu ul li a:hover,
+.profile-usermenu ul li a:active,
+.profile-usermenu ul li a:focus {
+    background-color: #eee;
+}
+
+.profile-usermenu ul li.active a {
+    color: #6FB494;
+    background-color: #FFFFFF;
+    border-left: 2px solid #6FB494;
+    margin-left: -2px;
+}
+
+.profile-usermenu ul li.active a:hover {
+    color: #569c7a;
+    border-left: 2px solid #569c7a;
+}
+
+.profile-stat {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f4f7;
+}
+
+.profile-stat-secondRow {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.profile-stat-title {
+    color: #6FB494;
+    font-size: 25px;
+    text-align: center;
+    font-weight: 300;
+}
+
+.profile-stat-text {
+    color: #545454;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.profile-stat-title-unapproved {
+    color: #D05454;
+    font-size: 25px;
+    text-align: center;
+    font-weight: 300;
+}
+
+/* Instructions of password */
+.profilePassword-instructions-head {
+    background-color: #EADCB1 !important;
+}
+
+/* Max width: 991px */
+@media (max-width: 991px) {
+
+    .profile-userpic img {
+        width: 50%;
+        height: 100%;
+    }
+
+    .profile-sidebar {
+        float: none;
+        width: 100% !important;
+        margin: 0;
+    }
+
+    .profile-sidebar > .portlet {
+        margin-bottom: 1px;
+    }
+
+    .profile-content {
+        overflow: visible;
+        margin: 1px 0 0 0;
+    }
+
+    .profile-content-password {
+        overflow: visible;
+        margin: 20px 0 0 0;
+    }
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+
+    .profile-userpic img {
+        width: 60%;
+        height: 100%;
+    }
+}
+
+/* Max-width: 480px */
+@media (max-width: 480px) {
+
+    .profile-userpic img {
+        width: 70%;
+        height: 100%;
+    }
+}
+
+/* Max-width: 320px */
+@media (max-width: 320px) {
+
+    .profile-userpic img {
+        width: 75%;
+        height: 100%;
+    }
+}
