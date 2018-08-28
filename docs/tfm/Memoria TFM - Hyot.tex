@@ -33,7 +33,6 @@
 \usepackage[utf8]{inputenc}
 \usepackage{xcolor,colortbl}
 \usepackage{wrapfig} 					% Position of image
-
 \usepackage{ifthen}
      
 % Make glossary
@@ -270,9 +269,13 @@ breaklines=true,
 	Una de estas iniciativas es \gls{hyperledger} \cite{hyperledger:url} -estándar \textit{\gls{opensource}} de investigación y evolución de la tecnología \gls{blockchain-a} permisionada anunciada por la fundación Linux en 2015-, se centra en apoyar este tipo de transacciones de negocio para mejorar numerosos aspectos de rendimiento y empresariales. \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) \cite{hyperledgerfabric:url}, es el proyecto más conocido dentro de este consorcio. Implementa la tecnología de libro de registros distribuido (\textit{\gls{dlt}} -\gls{dlt-a}-) \cite{wattenhofer:DLT} en una \gls{blockchain-a} permisionada donde la inserción de la información requiere que las entidades estén previamente autenticadas. Este modelo de control de acceso es de alto interés en el contexto de la trazabilidad de recursos ya que limita quién puede tener acceso y a qué recursos gracias a la existencia de roles. \\
 		
 	El surgimiento de nuevos paradigmas, como el Internet de las Cosas (\textit{\gls{iot}} -\gls{iot-a}-) \cite{christidis:2016:bsciot}, \cite{dorri:2017:TOBI} donde cualquier objeto del mundo real puede estar totalmente conectado a la red, ha evolucionado la forma de uso, de comunicación y de transmisión de información a través de Internet. Hasta hace poco, estos dispositivos eran meros consumidores de datos. Actualmente, exponen de forma permanente servicios y datos recolectados del entorno con lo que aparte de traer consigo numerosos beneficios, también abren la puerta a numerosos problemas de seguridad y privacidad. La importancia de mantener un registro de información inmutable y confidencial es esencial para garantizar la veracidad e integridad de los sucesos y de la información recogida. El presente proyecto aborda el desarrollo de una prueba de concepto (\textit{\gls{poc}} -\gls{poc-a}-) para implementar \gls{hyperledgerfabric-a} en el \gls{iot-a}. El objetivo será la recolección de eventos mediante sensores situados en una \gls{raspberry} 3 (\gls{raspberry-a}), y la inclusión de incidencias en la \gls{blockchain-a} de \gls{hyperledgerfabric-a}. Asimismo, toda la información recolectada podrá ser consumida en tiempo real mediante un sistema web.
-			
+	
+	% NEW PAGE		
+	\newpage	
+	
 	\paragraph{Palabras clave \\}
-		
+	\thispagestyle{empty}
+
 	Cadena de bloques, Contratos inteligentes, Hyperledger, Hyperledger Fabric, Internet de las Cosas, Libro principal, Privacidad, Raspberry Pi, Seguridad, Sensor
 			
 	\blankpage
@@ -294,11 +297,10 @@ breaklines=true,
 	\newpage
 	
 	\paragraph{Keywords \\}
-		
+	\thispagestyle{empty}
+
 	Blockchain, Hyperledger, Hyperledger Fabric, Internet of Things, Ledger, Raspberry Pi, Security, Sensor, Smart Contracts, Privacy
- 		
-	\blankpage
-	
+ 			
 	% Index
 	\tableofcontents
 	\addcontentsline{toc}{chapter}{Índice general}	
@@ -317,10 +319,10 @@ breaklines=true,
 
 	% Glossary of terms	
 	\printglossary
+	\thispagestyle{empty}
 		
 	% Acronyms	
-	\printglossary[title=Acrónimos, type=\acronymtype]
-		
+	\printglossary[title=Acrónimos, type=\acronymtype]	
 	\thispagestyle{empty}
 	
 	% Header
@@ -1340,8 +1342,8 @@ breaklines=true,
 			
 	% Analysis
 	\chapter{Análisis} \label{analysisChapter}
-	
-	Conocer todos y cada uno de los requerimientos de un sistema es fundamental para no caminar a través del camino incorrecto. En este capítulo se aborda el primer contacto con el sistema a través de un completo análisis con el fin de indagar con mayor profundidad en él y de desglosar y definir las necesidades a implementar.
+		
+	Conocer todos y cada uno de los requerimientos de un sistema es fundamental para no caminar a través del camino incorrecto. En este capítulo se aborda el primer contacto con el sistema a través de un completo análisis con el fin de indagar con mayor profundidad en él y de desglosar y definir las necesidades a implementar todo ello siguiendo el marco de planificación detallado en el anexo .
 
 	% Section
 	\section{Requisitos}
@@ -1401,6 +1403,9 @@ breaklines=true,
 		\caption{RF.3 - Habilitar interfaces en el dispositivo RPi}
 	\end{longtable}
 	
+	% NEW PAGE
+ 	\newpage
+ 	
 	% RF.4 - Seleccionar acciones de configuración a ejecutar en el dispositivo Raspberry Pi
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
@@ -1507,1223 +1512,1183 @@ breaklines=true,
 		
 		\caption{RF.11 - Calcular código hash de la evidencia sin encriptar}
 	\end{longtable}
-	
-	% NEW PAGE
- 	\newpage
- 	
-	% RF.12 - Publicar medición en la plataforma IoT
+	 	
+	% RF.12 - Añadir medición a la base de datos
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
 		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.12}}} \\ \hline
-
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Publicar medición en la plataforma \gls{iot-a} (\textit{\gls{iot}})}} \\ \hline
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
-
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la publicación de mediciones, es decir, los valores medidos para cada evento en la plataforma \gls{iot-a}}} \\ \hline
-		
-		\caption{RF.12 - Publicar medición en la plataforma IoT}
-	\end{longtable}
- 	
-	% RF.13 - Añadir medición a la base de datos
-	\begin{longtable}{m{5cm}|m{5cm}|}
-		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.13}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Añadir medición a la base de datos (\gls{bbdd-a})}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{el almacenamiento de mediciones en la \gls{bbdd-a}}} \\ \hline
 
-		\caption{RF.13 - Añadir medición a la base de datos BBDD}
+		\caption{RF.12 - Añadir medición a la base de datos BBDD}
 	\end{longtable}
 	
-	% RF.14 - Almacenar evidencia encriptada y firmada a la nube
+	% NEW PAGE
+ 	\newpage
+ 	
+	% RF.13 - Almacenar evidencia encriptada y firmada a la nube
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.14}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.13}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Almacenar evidencia encriptada y firmada a la nube}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{el almacenamiento en la nube de la evidencia generada tras la activación del protocolo de alerta}} \\ \hline
 		
-		\caption{RF.14 - Almacenar evidencia encriptada y firmada a la nube}
+		\caption{RF.13 - Almacenar evidencia encriptada y firmada a la nube}
 	\end{longtable}
 	
-	% RF.15 - Registrar evidencia en la Blockchain (BC)
+	% RF.14 - Registrar evidencia en la Blockchain (BC)
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.15}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.14}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Registrar evidencia en la \Gls{blockchain} (\gls{blockchain-a})}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{el registro de una evidencia en la \gls{blockchain-a}}} \\ \hline
 		
-		\caption{RF.15 - Registrar evidencia en la Blockchain (BC)}
+		\caption{RF.14 - Registrar evidencia en la Blockchain (BC)}
 	\end{longtable}
 	
-	% RF.16 - Enviar email de notificación
+	% RF.15 - Enviar email de notificación
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.16}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.15}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Enviar \textit{email} de notificación}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{el envío de emails para notificar un suceso anómalo, es decir, la activación del protocolo de alerta o un error producido durante una medición}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{el envío de emails para notificar un suceso anómalo (activación del protocolo de alerta) o un error producido durante una medición}} \\ \hline
 		
-		\caption{RF.16 - Enviar email de notificación}
+		\caption{RF.15 - Enviar email de notificación}
 	\end{longtable}
 	
-	% RF.17 - Generar par de claves GPG
+	% RF.16 - Generar par de claves GPG
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.17}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.16}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Generar par de claves \gls{gpg-a} (\gls{gpg})}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la generación del par de claves \gls{gpg-a} (clave privada y pública) para llevar a cabo la encriptación y firmado de la evidencia}} \\ \hline
 	
-		\caption{RF.17 - Generar par de claves GPG (GNU Privacy Guard)}
+		\caption{RF.16 - Generar par de claves GPG (GNU Privacy Guard)}
 	\end{longtable}
 	
-	% RF.18 - Configurar identidad del usuario para el par de claves GPG
+	% RF.17 - Configurar identidad del usuario para el par de claves GPG
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.18}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.17}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Configurar identidad del usuario para el par de claves \gls{gpg-a}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 13/02/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del nombre y dirección email a asociar a la identidad del usuario del par de claves}} \\ \hline
 		
-		\caption{RF.18 - Configurar identidad del usuario para el par de claves GPG}
+		\caption{RF.17 - Configurar identidad del usuario para el par de claves GPG}
 	\end{longtable}
 	
-	% RF.19 - Exportar par de claves GPG
+	% NEW PAGE
+ 	\newpage
+ 	
+	% RF.18 - Exportar par de claves GPG
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.19}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.18}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Exportar par de claves \gls{gpg-a}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la exportación de la clave privada y pública a un fichero con extensión \texttt{.asc} cuyo nombre será renombrado en caso de existir un fichero con el nombre por defecto}} \\ \hline
 		
-		\caption{RF.19 - Exportar par de claves GPG}
+		\caption{RF.18 - Exportar par de claves GPG}
 	\end{longtable}
 	
-	% RF.20 - Generar código QR del par de claves GPG
+	% RF.19 - Generar código QR del par de claves GPG
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.20}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.19}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Generar \gls{qr} del par de claves \gls{gpg-a}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 13/02/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la generación de un \gls{qr} a partir del par de claves creado}} \\ \hline
 		
-		\caption{RF.20 - Generar código QR del par de claves GPG}
+		\caption{RF.19 - Generar código QR del par de claves GPG}
 	\end{longtable}
 	
-	% NEW PAGE
-	\newpage
-	
-	% RF.21 - Seleccionar par de claves para el firmado de la evidencia
+	% RF.20 - Seleccionar par de claves para el firmado de la evidencia
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.21}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.20}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar par de claves para el firmado de la evidencia}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del par de claves a utilizar en el firmado de la evidencia cuando se especifican varios destinatarios para la encriptación}} \\ \hline
 		
-		\caption{RF.21 - Seleccionar par de claves para el firmado de la evidencia}
+		\caption{RF.20 - Seleccionar par de claves para el firmado de la evidencia}
 	\end{longtable}
 	
-	% RF.22 - Añadir adjunto en el email de notificación
+	% RF.21 - Añadir adjunto en el email de notificación
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.22}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.21}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Añadir adjunto en el \textit{email} de notificación}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 13/02/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{el anexo del fichero de log en el email de notificación}} \\ \hline
 		
-		\caption{RF.22 - Añadir adjunto en el email de notificación}
+		\caption{RF.21 - Añadir adjunto en el email de notificación}
 	\end{longtable}
-	
-	% RF.23 - Establecer conexión con la plataforma IoT
-	\begin{longtable}{m{5cm}|m{5cm}|}
-		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.23}}} \\ \hline
-
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Establecer conexión con la plataforma \gls{iot-a}}} \\ \hline
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
-
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la conexión con la plataforma \gls{iot-a} ubicada en la nube}} \\ \hline
-	
-		\caption{RF.23 - Establecer conexión con la plataforma IoT}
-	\end{longtable}
-	
-	% RF.24 - Introducir credenciales de la plataforma IoT
-	\begin{longtable}{m{5cm}|m{5cm}|}
-		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.24}}} \\ \hline
-
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Introducir credenciales de la plataforma \gls{iot-a}}} \\ \hline
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
-
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación de las credenciales de usuario para establecer conexión con la plataforma \gls{iot-a}}} \\ \hline
 		
-		\caption{RF.24 - Introducir credenciales de la plataforma IoT}
-	\end{longtable}
-	
-	% RF.25 - Establecer conexión con el servicio de BBDD
+	% RF.22 - Establecer conexión con el servicio de BBDD
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.25}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.22}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Establecer conexión con el servicio de \gls{bbdd-a}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la conexión con el servicio de \gls{bbdd-a} ubicado en la nube}} \\ \hline
 	
-		\caption{RF.25 - Establecer conexión con el servicio de BBDD}
+		\caption{RF.22 - Establecer conexión con el servicio de BBDD}
 	\end{longtable}
 	
 	% NEW PAGE
 	\newpage
 	
-	% RF.26 - Introducir credenciales en el servicio de BBDD
+	% RF.23 - Introducir credenciales en el servicio de BBDD
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.26}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.23}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Introducir credenciales en el servicio de \gls{bbdd-a}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación de las credenciales de usuario para establecer conexión con el servicio de \gls{bbdd-a}}} \\ \hline
 		
-		\caption{RF.26 - Introducir credenciales en el servicio de BBDD}
+		\caption{RF.23 - Introducir credenciales en el servicio de BBDD}
 	\end{longtable}
 	
-	% RF.27 - Configurar nombre de la BBDD
+	% RF.24 - Configurar nombre de la BBDD
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.27}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.24}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Configurar nombre de la \gls{bbdd-a}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la configuración del nombre de la \gls{bbdd-a} a emplear}} \\ \hline
 	
-		\caption{RF.27 - Configurar nombre de la BBDD}
+		\caption{RF.24 - Configurar nombre de la BBDD}
 	\end{longtable}
 	
-	% RF.28 - Crear o abrir BBDD
+	% RF.25 - Crear o abrir BBDD
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.28}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.25}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Crear o abrir \gls{bbdd-a}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la creación -si no existe- o la apertura -si existe- de la \gls{bbdd-a} para poder interactuar con ella}} \\ \hline
 	
-		\caption{RF.28 - Crear o abrir BBDD}
+		\caption{RF.25 - Crear o abrir BBDD}
 	\end{longtable}
 	
-	% RF.29 - Establecer conexión con el servicio de almacenamiento
+	% RF.26 - Establecer conexión con el servicio de almacenamiento
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.29}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.26}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Establecer conexión con el servicio de almacenamiento}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la conexión con el servicio de almacenamiento ubicado en la nube}} \\ \hline
 
-		\caption{RF.29 - Establecer conexión con el servicio de almacenamiento}
+		\caption{RF.26 - Establecer conexión con el servicio de almacenamiento}
 	\end{longtable}
 	
-	% RF.30 - Introducir credenciales en el servicio de almacenamiento en la nube
+	% RF.27 - Introducir credenciales en el servicio de almacenamiento en la nube
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.30}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.27}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Introducir credenciales en el servicio de almacenamiento en la nube}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del \gls{token} de autenticación para establecer conexión con el servicio de almacenamiento}} \\ \hline
 		
-		\caption{RF.30 - Introducir credenciales en el servicio de almacenamiento en la nube}
+		\caption{RF.27 - Introducir credenciales en el servicio de almacenamiento en la nube}
 	\end{longtable}
 	
-	% RF.31 - Configurar nombre de los subdirectorios en el servicio de almacenamiento
+	% NEW PAGE
+ 	\newpage
+ 	
+	% RF.28 - Configurar nombre de los subdirectorios en el servicio de almacenamiento
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.31}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.28}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Configurar nombre de los subdirectorios en el servicio de almacenamiento}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.1 - 03/01/2018 (rev. 13/02/2018)} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la configuración del nombre de los subdirectorios asociados a cada sensor donde se almacenarán las evidencias generadas por alertas lanzadas por dicho sensor}} \\ \hline
 		
-		\caption{RF.31 - Configurar nombre de los subdirectorios en el servicio de almacenamiento}
+		\caption{RF.28 - Configurar nombre de los subdirectorios en el servicio de almacenamiento}
 	\end{longtable}
  	
-	% RF.32 - Crear subdirectorios en el servicio de almacenamiento
+	% RF.29 - Crear subdirectorios en el servicio de almacenamiento
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.32}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.29}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Crear subdirectorios en el servicio de almacenamiento}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la creación -si no existen- de los subdirectorios asociados a cada sensor}} \\ \hline
 		
-		\caption{RF.32 - Crear subdirectorios en el servicio de almacenamiento}
+		\caption{RF.29 - Crear subdirectorios en el servicio de almacenamiento}
 	\end{longtable}
 		
-	% RF.33 - Comprobar espacio disponible en el servicio de almacenamiento
+	% RF.30 - Comprobar espacio disponible en el servicio de almacenamiento
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.33}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.30}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Comprobar espacio disponible en el servicio de almacenamiento}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 13/02/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la comprobación del espacio disponible en el servicio de almacenamiento con el fin de notificar al usuario si el espacio restante supera una cantidad mínima recomendada}} \\ \hline
 	
-		\caption{RF.33 - Comprobar espacio disponible en el servicio de almacenamiento}
+		\caption{RF.30 - Comprobar espacio disponible en el servicio de almacenamiento}
 	\end{longtable}
 	
-	% RF.34 - Obtener enlace de la evidencia
+	% RF.31 - Obtener enlace de la evidencia
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.34}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.31}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Obtener enlace de la evidencia}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la obtención del enlace de la evidencia almacenada en la nube}} \\ \hline
 	
-		\caption{RF.34 - Obtener enlace de la evidencia}
+		\caption{RF.31 - Obtener enlace de la evidencia}
 	\end{longtable}
 	
 	% NEW PAGE
  	\newpage
  	
-	% RF.35 - Comprobar disponibilidad del servidor que expone la red de negocio
+	% RF.32 - Comprobar disponibilidad del servidor que expone la red de negocio
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.35}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.32}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Comprobar disponibilidad del servidor que expone la red de negocio}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la comprobación de la disponibilidad del servidor que expone la red de negocio desplegada en la \Gls{blockchain-a} mediante una llamada ping}} \\ \hline
 
-		\caption{RF.35 - Comprobar disponibilidad del servidor que expone la red de negocio}
+		\caption{RF.32 - Comprobar disponibilidad del servidor que expone la red de negocio}
 	\end{longtable}
 	
-	% RF.36 - Introducir dirección y puerto del servidor que expone la red de negocio y poseedor de las evidencias registradas
+	% RF.33 - Introducir dirección y puerto del servidor que expone la red de negocio y poseedor de las evidencias registradas
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.36}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.33}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Introducir dirección y puerto del servidor que expone la red de negocio y poseedor de las evidencias registradas}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.1 - 03/01/2018 (rev. 13/02/2018)} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación de la \gls{url-a} (\gls{url}) y el puerto donde el servidor se encuentra desplegado y la información del poseedor de la evidencia -alerta- registrada, creando además un  participante en la \gls{blockchain-a} con esta información}} \\ \hline
 		
-		\caption{RF.36 - Introducir dirección y puerto del servidor que expone la red de negocio y poseedor de las evidencias registradas}
+		\caption{RF.33 - Introducir dirección y puerto del servidor que expone la red de negocio y poseedor de las evidencias registradas}
 	\end{longtable}
 	
-	% RF.37 - Securizar servidor que expone la red de negocio
+	% RF.34 - Securizar servidor que expone la red de negocio
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.37}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.34}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Securizar servidor que expone la red de negocio}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 13/02/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la securización del servidor que expone la red de negocio mediante un \gls{token} o api-key de acceso de tal forma que toda petición que no lo incluya será denegada}} \\ \hline
 	
-		\caption{RF.37 - Securizar servidor que expone la red de negocio}
+		\caption{RF.34 - Securizar servidor que expone la red de negocio}
 	\end{longtable}
 		
-	% RF.38 - Seleccionar dirección email donde enviar las notificaciones
+	% RF.35 - Seleccionar dirección email donde enviar las notificaciones
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.38}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.35}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar dirección \textit{email} donde enviar las notificaciones}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación de la dirección email destino donde enviar notificaciones de alerta o de error durante una medición}} \\ \hline
 	
-		\caption{RF.38 - Seleccionar dirección email donde enviar las notificaciones}
+		\caption{RF.35 - Seleccionar dirección email donde enviar las notificaciones}
 	\end{longtable}
 	
 	% NEW PAGE
  	\newpage
  	
-	% RF.39 - Seleccionar rango máximo del evento distancia
+	% RF.36 - Seleccionar rango máximo del evento distancia
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.39}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.36}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar rango máximo del evento distancia}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación de la distancia máxima a ser medida por el \gls{sensor} HC-SR04}} \\ \hline
 		
-		\caption{RF.39 - Seleccionar rango máximo del evento distancia}
+		\caption{RF.36 - Seleccionar rango máximo del evento distancia}
 	\end{longtable}
 	
-	% RF.40 - Seleccionar tiempo de grabación
+	% RF.37 - Seleccionar tiempo de grabación
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.40}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.37}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar tiempo de grabación}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del tiempo de grabación del entorno cuando el protocolo de alerta es activado}} \\ \hline
 		
-		\caption{RF.40 - Seleccionar tiempo de grabación}
+		\caption{RF.37 - Seleccionar tiempo de grabación}
 	\end{longtable}
 	 	
-	% RF.41 - Seleccionar frecuencia de medición de sucesos
+	% RF.38 - Seleccionar frecuencia de medición de sucesos
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.41}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.38}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar frecuencia de medición}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del tiempo de espera entre una medición de sucesos y la siguiente}} \\ \hline
 	
-		\caption{RF.41 - Seleccionar frecuencia de medición de sucesos}
+		\caption{RF.38 - Seleccionar frecuencia de medición de sucesos}
 	\end{longtable}
 	
-	% RF.42 - Seleccionar pin de datos del sensor DHT-11
+	% RF.39 - Seleccionar pin de datos del sensor DHT-11
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.42}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.39}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar pin de datos del \gls{sensor} DHT-11}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del pin de datos a utilizar en el \gls{sensor} DHT-11}} \\ \hline
 
-		\caption{RF.42 - Seleccionar pin de datos del sensor DHT-11}
+		\caption{RF.39 - Seleccionar pin de datos del sensor DHT-11}
 	\end{longtable}
 	
-	% RF.43 - Seleccionar pin Echo del sensor HC-SR04
+	% RF.40 - Seleccionar pin Echo del sensor HC-SR04
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.43}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.40}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar pin \textit{Echo} del \gls{sensor} HC-SR04}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del pin Echo a utilizar en el \gls{sensor} HC-SR04}} \\ \hline
 
-		\caption{RF.43 - Seleccionar pin Echo del sensor HC-SR04}
+		\caption{RF.40 - Seleccionar pin Echo del sensor HC-SR04}
 	\end{longtable}
 	
-	% RF.44 - Seleccionar pin Trigger del sensor HC-SR04
+	% NEW PAGE
+ 	\newpage
+	
+	% RF.41 - Seleccionar pin Trigger del sensor HC-SR04
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.44}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.41}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar pin \textit{Trigger} del \gls{sensor} HC-SR04}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del pin Trigger a utilizar en el \gls{sensor} HC-SR04}} \\ \hline
 
-		\caption{RF.44 - Seleccionar pin Trigger del sensor HC-SR04}
+		\caption{RF.41 - Seleccionar pin Trigger del sensor HC-SR04}
 	\end{longtable}
 	
-	% RF.45 - Seleccionar pin para el elemento LED
+	% RF.42 - Seleccionar pin para el elemento LED
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.45}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.42}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar pin para el elemento \gls{led-a} (\textit{\gls{led}})}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 03/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del pin a utilizar para el diodo emisor de luz (\gls{led-a}) de color rojo}} \\ \hline
 	
-		\caption{RF.45 - Seleccionar pin para el elemento LED (Light-Emitting Diode)}
+		\caption{RF.42 - Seleccionar pin para el elemento LED (Light-Emitting Diode)}
 	\end{longtable}
 	
-	% RF.46 - Seleccionar tipo de dispositivo I2C para el LCD del sensor DHT-11 
+	% RF.43 - Seleccionar tipo de dispositivo I2C para el LCD del sensor DHT-11 
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.46}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.43}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar tipo de dispositivo \gls{i2c-a} para el \gls{lcd-a} (\textit{\gls{lcd}}) del \gls{sensor} DHT-11}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del tipo de dispositivo \gls{i2c-a} -entre un rango predefinido- para el \gls{lcd-a} del \gls{sensor} DHT-11}} \\ \hline
 		
-		\caption{RF.46 - Seleccionar tipo de dispositivo I2C para el LCD (Liquid Crystal Display) del sensor DHT-11}
+		\caption{RF.43 - Seleccionar tipo de dispositivo I2C para el LCD (Liquid Crystal Display) del sensor DHT-11}
 	\end{longtable}
 	
-	% RF.47 - Dirección I2C del LCD enlazado al sensor DHT-11
+	% RF.44 - Dirección I2C del LCD enlazado al sensor DHT-11
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.47}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.44}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Dirección \gls{i2c-a} del \gls{lcd-a} enlazado al \gls{sensor} DHT-11}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la introducción de la dirección \gls{i2c-a} que posee el \gls{lcd-a} enlazado al \gls{sensor} DHT-11}} \\ \hline
 	
-		\caption{RF.47 - Dirección I2C del LCD enlazado al sensor DHT-11}
+		\caption{RF.44 - Dirección I2C del LCD enlazado al sensor DHT-11}
 	\end{longtable}
 	
 	% NEW PAGE
  	\newpage
  	
-	% RF.48 - Seleccionar tipo de dispositivo I2C para el LCD del sensor HC-SR04
+	% RF.45 - Seleccionar tipo de dispositivo I2C para el LCD del sensor HC-SR04
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.48}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.45}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar tipo de dispositivo \gls{i2c-a} para el \gls{lcd-a} del \gls{sensor} HC-SR04}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del tipo de dispositivo \gls{i2c-a} -entre un rango predefinido- para el \gls{lcd-a} del \gls{sensor} HC-SR04}} \\ \hline
 
-		\caption{RF.48 - Seleccionar tipo de dispositivo I2C para el LCD del sensor HC-SR04}
+		\caption{RF.45 - Seleccionar tipo de dispositivo I2C para el LCD del sensor HC-SR04}
 	\end{longtable}
 	
-	% RF.49 - Dirección I2C del LCD enlazado al sensor HC-SR04
+	% RF.46 - Dirección I2C del LCD enlazado al sensor HC-SR04
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.49}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.46}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Dirección \gls{i2c-a} del \gls{lcd-a} enlazado al \gls{sensor} HC-SR04}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la introducción de la dirección \gls{i2c-a} que posee el \gls{lcd-a} enlazado al \gls{sensor} HC-SR04}} \\ \hline
 	
-		\caption{RF.49 - Dirección I2C del LCD enlazado al sensor HC-SR04}
+		\caption{RF.46 - Dirección I2C del LCD enlazado al sensor HC-SR04}
 	\end{longtable}
 	
-	% RF.50 - Seleccionar umbral del evento humedad
+	% RF.47 - Seleccionar umbral del evento humedad
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.50}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.47}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar umbral del evento humedad}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del umbral límite a partir del cual se activa el protocolo de alerta para el evento humedad}} \\ \hline
 
-		\caption{RF.50 - Seleccionar umbral del evento humedad}
+		\caption{RF.47 - Seleccionar umbral del evento humedad}
 	\end{longtable}
 		
-	% RF.51 - Seleccionar umbral del evento temperatura
+	% RF.48 - Seleccionar umbral del evento temperatura
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.51}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.48}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar umbral del evento temperatura}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del umbral límite a partir del cual se activa el protocolo de alerta para el evento temperatura}} \\ \hline
 		
-		\caption{RF.51 - Seleccionar umbral del evento temperatura}
+		\caption{RF.48 - Seleccionar umbral del evento temperatura}
 	\end{longtable}
 	
 	% NEW PAGE
  	\newpage
  	
-	% RF.52 - Seleccionar umbral del evento distancia
+	% RF.49 - Seleccionar umbral del evento distancia
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.52}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.49}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar umbral del evento distancia}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del umbral límite a partir del cual se activa el protocolo de alerta para el evento distancia}} \\ \hline
 		
-		\caption{RF.52 - Seleccionar umbral del evento distancia}
+		\caption{RF.49 - Seleccionar umbral del evento distancia}
 	\end{longtable}
 	
-	% RF.53 - Mostrar información de valores establecidos
+	% RF.50 - Mostrar información de valores establecidos
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.53}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.50}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Mostrar información de valores establecidos}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la visualización de algunos parámetros establecidos para la monitorización de sucesos del entorno antes de que ésta comience}} \\ \hline
 
-		\caption{RF.53 - Mostrar información de valores establecidos}
+		\caption{RF.50 - Mostrar información de valores establecidos}
 	\end{longtable}
 	
-	% RF.54 - Fichero de log
+	% RF.51 - Fichero de log
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.54}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.51}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Fichero de \textit{log}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 13/02/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la redirección de la salida del terminal a un fichero de log el cual será generado en tiempo de ejecución junto con el directorio donde se almacenará}} \\ \hline
 		
-		\caption{RF.54 - Fichero de log}
+		\caption{RF.51 - Fichero de log}
 	\end{longtable}
 	
-	% RF.55 - Desencriptar evidencia
+	% RF.52 - Desencriptar evidencia
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.55}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.52}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Desencriptar evidencia}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la desencriptación de la evidencia previamente encriptada y firmada con \gls{gpg-a}}} \\ \hline
 		
-		\caption{RF.55 - Desencriptar evidencia}
+		\caption{RF.52 - Desencriptar evidencia}
 	\end{longtable}
 		
 	% NEW PAGE
  	\newpage
  	
-	% RF.56 - Verificar firma de la evidencia
+	% RF.53 - Verificar firma de la evidencia
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.56}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.53}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Verificar firma de la evidencia}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la verificación de la identidad del usuario que firmó la evidencia}} \\ \hline
 		
-		\caption{RF.56 - Verificar firma de la evidencia}
+		\caption{RF.53 - Verificar firma de la evidencia}
 	\end{longtable}
 	
-	% RF.57 - Comparar valores hash
+	% RF.54 - Comparar valores hash
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.57}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.54}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Comparar valores \textit{hash}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la comparación de valores \textit{hash} para verificar la integridad del contenido de la evidencia una vez desencriptada}} \\ \hline
 		
-		\caption{RF.57 - Comparar valores hash}
+		\caption{RF.54 - Comparar valores hash}
 	\end{longtable}
 	
-	% RF.58 - Seleccionar método para indicar el par de claves
+	% RF.55 - Seleccionar método para indicar el par de claves
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.58}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.55}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar método para indicar el par de claves}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.1 - 04/01/2018 (rev. 13/02/2018)} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la selección de un método para indicar el par de claves a utilizar (importación o indicación de la huella digital -\textit{fingerprint}-)}} \\ \hline
 
-		\caption{RF.58 - Seleccionar método para indicar el par de claves}
+		\caption{RF.55 - Seleccionar método para indicar el par de claves}
 	\end{longtable}
 	
-	% RF.59 - Importar par de claves
+	% RF.56 - Importar par de claves
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.59}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.56}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Importar par de claves}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la importación del par de claves (pública y privada) desde un fichero para efectuar la desencriptación de la evidencia y la verificación de la firma}} \\ \hline
 		
-		\caption{RF.59 - Importar par de claves}
+		\caption{RF.56 - Importar par de claves}
 	\end{longtable}
 	
 	% NEW PAGE
  	\newpage
  	
-	% RF.60 - Introducir huella digital (fingerprint)
+	% RF.57 - Introducir huella digital (fingerprint)
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.60}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.57}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Introducir huella digital}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación de la huella digital (\textit{fingerprint}) asociada a una clave existente a usar para efectuar la encriptación/desencriptación de la evidencia y el firmado y verificación}} \\ \hline
 	
-		\caption{RF.60 - Introducir huella digital}
+		\caption{RF.57 - Introducir huella digital}
 	\end{longtable}
 	
-	% RF.61 - Introducir contraseña (passphrase) de la clave privada
+	% RF.58 - Introducir contraseña (passphrase) de la clave privada
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.61}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.58}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Introducir contraseña de la clave privada}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación de la contraseña (\textit{passphrase}) de protección de la clave privada para poder efectuar la desencriptación y firmado de la evidencia}} \\ \hline
 		
-		\caption{RF.61 - Introducir contraseña de la clave privada}
+		\caption{RF.58 - Introducir contraseña de la clave privada}
 	\end{longtable}
 	
-	% RF.62 - Seleccionar evidencia
+	% RF.59 - Seleccionar evidencia
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.62}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.59}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar evidencia}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación de la evidencia a desencriptar y verificar la firma}} \\ \hline
 		
-		\caption{RF.62 - Seleccionar evidencia}
+		\caption{RF.59 - Seleccionar evidencia}
 	\end{longtable}
 	
-	% RF.63 - Descargar evidencia
+	% RF.60 - Descargar evidencia
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.63}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.60}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Descargar evidencia}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la descarga de la evidencia almacenada en la nube}} \\ \hline
 		
-		\caption{RF.63 - Descargar evidencia}
+		\caption{RF.60 - Descargar evidencia}
 	\end{longtable}
 	
 	% NEW PAGE
 	\newpage
 	
-	% RF.64 - Seleccionar método para indicar la evidencia
+	% RF.61 - Seleccionar método para indicar la evidencia
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.64}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.61}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar método para indicar la evidencia}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la selección de un método para indicar la evidencia a utilizar (evidencia en el sistema local o descarga)}} \\ \hline
 
-		\caption{RF.64 - Seleccionar método para indicar la evidencia}
+		\caption{RF.61 - Seleccionar método para indicar la evidencia}
 	\end{longtable}
 	
-	% RF.65 - Seleccionar directorio destino para la desencriptación
+	% RF.62 - Seleccionar directorio destino para la desencriptación
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.65}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.62}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar directorio destino para la desencriptación}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación del directorio donde la evidencia desencriptada será almacenada}} \\ \hline
 		
-		\caption{RF.65 - Seleccionar directorio destino para la desencriptación}
+		\caption{RF.62 - Seleccionar directorio destino para la desencriptación}
 	\end{longtable}
 	
-	% RF.66 - Introducir valor hash
+	% RF.63 - Introducir valor hash
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.66}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.63}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Introducir valor \textit{hash}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la indicación de valor \textit{hash} para poder efectuar la verificación de integridad de la evidencia desencriptada}} \\ \hline
 		
-		\caption{RF.66 - Introducir valor hash}
+		\caption{RF.63 - Introducir valor hash}
 	\end{longtable}
 	
-	% RF.67 - Seleccionar directorio GPG
+	% RF.64 - Seleccionar directorio GPG
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.67}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.64}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Seleccionar directorio \gls{gpg-a}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la selección del directorio donde \gls{gpg-a} generará su almacén}} \\ \hline
 		
-		\caption{RF.67 - Seleccionar directorio GPG}
+		\caption{RF.64 - Seleccionar directorio GPG}
 	\end{longtable}
 		
-	% RF.68 - Mostrar ayuda
+	% RF.65 - Mostrar ayuda
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.68}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.65}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Mostrar ayuda}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la visualización de la ayuda del componente}} \\ \hline
 		
-		\caption{RF.68 - Mostrar ayuda}
+		\caption{RF.65 - Mostrar ayuda}
 	\end{longtable}
 	
-	% RF.69 - Mostrar información sobre la ejecución por consola
+	% NEW PAGE
+ 	\newpage
+ 	
+	% RF.66 - Mostrar información sobre la ejecución por consola
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.69}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.66}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Mostrar información sobre la ejecución por consola}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la visualización en el terminal de las acciones ejecutadas}} \\ \hline
 		
-		\caption{RF.69 - Mostrar información sobre la ejecución por consola}
+		\caption{RF.66 - Mostrar información sobre la ejecución por consola}
 	\end{longtable}
 	
-	% RF.70 - Mostrar más información sobre la ejecución
+	% RF.67 - Mostrar más información sobre la ejecución
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.70}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.67}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Mostrar más información sobre la ejecución}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{en algunos componentes mostrar más información sobre las acciones ejecutadas}} \\ \hline
 	
-		\caption{RF.70 - Mostrar más información sobre la ejecución}
+		\caption{RF.67 - Mostrar más información sobre la ejecución}
 	\end{longtable}
 	
-	% RF.71 - Mostrar información a través de los LCDs
+	% RF.68 - Mostrar información a través de los LCDs
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.71}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.68}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Mostrar información a través de los \glspl{lcd-a}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la visualización de determinada información sobre la ejecución por medio de los \glspl{lcd-a} enlazados a los sensores}} \\ \hline
 	
-		\caption{RF.71 - Mostrar información a través de los LCDs}
+		\caption{RF.68 - Mostrar información a través de los LCDs}
 	\end{longtable}
  	
-	% RF.72 - Activar LED
+	% RF.69 - Activar LED
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.72}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.69}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Activar \gls{led-a}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 13/02/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la activación del \gls{led-a} rojo como señal visual de que un suceso anómalo se ha producido y se ha activado el protocolo de alerta}} \\ \hline
 		
-		\caption{RF.72 - Activar LED}
+		\caption{RF.69 - Activar LED}
 	\end{longtable}
 	
-	% RF.73 - Valores por defecto
+	% RF.70 - Valores por defecto
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.73}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.70}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Valores por defecto}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{usar valores por defecto pre-configurados en caso de no parametrizar la ejecución}} \\ \hline
 		
-		\caption{RF.73 - Valores por defecto}
+		\caption{RF.70 - Valores por defecto}
 	\end{longtable}
 	
-	% RF.74 - Inicializar componentes y servicios
+	% NEW PAGE
+ 	\newpage
+ 	
+	% RF.71 - Inicializar componentes y servicios
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.74}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.71}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Inicializar componentes y servicios}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la inicialización de los componentes hardware, directorios locales, utilidades y servicios a utilizar para un correcto funcionamiento posterior}} \\ \hline
 
-		\caption{RF.74 - Inicializar componentes y servicios}
+		\caption{RF.71 - Inicializar componentes y servicios}
 	\end{longtable}
 	
-	% RF.75 - Finalizar ordenadamente componentes y servicios
+	% RF.72 - Finalizar ordenadamente componentes y servicios
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.75}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.72}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Finalizar ordenadamente componentes y servicios}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la finalización ordenada de los componentes hardware, utilidades y servicios a utilizar mediante la liberación de las instancias generadas}} \\ \hline
 
-		\caption{RF.75 - Finalizar ordenadamente componentes y servicios}
+		\caption{RF.72 - Finalizar ordenadamente componentes y servicios}
 	\end{longtable}
 	 	
-	% RF.76 - Gestionar errores
+	% RF.73- Gestionar errores
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.76}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.73}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Gestionar errores}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema permitirá \textit{la gestión de cualquier error que se produzca durante la ejecución informando al usuario de tal suceso}} \\ \hline
 	
-		\caption{RF.76 - Gestionar errores}
+		\caption{RF.73 - Gestionar errores}
 	\end{longtable}
 	
-	% RF.77 - Identificación de usuario
+	% RF.74 - Identificación de usuario
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.77}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.74}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Identificación de usuario}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{iniciar sesión a un usuario (normal o administrador) cuando se haya autentificado correctamente a través de la introducción de las credenciales}} \\ \hline
 
-		\caption{RF.77 - Identificación de usuario}
+		\caption{RF.74 - Identificación de usuario}
 	\end{longtable}
 	
 	% NEW PAGE
  	\newpage
  	
-	% RF.78 - Activación de la opción Recordarme
+	% RF.75 - Activación de la opción Recordarme
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.78}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.75}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Activación de la opción Recordarme}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario (normal o administrador) activar la autenticación automática}} \\ \hline
 		
-		\caption{RF.78 - Activación de la opción Recordarme}
+		\caption{RF.75 - Activación de la opción Recordarme}
 	\end{longtable}
-	
-	% RF.79 - Autenticación a través de la opción Recordarme
+
+	% RF.76 - Autenticación a través de la opción Recordarme
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.79}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.76}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Autenticación a través de la opción Recordarme}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{la autenticación automática cuando esté seleccionada la opción Recordarme}} \\ \hline
 		
-		\caption{RF.79 - Autenticación a través de la opción Recordarme}
+		\caption{RF.76 - Autenticación a través de la opción Recordarme}
 	\end{longtable}
  	
-	% RF.80 - Información cuando el estado de cuenta deniegue el acceso al iniciar sesión
+	% RF.77 - Información cuando el estado de cuenta deniegue el acceso al iniciar sesión
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.80}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.77}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Información cuando el estado de cuenta deniegue el acceso al iniciar sesión}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario conocer la información del estado de la cuenta cuando el sistema no le permita el acceso al intentar iniciar sesión}} \\ \hline
 
-		\caption{RF.80 - Información cuando el estado de cuenta deniegue el acceso al iniciar sesión}
+		\caption{RF.77 - Información cuando el estado de cuenta deniegue el acceso al iniciar sesión}
 	\end{longtable}
 	
-	% RF.81 - Restablecer contraseña
+	% RF.78 - Restablecer contraseña
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.81}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.78}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Restablecer contraseña}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{a un usuario (normal o administrador) restablecer su contraseña}} \\ \hline
 
-		\caption{RF.81 - Restablecer contraseña}
+		\caption{RF.78 - Restablecer contraseña}
 	\end{longtable}
 	
 	% NEW PAGE
  	\newpage
  	
-	% RF.82 - Búsqueda rápida de usuario normal
+	% RF.79 - Búsqueda rápida de usuario normal
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.82}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.79}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Búsqueda rápida de usuario normal}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador realizar una búsqueda rápida de un usuario normal}} \\ \hline
 		
-		\caption{RF.82 - Búsqueda rápida de usuario normal}
+		\caption{RF.79 - Búsqueda rápida de usuario normal}
 	\end{longtable}
 	
-	% RF.83 - Gestionar usuario administrador
+	% RF.80 - Gestionar usuario administrador
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.83}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.80}}} \\ \hline
 		
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textsf{\textbf{Nombre}}} & \multicolumn{1}{p{14cm}|}{\textbf{Gestionar usuario administrador {\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador realizar la gestión de usuarios administradores}} \\ \hline
 	
-		\caption{RF.83 - Gestionar usuario administrador}
+		\caption{RF.80 - Gestionar usuario administrador}
 	\end{longtable}
 	
-	% RF.84 - Consultar lista de usuarios administradores
+	% RF.81 - Consultar lista de usuarios administradores
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.84}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.81}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Consultar lista de usuarios administradores {\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador consultar la lista de usuarios administradores registrados en el sistema}} \\ \hline
 		
-		\caption{RF.84 - Consultar lista de usuarios administradores}
+		\caption{RF.81 - Consultar lista de usuarios administradores}
 	\end{longtable}
 	
-	% RF.85 - Buscar usuario administrador
+	% RF.82 - Buscar usuario administrador
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.85}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.82}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Buscar usuario administrador {\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador realizar una búsqueda sobre el listado de usuarios administradores existentes en el sistema}} \\ \hline
 	
-		\caption{RF.85 - Buscar usuario administrador}
+		\caption{RF.82 - Buscar usuario administrador}
 	\end{longtable}
 	
 	% NEW PAGE
  	\newpage
  	
-	% RF.86 - Ordenación de usuarios administradores
+	% RF.83 - Ordenación de usuarios administradores
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.86}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.83}}} \\ \hline
 
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Ordenación de usuarios administradores {\color{black!40!blue}*}}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Ordenar usuarios administradores {\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 13/02/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador ordenar de manera ascendente o descendente los usuarios administradores según el campo seleccionado}} \\ \hline
 		
-		\caption{RF.86 - Ordenación de usuarios administradores}
+		\caption{RF.83 - Ordenación de usuarios administradores}
 	\end{longtable}
  	
-	% RF.87 - Filtrar usuarios administradores
+	% RF.84 - Filtrar usuarios administradores
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.87}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.84}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Filtrar usuarios administradores {\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 13/02/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador filtrar el número de usuarios administradores a mostrar}} \\ \hline
 		
-		\caption{RF.87 - Filtrar usuarios administradores}
+		\caption{RF.84 - Filtrar usuarios administradores}
 	\end{longtable}
 
-	% RF.88 - Visualizar y restablecer campos en la lista de usuarios administradores
+	% RF.85 - Visualizar y restablecer campos en la lista de usuarios administradores
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.88}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.85}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Visualizar y restablecer campos en la lista de usuarios administradores {\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 13/02/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador visualizar en el listado de los usuarios administradores los campos deseados de éste a través de la activación de las columnas correspondientes y restablecer la visualización de los campos marcados como principales}} \\ \hline
 
-		\caption{RF.88 - Visualizar y restablecer campos en la lista de usuarios administradores}
+		\caption{RF.85 - Visualizar y restablecer campos en la lista de usuarios administradores}
 	\end{longtable}
 	
-	% RF.89 - Exportar usuarios administradores
+	% RF.86 - Exportar usuarios administradores
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.89}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.86}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Exportar usuarios administradores {\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 13/02/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador exportar en formato PDF y CSV los usuarios administradores del sistema}} \\ \hline
 		
-		\caption{RF.89 - Exportar usuarios administradores}
+		\caption{RF.86 - Exportar usuarios administradores}
 	\end{longtable}
 	
 	% NEW PAGE
  	\newpage
  	
-	% RF.90 - Imprimir usuarios administradores
+	% RF.87 - Imprimir usuarios administradores
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.90}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.87}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Imprimir usuarios administradores {\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 13/02/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador imprimir el listado de usuarios administradores del sistema}} \\ \hline
 
-		\caption{RF.90 - Imprimir usuarios administradores}
+		\caption{RF.87 - Imprimir usuarios administradores}
 	\end{longtable}
 	
-	% RF.91 - Copiar usuarios administradores
+	% RF.88 - Copiar usuarios administradores
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.91}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.88}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Copiar usuarios administradores {\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador copiar al portapapeles el listado de usuarios administradores del sistema}} \\ \hline
 		
-		\caption{RF.91 - Copiar usuarios administradores}
+		\caption{RF.88 - Copiar usuarios administradores}
 	\end{longtable}
 	
-	% RF.92 - Crear usuario administrador
+	% RF.89 - Crear usuario administrador
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.92}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.89}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Crear usuario administrador {\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador la creación de nuevos administradores en el sistema}} \\ \hline
 
-		\caption{RF.92 - Crear usuario administrador}
+		\caption{RF.89 - Crear usuario administrador}
 	\end{longtable}
 	
-	% RF.93 - Editar usuario administrador
+	% RF.90 - Editar usuario administrador
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.93}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.90}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Editar usuario administrador {\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador editar los usuarios administradores existentes en el sistema}} \\ \hline
 
-		\caption{RF.93 - Editar usuario administrador}
+		\caption{RF.90 - Editar usuario administrador}
 	\end{longtable}
 	
 	% NEW PAGE
  	\newpage
  	
-	% RF.94 - Eliminar cuenta de usuario administrador
+	% RF.91 - Eliminar cuenta de usuario administrador
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.94}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.91}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Eliminar cuenta de usuario administrador {\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador eliminar una cuenta de usuario administrador}} \\ \hline
 
-		\caption{RF.94 - Eliminar cuenta de usuario administrador}
+		\caption{RF.91 - Eliminar cuenta de usuario administrador}
 	\end{longtable}
-	
-	% RF.95 - Importar usuarios administradores
+		
+	% RF.92 - Bloquear, inhabilitar, expirar cuenta o contraseña de usuario administrador
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.95}}} \\ \hline
-
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Importar usuarios administradores {\color{black!40!blue}*}}} \\ \hline
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.1 - 04/01/2018 (rev. 13/02/2018)} \\ \hline
-
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador importar usuarios administradores desde un fichero}} \\ \hline
-	
-		\caption{RF.95 - Importar usuarios administradores}
-	\end{longtable}
-	
-	% RF.96 - Bloquear, inhabilitar, expirar cuenta o contraseña de usuario administrador
-	\begin{longtable}{m{5cm}|m{5cm}|}
-		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.96}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.92}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Bloquear, inhabilitar, expirar cuenta o contraseña de usuario administrador {\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador bloquear, inhabilitar, expirar cualquier cuenta o contraseña de un usuario administrador}} \\ \hline
 
-		\caption{RF.96 - Bloquear, inhabilitar, expirar cuenta o contraseña de usuario administrador}
+		\caption{RF.92 - Bloquear, inhabilitar, expirar cuenta o contraseña de usuario administrador}
 	\end{longtable}
 	
-	% RF.97 - Activar cuenta de usuario administrador
+	% RF.93 - Activar cuenta de usuario administrador
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.97}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.93}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Activar cuenta de usuario administrador {\color{black!40!blue}*}}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador activar cualquier cuenta de un usuario administrador previamente bloqueada, inactiva o expirada}} \\ \hline
 	
-		\caption{RF.97 - Activar cuenta de usuario administrador}
+		\caption{RF.93 - Activar cuenta de usuario administrador}
 	\end{longtable}
 	
-	% NEW PAGE
- 	\newpage
- 	
-	% RF.98 - Consultar estadísticas
+	% RF.94 - Consultar estadísticas
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.98}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.94}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Consultar estadísticas}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador visualizar determinadas estadísticas}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador visualizar estadísticas globales y al usuario normal visualizar sus propias estadísticas}} \\ \hline
 		
-		\caption{RF.98 - Consultar estadísticas}
+		\caption{RF.94 - Consultar estadísticas}
 	\end{longtable}
 	 	
-	% RF.99 - Consultar perfil personal
+ 	% NEW PAGE
+ 	\newpage
+ 	
+	% RF.95 - Consultar perfil personal
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.99}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.95}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Consultar perfil personal}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario normal consultar los datos de su perfil personal}} \\ \hline
 
-		\caption{RF.99 - Consultar perfil personal}
+		\caption{RF.95 - Consultar perfil personal}
 	\end{longtable}
 	
-	% RF.100 - Editar perfil personal
+	% RF.96 - Editar perfil personal
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.100}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.96}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Editar perfil personal}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.1 - 04/01/2018 (rev. 13/02/2018)} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario normal editar los datos de su perfil personal}} \\ \hline
 
-		\caption{RF.100 - Editar perfil personal}
+		\caption{RF.96 - Editar perfil personal}
 	\end{longtable}
 	
-	% RF.101 - Visualizar información sobre las mediciones y sucesos anómalos
+	% RF.97 - Visualizar información sobre las mediciones y sucesos anómalos
 	\begin{longtable}{m{5cm}|m{5cm}|}
 		\hline
-		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.101}}} \\ \hline
+		\multicolumn{2}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textsc{RF.97}}} \\ \hline
 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Nombre}} & \multicolumn{1}{p{14cm}|}{\textbf{Visualizar información sobre las mediciones y sucesos anómalos}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{1}{p{14cm}|}{1.0 - 04/01/2018} \\ \hline
 
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{tanto al usuario administrador como al usuario normal visualizar la información completa y filtrada en tiempo real sobre las mediciones tomadas y los sucesos anómalos (alertas) producidos}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{1}{p{14cm}|}{El sistema web permitirá \textit{al usuario administrador visualizar la información completa y filtrada en tiempo real sobre las mediciones tomadas y los sucesos anómalos (alertas) producidos. Además, permitirá al usuario normal visualizar la información monitorizada de la que sea poseedor}} \\ \hline
 		
-		\caption{RF.101 - Visualizar información sobre las mediciones y sucesos anómalos}
+		\caption{RF.97 - Visualizar información sobre las mediciones y sucesos anómalos}
 	\end{longtable}
 	
 	% Subsection
@@ -2731,11 +2696,11 @@ breaklines=true,
 	
 	También denominados cualidades del sistema, especifican las restricciones que afectan a la funcionalidad del sistema, es decir, cómo el sistema debe ser y comportarse. \\
 	
+	\textbf{¡Importante! -} Al igual que en los requisitos funcionales, en los requisitos no funcionales solamente se especificarán los campos de interés con la salvedad del primero que contiene la especificación completa. \\
+	
 	% NEW PAGE
  	\newpage
  	
-	\textbf{¡Importante! -} Al igual que en los requisitos funcionales, en los requisitos no funcionales solamente se especificarán los campos de interés con la salvedad del primero que contiene la especificación completa. \\
-	
 	%% Facilidad de uso
 	% RNF.1 - Interfaz de usuario
 	\begin{longtable}{m{5cm}|m{5cm}|}
@@ -3676,7 +3641,7 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Pre-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor posee el \gls{prototipo} \textit{hardware} correctamente conectado y configurado} \\ \hline
 			
 		% Sequence
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Secuencia normal}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
+		{\cellcolor{Gainsboro}\textbf{Secuencia}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 1 & El caso de uso comienza cuando cualquiera de los actores ejecuta este componente \\ \cline{2-3}  
 		\cellcolor{Gainsboro} & 2 & El componente realiza una serie de comprobaciones iniciales: usuario superprivilegiado, plataforma \gls{gnulinux}, dispositivo \gls{raspberry-a}, conexión de red y concurrencia \\ \cline{2-3}  
 		\cellcolor{Gainsboro} & 3 & El componente inicializa el \textit{logger} \\ \cline{2-3}  
@@ -3686,14 +3651,14 @@ breaklines=true,
 		\cellcolor{Gainsboro} & 7 & El componente inicializa cada utilidad y servicio \\ \cline{2-3}  
 		\cellcolor{Gainsboro} & 8 & El componente monitoriza los sucesos del entorno mediante la obtención de una medición, mostrando la información por el terminal y los \glspl{lcd-a} \\ \cline{2-3}  
 		\cellcolor{Gainsboro} & 9 & El componente comprueba si la medición actual representa un suceso anómalo. En caso afirmativo, activa el protocolo de alerta \\ \cline{2-3}  
-		\cellcolor{Gainsboro} & 10 & El componente efectúa las acciones del protocolo de alerta: capturar evidencia (vídeo), calcular código \textit{hash}, encriptar y firmar la evidencia, almacenar la evidencia en la nube, almacenar medición en la \gls{bbdd-a}, enviar el suceso a la plataforma \gls{iot-a}, registrar la alerta en la \gls{blockchain-a} y notificar por \textit{email} en caso de que dicha opción esté activa \\ \cline{2-3}  	
+		\cellcolor{Gainsboro} & 10 & El componente efectúa las acciones del protocolo de alerta: capturar evidencia (vídeo), calcular código \textit{hash}, encriptar y firmar la evidencia, almacenar la evidencia en la nube, almacenar medición en la \gls{bbdd-a}, registrar la alerta en la \gls{blockchain-a} y notificar por \textit{email} en caso de que dicha opción esté activa \\ \cline{2-3}  	
 		\cellcolor{Gainsboro} & 11 & El caso de uso vuelve al paso 8 \\ \hline
 		
 		% Alternative flow
-		\multirow{0}{3.2cm}{\cellcolor{Gainsboro}\textbf{Flujo alternativo}} & \textbf{Paso} & \textbf{Acción}  	\\ \cline{2-3}
+		{\cellcolor{Gainsboro}\textbf{Flujo alternativo}} & \textbf{Paso} & \textbf{Acción}  	\\ \cline{2-3}
 		\cellcolor{Gainsboro} & 4.1 & El componente comprueba las opciones introducidas detectando que el usuario desea mostrar la ayuda. En dicho caso, muestra la sección informativa, y a continuación el caso de uso finaliza \\ \cline{2-3}
  		\cellcolor{Gainsboro} & 9.1 & El componente comprueba si la medición actual representa un suceso anómalo. En caso negativo, no activa ningún protocolo \\ \cline{2-3} 
-		\cellcolor{Gainsboro} & 9.1.1 & El componente efectúa las acciones de una medición normal: almacenar medición en la \gls{bbdd-a}, enviar el suceso a la plataforma \gls{iot-a} \\ \cline{2-3}
+		\cellcolor{Gainsboro} & 9.1.1 & El componente efectúa la acción de una medición normal: almacenar medición en la \gls{bbdd-a} \\ \cline{2-3}
 		\cellcolor{Gainsboro} & 9.1.2 & El caso de uso vuelve al paso 8 \\ \cline{2-3}
 		\cellcolor{Gainsboro} & 9.2 & El componente comprueba si la medición actual es errónea. En caso afirmativo, no muestra ningún valor por el terminal ni los \glspl{lcd-a} y a continuación, el caso de uso vuelve al paso 8 \\ \hline
 
@@ -3701,7 +3666,7 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Post-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor ha monitorizado el entorno \gls{iot-a} registrando tanto los sucesos normales como aquellos considerados anómalos} \\ \hline
 			
 		% Exceptions
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3}
+		{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3}
 		\cellcolor{Gainsboro} & 2 & Si alguna de las condiciones iniciales no se cumple, el componente notifica al usuario por el terminal y a continuación, el caso de uso finaliza \\ \cline{2-3}
 		\cellcolor{Gainsboro} & 3 & Si el componente obtiene algún error durante la creación del directorio donde se almacenará el fichero de \textit{log}, se notifica al usuario por el terminal y a continuación, el caso de uso finaliza \\ \cline{2-3}
 		\cellcolor{Gainsboro} & 4 & Si el número de opciones introducido es erróneo, alguna opción presenta un valor incorrecto o no es reconocida, el componente notifica al usuario por el terminal y a continuación, el caso de uso finaliza \\ \cline{2-3}
@@ -3709,7 +3674,7 @@ breaklines=true,
 		\cellcolor{Gainsboro} & 9.1.1 & Si el componente obtiene algún error durante la ejecución de alguna acción tras una medición normal, se notifica al usuario por el terminal, se envía un \textit{email} del error en caso de estar activa dicha opción y a continuación, el caso de uso finaliza \\ \cline{2-3}
 		\cellcolor{Gainsboro} & 10 & Si el componente obtiene algún error durante la ejecución de alguna acción del protocolo de alerta, se notifica al usuario por el terminal, se envía un \textit{email} del error en caso de estar activa dicha opción y a continuación, el caso de uso finaliza \\ \hline
 				
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.6, RF.7, RF.8, RF.9, RF.10, RF.11, RF.12, RF.13, RF.14, RF.15, RF.16, RF.17, RF.18, RF.19, RF.20, RF.21, RF.22, RF.23, RF.24, RF.25, RF.26, RF.27, RF.28, RF.29, RF.30, RF.31, RF.32, RF.33, RF.34, RF.35, RF.36, RF.37, RF.38, RF.39, RF.40, RF.41, RF.42, RF.43, RF.44, RF.45, RF.46, RF.47, RF.48, RF.49, RF.50, RF.51, RF.52, RF.53, RF.54, RF.60, RF.61, RF.67, RF.68, RF.69, RF.71, RF.72, RF.73, RF.74, RF.75, RF.76} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.6, RF.7, RF.8, RF.9, RF.10, RF.11, RF.12, RF.13, RF.14, RF.15, RF.16, RF.17, RF.18, RF.19, RF.20, RF.21, RF.22, RF.23, RF.24, RF.25, RF.26, RF.27, RF.28, RF.29, RF.30, RF.31, RF.32, RF.33, RF.34, RF.35, RF.36, RF.37, RF.38, RF.39, RF.40, RF.41, RF.42, RF.43, RF.44, RF.45, RF.46, RF.47, RF.48, RF.49, RF.50, RF.51, RF.57, RF.58, RF.64, RF.65, RF.66, RF.68, RF.69, RF.70, RF.71, RF.72, RF.73} \\ \hline
 		\caption{Descripción del caso de uso - Monitorizar sucesos del entorno}
 	\end{longtable}
 		
@@ -3741,7 +3706,7 @@ breaklines=true,
 		\cellcolor{Gainsboro} & 13 & El componente calcula el código \textit{hash} de la evidencia recién desencriptada y lo compara con el valor \textit{hash} introducido \\ \hline
 
 		% Alternative flow
-		\multirow{0}{3.2cm}{\cellcolor{Gainsboro}\textbf{Flujo alternativo}} & \textbf{Paso} & \textbf{Acción} \\ \cline{2-3} 
+		{\cellcolor{Gainsboro}\textbf{Flujo alternativo}} & \textbf{Paso} & \textbf{Acción} \\ \cline{2-3} 
 		
 		\cellcolor{Gainsboro} & 3.1 & El componente comprueba las opciones introducidas detectando que el usuario desea mostrar la ayuda. En dicho caso, muestra la sección informativa, y a continuación el caso de uso finaliza \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 7.1 & El componente comprueba que la huella digital o \textit{fingerprint} introducida se relacione con el de alguna clave existente en el almacén de claves \\ \cline{2-3} 
@@ -3751,7 +3716,7 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Post-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor ha desencriptado la evidencia y ha comprobado la firma y la integridad del contenido} \\ \hline
 			
 		% Exceptions
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3}
+		{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3}
 		\cellcolor{Gainsboro} & 2 & El componente detecta que la ejecución fue con un usuario normal, por lo que notifica al usuario del error, y a continuación el caso de uso finaliza \\ \cline{2-3}
 		\cellcolor{Gainsboro} & 3 & Si el número de opciones introducido es erróneo, no se ha introducido alguna opción obligatoria, alguna opción presenta un valor incorrecto o no es reconocida, el componente notifica al usuario por el terminal y a continuación, el caso de uso finaliza \\ \cline{2-3}
 		\cellcolor{Gainsboro} & 5 & Si el componente verifica que algún fichero o directorio no existe o no es del tipo correcto, notifica al usuario por el terminal, y a continuación el caso de uso finaliza \\ \cline{2-3}
@@ -3762,7 +3727,7 @@ breaklines=true,
 		\cellcolor{Gainsboro} & 11 & Si el componente obtiene algún error durante la desencriptación, notifica al usuario por el terminal, y a continuación el caso de uso finaliza \\ \cline{2-3}
 		\cellcolor{Gainsboro} & 13 & Si el componente obtiene algún error durante el cálculo del valor \textit{hash}, notifica al usuario por el terminal, y a continuación el caso de uso finaliza \\ \hline
 				
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.55, RF.56, RF.57, RF.58, RF.59, RF.60, RF.61, RF.62, RF.63, RF.64, RF.65, RF.66, RF.67, RF.68, RF.69, RF.73, RF.74, RF.76} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.52, RF.53, RF.54, RF.55, RF.56, RF.57, RF.58, RF.59, RF.60, RF.61, RF.62, RF.63, RF.64, RF.65, RF.66, RF.70, RF.71, RF.73} \\ \hline
 		\caption{Descripción del caso de uso - Desencriptar evidencia}
 	\end{longtable}
 	
@@ -3781,12 +3746,12 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Pre-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor Usuario administrador (ACT-0001) o  actor Usuario normal (ACT-0002) se encuentra en la página de inicio del sistema web} \\ \hline
 			
 		% Sequence
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Secuencia normal}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
+		{\cellcolor{Gainsboro}\textbf{Secuencia}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 1 & El caso de uso comienza cuando un actor Usuario administrador (ACT-0001) o actor Usuario normal (ACT-0002) introduce sus credenciales para la autenticación  		\\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 2 & El sistema web comprueba que los datos introducidos sean correctos. En caso afirmativo, crea la sesión de usuario y le redirige a la página de usuario dentro del sistema, si éste posee rol usuario normal 		\\ \hline
 
 		% Alternative flow
-		\multirow{0}{3.2cm}{\cellcolor{Gainsboro}\textbf{Flujo alternativo}} & \textbf{Paso} & \textbf{Acción}  	\\ \cline{2-3} 
+		{\cellcolor{Gainsboro}\textbf{Flujo alternativo}} & \textbf{Paso} & \textbf{Acción}  	\\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 1.1 & El sistema web comprueba si existe la \textit{\gls{cookie}} referente a la funcionalidad de \textit{Recordarme}. En caso afirmativo, el sistema web inicia sesión automáticamente al usuario y le redirige a la página de usuario dentro del sistema o al panel de control según su rol. A continuación, el caso de uso finaliza \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 2.1 & El sistema web comprueba que los datos introducidos sean correctos. En caso afirmativo, crea la sesión de usuario y le redirige al panel de control, si éste posee rol usuario administrador \\ \hline
 
@@ -3794,11 +3759,11 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Post-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor Usuario administrador (ACT-0001) o  actor Usuario normal (ACT-0002) ha iniciado sesión en el sistema web y se encuentra dentro de él ya sea en el panel de control o en la página de usuario según el rol de éste} \\ \hline
 			
 		% Exceptions
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3}
+		{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3}
 		\cellcolor{Gainsboro} & 1.1 & Si la \textit{\gls{cookie}} referente a la funcionalidad de \textit{Recordarme} no existe, el sistema web redirige a la página de inicio, y a continuación el caso de uso finaliza \\ \cline{2-3}
-		\cellcolor{Gainsboro} & 2, 2.1 & Si el sistema web obtiene algún error al comprobar los datos introducidos (datos erróneos, usuario no registrado, cuenta bloqueada, cuenta sin activar, cuenta o contraseña expirada), muestra un mensaje de error, y a continuación el caso de uso finaliza. En el caso de que sea el 5 intento fallido, también se realiza la acción de bloquear la cuenta de usuario \\ \hline
+		\cellcolor{Gainsboro} & 2, 2.1 & Si el sistema web obtiene algún error al comprobar los datos introducidos (datos erróneos, usuario no registrado, cuenta bloqueada, cuenta sin activar, cuenta o contraseña expirada), muestra un mensaje de error, y a continuación el caso de uso finaliza. \\ \hline
 				
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.77, RF.78, RF.79, RF.80} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.74, RF.75, RF.76, RF.77} \\ \hline
 		\caption{Descripción del caso de uso - Iniciar sesión}
 	\end{longtable}
 	
@@ -3817,7 +3782,7 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Pre-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor Usuario administrador (ACT-0001) o actor Usuario normal (ACT-0002) se encuentra en la página de inicio del sistema web} \\ \hline
 			
 		% Sequence
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Secuencia normal}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
+		{\cellcolor{Gainsboro}\textbf{Secuencia}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 1 & El caso de uso comienza cuando un actor Usuario administrador (ACT-0001) o actor Usuario normal (ACT-0002) selecciona la opción para restablecer la contraseña 		\\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 2 & El sistema web muestra el formulario a rellenar \\ \cline{2-3}  
 		\cellcolor{Gainsboro} & 3 & El actor Usuario administrador (ACT-0001) o actor Usuario normal (ACT-0002) introduce su \textit{email} asociado a su cuenta existente \\ \cline{2-3} 
@@ -3829,14 +3794,14 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Post-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor Usuario administrador (ACT-0001) o  actor Usuario normal (ACT-0002) ha modificado su contraseña} \\ \hline
 					
 		% Exceptions
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción} \\ \cline{2-3} 
+		{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción} \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 3 & Si el actor Usuario administrador (ACT-0001) o actor Usuario normal (ACT-0002) cancela la introducción del \textit{email} en el formulario, el sistema web no realiza ninguna acción, y a continuación el caso de uso finaliza		\\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 4 & Si el sistema web obtiene algún error al comprobar el \textit{email} introducido (dirección de correo inexistente), muestra un mensaje, y a continuación el caso de uso vuelve al paso 2	\\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 4 & Si el sistema web obtiene algún error al enviar el \textit{email}, muestra un mensaje de error y el caso de uso finaliza			\\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 6 & Si el sistema web obtiene algún error al comprobar el \textit{\gls{token}} de seguridad (expirado, ya usado o de distinto tipo) de restablecimiento de contraseña, muestra un mensaje de error y el caso de uso finaliza	\\ \cline{2-3}
 		\cellcolor{Gainsboro} & 6 & Si el sistema web obtiene algún error al comprobar la nueva contraseña (no cumple con un patrón), muestra un mensaje de error, y a continuación el caso de uso vuelve al paso 5	\\ \hline
 				
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.81} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.78} \\ \hline
 		\caption{Descripción del caso de uso - Restablecer contraseña}
 	\end{longtable}
 	
@@ -3852,7 +3817,7 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Pre-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor Usuario administrador (ACT-0001) debe estar autenticado en el sistema web} \\ \hline
 			
 		% Sequence
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Secuencia}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
+		{\cellcolor{Gainsboro}\textbf{Secuencia}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 1 & El caso de uso comienza cuando el actor Usuario administrador (ACT-0001) notifica desde el panel de control que desea gestionar un usuario administrador 			\\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 2 & El sistema web muestra un listado ordenado y paginado o filtrado de los usuarios administradores disponibles en el sistema \\\cline{2-3} 
 		\cellcolor{Gainsboro} & 3 & El actor Usuario administrador (ACT-0001) selecciona el apartado para crear un nuevo usuario administrador \\\cline{2-3} 
@@ -3861,11 +3826,7 @@ breaklines=true,
 		\cellcolor{Gainsboro} & 6 & El sistema web comprueba que los datos introducidos sean correctos. En caso afirmativo, almacena el nuevo usuario con rol usuario administrador y avisa al actor Usuario administrador (ACT-0001) mediante un mensaje. A continuación, el caso de uso vuelve al paso 2 \\ \hline
 
 		% Alternative flow
-		\multirow{0}{3.2cm}{\cellcolor{Gainsboro}\textbf{Flujo alternativo}} & \textbf{Paso} & \textbf{Acción}  	\\ \cline{2-3} 
-		\cellcolor{Gainsboro} & 1.1.1 & El actor Usuario administrador (ACT-0001) notifica desde el panel de administración que desea importar un usuario administrador o varios \\ \cline{2-3} 
-		\cellcolor{Gainsboro} & 1.1.2 & El sistema web muestra la página para la importación con las instrucciones informativas \\ \cline{2-3} 
-		\cellcolor{Gainsboro} & 1.1.3 & El actor Usuario administrador (ACT-0001) selecciona el fichero a importar \\ \cline{2-3} 
-		\cellcolor{Gainsboro} & 1.1.4 & El sistema web comprueba que el fichero y su contenido es válido. En caso afirmativo, almacena el usuario administrador o usuarios administradores y avisa al actor Usuario administrador (ACT-0001) mediante un mensaje. A continuación, el caso de uso vuelve al paso 1.1.2 \\ \cline{2-3}
+		{\cellcolor{Gainsboro}\textbf{Flujo alternativo}} & \textbf{Paso} & \textbf{Acción}  	\\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 3.1.1 & El actor Usuario administrador (ACT-0001) selecciona un usuario administrador existente para su edición \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 3.1.2 & El sistema web muestra el formulario con los datos del usuario administrador seleccionado \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 3.1.3 & El actor Usuario administrador (ACT-0001) edita los campos deseados \\ \cline{2-3} 
@@ -3875,22 +3836,22 @@ breaklines=true,
 		\cellcolor{Gainsboro} & 3.2.3 & El actor Usuario administrador (ACT-0001) confirma la eliminación \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 3.2.4 & El sistema web elimina el usuario administrador seleccionado y avisa al actor Usuario administrador (ACT-0001) mediante un mensaje. A continuación, el caso de uso vuelve al paso 2 \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 3.3.1 & El actor Usuario administrador (ACT-0001) introduce una cadena de caracteres para realizar una búsqueda entre todos los usuarios administradores existentes. A continuación, el caso de uso vuelve al paso 2 \\ \cline{2-3} 
-		\cellcolor{Gainsboro} & 3.4.1 & El actor Usuario administrador (ACT-0001) selecciona un criterio de ordenación. A continuación, el caso de uso vuelve al paso 2 \\ \hline 
-		\cellcolor{Gainsboro} & 3.5.1 & El actor Usuario administrador (ACT-0001) filtra el número de usuarios administradores a mostrar. A continuación, el caso de uso vuelve al paso 2 \\ \hline 
-		\cellcolor{Gainsboro} & 3.6.1 & El actor Usuario administrador (ACT-0001) selecciona las columnas (campos de la entidad) que desea mostrar. A continuación, el caso de uso vuelve al paso 2 \\ \hline 
-		\cellcolor{Gainsboro} & 3.7.1 & El actor Usuario administrador (ACT-0001) selecciona la opción de exportar datos en PDF o CSV \\ \hline 
-		\cellcolor{Gainsboro} & 3.7.2 & El sistema web genera el fichero con la información. A continuación, el caso de uso vuelve al paso 2 \\ \hline 
-		\cellcolor{Gainsboro} & 3.8.1 & El actor Usuario administrador (ACT-0001) selecciona la opción de imprimir \\ \hline 
-		\cellcolor{Gainsboro} & 3.8.2 & El sistema web genera la funcionalidad para permitir al usuario imprimir la información de los usuarios administradores. A continuación, el caso de uso vuelve al paso 2 \\ \hline 
-		\cellcolor{Gainsboro} & 3.9.1 & El actor Usuario administrador (ACT-0001) selecciona la opción de copiar \\ \hline 
+		\cellcolor{Gainsboro} & 3.4.1 & El actor Usuario administrador (ACT-0001) selecciona un criterio de ordenación. A continuación, el caso de uso vuelve al paso 2 \\ \cline{2-3} 
+		\cellcolor{Gainsboro} & 3.5.1 & El actor Usuario administrador (ACT-0001) filtra el número de usuarios administradores a mostrar. A continuación, el caso de uso vuelve al paso 2 \\ \cline{2-3} 
+		\cellcolor{Gainsboro} & 3.6.1 & El actor Usuario administrador (ACT-0001) selecciona las columnas (campos de la entidad) que desea mostrar. A continuación, el caso de uso vuelve al paso 2 \\ \cline{2-3} 
+		\cellcolor{Gainsboro} & 3.7.1 & El actor Usuario administrador (ACT-0001) selecciona la opción de exportar datos en PDF o CSV \\ \cline{2-3} 
+		\cellcolor{Gainsboro} & 3.7.2 & El sistema web genera el fichero con la información. A continuación, el caso de uso vuelve al paso 2 \\ \cline{2-3} 
+		\cellcolor{Gainsboro} & 3.8.1 & El actor Usuario administrador (ACT-0001) selecciona la opción de imprimir \\ \cline{2-3} 
+		\cellcolor{Gainsboro} & 3.8.2 & El sistema web genera la funcionalidad para permitir al usuario imprimir la información de los usuarios administradores. A continuación, el caso de uso vuelve al paso 2 \\ \cline{2-3} 
+		\cellcolor{Gainsboro} & 3.9.1 & El actor Usuario administrador (ACT-0001) selecciona la opción de copiar \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 3.9.2 & El sistema web copia las información de los usuarios administradores al portapapeles. A continuación, el caso de uso vuelve al paso 2 \\ \hline 
 			
 		% Post-condition 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Post-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor Usuario administrador (ACT-0001) ha administrado un usuario administrador a través de la posibilidad de ejecutar diferentes tareas} \\ \hline
 			
 		% Exceptions
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3}
-		\cellcolor{Gainsboro} & 1.1.4 & Si el sistema web obtiene algún error al comprobar el fichero y su contenido, ningún usuario administrador es almacenado y se muestra un mensaje de error, y a continuación el caso de uso vuelve al paso 1.1.2 \\ \cline{2-3} 	
+		{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3}
+
 		\cellcolor{Gainsboro} & 2 & Si el sistema web obtiene algún error al cargar los usuarios administradores, muestra un mensaje de error, y a continuación el caso de uso finaliza.		 			\\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 3.1.2 & Si el sistema web obtiene algún error al cargar los datos del usuario administrador seleccionado, muestra un mensaje de error, y a continuación el caso de uso finaliza			 			\\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 5, 3.1.3 & Si el actor Usuario administrador (ACT-0001) cancela la introducción o edición de datos, el sistema web no almacena ningún dato, y a continuación el caso de uso vuelve al paso 2 \\ \cline{2-3} 
@@ -3898,36 +3859,38 @@ breaklines=true,
 		\cellcolor{Gainsboro} & 3.2.3 & El actor Usuario administrador (ACT-0001) cancela la confirmación de la eliminación. El sistema web no realiza ninguna acción, y a continuación el caso de uso vuelve al paso 2 \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 3.2.4 & Si el sistema web obtiene algún error al borrar el usuario administrador, muestra un mensaje de error, y a continuación el caso de uso vuelve al paso 2 \\ \hline
 				
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.82, RF.83, RF.84, RF.85, RF.86, RF.87, RF.88, RF.89, RF.90, RF.91, RF.92, RF.93, RF.94, RF.95, RF.96, RF.97} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.79, RF.80, RF.81, RF.82, RF.83, RF.84, RF.85, RF.86, RF.87, RF.88, RF.89, RF.90, RF.91, RF.92, RF.93} \\ \hline
 		\caption{Descripción del caso de uso - Gestionar usuario administrador}
 	\end{longtable}
 							
-	% UC-0008 - Consultar estadísticas
+	% UC-0008 - Consultar estadísticas globales
 	\begin{longtable}{|p{3cm}|p{1cm}|p{12.5cm}|}
 		\hline
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textbf{UC-0008}}} & \multicolumn{2}{|p{13.5cm}|}{\textbf{Consultar estadísticas}}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}c|}{\multirow{1}{*}{\textbf{UC-0008}}} & \multicolumn{2}{|p{13.5cm}|}{\textbf{Consultar estadísticas globales}}
 		\\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Versión}} & \multicolumn{2}{p{13.5cm}|}{1.0 - 15/01/2018} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Autores}} & \multicolumn{2}{p{13.5cm}|}{Jesús Iglesias García} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Usuario}} & \multicolumn{2}{p{13.5cm}|}{Actor Usuario administrador (ACT-0001)} \\ \hline
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{2}{p{13.5cm}|}{El sistema web deberá comportarse tal como se describe en el siguiente caso de uso cuando \textit{un actor Usuario administrador (ACT-0001) quiera consultar las estadísticas}} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Descripción}} & \multicolumn{2}{p{13.5cm}|}{El sistema web deberá comportarse tal como se describe en el siguiente caso de uso cuando \textit{un actor Usuario administrador (ACT-0001) quiera consultar las estadísticas de toda la información monitorizada}} \\ \hline
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Pre-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor Usuario administrador (ACT-0001) debe estar autenticado en el sistema web} \\ \hline
 			
 		% Sequence
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Secuencia normal}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
-		\cellcolor{Gainsboro} & 1 & El caso de uso comienza cuando el actor Usuario administrador (ACT-0001) notifica desde el panel de control que desea ver las estadísticas actuales \\ \cline{2-3} 
+		{\cellcolor{Gainsboro}\textbf{Secuencia}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
+		\cellcolor{Gainsboro} & 1 & El caso de uso comienza cuando el actor Usuario administrador (ACT-0001) notifica desde el panel de control que desea ver las estadísticas actuales de la información completa monitorizada  \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 2 & El sistema web carga los diferentes gráficos y datos de estadísticas  	\\ \hline
 		
 		% Post-condition 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Post-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor Usuario administrador (ACT-0001) puede analizar las diferentes estadísticas} \\ \hline
 					
 		% Exceptions
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción} \\ \cline{2-3} 
-		\cellcolor{Gainsboro} & 2 & Si el sistema web obtiene algún error al cargar las estadísticas, muestra un mensaje de error, y a continuación el caso de uso finaliza	 \\ \cline{2-3} 
+		{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción} \\ \cline{2-3} 
+		\cellcolor{Gainsboro} & 2 & Si el sistema web obtiene algún error al cargar las estadísticas, muestra un mensaje de error, y a continuación el caso de uso finaliza	 \\ \hline 
 						
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.98} \\ \hline
-		\caption{Descripción del caso de uso - Consultar estadísticas}
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.94} \\ \hline
+		\caption{Descripción del caso de uso - Consultar estadísticas globales}
 	\end{longtable}
+	
+	\newpage
 	
 	% UC-0009 - Consultar o modificar perfil personal
 	\begin{longtable}{|p{3cm}|p{1cm}|p{12.5cm}|}
@@ -3941,9 +3904,9 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Pre-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor Usuario normal (ACT-0002) debe estar autenticado en el sistema web} \\ \hline
 			
 		% Sequence
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Secuencia normal}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
+		{\cellcolor{Gainsboro}\textbf{Secuencia}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 1 & El caso de uso comienza cuando el actor Usuario normal (ACT-0002) notifica que desea acceder a su panel de perfil personal \\ \cline{2-3} 
-		\cellcolor{Gainsboro} & 2 & El sistema web muestra el perfil personal del usuario con los datos de éste 	\\ \hline
+		\cellcolor{Gainsboro} & 2 & El sistema web muestra el perfil personal del usuario con los datos de éste 	\\ \cline{2-3}
 		\cellcolor{Gainsboro} & 3 & El actor Usuario normal (ACT-0002) edita los campos deseados	\\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 4 & El sistema web comprueba que los datos editados sean correctos. En caso afirmativo, almacena el usuario modificado y notifica al actor Usuario normal (ACT-0002) mediante un mensaje \\ \hline 
 		
@@ -3951,20 +3914,17 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Post-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor Usuario normal (ACT-0002) ha consultado o modificado su perfil personal} \\ \hline
 					
 		% Exceptions
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción} \\ \cline{2-3} 
+		{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción} \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 2 & Si el sistema web obtiene algún error al cargar los datos del usuario, muestra un mensaje de error, y a continuación el caso de uso finaliza	 \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 3 & Si el actor Usuario normal (ACT-0002) cancela la edición de datos, el sistema web no almacena ningún dato, y a continuación el caso de uso finaliza \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 4 & Si el sistema web obtiene algún error al comprobar los datos editados (datos erróneos, nombre de usuario o \textit{email} ya existentes, etc.), muestra un mensaje de error, y a continuación el caso de uso vuelve al paso 2			\\ \hline
-		
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción} \\ \cline{2-3} 
-		\cellcolor{Gainsboro} & 2 & Si el sistema web obtiene algún error al cargar las estadísticas, muestra un mensaje de error, y a continuación el caso de uso finaliza	\\ \cline{2-3} 
-						
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.99, RF.100} \\ \hline
+							
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.95, RF.96} \\ \hline
 		\caption{Descripción del caso de uso - Consultar o modificar perfil personal}
 	\end{longtable}
 	
-	% VSPACE
-	\vspace{0.3cm}
+	% NEW PAGE
+	\newpage
 	
 	% UC-0010 - Consumir información sobre la trazabilidad del entorno
 	\begin{longtable}{|p{3cm}|p{1cm}|p{12.5cm}|}
@@ -3978,18 +3938,18 @@ breaklines=true,
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Pre-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor debe estar autenticado en el sistema web y el \gls{prototipo} \textit{hardware} estar monitorizando los sucesos del entorno} \\ \hline
 						
 		% Sequence
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Secuencia normal}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
+		{\cellcolor{Gainsboro}\textbf{Secuencia}} & \textbf{Paso} & \textbf{Acción}  \\ \cline{2-3} 
 		\cellcolor{Gainsboro} & 1 & El caso de uso comienza cuando el actor Usuario administrador (ACT-0001) o actor Usuario normal (ACT-0002) notifica que desea consultar la información en tiempo real \\ \cline{2-3} 
-		\cellcolor{Gainsboro} & 2 & El sistema web carga la información \\ \hline
+		\cellcolor{Gainsboro} & 2 & El sistema web carga la información completa o filtrada en función del rol del usuario \\ \hline
 		
 		% Post-condition 
 		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Post-condición}} & \multicolumn{2}{p{13.5cm}|}{El actor Usuario administrador (ACT-0001) o actor Usuario normal (ACT-0002) puede observar lo que está sucediendo en el entorno \gls{iot-a} monitorizado} \\ \hline
 					
 		% Exceptions
-		\multirow{0}{3cm}{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción} \\ \cline{2-3} 
-		\cellcolor{Gainsboro} & 2 & Si el sistema web obtiene algún error al cargar la información, muestra un mensaje de error, y a continuación el caso de uso finaliza	\\ \cline{2-3} 
+		{\cellcolor{Gainsboro}\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción} \\ \cline{2-3} 
+		\cellcolor{Gainsboro} & 2 & Si el sistema web obtiene algún error al cargar la información, muestra un mensaje de error, y a continuación el caso de uso finaliza	\\ \hline 
 						
-		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.101} \\ \hline
+		\multicolumn{1}{|>{\columncolor{Gainsboro}}p{3cm}|}{\textbf{Comentarios}} & \multicolumn{2}{p{13.5cm}|}{Requisitos: RF.97} \\ \hline
 		\caption{Descripción del caso de uso - Consumir información sobre la trazabilidad del entorno}
 	\end{longtable}
 	
@@ -4031,7 +3991,7 @@ breaklines=true,
 		
 		\item Gestionar usuario administrador:
 		
-		Pablo ha podido acceder con un usuario administrador preconfigurado por defecto por lo que cree que no es ideal su existencia. Por ello, decide dar de alta un nuevo administrador a través de la opción de importar. Tras tener preparado el fichero CSV con los datos a importar, desde el sistema selecciona este fichero. Una vez completado el proceso, observa una notificación de alerta informando del procesamiento correcto. Pablo a partir de ese momento ya posee su propio usuario administrador por lo que procede a listar los usuarios administradores del sistema y seleccionar aquel que venía preconfigurado para su eliminación.
+		Pablo ha podido acceder con un usuario administrador preconfigurado por defecto por lo que cree que no es ideal su existencia. Por ello, decide dar de alta un nuevo administrador dirigiéndose a tal formulario. En él, introduce un nombre de usuario y dirección de correo y comprueba in situ si dichas elecciones se encuentran disponibles en el sistema, es decir, no hay ningún otro usuario registrado con esos datos. Como ambas elecciones están disponibles, continúa rellenando el resto de información y crea el nuevo usuario observando que una notificación es mostrada. Pablo a partir de ese momento ya posee su propio usuario administrador por lo que procede a listar los usuarios administradores del sistema y seleccionar aquel que venía preconfigurado para su eliminación.
 					
 		\item Gestionar usuario normal:
 		
@@ -4041,7 +4001,7 @@ breaklines=true,
 		
 		\item Consultar estadísticas:
 		
-		Pablo desde su panel de control observa que existe una sección donde se despliegan estadísticas sobre el propio sistema web, entre ellas, el número total de usuarios que existen en la plataforma diferenciados por rol, últimas cuentas de usuario creadas, número de mediciones, número de sucesos anómalos o alertas producidas, etc. y se percata que la nueva cuenta de Alberto ya se refleja en el sistema.
+		Pablo desde su panel de control observa que existe una sección donde se muestran estadísticas completas sobre el sistema, entre ellas, el número total de usuarios que existen en la plataforma diferenciados por rol, últimas cuentas de usuario normal creadas, número de mediciones, número de alertas producidas, etc. Visualizando la información se percata que la nueva cuenta de Alberto ya está reflejada en el sistema.
 		
 		\item Restablecer contraseña:
 		
@@ -4150,7 +4110,7 @@ breaklines=true,
 		\newpage
 		
 		\item Diagrama de secuencia de análisis: Gestionar usuario administrador (Figura \ref{fig:ds_adminuser1} - Parte 1 y Figura \ref{fig:ds_adminuser2} - Parte 2)\footnote{El diagrama de secuencia de análisis para el caso de uso UC-0007: Gestionar usuario normal es similar al presente con la salvedad de adaptar a la entidad correspondiente.}.
-		 
+		
 %		\begin{figure}[!ht]   
 %			\caption{Diagrama de secuencia de análisis: Gestionar usuario administrador - Parte 1.} 
 %			\begin{center} 
@@ -4173,10 +4133,10 @@ breaklines=true,
 		% NEW PAGE 
 		\newpage
 		
-		\item Diagrama de secuencia de análisis: Consultar estadísticas (Figura \ref{fig:ds_estadisticas}).
+		\item Diagrama de secuencia de análisis: Consultar estadísticas globales (Figura \ref{fig:ds_estadisticas}).
 		
 %		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de análisis: Consultar estadísticas.} 
+%			\caption{Diagrama de secuencia de análisis: Consultar estadísticas globales.} 
 %			\begin{center} 
 %	 			\includegraphics[width=17cm,height=13cm]{Images/analysis/secuencia/secuencia_consultarEstadisticas} \\
 %				\label{fig:ds_estadisticas} 
@@ -4210,7 +4170,7 @@ breaklines=true,
 %		\end{figure} 
 		
 	\end{itemize}
-		
+ 				
 	% Design
 	\chapter{Diseño} \label{designChapter}
 	
