@@ -3726,12 +3726,12 @@ breaklines=true,
 	% Implementation
 	\chapter{Implementación} \label{implementationChapter}
 	
-	Todo sistema software se encuentra respaldado por un trabajo previo que lo conforma. Un aspecto importante es mostrar al lector la información interna más destacada sobre la implementación tecnológica llevada a cabo ya que de esta manera podrá conocer de una forma más concreta los entresijos del sistema, la funcionalidad, etc.
+	Todo sistema \textit{software} se encuentra respaldado por un trabajo previo que lo conforma. Un aspecto importante es mostrar al lector la información interna más destacada sobre la implementación tecnológica llevada a cabo ya que de esta manera podrá conocer de una forma más concreta los entresijos del sistema, la funcionalidad, etc.
 	
 	% Section
 	\section{Hyot}
 		
-	Hyot es la prueba de concepto (\textit{\gls{poc}} -\gls{poc-a}-) de código abierto\footnote{Consulte el anexo \ref{install} para saber cómo conseguir el código.} desarrollada para llevar a cabo la trazabilidad de un entorno controlado de \gls{iot-a} (\textit{\gls{iot}}) mediante la tecnología \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}). Si bien es cierto que esta trazabilidad se puede realizar utilizando metodologías tradicionales, como son bases de datos o ficheros de \textit{logs} para almacenar la información, también es evidente que se carece de una falta de seguridad y garantía de que esta información ha perdurado inmutable desde su registro. \\
+	Hyot es la prueba de concepto (\textit{\gls{poc}} -\gls{poc-a}-) de código abierto\footnote{Consulte el anexo \ref{install} para saber cómo conseguir el código y cómo poner en marcha esta \gls{poc-a}.} desarrollada para llevar a cabo la trazabilidad de un entorno controlado de \gls{iot-a} (\textit{\gls{iot}}) mediante la tecnología \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}). Si bien es cierto que esta trazabilidad se puede realizar utilizando metodologías tradicionales, como son bases de datos o ficheros de \textit{logs} para almacenar la información, también es evidente que se carece de una falta de seguridad y garantía de que esta información ha perdurado inmutable desde su registro. \\
 				
 	Aprovechando el respaldo de todas las ventajas que proporciona el concepto de \Gls{blockchain} (\gls{blockchain-a}), Hyot mantiene parte de su persistencia en una \gls{blockchain-a} de carácter permisionada lo cual incrementa favorablemente la seguridad frente a las públicas ya que se puede controlar quién puede acceder y con qué privilegios al existir varios niveles de privacidad y de membresía proporcionando así mayor confidencialidad. De esta forma la información no es expuesta públicamente a cualquier usuario ajeno a la misma y siempre está identificada al participante que la registra por lo que favorece la trazabilidad de los datos. Pero solamente una parte de toda la información trazada del entorno es registrada en la \gls{blockchain-a}, en concreto aquella que interesa salvaguardar de una posible alteración ya que es la que proporcionará el resguardo y la prueba de que un suceso irregular realmente sucedió en un marco temporal. El suceso registrado a partir del cual se genera una evidencia -vídeo del entorno- se guarda en una tercera parte de confianza (\gls{tpc-a}), como puede ser un servicio de almacenamiento en la nube, debido a su tamaño y al formato que presenta. Este agente externo puede no encontrarse 100\% securizado por lo que la evidencia almacenada debe ser protegida mediante el cifrado de su contenido y posterior firmado. La encriptación proporciona al contenido una codificación de tal manera que la información no sea legible de forma directa otorgando así confidencialidad y privacidad. Por su parte, el firmado ayuda a asegurar:
 		
@@ -3743,9 +3743,9 @@ breaklines=true,
 		
 	El resto de información que es meramente informativa y que permite ampliar el contexto de la trazabilidad efectuada es almacenada en una base de datos (\gls{bbdd-a}). También, cabe destacar que es fácilmente escalable a ampliar a un mayor rango de cobertura en cuanto a \gls{iot-a} se refiere, indistintamente de usar dispositivos del mismo tipo o variedad en ellos. \\
 	
-	Esta solución, que es altamente parametrizable y configurable por el usuario, gestiona de forma transparente éste una serie de sucesos -temperatura, humedad y distancia- del entorno que son monitorizados constantemente con una frecuencia por defecto de 3 segundos y en tiempo real desde fuentes de entradas de datos, como son los \glspl{sensor}, conectados a un ordenador de placa reducida (\textit{\gls{sbc}} -\gls{sbc-a}-) como es la \gls{raspberry} (\gls{raspberry-a}), siendo la última versión disponible (versión 3) la utilizada en el proyecto. Esta información recogida es analizada para determinar si es un instante concreto de tiempo los valores leídos son anómalos o no y por tanto decretar si en el entorno se está produciendo un acontecimiento desautorizado. En todo momento, las acciones ejecutadas y las mediciones efectuadas se notifican al usuario tanto a través del terminal como a través de los dispositivos de salida con los que cuenta el \gls{prototipo} \textit{hardware}\footnote{Consultar los anexos \ref{prototype} y \ref{prototypeGPIO} para obtener más información sobre la implementación \textit{hardware} de Hyot.}, como son los \glspl{lcd-a} (\textit{\gls{lcd}}) y el \gls{led-a} (\textit{\gls{led}}), este último activándose solamente en caso de accionar el protocolo de alerta. \\	
+	Esta solución, que es altamente parametrizable y configurable por el usuario, gestiona de forma transparente éste una serie de sucesos -temperatura, humedad y distancia- del entorno que son monitorizados constantemente con una frecuencia por defecto de 3 segundos y en tiempo real desde fuentes de entradas de datos, como son los \glspl{sensor}, conectados a un ordenador de placa reducida (\textit{\gls{sbc}} -\gls{sbc-a}-) como es la \gls{raspberry} (\gls{raspberry-a}), siendo la última versión disponible (versión 3) la utilizada en el proyecto. Esta información recogida es analizada para determinar si en un instante concreto de tiempo los valores leídos se consideran anómalos o no y por tanto decretar si en el entorno se está produciendo un acontecimiento desautorizado. En todo momento, las acciones ejecutadas y las mediciones efectuadas se notifican al usuario tanto a través del terminal como a través de los dispositivos de salida con los que cuenta el \gls{prototipo} \textit{hardware}\footnote{Consulte los anexos \ref{prototype}, \ref{prototypeGPIO} y \ref{hardware} para obtener más información sobre la implementación \textit{hardware} de Hyot.}, como son los \glspl{lcd-a} (\textit{\gls{lcd}}) y el \gls{led-a} (\textit{\gls{led}}), este último activándose solamente en caso de accionar el protocolo de alerta. \\	
 	
-	En el caso de que la medición actual no reporte ningún caso anómalo, se procede con el protocolo de medición normal compuesto por las siguientes dos acciones:
+	En el caso de que la medición –monitorización del entorno en un instante de tiempo- actual no reporte ningún caso anómalo, se procede con el protocolo de medición normal compuesto por la siguiente acción:
 	
 	\begin{enumerate}
 		\item Almacenar la medición en la \gls{bbdd-a} para que quede constancia de que en ese momento temporal el entorno controlado no presenta ninguna incidencia. Para cada medición se almacenan los siguientes campos:
@@ -3762,42 +3762,34 @@ breaklines=true,
 				\item Umbral límite del evento que lanza el protocolo de alerta.
 				\item Enlace al servicio de almacenamiento en la nube donde se ubica la evidencia encriptada y firmada.
 				\item Dirección \textit{email} del destinatario para efectos de notificación.
-				\item Usuario que monitoriza la medición el cual coincide con el usuario que registra la alerta en la \gls{blockchain-a} en caso de que el suceso sea anómalo.
+				\item Usuario que registra la alerta en la \gls{blockchain-a} en caso de que el suceso sea anómalo.
 			\end{itemize}
-				
-		\item Subir determinada información de la medición a una plataforma de \gls{iot-a} que actúa como pasarela de comunicación en tiempo real entre los dispositivos conectados y las aplicaciones que consumen los datos.	% TODO - IOT	
 	\end{enumerate}
 		
 	Por contra, si la lectura actual de valores presenta datos anómalos que superan unos umbrales preestablecidos considerados como posible indicio de una incidencia en el entorno, el procedimiento a seguir es más exhaustivo debido a que esta situación es la se quiere certificar su originalidad. Una incidencia no es sino una acción no controlada que tiene lugar en el entorno que se está vigilando, y origina la ejecución de un protocolo de alerta que comprende:
 		
 	\begin{enumerate}
 		\item Captura de un vídeo -por defecto 10 segundos de duración- a través de una cámara (dispositivo Picamera) conectada a la \gls{raspberry-a} que representará la evidencia.
-		\item Cálculo del valor \textit{hash} del contenido original de la evidencia, aplicando la \gls{hash} \gls{sha-a}-3 (anteriormente conocido como \textit{keccak}), que actúa como prueba de integridad y por tanto se almacena únicamente en la \Gls{blockchain}. 
+		\item Cálculo del valor \textit{hash} del contenido original de la evidencia, aplicando la \gls{hash} \gls{sha-a}-3 (anteriormente conocido como \textit{keccak}), que actúa como prueba de integridad y por tanto se almacena únicamente en la \gls{blockchain-a}. 
 		\item Encriptación y firmado de la evidencia con la utilidad \gls{gpg-a} puesto que se ha asumido un modelo de confianza nula en el cual toda la información debe ser protegida.
 		\item Almacenamiento en la nube de la evidencia. Este tipo de servicios son considerados \gls{tpc-a} que pueden poner en riesgo la privacidad de las evidencias por lo que es necesario el paso anterior de cifrado y firmado.	
-		\item Volcado de la incidencia con información adicional -medición- en la \gls{bbdd-a} para que quede constancia de que en ese momento temporal el entorno vigilado presenta una lectura no controlada. Este método de almacenamiento como no garantiza la no alteración, la propiedad de prueba que se quiere garantizar la originalidad (código \textit{hash}) no es almacenada.
-		\item Subida de determinada información de la medición a una plataforma de \gls{iot-a} que actúa como pasarela de comunicación en tiempo real entre los dispositivos conectados y las aplicaciones que consumen los datos. % TODO - IOT
-		\item Registro de la incidencia	en \gls{hyperledgerfabric-a}. El punto central de Hyot es garantizar que el registro de un suceso anómalo no ha sido indebidamente modificado, de forma que una vez registrada una incidencia se tenga total certeza respecto a su integridad y veracidad. Este objetivo se consigue con esta tecnología, ya que proporciona un protocolo de consenso distribuido para la protección de integridad y un control de acceso que permite identificar a los agentes que introducen datos en la \Gls{blockchain-a}. Por ese motivo, en este método de persistencia se almacena de forma exclusiva el valor \textit{hash}.
-
+		\item Volcado de la información completa de la medición en la \gls{bbdd-a} para que quede constancia de que en ese momento temporal el entorno vigilado presenta una lectura no controlada. Este método de almacenamiento como no garantiza la no alteración, la propiedad (código \textit{hash}) que permite garantizar la originalidad del hecho no es almacenada.
+		\item Registro de la incidencia	en \gls{hyperledgerfabric-a}. El punto central de Hyot es garantizar que el registro de un suceso anómalo no ha sido indebidamente modificado, de forma que una vez registrada la alerta se tenga total certeza respecto a su integridad y veracidad. Este objetivo se consigue con esta tecnología ya que proporciona un protocolo de consenso distribuido para la protección de integridad y un control de acceso que permite identificar a los agentes que introducen datos en la \Gls{blockchain-a}. Por ese motivo, en este método de persistencia se almacena de forma exclusiva el valor \textit{hash}.
 		\item Notificación del suceso no controlado mediante el envío de un \textit{email} a la dirección de correo electrónico destino configurada. Esta comunicación es importante para que el usuario pueda conocer el estado del entorno en todo momento lo antes posible y ver que está sucediendo y poder tomar decisiones en caso necesario.
 	
 	\end{enumerate}
-		
-	% TODO - IOT	
+			
 	La Figura \ref{fig:hyot_flow} muestra el mapa de flujo de forma superficial de la monitorización de sucesos del entorno donde durante su ejecución, indistintamente de la activación o no del protocolo de alerta, se gestiona exhaustivamente cualquier error que se pueda producir, finalizando la ejecución de manera instantánea y notificando al usuario por la interfaz de la terminal. Además, si el error se produce durante la etapa de monitorización de sucesos, el usuario tiene la certeza de que si algo no funciona correctamente se le notifica instantáneamente mediante el envío de un \textit{email} adjuntando el \textit{log} con los pasos ejecutados hasta el momento -si dicha funcionalidad está habilitada-.
-	
-	% NEW PAGE
-	\newpage
 	
 		\begin{figure}[!ht]   
 			\caption{Diagrama de flujo - Monitorización de sucesos del entorno.} 
 			\begin{center} 
-	 			\includegraphics[width=18cm,height=6.7cm]{Images/implement/hyot_flow} \\
+	 			\includegraphics[width=18cm,height=5.5cm]{Images/implement/hyot_flow} \\
 				\label{fig:hyot_flow} 
 			\end{center}  
 		\end{figure}
 
-	A modo resumen, se puede detallar que Hyot se compone de tres componentes principales:
+	A modo resumen, se puede detallar que Hyot se compone de tres componentes principales\footnote{Consulte el anexo \ref{userguide} para conocer la funcionalidad de cada componente.}:
 
 	\begin{itemize}
   		\item Componente de monitorización de sucesos del entorno a través de \glspl{sensor} situados en una \gls{raspberry-a}.
@@ -3816,7 +3808,7 @@ breaklines=true,
 	\begin{figure}[!ht]   
 		\caption{Diagrama de flujo - Configuración inicial de la \gls{raspberry-a}.} 
 		\begin{center} 
-	 		\includegraphics[width=17cm,height=9.3cm]{Images/implement/hyot_setupflow} \\
+	 		\includegraphics[width=17cm,height=8cm]{Images/implement/hyot_setupflow} \\
 			\label{fig:hyot_setupflow} 
 		\end{center}  
 	\end{figure}
@@ -3824,7 +3816,7 @@ breaklines=true,
   	\begin{figure}[!ht]   
 		\caption{Diagrama de flujo - Desencriptación de evidencias.} 
 		\begin{center} 
-	 		\includegraphics[width=18cm,height=9.2cm]{Images/implement/hyot_decryptionflow} \\
+	 		\includegraphics[width=18cm,height=8.5cm]{Images/implement/hyot_decryptionflow} \\
 			\label{fig:hyot_decryptionflow} 
 		\end{center}  
 	\end{figure}
@@ -3837,7 +3829,7 @@ breaklines=true,
 		\begin{figure}[!ht]   
 			\caption{Arquitectura de Hyot.} 
 			\begin{center} 
-	 			\includegraphics[width=18cm,height=10cm]{Images/implement/hyot_architecture} \\
+	 			\includegraphics[width=18cm,height=7cm]{Images/implement/hyot_architecture} \\
 				\label{fig:hyot_architecture} 
 			\end{center}  
 		\end{figure}
@@ -3845,29 +3837,21 @@ breaklines=true,
 	Observando la arquitectura se diferencian claramente dos entornos donde los diversos componentes están desplegados:
 
 	\begin{itemize}
-		\item Entorno de ámbito local donde se ubica el \gls{prototipo} \textit{hardware} elaborado correspondiente a un cliente pesado. En él se despliega el componente de monitorización de sucesos, el componente de configuración del dispositivo \gls{raspberry-a} y el componente de desencriptación de evidencia. Este último pudiendo ser desplegado en cualquier otro dispositivo siempre y cuando se disponga de todas las dependencias necesarias.
+		\item Entorno de ámbito local donde se ubica el \gls{prototipo} \textit{hardware} elaborado, correspondiente a un cliente pesado. En él se despliega el componente de monitorización de sucesos, el componente de configuración del dispositivo \gls{raspberry-a} y el componente de desencriptación de evidencia, pudiendo este último ser desplegado en cualquier otro dispositivo siempre y cuando se disponga de todas las dependencias necesarias.
 	
-		\item Entorno en la nube donde se despliegan los dos componentes restantes: protocolo de registro de incidencias en la \gls{blockchain-a} de \gls{hyperledgerfabric-a} y sistema web y los servicios empleados. Aquí, se puede diferenciar:
+		\item Entorno en la nube donde se despliegan los dos componentes restantes: protocolo de registro de incidencias en la \gls{blockchain-a} de \gls{hyperledgerfabric-a} y sistema web junto con los servicios empleados. Aquí, se puede diferenciar:
 
 		\begin{itemize}
 			\item La capa de persistencia que engloba los cuatro mecanismos utilizados para persistir toda la información gestionada en el proyecto.
 						
 			\begin{itemize}
-				\item Por un lado, se encuentran las \gls{bbdd-a} como servicio (\textit{\gls{dbaas}} -\gls{dbaas-a}-) \gls{cloudant} y Compose for MySQL pertenecientes ambas al servicio IBM Cloud y el servicio de almacenamiento en la nube Dropbox (\textit{\gls{saas}} -\gls{saas-a}-) \cite{gonzalez:2011:TCCS}.
+				\item Por un lado, se encuentran las \gls{bbdd-a} como servicio (\textit{\gls{dbaas}} -\gls{dbaas-a}-) \gls{cloudant} y Compose for MySQL pertenecientes ambas al servicio IBM Cloud que mantienen el listado de mediciones y la gestión de usuarios y \textit{\gls{token}} del sistema web, respectivamente. Además, se encuentra el servicio de almacenamiento en la nube Dropbox (\textit{\gls{saas}} -\gls{saas-a}-) \cite{gonzalez:2011:TCCS}.
 			
-				\item Por otro lado y dentro de la capa de persistencia se encuentra la capa de control formada por la \gls{blockchain-a} permisionada desplegada en \gls{hyperledgerfabric-a}. Esta denominación se debe a que la información aquí guardada permite controlar y garantizar la veracidad de la trazabilidad registrada. Este despliegue se ha efectuado en una máquina virtual (\textit{\gls{vm}} -\gls{vm-a}-) Ubuntu en el servicio Microsoft Azure y en dicha máquina se localiza tanto \gls{hyperledgerfabric-a} como el servidor \gls{rest-a} (\textit{\gls{rest}}) \gls{api-a} (\textit{\gls{api}}) de \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a}). Este servidor recibe peticiones securizadas por parte del componente de monitorización de sucesos y del sistema web e interactúa con la \gls{blockchain-a} a través del nodo conectado.								
+				\item Por otro lado y dentro de la capa de persistencia se encuentra la capa de control formada por la \gls{blockchain-a} permisionada desplegada en \gls{hyperledgerfabric-a} la cual almacena alertas -información de incidencias-. Esta denominación se debe a que la información aquí guardada permite controlar y garantizar la veracidad de la trazabilidad registrada. Este despliegue se ha efectuado en una máquina virtual (\textit{\gls{vm}} -\gls{vm-a}-) Ubuntu en el servicio Microsoft Azure y en dicha máquina se localiza tanto \gls{hyperledgerfabric-a} como el servidor \gls{rest-a} (\textit{\gls{rest}}) \gls{api-a} (\textit{\gls{api}}) de \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a}), siendo este servidor el que recibe peticiones securizadas por parte del componente de monitorización de sucesos y del sistema web y el que interactúa con la \gls{blockchain-a} a través del nodo conectado.								
 			\end{itemize}  
-		 				 		
-			\item Los servicios pertenecientes a IBM Cloud donde se localizan:
-						
-			\begin{itemize}
-				\item La plataforma como servicio (\textit{\gls{paas}} -\gls{paas-a}-) de \gls{iot-a} para enviar datos de forma sencilla desde dispositivos y permitir la comunicación entre éstos y las aplicaciones. % TODO - IOT
-				\item El sistema web que actúa como cliente delgado para consumir la información. Esta aplicación es desplegada en  en la plataforma como servicio (\textit{\gls{paas}} -\gls{paas-a}-) \cite{gonzalez:2011:TCCS} \gls{cloudfoundry} de tal manera que se garantiza, con respecto a un sistema local, una rápida provisión y despliegue de la aplicación junto con una total disponibilidad.  
-				% TOMCAT o CloudFoundry?
-				% TODO Esa tecnología también debe ir en el diagrama de despliegue. Añadir la dirección web donde se puede acceder en el diagrama. Si no quito IOT, el gls{pass} debe ir en IOT.
-				
-			\end{itemize}
-			
+		 				 				
+			\item El sistema web que actúa como cliente delgado para consumir la información monitorizada. Este sistema es desplegado en la plataforma como servicio (\textit{\gls{paas}} -\gls{paas-a}-) \cite{gonzalez:2011:TCCS} \textit{Liberty for Java} (\gls{cloudfoundry}) perteneciente al servicio IBM Cloud. Este tipo de despliegue garantiza, con respecto a uno local, una rápida provisión y configuración de la aplicación junto con una total disponibilidad.  
+		
 			\item El servicio para el envío de notificaciones mediante \textit{emails}, siendo Gmail (\gls{saas-a}) el configurado y utilizado.
 		\end{itemize}
 	\end{itemize}
@@ -3875,12 +3859,12 @@ breaklines=true,
 	% Section
 	\section{Tecnologías de desarrollo}
 	
-	La codificación de los componentes de Hyot se ha llevado a cabo con diversas tecnologías de desarrollo. El empleo de varias, en concreto 4, se debe a las necesidades requeridas por cada componente ya sea por su grado de adaptación o porque se encuentre impuesto por la propia herramienta y a la experiencia de uso. A continuación, se indican cada una de ellas referenciando el componente o componentes donde se emplean y la justificación de ello:
+	La codificación de los componentes de Hyot se ha llevado a cabo con diversas tecnologías de desarrollo. El empleo de varias, en concreto 4, se debe a las necesidades requeridas por cada componente ya sea por su grado de adaptación o porque se encuentre impuesto por la propia herramienta y a la experiencia de uso. A continuación, se indica cada una de ellas referenciando el componente o componentes donde se emplea y la justificación de ello:
 	
 	\begin{itemize}
 		\item GNU Bash \cite{bash}: intérprete y procesador de comandos de \textit{\gls{shell}} que permite ejecutar \textit{\glspl{script}} simples por consola con la finalidad de automatizar tareas que puede desempeñar un administrador de sistemas como puede ser la configuración de un sistema. Fue desarrollado para el proyecto GNU en el año 1987 como la versión libre del hasta entonces intérprete más importante de \gls{unix}: \gls{bourneshell} (\gls{bourneshell-a}) y actualmente es el estándar de todas las distribuciones \gls{gnulinux}. Esta tecnología es usada para codificar el componente de configuración del dispositivo \gls{raspberry-a} debido a que es la más idónea para automatizar las acciones de configuración inicial al no requerir demasiada complejidad en cuyo caso hubiese que haber empleado otros lenguajes de \textit{scripting} más potentes como por ejemplo, \gls{perl} o \gls{python}.
 		 	
-		\item Javascript (JS) \cite{javascript}: lenguaje de programación ligero e interpretado -orientado a objetos, basado en prototipos, imperativo, débilmente tipado y dinámico, entre otras características- que surge debido a la necesidad de ampliar las posibilidades de desarrollar sistemas web del lado del cliente (\textit{\gls{frontend}}) con contenido más complejo, dinámico y funcional ya que hasta entonces las prestaciones de estos sitios se encontraban limitadas exclusivamente a funcionalidades básicas sobre los elementos de texto, estilos y formatos, es decir, a contenido estático. Iniciado originalmente por Brendan Eich de la compañía de \textit{software} Netscape Communications Corporation con el nombre de Mocha, el cual fue renombrado posteriormente a LiveScript, para finalmente quedar como JavaScript y continuado por la alianza entre Netscape y Sun, se ha popularizado enormemente hasta convertirse es un estándar basado en \gls{ecmascript} y soportado por todos los navegadores actuales. El uso de este lenguaje se ha centrado en el desarrollo de la red de negocio con la tecnología \gls{hyperledgercomposer-a} ya que es el lenguaje impuesto para describir la estructura de los recursos que participan en la \gls{blockchain-a}. Aun así, esta tecnología presenta su propia sintaxis basada en este lenguaje. También, se ha empleado para definir la funcionalidad del lado de cliente del sistema web mediante la librería jQuery y otras librerías de funcionalidad específica.
+		\item Javascript (JS) \cite{javascript}: lenguaje de programación ligero e interpretado -orientado a objetos, basado en prototipos, imperativo, débilmente tipado y dinámico, entre otras características- que surge debido a la necesidad de ampliar las posibilidades de desarrollar sistemas web del lado del cliente (\textit{\gls{frontend}}) con contenido más complejo, dinámico y funcional ya que hasta entonces las prestaciones de estos sitios se encontraban limitadas exclusivamente a funcionalidades básicas sobre los elementos de texto, estilos y formatos, es decir, a contenido estático. Iniciado originalmente por Brendan Eich de la compañía de \textit{software} Netscape Communications Corporation con el nombre de Mocha, el cual fue renombrado posteriormente a LiveScript, para finalmente quedar como JavaScript y continuado por la alianza entre Netscape y Sun, se ha popularizado enormemente hasta convertirse es un estándar basado en \gls{ecmascript} y soportado por todos los navegadores actuales. El uso de este lenguaje se ha centrado en el desarrollo de la red de negocio con la tecnología \gls{hyperledgercomposer-a} ya que es el lenguaje impuesto para describir la estructura de los recursos que participan en la \gls{blockchain-a}. También, se ha empleado para definir la funcionalidad del lado de cliente del sistema web mediante la librería jQuery y otras librerías de funcionalidad específica.
 		
 		\item Python \cite{python}: lenguaje de \textit{scripting} de código abierto interpretado, interactivo y orientado a objetos creado por Guido van Rossum, preparado para desarrollar independientemente de la plataforma y sistema operativo desde aplicaciones de escritorio, \textit{\glspl{script}} o incluso, sistemas web. En este tipo de lenguajes, que son más flexibles y portables que los lenguajes compilados, se emplea un programa intermedio llamado intérprete donde se traduce el código fuente a un pseudo código llamado \textit{bytecode} la primera vez que se ejecuta, generando archivos \texttt{.pyc} o \texttt{.pyo}, que son los que se ejecutarán en sucesivas ocasiones directamente en la computadora, en lugar de compilar el código a lenguaje máquina comprensible por este dispositivo. En los últimos años el lenguaje se ha hecho muy popular debido a todas las características que proporciona. Gracias a esto, a la facilidad de interacción con componentes electrónicos y al contexto y necesidades de desarrollo rápido y sencillo se ha empleado en:
 		
@@ -3895,7 +3879,6 @@ breaklines=true,
 	% Section
 	\section{Red de negocio de Hyperledger Composer} \label{businessNetwork}
 	
-	% TODO - Peer node?
 	La especificación de la red de negocio es un concepto clave en \gls{blockchain-a} puesto que representa la digitalización de los elementos que la conforman junto con la lógica de negocio. En Hyot, se ha empleado la herramienta \gls{hyperledgercomposer-a} para la definición de esta red la cual es desplegada a través de un fichero \texttt{.bna} y mantenida por cada nodo conectado a la \gls{blockchain-a} de \gls{hyperledgerfabric-a}\footnote{En el contexto actual del Trabajo Fin de Máster (\gls{tfm-a}) y debido a las limitaciones existentes, la red está formada por un único nodo, en concreto, aquel desplegado en \gls{hyperledgerfabric-a} de la \gls{vm-a} establecida en el servicio Microsoft Azure.}. Aunque \gls{hyperledgercomposer-a} no aprovecha aun todas las características que ofrece el \textit{\gls{framework}} \gls{hyperledgerfabric-a}, las necesidades actuales son cubiertas con creces con esta herramienta\footnote{\gls{hyperledgercomposer-a} se encuentra bajo continuo desarrollo y está respaldado por una fuerte comunidad de desarrolladores, hecho contrastado por la liberación constante de nuevas \textit{releases}. Consultar \cite{hyperledgercomposer:releases} para obtener más información.} y su uso se debe a los beneficios que proporciona:
 	
 	\begin{itemize}
@@ -3912,14 +3895,14 @@ breaklines=true,
 		\item Transacción o \textit{\gls{transaction}}: simbolizan las reglas de negocio permitidas, es decir, los procedimientos por el cual los participantes interactúan con los activos.
 	\end{itemize}
 	
-	En el dominio de nuestro caso de uso -versión actual de la red 1.1.2- se ha determinado el siguiente espacio de nombres \texttt{org.hyot.network.} y se ha definido únicamente un tipo de activo o \textit{\glspl{asset}} (estereotipo \texttt{<<asset>>}) con nombre \texttt{Alert} que representa una incidencia en el entorno monitorizado, es decir, la alerta de un suceso anómalo y contiene un dato clave de la evidencia, valor \textit{hash}. Este activo, que ha sido especificado utilizando a mayores dos tipos enumerados y una clase abstracta\footnote{Indica que el tipo no puede ser instanciado.} \texttt{concept}\footnote{Clase que no representa ni un activo, ni un participante ni una transacción y típicamente son contenidos por alguno de ellos.} como objetivo meramente de aprendizaje\footnote{El foco también ha sido aprender la sintaxis de la tecnología por lo que se que han definido entidades y propiedades adicionales o de la forma menos directa.}, se compone de:
+	En el dominio de nuestro caso de uso -versión actual de la red 1.1.2- se ha determinado el siguiente espacio de nombres \texttt{org.hyot.network.} y se ha definido únicamente un tipo de activo (estereotipo \texttt{<<asset>>}) con nombre \texttt{Alert} que representa una incidencia en el entorno monitorizado, es decir, la alerta de un suceso anómalo y contiene un dato clave de la evidencia, valor \textit{hash}. Este activo, que ha sido especificado utilizando a mayores dos tipos enumerados y una clase abstracta\footnote{Indica que el tipo no puede ser instanciado.} (estereotipo \texttt{<<concept>>}\footnote{Clase que no representa ni un activo, ni un participante ni una transacción y típicamente son contenidos por alguno de ellos.}) como objetivo meramente de aprendizaje\footnote{El foco también ha sido aprender la tecnología por lo que se han definido entidades y propiedades adicionales o de la forma menos directa.}, se compone de:
 	
 		\begin{itemize}
 			\item Identificador de la alerta (tipo \texttt{String}) que actúa como clave primaria, es decir, valor único. Coincide con el identificador de la medición almacenada en la \gls{bbdd-a} a la que está asociada.
-			\item Clase \texttt{AlertDetails} con estereotipo \texttt{<<concept>>} que contiene los detalles de la alerta:
+			\item Clase \texttt{AlertDetails} con estereotipo \texttt{<<concept>>} que contiene los detalles de la alerta\footnote{El valor de cada propiedad aquí almacenada, con fin estadístico, coincide con el almacenado en la medición -excepto el valor \textit{hash} que no es registrado en la medición-. Sí que es verdad, que al presentar el mismo identificador se podría relacionar la medición y alerta y obtener la información pero requiere de una complejidad mayor en la lógica.}:
 			
 			\begin{itemize}
-				\item Marca temporal (\textit{timestamp}) en la que ocurre el suceso (tipo \texttt{DateTime}), coincidiendo de nuevo con la almacenada en la medición.
+				\item Marca temporal (\textit{timestamp}) en la que ocurre el suceso (tipo \texttt{DateTime}).
 				\item \Gls{sensor} que origina el protocolo de alerta de tipo \texttt{SensorType} el cual representa una enumeración.
 				\item Evento del \gls{sensor} que origina el protocolo de alerta de tipo \texttt{EventType} el cual representa una enumeración.
 				\item Valor \textit{hash} del contenido de la evidencia original -sin encriptar ni firmar- (tipo \texttt{String}).
@@ -3928,14 +3911,14 @@ breaklines=true,
 			\end{itemize}
 		\end{itemize}
 		
-		Cada enumerado contiene a su vez los posibles valores para los campos que hacen referencia al \gls{sensor} y evento que lanzan la alerta, siendo éstos los siguientes:
+		Cada enumerado contiene a su vez los posibles valores para las propiedades que hacen referencia al \gls{sensor} y evento que lanzan la alerta, siendo éstos los siguientes:
 		
 		\begin{itemize}
 			\item Enumerado \texttt{SensorType}: DHT11 y HCSR04.
 			\item Enumerado \texttt{EventType}: TEMPERATURE, HUMIDITY, DISTANCE.
 		\end{itemize}
 	
-	Con respecto a los participantes (\textit{\glspl{participant}}) se ha definido al participante \texttt{User} -estereotipo \texttt{<<participant>>}- que representa el usuario o dispositivo que registra una alerta en la \gls{blockchain-a} y contiene las siguientes propiedades:
+	Con respecto a los participantes se ha definido al participante \texttt{User} -estereotipo \texttt{<<participant>>}- que representa el usuario o dispositivo que registra una alerta en la \gls{blockchain-a} y contiene las siguientes propiedades:
 			
 		\begin{itemize}
 			\item Nombre de usuario que actúa como clave primaria debiendo ser único su valor (tipo \texttt{String}). 
@@ -3943,9 +3926,9 @@ breaklines=true,
 			\item Nombre real (tipo \texttt{String}).
 			\item Apellidos (tipo \texttt{String}).
 		\end{itemize}
-			
-	La lógica de negocio está definida por la especificación de la transacción o \textit{\glspl{transaction}} \texttt{PublishAlert} (estereotipo \texttt{<<transaction>>}) que contiene los mismos campos que los del activo \texttt{User}. Esta transacción es ejecutada por una función procesadora de transacciones cuyo propósito es el registro de un nuevo activo \texttt{User} en la \gls{blockchain-a}. Además, en la red de negocio se pueden especificar consultas (\textit{querys}) que se ejecutan contra la \gls{blockchain-a} y definir los privilegios de acceso para los participantes y activos. Para el primer caso, se han definido las siguientes consultas algunas de ellas parametrizadas\footnote{Cabe indicar que la obtención de la información también puede realizarse mediante llamadas directas a la entidad, aunque de esta forma únicamente se puede obtener información simple y no filtrada. Además, con el formato de consulta se evita la dependencia de indicar el \textit{namespace} la de la red.}.
 	
+	La lógica de negocio está definida por la especificación de la transacción \texttt{PublishAlert} (estereotipo \texttt{<<transaction>>}) que contiene los mismos campos que los del activo \texttt{Alert}. Esta transacción es ejecutada por una función procesadora de transacciones cuyo propósito es el registro de un nuevo activo \texttt{Alert} en la \gls{blockchain-a}. Además, en la red de negocio se pueden especificar consultas (\textit{querys}) que se ejecutan contra la \gls{blockchain-a} y definir los privilegios de acceso para los participantes. Para el primer caso, se han definido las siguientes consultas algunas de ellas parametrizadas\footnote{Cabe indicar que la obtención de la información también puede realizarse mediante llamadas directas a la entidad, aunque de esta forma únicamente se puede obtener información simple y no filtrada. Además, con el formato de consulta se evita la dependencia de indicar el \textit{namespace} de la red.}.
+		
 	\begin{itemize}
 		\item Seleccionar todas las alertas.
 		\item Seleccionar las alertas generadas por un determinado sensor.
@@ -3962,7 +3945,7 @@ breaklines=true,
 	\begin{itemize}
 		\item Todos los participantes de tipo \texttt{User} pueden registrar transacciones \texttt{PublishAlert}.
 		\item Todos los participantes de tipo \texttt{User} pueden crear activos de tipo \texttt{Alert} cuando se registren transacciones \texttt{PublishAlert}. Esto quiere decir que este tipo de activos no pueden ser creados directamente con este tipo de participante.
-		\item Todos los participantes de tipo \texttt{User} pueden obtener el registro de los activos \texttt{Alert} cuyo poseedor sean ellos mismos lo que implica que los registros una vez almacenados no puedan ser modificados ni eliminados, proporcionando así una capa extra de seguridad al asegurar que si una alerta fue almacenada es porque realmente sucedió. Esta regla implica también que un determinado participante \texttt{User} no puede consultar los activos de alerta registrados por otros participantes de este tipo.
+		\item Todos los participantes de tipo \texttt{User} pueden obtener el registro de los activos \texttt{Alert} cuyo poseedor sean ellos mismos lo que implica que los registros una vez almacenados no puedan ser modificados ni eliminados, proporcionando así una capa extra de seguridad al asegurar que si una alerta fue almacenada es porque realmente sucedió. Esta regla implica también que un determinado participante \texttt{User} no puede consultar los activos \texttt{Alert} registrados por otros participantes de este tipo.
 		\item Los administradores de la red de negocio presentan acceso completo a los recursos de usuario por lo que pueden realizar directamente cualquier tipo de operación sobre las entidades participante, activo y transacción lo cual es denegado al participante de tipo \texttt{User} en algunos casos.
 		\item Los administradores de la red de negocio presentan acceso completo a los recursos de sistema lo que permite por ejemplo, desplegar la red de negocio, gestionar identidades, etc.
 	\end{itemize}
@@ -3972,163 +3955,159 @@ breaklines=true,
 	% Section
 	\section{Jerarquía de ficheros}
 	
-	En esta sección se desglosa la estructura completa de directorios y ficheros del proyecto Hyot -según la jerarquía completa del proyecto situada bajo un directorio llamado \texttt{Hyot}- diferenciando los componentes que lo conforman:
+	En esta sección se desglosa la estructura de directorios y ficheros del proyecto -según la jerarquía completa situada bajo el directorio llamado \texttt{Hyot}- diferenciando los componentes que lo conforman:
 		
 	\begin{itemize}
-		\item \texttt{.gitignore}: fichero oculto que permite excluir del control de versiones \gls{git} determinados archivos por lo que serán ignorados y por tanto no versionados al repositorio de código.
+		\item \texttt{.gitignore}: fichero oculto que permite excluir del control de versiones \gls{git} determinados archivos los cuales son ignorados y por tanto no versionados en el repositorio de código.
 		\item \texttt{README.md}: fichero de texto en formato \gls{markdown} que documenta el proyecto Hyot, es decir, contiene información acerca de éste como la descripción, componentes, dependencias, guía de instalación y de uso, autor, etc.
 		
-		\item \textbf{hyot\_app:} componente del proyecto Hyot referido al sistema web desarrollado con el \textit{framework} \gls{grails} para consumir la información monitorizada.
+		\item \textbf{hyot\_app:} componente del proyecto Hyot referido al sistema web desarrollado con el \textit{\gls{framework}} \gls{grails} para consumir la información monitorizada\footnote{Únicamente se especifican los directorios y ficheros más importantes.}.
 			
-		% TODO - Especificar más? ficheros de controladores, servicios, etc.
 		\begin{itemize}
-			\item \texttt{application.properties:} fichero de metadatos que contiene la versión de \gls{grails} empleada y el nombre y versión de la aplicación.
+			\item \texttt{build:} directorio que contiene el código compilado junto con ficheros propios de la aplicación web.
+	
 			\item \texttt{grails-app:} directorio que contiene todos los artefactos \gls{groovy} que el entorno genera y que el desarrollador debe modificar para implementar la funcionalidad.
 				 
 			\begin{itemize}
-				\item \texttt{assets:} contiene las hojas de estilo \gls{css-a} (\textit{\gls{css}}) y los ficheros \gls{js} (\gls{js-a}). Estos ficheros también pueden ser situados bajo el directorio \texttt{web-app}. Sin embargo, en el directorio actual son tratados de manera más eficiente. 
-				\item \texttt{conf:} contiene ficheros fuente de configuración de la aplicación.
+				\item \texttt{assets:} directorio que contiene las hojas de estilo \gls{css-a} (\textit{\gls{css}}) y los ficheros \gls{js-a}. Estos ficheros también pueden ser situados bajo el directorio \texttt{src/main/webapp}. Sin embargo, en el directorio actual son tratados de manera más eficiente. 
+				\item \texttt{conf:} contiene ficheros de configuración de la aplicación.
 						
 				\begin{itemize}
-					\item \texttt{BootStrap.groovy:} fichero que especifica las acciones a ejecutar al arranque y/o destrucción de la aplicación.
-					\item \texttt{BuildConfig.groovy:} fichero que controla distintos aspectos del proceso de compilación como las rutas de trabajo y la resolución de dependencias.
-					\item \texttt{Config.groovy:} fichero contiene los parámetros de configuración general de la aplicación.
-					\item \texttt{DataSource.groovy:} fichero con la configuración de la \gls{bbdd-a}.
-					\item \texttt{hibernate:} directorio con configuración personal de \gls{hibernate}.
-					\item \texttt{spring:} directorio con configuración personal de \gls{spring}.
-					\item \texttt{UrlMappings.groovy:} fichero que contiene el mapeo de las direcciones \glspl{url-a} (\textit{\gls{url}}).
+					\item \texttt{spring:} directorio que contiene el fichero \texttt{resources.groovy} donde se registran e inyectan \textit{beans} -objetos adicionales- usados por \Gls{spring} DSL.
+					\item \texttt{application.groovy:} fichero que contiene la configuración del \textit{\gls{plugin}} Spring Security Core.
+					\item \texttt{application.yml:} fichero \gls{yaml-a} (\textit{\gls{yaml}}) que contiene las principales configuraciones como, por ejemplo la \gls{bbdd-a}, las credenciales del servicio de envío de notificaciones, etc.
+					\item \texttt{logback.groovy:} fichero que contiene la configuración para el \textit{logger}.				
 				\end{itemize}
 						
-		    	\item \texttt{controllers:} directorio que contiene los ficheros correspondientes a los controladores de la aplicación.
-				\item \texttt{domain:} directorio que contiene las clases de dominio mapeadas como tablas en la \gls{bbdd-a}.
+		    	\item \texttt{controllers:} directorio que contiene los controladores de la aplicación.
+		    	
+		    	\begin{itemize}
+					\item \texttt{ControlPanel:} directorio que contiene los controladores empleados por el usuario administrador.
+					\item \texttt{CustomUserTasks:} directorio que contiene el controlador que implementa la funcionalidad para un usuario sin registrar (redirección tras autenticación, autenticación fallida, restablecer contraseña, etc.).
+					\item \texttt{grails/plugin/springsecurity:} directorio que contiene el controlador definido por el \textit{\gls{plugin}} Spring Security Core para el procedimiento de autenticación. Este controlador por defecto se ubica en el directorio del propio \textit{\gls{plugin}}. Sin embargo, se ha ubicado aquí porque se han redifinido determinadas acciones.
+					\item \texttt{hyot\_app:} directorio que contiene el fichero \texttt{UrlMappings.groovy} el cual define el mapeo de las direcciones \glspl{url-a} (\textit{\gls{url}}).	
+					\item \texttt{Security:} directorio que contiene el controlador para gestionar la entidad \texttt{SecUser} la cual está referida al usuario administrador.	
+					\item \texttt{User:} directorio que contiene el controlador para gestionar la entidad \texttt{User} la cual está referida al usuario normal.	
+					\item \texttt{UserPage:} directorio que contiene el controlador empleado por el usuario normal.
+				\end{itemize}
+		    	
+				\item \texttt{domain:} directorio que contiene las clases de dominio mapeadas como tablas en la \gls{bbdd-a}, donde se ubican las entidades referentes al usuario administrador, al usuario normal, a los roles, relaciones entre éstos y al \textit{\gls{token}}.
 				\item \texttt{i18n:} directorio que contiene los ficheros de mensajes de internacionalización de la aplicación que permiten adaptar el idioma de acuerdo al lenguaje del navegador.
-				\item \texttt{migrations:} directorio que contiene los ficheros que monitorizan los cambios y migraciones de la aplicación.
+				\item \texttt{init:} directorio que contiene el fichero \texttt{BootStrap.groovy} que especifica las acciones a ejecutar al arranque y/o destrucción de la aplicación.
 				\item \texttt{services:} directorio que contiene las clases que modelan los servicios. Corresponde con la capa de servicio.
+				
+				\begin{itemize}
+					\item \texttt{Certificate:} directorio que contiene el servicio para saltar la verificación del certificado al hacer peticiones al servidor de \gls{hyperledgercomposer-a}.
+					\item \texttt{Cloudant:} directorio que contiene el servicio que maneja la lógica de \gls{cloudant}.
+					\item \texttt{CustomUserTasks:} directorio que contiene el servicio que maneja la lógica de las funcionalidades de un usuario sin registrar.
+					\item \texttt{HyperledgerFabric:} directorio que contiene el servicio que maneja la lógica de las peticiones a la \gls{blockchain-a} de \gls{hyperledgerfabric-a} a través de \gls{hyperledgercomposer-a}.
+					\item \texttt{Security:} directorio que contiene el servicio para gestionar los \textit{\glspl{token}}.
+				\end{itemize}
 				\item \texttt{taglib:} directorio que contiene las librerías de etiquetas que el desarrollador crea para ser utilizadas en las vistas.
-				\item \texttt{utils:} directorio que contiene clases utilitarias.
 				\item \texttt{views:} directorio que contiene ficheros \gls{gsp-a} (\textit{\gls{gsp}}) que modelan las vistas de la aplicación.
 			\end{itemize}
-		
-			\item \texttt{Ficheros grailsw y grailsw.bat\footnote{Consulte \cite{grails:wrapper} para obtener más información sobre este proceso.}:} ficheros que descargan el \textit{framework} \gls{grails} y lo instalan en el directorio \textit{wrapper} cuando se ejecuta por primera vez.
 			
-			\item \texttt{lib:} directorio que contiene los ficheros \gls{jar-a} (\textit{\gls{jar}}) que la aplicación requiera y no se incluyan por defecto.
-			\item \texttt{README.md:} fichero de texto en formato \gls{markdown} que documenta el sistema web.
-			\item \texttt{scripts:} directorio que contiene clases ejecutadas como \textit{\glspl{script}}.
-			\item \texttt{src:} directorio que contiene otras clases y código fuente \gls{java} y/o \gls{groovy}. También, contiene las plantillas usadas por \gls{grails} para la creación de los diferentes artefactos (\textit{\gls{scaffolding}}).
-			
-			\begin{itemize}
-				\item \texttt{templates/artifacts:} directorio con plantillas para generar los distintos artefactos: controlador, clase de dominio, servicio, etc.
-				\item \texttt{templates/scaffolding:} directorio con plantillas para generar el \textit{\gls{scaffolding}} de una clase de dominio.
-				\item \texttt{templates/war:} directorio que contiene la plantilla para generar el fichero \gls{war-a} (\textit{\gls{war}}).
-			\end{itemize}
-				
-			\item \texttt{target:} directorio que contiene el código compilado, junto con ficheros propios de la aplicación web (recursos estáticos, imágenes, etc.).
-			\item \texttt{test:} directorio que contiene ficheros para la ejecución de casos de pruebas.
-			\item \texttt{web-app:} directorio raíz de la aplicación web. 
-			\item \texttt{wrapper:} directorio que contiene ficheros que permiten construir una aplicación \gls{grails} y ejecutar comandos en un proyecto sin tener instalado el \textit{framework} ni configurada la variable de entorno \texttt{GRAILS\_HOME}.
+			\item \texttt{src:} directorio que contiene la especificación de tests y otras clases \gls{java} y/o \gls{groovy}. Entre esta clases, se han definido algunas para extender la funcionalidad o gestionar las sesiones concurrentes, la redirección tras una autenticación exitosa, el manejo de cierre de sesión, etc.JS
+			\item \texttt{build.gradle:} fichero que contiene distintos aspectos del proceso de compilación como las rutas de trabajo y la resolución de dependencias.
 		\end{itemize}
 		
 		\item \textbf{hyot\_bnd:} componente del proyecto Hyot que contiene la especificación de la red de negocio desplegada en la \gls{blockchain-a} de \gls{hyperledgerfabric-a}. El desarrollo de este componente se ha realizado con \gls{hyperledgercomposer-a}.
 		\begin{itemize}
 			\item \texttt{dist}: directorio donde se almacena la red de negocio generada (\texttt{hyot-network@version.bna}).
 			\item \texttt{doc}: directorio donde se almacena la documentación generada con el \gls{lenguajemarcado} \gls{jsdoc-a} (\textit{\gls{jsdoc}}).
-			\item \texttt{lib}: directorio donde se ubican los ficheros que permiten implementar los requisitos de la red de negocio.
+			\item \texttt{lib}: directorio donde se ubican los ficheros que permiten implementar los requisitos de funcionalidad de la red de negocio.
 			\begin{itemize}
-				\item \texttt{hyot\_logic.js}: fichero \gls{js-a} que define la lógica de las funciones procesadoras de transacciones (\textit{\glspl{transaction}}) para la red de negocio.
+				\item \texttt{hyot\_logic.js}: fichero \gls{js-a} que define la lógica de las funciones procesadoras de transacciones para la red de negocio.
 			\end{itemize}
-			\item \texttt{models}: directorio donde se ubican los ficheros que permiten modelar la estructura y dominio de una red de negocio (activos -\textit{\glspl{asset}}-, participantes -\textit{\glspl{participant}}- y transacciones -\textit{\glspl{transaction}}-) y las relaciones entre los elementos.		
+			\item \texttt{models}: directorio donde se ubican los ficheros que permiten modelar la estructura y dominio de una red de negocio (activos, participantes y transacciones) y las relaciones entre los elementos.		
 			\begin{itemize}
 				\item \texttt{hyot\_model.cto}: fichero que modela la red de negocio.
 			\end{itemize}
-			\item \texttt{node\_modules}: directorio que contiene los paquetes instalados localmente al proyecto con la herramienta \gls{npm-a} (\textit{\gls{npm}}).	
+			\item \texttt{node\_modules}: directorio que contiene los paquetes de \gls{nodejs} instalados localmente al proyecto con la herramienta \gls{npm-a} (\textit{\gls{npm}}).	
 			\item \texttt{test}: directorio que contiene la especificación de los tests unitarios.
 			\begin{itemize}
-				\item \texttt{xx}: % TODO -- aa
+				\item \texttt{hyot\_unit.js}: fichero que contiene test unitarios sobre la red de negocio especificada.
 			\end{itemize}
 			\item \texttt{uml}: directorio que contiene diagramas \gls{uml-a} (\textit{\gls{uml}}) de los modelos de la red de negocio, generados con la herramienta PlantUML\footnote{Extensión para la herramienta Visual Studio Code que requiere tener instalados las herramientas Java y Graphviz. Para obtener más información, consultar \cite{krishnan:uml}.}.
 				\begin{itemize}
 				\item \texttt{hyot\_bnd\_uml.png}: imagen del diagrama \gls{uml-a} del modelo de Hyot.
 				\item \texttt{hyot\_bnd\_uml.puml}: fichero PlantUML del modelo de Hyot.
 			\end{itemize}
-			\item \texttt{.eslintignore}: fichero asociado a la herramienta \textit{\gls{opensource}} \gls{eslint} que permite excluir del proceso del \textit{\gls{linter}} determinados ficheros por lo que serán ignorados.	
+			\item \texttt{.eslintignore}: fichero asociado a la herramienta \textit{\gls{opensource}} \gls{eslint} que permite excluir del proceso del \textit{\gls{linter}} determinados ficheros los cuales son ignorados.	
 			\item \texttt{.eslintrc.yml}: fichero en formato \gls{yaml-a} que especifica la configuración de la herramienta \gls{eslint}.
 			\item \texttt{jsdoc.json	}: fichero en formato \gls{json-a} (\textit{\gls{json}}) que contiene la configuración para la generación de documentación con \gls{jsdoc-a}.
-			\item \texttt{package.json}: fichero \gls{json-a} donde se especifican metadatos de identificación del proyecto (nombre, versión, descripción, repositorio, autores, licencia, etc.) y de las dependencias necesarias para su funcionamiento.
-			\item \texttt{package-lock.json}: fichero \gls{json-a} que permite mantener un detalle específico de las versiones de dependencias que están instaladas en el proyecto de forma que garantiza que todos los colaboradores presenten las mismas versiones de paquetes.
-			\item \texttt{permissions.acl}: fichero que detalla las reglas de control de acceso para los participantes (\textit{\glspl{participant}}) de la red de negocio.
-			\item \texttt{\glspl{query}.qry}: fichero que contiene la definición de las consultas que se pueden realizar a la \gls{blockchain-a} desplegada.
+			\item \texttt{package.json}: fichero \gls{json-a} donde se especifican metadatos de identificación del proyecto (nombre, versión, descripción, repositorio, autores, licencia, etc.) y las dependencias necesarias para su funcionamiento.
+			\item \texttt{package-lock.json}: fichero \gls{json-a} que permite mantener el detalle específico de las versiones de dependencias que están instaladas en el proyecto de forma que garantiza que todos los colaboradores presenten las mismas versiones de paquetes.
+			\item \texttt{permissions.acl}: fichero que detalla las reglas de control de acceso para los participantes de la red de negocio.
+			\item \texttt{\glspl{query}.qry}: fichero que contiene la definición de las consultas que se pueden realizar contra la \gls{blockchain-a} desplegada.
 			\item \texttt{README.md}: fichero de texto en formato \gls{markdown} que documenta la red de negocio.
 		\end{itemize}	
-		
-		\item \textbf{hyot\_raspberry/setup:} componente del proyecto Hyot, formado por dos ficheros \gls{bash-a} (\textit{\gls{bash}}), que permite configurar el dispositivo \gls{raspberry-a}.
-			\begin{itemize}
-				\item \texttt{raspberrypi\_setup.sh}: fichero que ejecuta una serie de comprobaciones iniciales, instala las dependencias y habilita las interfaces necesarias\footnote{El detalle explícito de las dependencias instaladas e interfaces habilitadas puede obtenerse en el anexo \ref{install}.}.
-				\item \texttt{utils.sh}: fichero que contiene funciones para proporcionar formato y estilo al texto mostrado por consola.
-			\end{itemize}
-		
-		\item \textbf{hyot\_raspberry/hyot\_decryption:} componente del proyecto Hyot, formado por dos ficheros \gls{python}, que permite la desencriptación de evidencias previamente encriptadas y firmadas con \gls{gpg-a}.
-			\begin{itemize}
-				\item \texttt{hyot\_decryption.py}: fichero que contiene la funcionalidad principal para efectuar la desencriptación y el resto de comprobaciones.
-				\item \texttt{menu\_module.py}: fichero que parsea el menú y comprueba las opciones introducidas por el usuario.	
-			\end{itemize}
-		
-		\item \textbf{hyot\_raspberry/hyot:} componente del proyecto Hyot, formado por ficheros \gls{python}, que monitoriza sucesos -temperatura, humedad y distancia- del entorno desde sensores conectados a una \gls{raspberry-a} y en caso de producirse una lectura anómala se activa el protocolo de alerta.
+				
+		\item \textbf{hyot\_raspberry/hyot:} componente del proyecto Hyot, formado por ficheros \gls{python}, que monitoriza sucesos -eventos temperatura, humedad y distancia- del entorno \gls{iot-a}.
 		\begin{itemize}
 			\item \texttt{logs}: directorio donde se almacena el fichero de \textit{log} generado durante la ejecución de este componente. Este fichero contiene la salida por consola.
 			\item \texttt{conf}: directorio de configuración.
 			\begin{itemize}
-				\item \texttt{hyot.yml}: fichero \gls{yaml-a} (\textit{\gls{yaml}}) que define la configuración de determinados servicios (Gmail, Dropbox, etc.). Este fichero no está bajo control de versiones y es de obligatoriedad su existencia.
+				\item \texttt{hyot.yml}: fichero \gls{yaml-a} que define la configuración de determinados servicios (Gmail, Dropbox, etc.). Este fichero no está bajo control de versiones y es de obligatoriedad su existencia.
 			\end{itemize}
-			\item \texttt{template}: directorio que contiene las plantillas para el envío de \textit{emails}.
+			\item \texttt{template}: directorio que contiene las plantillas para las notificaciones mediante \textit{emails}.
 			\begin{itemize}
 				\item \texttt{email\_template.html}: plantilla \gls{html-a} (\textit{\gls{html}}) referida al envío de una notificación de \textit{email} cuando se produce una alerta.
 				\item \texttt{error\_measurement\_template.html}: plantilla \gls{html-a} referida al envío de una notificación de \textit{email} cuando se produce algún error durante la medición.
 			\end{itemize}
-			\item \texttt{camera\_module.py}: módulo que contiene la lógica para manejar el dispositivo PiCamera.
+			\item \texttt{camera\_module.py}: módulo que contiene la lógica para manejar el dispositivo Picamera.
 			\item \texttt{checks\_module.py}: módulo que parsea el menú comprobando las opciones introducidas por el usuario y realiza diversas comprobaciones iniciales tales como la comprobación de ejecución con usuario superprivilegiado, comprobación de que se está ejecutando en una plataforma \gls{gnulinux} y en un dispositivo \gls{raspberry-a}, etc.
-			\item \texttt{cloudantdb\_module.py}: módulo que gestiona la lógica con la plataforma \gls{cloudant} del servicio IBM Cloud, conectando, generando la \gls{bbdd-a}, subiendo datos y desconectando. 
+			\item \texttt{cloudantdb\_module.py}: módulo que gestiona la lógica con la plataforma \gls{cloudant} del servicio IBM Cloud.
 			\item \texttt{dropbox\_module.py}: módulo que gestiona la funcionalidad con el servicio Dropbox.
-			\item \texttt{email\_module.py}: módulo que gestiona el envío de \textit{emails}.
-			\item \texttt{gpg\_module.py}: módulo que hace uso de la funcionalidad provista por \gls{gpg-a} para la encriptación y firmado de ficheros.
-			\item \texttt{hyot\_main.py}: fichero que contiene la funcionalidad principal para efectuar la monitorización. Este fichero importa todos los módulos y realiza llamadas a las funciones de éstos. 
+			\item \texttt{email\_module.py}: módulo que gestiona el envío de \textit{emails} a través del servicio Gmail.
+			\item \texttt{gpg\_module.py}: módulo que hace uso de la funcionalidad provista por \gls{gpg-a} para la encriptación y firmado de evidencias.
+			\item \texttt{hyot\_main.py}: fichero que contiene la funcionalidad principal para efectuar la monitorización del entorno. Este fichero importa todos los módulos y realiza llamadas a las funciones de éstos. 
 			\item \texttt{hyperledgerFabric\_module.py}: módulo que gestiona la interacción con la \gls{blockchain-a} de \gls{hyperledgerfabric-a}.
-			\item \texttt{iot\_module.py}: módulo que gestiona la lógica con la plataforma \gls{iot-a} del servicio IBM Cloud.
-			\item \texttt{lcd\_module.py}: fichero que permite manejar los \glspl{lcd-a}.
+			\item \texttt{lcd\_module.py}: módulo que maneja los \glspl{lcd-a}.
 			\item \texttt{logger.py}: clase que permite redirigir la salida de la ejecución tanto a un fichero de \textit{log} como a la consola.
 			\item \texttt{system\_module.py}: módulo que ejecuta funciones sobre el sistema local, en concreto, la creación, eliminación y establecimiento de permisos de directorios y/o ficheros y la comprobación de existencia de ficheros.
 			\item \texttt{token\_module.py}: módulo que contiene funciones para generar \textit{\glspl{token}} empleados en la securización del servidor \gls{rest-a} \gls{api-a} de \gls{hyperledgercomposer-a}.
 		\end{itemize}	
+		
+		\item \textbf{hyot\_raspberry/hyot\_decryption:} componente del proyecto Hyot, formado por dos ficheros \gls{python}, que permite la desencriptación de la evidencia previamente encriptada y firmada con \gls{gpg-a}.
+			\begin{itemize}
+				\item \texttt{hyot\_decryption.py}: fichero que contiene la funcionalidad principal para efectuar la desencriptación, la verificación de la firma y la comparación del valor \textit{hash} entre otras comprobaciones.
+				\item \texttt{menu\_module.py}: fichero que parsea el menú y comprueba las opciones introducidas por el usuario.	
+			\end{itemize}
+			
+		\item \textbf{hyot\_raspberry/setup:} componente del proyecto Hyot, formado por dos ficheros \gls{bash-a} (\textit{\gls{bash}}), que permite configurar el dispositivo \gls{raspberry-a}.
+			\begin{itemize}
+				\item \texttt{raspberrypi\_setup.sh}: fichero que ejecuta una serie de comprobaciones iniciales, instala las dependencias y habilita las interfaces necesarias.
+				\item \texttt{utils.sh}: fichero que contiene funciones para proporcionar formato y estilo al texto mostrado por consola.
+			\end{itemize}
+					
 	\end{itemize}
 	
 	% Section
 	\section{Mapeo de URLs}
-	
-	En esta sección se documentan las direcciones \gls{url-a} (\textit{\gls{url}}) disponibles en el proyecto Hyot, diferenciando el componente al que pertenecen. \\
+		
+	Las direcciones \gls{url-a} son uno de los mecanismos por el cual el usuario puede interactuar con el sistema o la \gls{api-a} expuesta por éste. Aunque en el proyecto actual el usuario no debe emplearlas de una forma directa y son totalmente transparentes para éste, en esta sección se exponen como punto meramente informativo.
 		
 	% Subsection
 	\subsection{Servidor REST API de Hyperledger Composer}
+		
+	El servidor expuesto por la tecnología \gls{hyperledgercomposer-a} genera una \gls{rest-a} \gls{api-a} establecida dinámicamente al momento de desplegar la red de negocio en base a su especificación, abstrayendo del bajo nivel de interacción al usuario y permitiendo interactuar con la \gls{blockchain-a} de una manera directa y sencilla mediante los protocolos \gls{http-a} (\textit{\gls{http}}) o \gls{https-a} (\textit{\gls{https}})\footnote{Otra método de interacción es utilizar directamente \gls{hyperledgerfabric-a}. Sin embargo, el mismo proceso es más complejo al tratarse de un más bajo nivel..}. \\
 	
-	Este servidor, incluido en la tecnología \gls{hyperledgercomposer-a}, expone una \gls{rest-a} \gls{api-a} generada dinámicamente al momento de desplegar la red de negocio en base a su especificación, abstrayendo del bajo nivel de interacción y permitiendo interactuar con dicha red desplegada en la \gls{blockchain-a} de \gls{hyperledgerfabric-a} de una manera directa y sencilla mediante los protocolos \gls{http-a} (\textit{\gls{http}}) o \gls{https-a} (\textit{\gls{https}}) \footnote{Otra forma de interacción sería utilizar directamente \gls{hyperledgerfabric-a} aunque sería más complejo debido a que el código es a más bajo nivel.}. Para el proyecto Hyot, se ha adoptado una política de seguridad estricta por lo que únicamente se puede realizar comunicaciones seguras a este servidor mediante el protocolo \gls{https-a}. \\
-	
-	De esta forma, es requisito indispensable para el funcionamiento correcto que el servidor sea arrancado de forma segura donde la \gls{api-a} generada es expuesta en la siguiente dirección: \texttt{https://localhost:3000/explorer}. Para el despliegue actual realizado, este servidor puede ser accedido desde la dirección: \texttt{https://40.121.15.202:3000/explorer}. A estas direcciones se las debe añadir el espacio de nombres utilizado -\texttt{org.hyot.network.}- en la red de negocio a la hora de realizar cualquier solicitud a uno de los tres elementos que forman el modelo (\textit{\gls{asset}}, \textit{\gls{transaction}} o \textit{\gls{participant}}) como se muestra a continuación en el mapeo. 
-		% TODO - Add esto aquí para quitarlo del listing.
-		o al \Glspl{query}
-		o \gls{historian}
-		\glspl{identity}
-	 
+	Para el proyecto Hyot se ha adoptado una política de seguridad estricta por lo que únicamente se pueden realizar a este servidor peticiones a través de una comunicación segura. De esta forma, es requisito indispensable para el funcionamiento correcto que el servidor sea arrancado de forma segura lo que conlleva a su vez la generación de un certificado. Este servidor expone la red de negocio en la dirección: \url{https://localhost:3000/explorer}\footnote{Esta dirección para el despliegue actual realizado es: \url{https://40.121.15.202:3000/explorer}.}. A esta dirección se la debe añadir el espacio de nombres definido -\texttt{org.hyot.network.}- en la red de negocio a la hora de realizar cualquier solicitud a uno de los tres elementos que forman el modelo (\textit{\gls{asset}}, \textit{\gls{transaction}} o \textit{\gls{participant}}). Además, el servidor expone el acceso a otros elementos como son las consultas (\glspl{query}), el \gls{historian} o las identidades (\glspl{identity}). A continuación, se muestra el mapeo de direcciones de este servidor. \\
+			  
 \begin{listing}[style=consola, basicstyle=\ttfamily\scriptsize, numbers=none, escapechar=ß]
 ß{\color{ballblue}| \textbf{MAPEO DE URLS DEL SERVIDOR REST API DE HYPERLEDGER COMPOSER}}ß
 ß{\color{ballblue}| \textbf{URL base: /api}}ß
 ß{\color{ballblue}| \textbf{Versión de la API: 1.0.0}}ß
-ß{\color{ballblue}| ----------------------------------------------------}ß
+ß{\color{ballblue}| ----------------------------------------------------------}ß
 
 ß\textbf{{\color{maroon} \# Asset: Alert}}ß
-| GET    | /org.hyot.network.Alert         | Acción: Retorna todas las instancias de Alerta           |
-| POST   | /org.hyot.network.Alertß{\color{red}*}ß        | Acción: Crea una nueva instancia de Alerta               |
-| GET    | /org.hyot.network.Alert/{id}    | Acción: Retorna la instancia de Alerta que posea ese id  |
-| HEAD   | /org.hyot.network.Alert/{id}    | Acción: Comprueba si una instancia de Alerta existe      |
-| PUT    | /org.hyot.network.Alert/{id}ß{\color{red}*}ß   | Acción: Remplaza propiedades de una instancia de Alerta  |
-| DELETE | /org.hyot.network.Alert/{id}    | Acción: Borra la instancia de Alerta que posea ese id    |
+| GET    | /org.hyot.network.Alert         | Acción: Retorna todas las instancias Alert               |
+| POST   | /org.hyot.network.Alertß{\color{red}*}ß        | Acción: Crea una nueva instancia Alert                   |
+| GET    | /org.hyot.network.Alert/{id}    | Acción: Retorna la instancia Alert que posea ese id      |
+| HEAD   | /org.hyot.network.Alert/{id}    | Acción: Comprueba si una instancia Alert existe          |
+| PUT    | /org.hyot.network.Alert/{id}ß{\color{red}*}ß   | Acción: Remplaza propiedades de una instancia Alert      |
+| DELETE | /org.hyot.network.Alert/{id}    | Acción: Borra la instancia Alert que posea ese id        |
  
  ß\textbf{{\color{maroon} \# Transaction: PublishAlert}}ß
 | GET    | /org.hyot.network.PublishAlert  | Acción: Retorna todas las instancias de PublishAlert     |
@@ -4144,38 +4123,45 @@ breaklines=true,
 | DELETE | /org.hyot.network.User/{id}     | Acción: Borra la instancia User que posea ese id         |
  
 ß\textbf{{\color{maroon} \# Queries}}ß
-
-| GET    | /queries/AlertFromSpecificSensor | Acción: Retorna todas las instancias Alerta lanzadas por un determinado sensor |
+| GET    | /queries/Alert                          | Acción: Retorna todas las instancias Alert       |
+| GET    | /queries/AlertFromSpecificEvent         | Acción: Retorna todas las instancias Alert lanzadas por un determinado evento                                                                |
+| GET    | /queries/AlertFromSpecificEventAndUser  | Acción: Retorna todas las instancias Alert lanzadas por un determinado sensor y registradas por un User concreto                             |
+| GET    | /queries/AlertFromSpecificSensor        | Acción: Retorna todas las instancias Alert lanzadas por un determinado sensor                                                                |
+| GET    | /queries/AlertFromSpecificSensorAndUser | Acción: Retorna todas las instancias Alert lanzadas por un determinado sensor y registradas por un User concreto                             |
+| GET    | /queries/AlertsOfUser                   | Acción: Retorna todas las instancias Alert registradas por un User concreto                                                                  |
+| GET    | /queries/User                           | Acción: Retorna todas las instancias User        |
+| GET    | /queries/User                           | Acción: Retorna la instancia User con un determinado identificador                                                                         |
  
 ß\textbf{{\color{maroon} \# System: Métodos generales de la red de negocio}}ß
-| GET    | /system/historian               | Acción: Retorna todos los registros del historian          |
-| GET    | /system/historian{id}           | Acción: Retorna el registro del historian con ese id       |
-| GET    | /system/identity}              | Acción: Retorna todas las identidades                     |
-| GET    | /system/identity{id}          | Acción: Retorna la identidad que posea ese id             |
-| POST   | /system/identity{id}/revoke   | Acción: Revoca la identidad especificada                  |
-| POST   | /system/identity/bindß{\color{red}*}ß        | Acción: Enlaza una identidad a un participante existente  |
-| POST   | /system/identity/issueß{\color{red}*}ß       | Acción: Emite una identidad al participante especificado  |
-| GET    | /system/ping                   | Acción: Prueba la conexión con la red de negocio          |
+| GET    | /system/historian               | Acción: Retorna todos los registros del historian        |
+| GET    | /system/historian{id}           | Acción: Retorna el registro del historian con ese id     |
+| GET    | /system/identity}               | Acción: Retorna todas las identidades                    |
+| GET    | /system/identity{id}            | Acción: Retorna la identidad que posea ese id            |
+| POST   | /system/identity{id}/revoke     | Acción: Revoca la identidad especificada                 |
+| POST   | /system/identity/bindß{\color{red}*}ß          | Acción: Enlaza una identidad a un participante existente |
+| POST   | /system/identity/issueß{\color{red}*}ß         | Acción: Emite una identidad al participante especificado |
+| GET    | /system/ping                    | Acción: Prueba la conexión con la red de negocio         |
 
 \end{listing}	
 
-{\color{red}*} Estas consultas a la API requieren de información adicional introducida como parámetro en formato \textit{\gls{json-a}}. Existen otras peticiones que deben incluir un único parámetro como, por ejemplo: el identificador o el nombre del sensor. Sin embargo, no requieren de una estructura de datos en este formato por lo que se omiten a continuación. \\
+{\color{red}*} Estas consultas a la \gls{api-a} requieren de información adicional introducida como parámetro en formato \textit{\gls{json-a}}. Existen otras peticiones que deben incluir un único parámetro como, por ejemplo: el identificador o el nombre del sensor o evento. Sin embargo, no requieren de una estructura de datos en este formato por lo que se omiten a continuación. \\
 
-La estructura de la información de cada petición para la red de negocio de Hyot se puede consultar directamente en la dirección web donde se expone la \gls{api-a} (citada anteriormente). Aun así, para evitar que el lector tenga que desplegar este servicio, a continuación se presenta la estructura de datos necesaria para cada petición que deba incluir algún parámetro. \\
+La estructura de la información de cada petición para la red de negocio de Hyot se puede consultar directamente en la dirección web donde se expone la \gls{api-a} -citada anteriormente-. Aun así, para evitar que el lector tenga que desplegar este servicio, a continuación se presenta la estructura de datos necesaria para cada petición que deba incluir algún parámetro. \\
 
 \begin{lstlisting}[language=json, basicstyle=\ttfamily\footnotesize, numbers=none, escapechar=ß]
 ß{\color{ballblue}| \textbf{ESTRUCTURA DE PARÁMETROS EN FORMATO JSON}}ß
 ß{\color{ballblue}| \textbf{Versión de la red de negocio Hyot: 1.0.0}}ß
-ß{\color{ballblue}| -----------------------------------}ß
+ß{\color{ballblue}| ----------------------------------------}ß
 
 ß\textbf{{\color{maroon} \# Asset: Alert - Method: POST, PUT}}ß
 {
   ß``ß$class": ß``ßorg.hyot.network.PublishAlert",
-  ß``ßalert_id": ß``ßuuid",
+  ß``ßalert_id": ß``ßstring",
   ß``ßalert_details": {
      ß``ß$class": ß``ßorg.hyot.network.AlertDetails",
      ß``ßtimestamp": ß``ßdatetime (e.g. 2018-07-01T06:08:20.001Z)",
-     ß``ßalert_origin": ß``ßDHT11|HCSR04",
+     ß``ßsensor_origin": ß``ßDHT11|HCSR04",
+     ß``ßevent_origin": ß``ßTEMPERATURE|HUMIDITY|DISTANCE",
      ß``ßhash": ß``ßstring",
      ß``ßlink": ß``ßstring",
      ß``ßowner": ß``ßresource:org.hyot.network.User#identifier"
@@ -4185,11 +4171,12 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 ß\textbf{{\color{maroon} \# Transaction: PublishAlert - Method: POST}}ß
 {
   ß``ß$class": ß``ßorg.hyot.network.PublishAlert",
-  ß``ßalert_id": ß``ßuuid",
+  ß``ßalert_id": ß``ßstring",
   ß``ßalert_details": {
      ß``ß$class": ß``ßorg.hyot.network.AlertDetails",
      ß``ßtimestamp": ß``ßdatetime (e.g. 2018-07-01T06:08:20.001Z)",
-     ß``ßalert_origin": ß``ßDHT11|HCSR04",
+     ß``ßsensor_origin": ß``ßDHT11|HCSR04",
+     ß``ßevent_origin": ß``ßTEMPERATURE|HUMIDITY|DISTANCE",
      ß``ßhash": ß``ßstring",
      ß``ßlink": ß``ßstring",
      ß``ßowner": ß``ßresource:org.hyot.network.User#identifier"
@@ -4220,99 +4207,90 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 
 \end{lstlisting}
 
-	% TODO - Completar URLs web
 	% Subsection
 	\subsection{Sistema web}
 	
-	% TODO Add url base.i ndicar la url donde está desplegado o puede ser accedido
-	En esta sección se presentan las diferentes direcciones URLs mapeadas en acciones de controladores. También se debe indicar que existen más acciones en algunos controladores que no han sido mapeadas explícitamente en una dirección URL debido a que se trata de llamadas internas, como por ejemplo: llamadas AJAX, acción de eliminación de una instancia de una entidad (método \textit{HTTP delete}, etc.). \\
-		
-					 
+	En esta sección se presentan las diferentes direcciones \glspl{url-a} mapeadas en acciones de controladores. También se debe indicar que existen más acciones en algunos controladores que no han sido mapeadas explícitamente en una dirección debido a que se trata de llamadas internas, como por ejemplo: llamadas AJAX o acción de eliminación de una instancia de una entidad (método \textit{HTTP delete}, etc.). \\
+						 
 \begin{listing}[style=consola, basicstyle=\ttfamily\scriptsize, numbers=none, escapechar=ß]
 ß{\color{ballblue}| \textbf{MAPEO DE URLS DEL SISTEMA WEB}}ß
-ß{\color{ballblue}| ----------------------------------------------------}ß
+ß{\color{ballblue}| \textbf{Dirección del despliegue actual: https://hyot.eu-gb.mybluemix.net/}}ß
+ß{\color{ballblue}| -----------------------------------------------------------------}ß
 
- ß\textbf{{\color{maroon} \# Métodos generales}}ß
- |  *  | /${controller}/${action}?/${id}?(.${format)?    | Acción: (acción por defecto)               |
- |  *  | /noRole                                         | Vista:   noRole                         |
- |  *  | ERROR: 400                                      | Vista:   /error/badRequest              |
- |  *  | ERROR: 401                                      | Vista:   /error/unauthorized            |
- |  *  | ERROR: 403                                      | Vista:   /login/denied                  |
- |  *  | ERROR: 404                                      | Vista:   /error/notFound                |
- |  *  | ERROR: 405                                      | Vista:   /error/notAllowed              |
- |  *  | ERROR: 500                                      | Vista:   /error/internalError           |
- |  *  | ERROR: 503                                      | Vista:   /error/unavailableService      |
- |  *  | /humans.txt                                     | Vista:   extraInformation/humans        |
- |  *  | /robots.txt                                     | Vista:   extraInformation/robots        |
-
- ß\textbf{{\color{maroon} \# Controlador: dashboard}}ß
- |  *  | /dashboard                                      | Acción: dashboard                      |
-
- ß\textbf{{\color{maroon} \# Controlador: customTasksNormalUser}}ß
- |  *  | /home                                           | Acción: home                           |
- |  *  | /profile                                        | Acción: profile                        |
- |  *  | /profile-error                                  | Acción: updatePersonalInfo             |
- |  *  | /profileAvatar                                  | Acción: profileAvatar                  |
- |  *  | /profileAvatar-error                            | Acción: updateAvatar                   |
- |  *  | /profilePassword                                | Acción: profilePassword                |
-
- ß\textbf{{\color{maroon} \# Controlador: customTasksUser}}ß
- |  *  | /login/loggedIn                                 | Acción: loggedIn                       |
- |  *  | /concurrentSession                              | Acción: invalidSession                 |
- |  *  | /authFail                                       | Acción: authFail                       |
- |  *  | /forgotPassword                                 | Acción: restorePassword                |
- |  *  | /newPassword                                    | Acción: changePass                     |
+ß\textbf{{\color{maroon} \# Métodos de usuario sin registrar}}ß
+ß{\color{maroon} \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}ß
+ß\textbf{{\color{maroon} \# Controlador: login}}ß
+|  *  | /                                               | Acción: auth                                |
+ß\textbf{{\color{maroon} \# Controlador: customUserTasks}}ß
+|  *  | /login/loggedIn                                 | Acción: loggedIn                            |
+|  *  | /authFail                                       | Acción: authFail                            |
+|  *  | /forgotPassword                                 | Acción: restorePassword                     |
+|  *  | /newPassword                                    | Acción: changePass                          |
  
-ß\textbf{{\color{maroon} \# Controlador: dbdoc}}ß                         
- |  *  | /dbdoc/${section}?/${filename}?/${table}?/${column}?  | Acción: (default action)         |
+ß\textbf{{\color{maroon} \# Métodos de usuario administrador}}ß
+ß{\color{maroon} \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}ß
+ß\textbf{{\color{maroon} \# Controlador: controlPanel}}ß
+|  *  | /dashboard                                      | Acción: dashboard                           |
+ß\textbf{{\color{maroon} \# Controlador: alert}}ß
+|  *  | /alert                                          | Acción: getAllAlerts                        |
+ß\textbf{{\color{maroon} \# Controlador: measurement}}ß
+|  *  | /measurement                                    | Acción: getAllMeasurements                  |
+ß\textbf{{\color{maroon} \# Controlador: secUser}}ß
+|  *  | /administrator                                  | Acción: index                               |
+|  *  | /administrator/create                           | Acción: create                              |
+|  *  | /administrator/create-error                     | Acción: save                                |
+|  *  | /administrator/edit/${id}?(.${format)?          | Acción: edit                                |
+|  *  | /administrator/edit-error/${id}?(.${format)?    | Acción: update                              |
+|  *  | /administrator/edit/profileImage/${id}?(.${format)?        | Acción: editProfileImage         |
+|  *  | /administrator/edit-error/profileImage/${id}?(.${format)?  | Acción: updateProfileImage       |      
+ß\textbf{{\color{maroon} \# Controlador: user}}ß
+|  *  | /user                                           | Acción: index                               |
+|  *  | /user/create                                    | Acción: create                              |
+|  *  | /user/create-error                              | Acción: save                                |
+|  *  | /user/edit                                      | Acción: edit                                |
+|  *  | /user/edit-error/${id}?(.${format)?             | Acción: update                              |
+|  *  | /user/edit/profileImage/${id}?(.${format)?      | Acción: editProfileImage                    |
+|  *  | /user/edit-error/profileImage/${id}?(.${format)?  | Acción: updateProfileImage                |
+ 
+ß\textbf{{\color{maroon} \# Métodos de usuario normal}}ß
+ß{\color{maroon} \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}ß
+ß\textbf{{\color{maroon} \# Controlador: userPage}}ß
+|  *  | /home                                           | Acción: home                                |
+|  *  | /profile                                        | Acción: profile                             |
+|  *  | /profile-error                                  | Acción: updatePersonalInfo                  |
+|  *  | /profilePassword                                | Acción: profilePassword                     |
+|  *  | /profilePassword-error                          | Acción: profilePassword                     |
+|  *  | /profileAvatar                                  | Acción: profileAvatar                       |
+|  *  | /profileAvatar-error                            | Acción: updateAvatar                        |
+|  *  | /mymeasurements                                 | Acción: myMeasurements                      |
+|  *  | /myalerts                                       | Acción: myalerts                            |
 
- ß\textbf{{\color{maroon} \# Controlador: login}}ß
- |  *  | /                                               | Acción: auth                           |
+ß\textbf{{\color{maroon} \# Métodos generales}}ß
+|  *  | /${controller}/${action}?/${id}?(.${format)?    | Acción: (acción por defecto)                |
+|  *  | /noRole                                         | Vista:   noRole                             |
+|  *  | ERROR: 400                                      | Vista:   /error/badRequest                  |
+|  *  | ERROR: 401                                      | Vista:   /error/unauthorized                |
+|  *  | ERROR: 403                                      | Vista:   /error/denied                      |
+|  *  | ERROR: 404                                      | Vista:   /error/notFound                    |
+|  *  | ERROR: 405                                      | Vista:   /error/notAllowed                  |
+|  *  | ERROR: 500                                      | Vista:   /error/internalError               |
+|  *  | ERROR: 503                                      | Vista:   /error/unavailableService          |
+|  *  | /humans.txt                                     | Vista:   extraInformation/humans            |
+|  *  | /robots.txt                                     | Vista:   extraInformation/robots            |
 
- ß\textbf{{\color{maroon} \# Controlador: secUser}}ß
- |  *  | /administrator                                  | Acción: index                          |
- |  *  | /administrator/create                           | Acción: create                         |
- |  *  | /administrator/create-error                     | Acción: save                           |
- |  *  | /administrator/edit/${id}?(.${format)?          | Acción: edit                           |
- |  *  | /administrator/edit-error/${id}?(.${format)?    | Acción: update                         |
- |  *  | /administrator/edit/profileImage/${id}?(.${format)?        | Acción: editProfileImage    |
- |  *  | /administrator/edit-error/profileImage/${id}?(.${format)?  | Acción: updateProfileImage  |
- |  *  | /administrator/import                           | Acción: importAdmin                    |
- |  *  | /administrator/uploadFile                       | Acción: uploadFileAdmin                |
-
- ß\textbf{{\color{maroon} \# Controlador: user}}ß
- |  *  | /user                                           | Acción: index                          |
- |  *  | /user/create-error                              | Acción: save                           |
- |  *  | /user/edit-error/${id}?(.${format)?             | Acción: update                         |
- |  *  | /user/edit/profileImage/${id}?(.${format)?      | Acción: editProfileImage               |
- |  *  | /user/edit-error/profileImage/${id}?(.${format)?  | Acción: updateProfileImage           |
- |  *  | /user/import                                    | Acción: importUser                     |
- |  *  | /user/uploadFile                                | Acción: uploadFileUser                 |
 \end{listing}	
-
 
 	% Section
 	\section{Seguridad}
 	
-	% TODO
-	%Otro objetivo importante donde se ha puesto énfasis es: la \textit{seguridad} la cual hoy en día en muchos desarrollos es obviada parcialmente. Una buena seguridad evita todo tipo de contratiempos presentes y futuros. Para ofrecer seguridad a Hyot se ha utilizado el \textit{plugin} Spring Security Core el cual gestiona todos los procesos relativos a la autenticación de los usuarios y a la autorización de éstos mediante permisos, como por ejemplo: protección de URLs, autenticación básica y avanzada (OpenID, CAS, LDAP, Kerberos, JAAS, etc.), definición de roles y control de acceso, securización de métodos y usuarios de la capa de negocio, restricción de acceso basada en IP, etc. Además, también se han añadido manualmente funcionalidades con el fin de ampliar el marco de seguridad, como por ejemplo: la adición de cabeceras en la respuesta HTTP, el filtrado de peticiones y entradas de usuario, definición de mensajes genéricos, bloqueo de usuarios, etc. \\
-	
-%	Hyot trata datos de nivel básico y por ello se deben implementar una serie de medidas de seguridad para gestionar estos datos de forma correcta. Además una vez finalizado el desarrollo del sistema y la implementación de las medidas de seguridad es muy importante realizar una auditoría de seguridad a través de pruebas de penetración (\textit{pentesting o penetration testing}) las cuales se basan en atacar el sistema para descubrir fallos y vulnerabilidades y así poder reportarlas y solucionarlas lo antes posible. De esta forma se conseguirá una visión global de la seguridad del sistema.
-	 
-	% Section
-	\subsection{Medidas implementadas}
-	
-	 % TODO - aaa
-	%En este apartado se indican algunas de las medidas más relevantes de seguridad implementadas en \textsf{Smart testing tool} clasificadas según funcionalidad. Éstas están basadas en las recomendaciones de OWASP\footnote{Puede ampliar la información en la siguiente dirección: \url{https://www.owasp.org/}.} (\textit{Open web application security project}).
+	Otro aspecto donde se ha intentado poner énfasis es la seguridad ya que hoy en día en muchos desarrollos es obviada parcialmente. Una buena seguridad evita todo tipo de contratiempos presentes y futuros. Para ofrecer seguridad en Hyot se han securizado las comunicaciones con los servidores empleados: \gls{hyperledgercomposer-a} y sistema web. Además, para este último se ha empleado el \textit{plugin} Spring Security Core el cual gestiona todos los procesos relativos a la autenticación de los usuarios y a la autorización de éstos mediante permisos, como por ejemplo: protección de direcciones, autenticación básica y avanzada, definición de roles y control de acceso, securización de métodos y usuarios de la capa de negocio, restricción de acceso basada en IP, etc. La red de negocio desplegada en la \gls{blockchain-a} también dispone por su parte de una lista de control de acceso para limitar quién puede acceder y a qué recursos.
 	
 	% Section
 	\subsection{Securización de servidores}\label{certificadoSSL}
-		
-	% TODO - 2 servidores? Indica en alguna lado la API Key de REST API Composer. Otra medida de seguridad
-	
-	En el proyecto Hyot existen dos servidores que reciben peticiones desde un agente externo y retornan respuestas en base a esas solicitudes. En estos servidores (servidor de \gls{hyperledgercomposer-a} que expone la \gls{api-a} de la red de negocio desplegada y servidor del sistema web) la comunicación puede ser realizada a través del protocolo \gls{http-a}. Esta comunicación es completamente funcional. Sin embargo, presenta el problema de garantizar la seguridad puesto que cualquier dato se transmite en texto plano -sin cifrar- y por tanto cualquier intruso que tenga acceso a la red puede capturar y analizar los datos intercambiados, desembocando en un fallo de seguridad grave cuando se trata de datos sensibles como, por ejemplo contraseñas o \textit{\glspl{token}} de autenticación. \\
+			
+	En el proyecto existen dos servidores que reciben peticiones desde un agente externo y retornan respuestas en base a esas solicitudes. En estos servidores (servidor de \gls{hyperledgercomposer-a} y servidor del sistema web) la comunicación podría ser realizada a través del protocolo \gls{http-a}. Esta comunicación que es completamente funcional, presenta el problema de garantizar la seguridad puesto que cualquier dato se transmite en texto plano -sin cifrar- y por tanto cualquier intruso que tenga acceso a la red puede capturar y analizar los datos intercambiados, desembocando en un fallo de seguridad grave cuando se trata de datos sensibles como, por ejemplo contraseñas o \textit{\glspl{token}} de autenticación. \\
 
-	Por esta razón, hoy en día la gran mayoría de sistemas que tratan datos sensibles implementan el protocolo \gls{https-a} con el fin de ofrecer conexiones seguras e impedir que intrusos puedan conocer de una manera directa estos datos y los movimientos realizados. Sobre esta conexión, los datos navegan de manera cifrada y solamente los poseedores de las claves de cifrado pueden leer su contenido. Aun así, esta medida no es suficiente ya que puede existir otro problema adicional en la comunicación: la falsedad de la identidad del servidor. Dicho esto, otra consideración es la implementación de la autenticación de servidores mediante \glspl{certssl} -a partir de ahora como certificado- para confirmar que el servidor con el que se está estableciendo la comunicación es quién dice ser. Esta autenticación es realmente vital ya que el proceso de generación de certificados es público y cualquiera con las condiciones necesarias (posesión de claves) puede falsear la información.  \\
+	Por esta razón, hoy en día la gran mayoría de sistemas que tratan datos sensibles implementan el protocolo \gls{https-a} con el fin de ofrecer conexiones seguras e impedir que intrusos puedan conocer de una manera directa estos datos y los movimientos realizados. Sobre esta conexión, los datos navegan de manera cifrada y solamente los poseedores de las claves de cifrado pueden leer su contenido. Aun así, esta medida no es suficiente ya que puede existir otro problema adicional en la comunicación: la falsedad de la identidad del servidor. Dicho esto, otra consideración es la implementación de la autenticación de servidores mediante \glspl{certssl} para confirmar que el servidor con el que se está estableciendo la comunicación es quién dice ser. Esta autenticación es realmente vital ya que el proceso de generación de certificados es público y cualquiera con las condiciones necesarias (posesión de claves) puede falsear la información.  \\
 	
 	Para solucionar este problema existen además las autoridades de confianza\footnote{Puede consultar el listado de autoridades en \cite{cab:members}.} (\textit{\gls{ca}} -\gls{ca-a}-) las cuales se dedican a asegurar que un certificado es válido y el dominio indicado pertenece al propietario. Estos certificados aseguran que los datos son enviados al servidor correcto pero previamente entre el cliente y el servidor debe ocurrir una fase de negociación (protocolo \textit{handshake} o apretón de manos) de los detalles técnicos (versión del protocolo, algoritmos de cifrado que se usarán, etc.) usados en la comunicación. Esta fase se puede resumir en los siguientes puntos:
 	
@@ -4325,11 +4303,9 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\item Los datos cifrados se comparten entre el cliente y el servidor.
 	\end{enumerate}
 
-	En Hyot se ha implementado el protocolo \gls{https-a} en ambos servidores \footnote{Por razones de seguridad se recomienda desplegar ambos servidores con este protocolo.} para proporcionar seguridad a los usuarios. Debido al carácter del trabajo y al coste que presentan los certificados firmados por una \gls{ca-a} se ha utilizado un \gls{certautofirmado}\footnote{En el anexo \ref{install} se detallan los pasos para su generación.}. La única diferencia que presentan este tipo de certificados es que son firmados por uno mismo con la clave privada generada previamente. Debido a ello, su uso únicamente se recomienda para situaciones de desarrollo y/o pruebas. \\
-
-	Con el fin de analizar de forma superficial la seguridad, a continuación se presenta una serie de pruebas que se han realizado sobre el servidor \gls{rest-a} \gls{api-a} de \gls{hyperledgercomposer-a}\footnote{Estas pruebas son también reproducibles para el servidor del sistema web.}. La Figura \ref{fig:digicert} muestra el análisis realizado con una herramienta \textit{online} donde se observa información sobre el certificado, la fecha de validez, el algoritmo de firma utilizado, si el certificado es confiable o no, etc. En este caso, el certificado es marcado como no confiable porque es de tipo autofirmado. Sin embargo, se trata de un aviso ya que el funcionamiento es correcto por lo que no afecta a la seguridad. La Figura \ref{fig:digicert_sha1} muestra la advertencia si se hubiese empleado el algoritmo de firma por defecto \gls{sha-a}-1 el cual se considera inseguro hoy en día.	
+	En Hyot se ha impuesto el uso de comunicaciones seguras. Debido al carácter del trabajo y al coste que presentan los certificados firmados por una \gls{ca-a} se ha utilizado un \gls{certautofirmado}. La única diferencia que presentan este tipo de certificados es que son firmados por uno mismo con la clave privada generada previamente. Debido a ello, su uso únicamente es recomendado para situaciones de desarrollo y/o pruebas. Este certificado que debe ser desplegado en ambos servidores\footnote{En el caso del sistema web, al ser desplegado en un servicio de IBM Cloud no ha hecho falta su instalación para habilitar la comunicación segura ya que por defecto se utilizan los certificados de dicha plataforma.} habilita la comunicación segura y con el fin analizar de forma superficial la seguridad, a continuación se presenta una serie de pruebas que se han realizado en este caso sobre el servidor de \gls{hyperledgercomposer-a}. La Figura \ref{fig:digicert} muestra el análisis realizado con una herramienta \textit{online} donde se observa información sobre el certificado, la fecha de validez, el algoritmo de firma utilizado, si el certificado es confiable o no, etc. En este caso, el certificado es marcado como no confiable porque es de tipo autofirmado, sin embargo se trata de un aviso ya que el funcionamiento es correcto por lo que no afecta a la seguridad. La Figura \ref{fig:digicert_sha1} muestra la advertencia si se hubiese empleado el algoritmo de firma por defecto \gls{sha-a}-1 el cual se considera inseguro hoy en día.	
 		
-		% TODO New page
+		% NEW PAGE
 		\newpage
 		
 		\begin{figure}[!ht]   
@@ -4342,21 +4318,21 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 		\end{figure}	
 			
 		\begin{figure}[!ht]   
-			\caption{Análisis de seguridad del certificado - Algoritmo de firma \gls{sha-a}-1.} 
+			\caption{Análisis de seguridad del certificado - Algoritmo de firma SHA-1.} 
 			\begin{center} 
-	 			\includegraphics[width=16cm,height=1.5cm]{Images/implement/digicert_sha1} \\
+	 			\includegraphics[width=14cm,height=1.5cm]{Images/implement/digicert_sha1} \\
 				\label{fig:digicert_sha1} 
 				\textbf{Fuente de comprobación:} \url{https://www.digicert.com/help/}
 			\end{center}  
 		\end{figure}	
 
-	Las Figuras \ref{fig:comodo}, \ref{fig:htbridge1} y \ref{fig:htbridge2} muestran más información sobre el análisis realizado por otras herramientas poniendo énfasis en la configuración de seguridad. Algunos datos informativos obtenidos son: 
+	Las Figuras \ref{fig:htbridge1}, \ref{fig:htbridge2} y \ref{fig:comodo} muestran más información sobre el análisis realizado por otras herramientas poniendo énfasis en la configuración de seguridad. Algunos datos informativos obtenidos son: 
 	
 	\begin{itemize}
 		\item El servidor presenta una buena configuración de seguridad con una calificación final de A- gracias al uso de las buenas prácticas recomendadas por la empresa Qualys SSL Labs\footnote{Para obtener más información sobre estas prácticas puede consultar la referencia \cite{ssllabs:best}.}.
 		\item Solamente se admiten conexiones a través del protocolo \gls{tls-a} (\textit{\gls{tls}}). Esta configuración es la idónea puesto que el protocolo \gls{ssl-a} se considera inseguro debido a la gran cantidad de vulnerabilidades existentes: DROWN, FREAK, POODLE, etc.
 		\item Se mitigan también otro tipo de vulnerabilidades: CRIME, Heartbleed, SLOTH, Robot, CVE-2014-0224 (OpenSSL CCS flaw), CVE-2016-2107 (OpenSSL padding-oracle flaw), etc.
-		\item Solamente se permite la renegociación segura de los detalles de la comunicación. La renegociación insegura iniciada por el client no es soportada.
+		\item Solamente se permite la renegociación segura de los detalles de la comunicación. La renegociación insegura iniciada por el cliente no es soportada.
 	\end{itemize}
 					
 	\begin{figure}[!ht]   
@@ -4396,7 +4372,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 			\label{fig:handshake} 
 		\end{center}  
 	\end{figure}	
-	
+
 	% Test cases
 	\chapter{Casos de prueba} \label{testingChapter}
 	
