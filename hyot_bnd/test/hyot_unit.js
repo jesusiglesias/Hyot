@@ -15,7 +15,7 @@
 *                                                                                                                      *
 *                                                                                                                      *
 *        PROJECT:     Hyot                                                                                             *
-*           FILE:     unit.js                                                                                          *
+*           FILE:     hyot_unit.js                                                                                     *
 *                                                                                                                      *
 *          USAGE:     npm test                                                                                         *
 *                                                                                                                      *
