@@ -515,16 +515,21 @@ class UserController {
 
         def number
         try {
-            new URL(blockchain_getUserID + username).getText(requestProperties: [Accept: 'application/json'])
 
-            if (SecUser.countByUsername(username)) { // // Username found in BC and DB
-                number = 0
-            } else { // Username found in BC and not found in DB
-                number = 1
+            def response = new URL(blockchain_getUserID + username).getText(requestProperties: [Accept: 'application/json'])
+
+            def response_json = new JsonSlurper().parseText(response)
+
+            if (response_json.size() == 0) { // Username not found in BC
+                number = 2
+            } else {
+
+                if (SecUser.countByUsername(username)) { // // Username found in BC and DB
+                    number = 0
+                } else { // Username found in BC and not found in DB
+                    number = 1
+                }
             }
-
-        } catch (FileNotFoundException ignored) { // Username not found in BC
-            number = 2
 
         } catch (ConnectException ignored) { // BC is not available
             number = 3
