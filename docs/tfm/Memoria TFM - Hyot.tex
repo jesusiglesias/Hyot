@@ -8324,13 +8324,13 @@ IP.1			    = [IP Server]
 	Para cuestiones directamente relacionadas al proyecto \textbf{Hyot}, puede ponerse en contacto con el autor vía \textit{email} en la siguiente dirección: \href{mailto:jesusgiglesias@gmail.com}{\nolinkurl{jesusgiglesias@gmail.com}}. \\
 	
 	La versión actual del presente documento a fecha de \textsf{\color{red}XX de XX de 2018}: \textbf{1.0.0}.
-	
+			
 	% Annexe F
 	\chapter{Manual de usuario}\label{userguide}
 	
 	\textit{Hyot} es una prueba de concepto (\textit{\gls{poc}} -\gls{poc-a}-) de código abierto para la trazabilidad de un entorno controlado del Internet de las Cosas (\textit{\gls{iot}} -\gls{iot-a}-) mediante la tecnología \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}). El objetivo de esta solución es la monitorización de dicho entorno para el reconocimiento de sucesos anómalos en cuyo caso el propósito es garantizar una prueba irrefutable y veraz de cada incidencia producida. Esto es posible gracias a la constante recolección de sucesos por medio de \glspl{sensor} situados en una \gls{raspberry} (\gls{raspberry-a}) 3 y la inclusión de incidencias en la \Gls{blockchain} (\gls{blockchain-a}) de \gls{hyperledgerfabric-a} aprovechando de tal forma las ventajas que brinda esta tecnología. Asimismo, mediante un sistema web se puede consultar la información recolectada en tiempo real. \\
 	
-	 Cinco son los componentes que conforman Hyot, y a continuación se detalla el modo de funcionamiento de cada uno -excepto el componente de protocolo de registro de incidencias el cual ya se encuentra embebido en otro componente- y la variedad de funcionalidades que ofrece al usuario.
+	 Cinco son los componentes que conforman Hyot, y a continuación se detalla el modo de funcionamiento de cada uno -excepto el componente de protocolo de registro de incidencias el cual ya se encuentra embebido en otros componentes- y la variedad de funcionalidades que ofrece al usuario.
 	 
 	 % Section
 	 \section{Componente de configuración del dispositivo Raspberry Pi} \label{setup_rpi}
@@ -8341,7 +8341,7 @@ IP.1			    = [IP Server]
 	
 	\begin{enumerate}
 		\item Comprobaciones iniciales.
-		\item Instalación de dependencias requeridas\footnote{En el anexo \ref{install} se especifican las dependencias instaladas y sus versiones.} (paquetes y librerías \gls{python}).
+		\item Instalación de dependencias requeridas (paquetes y librerías \gls{python}).
 		\item Activación de interfaces.
 	\end{enumerate}
 	
@@ -8356,7 +8356,7 @@ IP.1			    = [IP Server]
 	\begin{figure}[!ht]   
 		\caption{Configuración inicial de la RPi - Menú de ayuda.} 
 		\begin{center} 
-			\includegraphics[width=15cm,height=10cm]{Images/userGuide/setup/help} \\
+			\includegraphics[width=15cm,height=9.5cm]{Images/userGuide/setup/help} \\
 			\label{fig:userguide_setup_help} 
 		\end{center}  
 	\end{figure}
@@ -8653,7 +8653,7 @@ IP.1			    = [IP Server]
 	 % Section
 	 \section{Componente de monitorización de sucesos del entorno}
 	 
-	 Este componente contiene la funcionalidad principal del proyecto Hyot puesto que permite la monitorización de sucesos del entorno \gls{iot-a} -a través del dispositivo \gls{raspberry-a} y una serie de \glspl{sensor}- y la generación ante un suceso anómalo de una evidencia garante de su veracidad y originación en un instante de tiempo dado. Su uso es de obligatoriedad y requiere de la ejecución previa del componente de configuración del dispositivo \gls{raspberry-a} o por el contrario la ejecución de forma manual de las acciones contenidas\footnote{Las librerías requeridas se encuentran definidas en un fichero de texto (\texttt{requirements.txt}) y pueden ser instaladas ejecutando el comando: \texttt{pip install -r requirements.txt}. Si alguna librería requerida no se encuentra instalada, se muestra un error al inicio de la ejecución al intentar importarla. En el caso de la habilitación de interfaces, el comando \texttt{raspi-config} debe ser utilizado.}, del prototipo correctamente conectado y funcional\footnote{El prototipo construido puede ser consultado en el anexo \ref{prototype}. \nameref{prototype}.}, de las direcciones \gls{i2c-a} de los dos \glspl{lcd-a} conectados, de conectividad a la red en el dispositivo \gls{raspberry-a} y de la existencia del fichero de configuración \texttt{hyot.yml} en el directorio \texttt{hyot\_raspberrypi/hyot/conf}\footnote{La estructura de este fichero de configuración puede ser consultada en el anexo \ref{install}. \nameref{install}.}. \\
+	 Este componente contiene la funcionalidad principal del proyecto Hyot puesto que permite la monitorización de sucesos del entorno \gls{iot-a} -a través del dispositivo \gls{raspberry-a} y una serie de \glspl{sensor}- y la generación ante un suceso anómalo de una evidencia garante de su veracidad y originación en un instante de tiempo dado. Su uso es de obligatoriedad y requiere de la ejecución previa del componente de configuración del dispositivo \gls{raspberry-a} o por el contrario la ejecución de forma manual de las acciones contenidas\footnote{Las librerías requeridas se encuentran definidas en un fichero de texto (\texttt{requirements.txt}) y pueden ser instaladas ejecutando el comando: \texttt{pip install -r requirements.txt}. Si alguna librería requerida no se encuentra instalada, se muestra un error al inicio de la ejecución al intentar importarla. En el caso de la habilitación de interfaces, el comando \texttt{raspi-config} debe ser utilizado.}, del prototipo correctamente conectado y funcional, de las direcciones \gls{i2c-a} de los dos \glspl{lcd-a} conectados, de conectividad a la red en el dispositivo \gls{raspberry-a} y de la existencia del fichero de configuración \texttt{hyot.yml} en el directorio \texttt{hyot\_raspberrypi/hyot/conf}. \\
 	 
 	Para iniciar este componente, desarrollado en el lenguaje \gls{python}, basta con ejecutar el fichero \texttt{hyot\_main.py} -ubicado en el directorio \texttt{Hyot/hyot\_raspberrypi/hyot} según la jerarquía completa del proyecto- en la \gls{raspberry-a} desde un terminal con el comando \texttt{sudo python} y seguir los pasos indicados. La monitorización del entorno se compone de tres fases ejecutadas en el siguiente orden:
 	
@@ -8693,7 +8693,7 @@ IP.1			    = [IP Server]
 		\begin{itemize}
 			\item Opción \texttt{-die} o \texttt{--dhti2cexpander}: tipo de expansor \gls{i2c-a} -\texttt{MCP23008}, \texttt{MCP23017} o \texttt{PCF8574}- para el componente \gls{lcd-a} asociado al \gls{sensor} DHT11. Por defecto, \texttt{PCF8574}.
 			
-			\item Opción \texttt{-dia} o \texttt{--dhti2caddress}: dirección \gls{i2c-a}\footnote{Esta dirección puede ser obtenida con el comando \texttt{i2cdetect}, como se indica en la parte final del manual de usuario de \ref{setup_rpi}. \nameref{setup_rpi}.} para el componente \gls{lcd-a} asociado al \gls{sensor} DHT11. Por defecto, \texttt{0x3f}.
+			\item Opción \texttt{-dia} o \texttt{--dhti2caddress}: dirección \gls{i2c-a} para el componente \gls{lcd-a} asociado al \gls{sensor} DHT11. Por defecto, \texttt{0x3f}.
 			
 			\item Opción \texttt{-hie} o \texttt{--hcsri2cexpander}: tipo de expansor \gls{i2c-a} -\texttt{MCP23008}, \texttt{MCP23017} o \texttt{PCF8574}- para el componente \gls{lcd-a} asociado al \gls{sensor} HC-SR04. Por defecto, \texttt{PCF8574}.
 			
@@ -8722,7 +8722,7 @@ IP.1			    = [IP Server]
 	 % Subsection
 	 \subsection{Comprobaciones iniciales}
 	 	 
-	 En esta primera fase se realizan diferentes comprobaciones para garantizar que la posterior ejecución se efectúe de manera correcta y sin ningún contratiempo. Si alguna de estas comprobaciones -similares a las verificadas en el manual de usuario de \ref{setup_rpi}. \nameref{setup_rpi}- falla ya sea porque no cumple la condición o por cualquier otra causa, se muestra por consola un error al usuario y se finaliza la ejecución. Las comprobaciones incluyen:
+	 En esta primera fase se realizan diferentes comprobaciones para garantizar que la posterior ejecución se efectúe de manera correcta y sin ningún contratiempo. Si alguna de estas comprobaciones -similares a las del componente anterior- falla ya sea porque no cumple la condición o por cualquier otra causa, se muestra por consola un error al usuario y se finaliza la ejecución. Las comprobaciones incluyen:
 	 
 	 \begin{enumerate}
 	 	\item Verificación de ejecución con un usuario superprivilegiado.
@@ -8869,17 +8869,7 @@ IP.1			    = [IP Server]
 				\end{center}  
 			\end{figure}
 	 
-	 	\item Inicializar la plataforma de \gls{iot-a} de IBM Cloud, solicitando el \textit{\gls{token}} de autenticación y otros detalles (Figura \ref{fig:userguide_monitoring_iot}). Esta plataforma actúa como pasarela de comunicación en tiempo real entre los dispositivos conectados y las aplicaciones que consumen los datos.
-	 
-	 	 	\begin{figure}[!ht]   
-				\caption{Monitorización de sucesos del entorno - Inicialización de la plataforma IoT.} 
-				\begin{center} 
-					\includegraphics[width=12cm,height=2cm]{Images/userGuide/monitoring/iotPlatform} \\
-					\label{fig:userguide_monitoring_iot} 
-				\end{center}  
-			\end{figure}
-	 
-	 	\item Inicializar \gls{cloudant} donde en primer lugar se solicitan las credenciales de autenticación y la dirección donde se ubica la \gls{bbdd-a}. Posteriormente, se pregunta al usuario por el nombre de la \gls{bbdd-a}\footnote{El nombre de la \gls{bbdd-a} por defecto -\texttt{sensors\_measurements\_}- contiene una marca temporal o \textit{timestamp} (año-mes) al final.} a utilizar y se comprueba si existe o no, creándola (Figura \ref{fig:userguide_monitoring_dbCreate}) o abriéndola (Figura \ref{fig:userguide_monitoring_dbOpen}) según el caso correspondiente. En este último caso, como la \gls{bbdd-a} ya fue creada con anterioridad puede contener mediciones de otras ejecuciones previas.
+	 	\item Inicializar \gls{cloudant} donde en primer lugar se solicitan las credenciales de autenticación y la dirección donde se ubica la \gls{bbdd-a}. Posteriormente, se pregunta al usuario por el nombre de la \gls{bbdd-a}\footnote{El nombre de la \gls{bbdd-a} por defecto -\texttt{hyot\_measurements\_}- contiene una marca temporal o \textit{timestamp} (año-mes) al final.} a utilizar y se comprueba si existe o no, creándola (Figura \ref{fig:userguide_monitoring_dbCreate}) o abriéndola (Figura \ref{fig:userguide_monitoring_dbOpen}) según el caso correspondiente. En este último caso, como la \gls{bbdd-a} ya fue creada con anterioridad puede contener mediciones de otras ejecuciones previas.
 	 	
 	 		 \begin{figure}[!ht]   
 				\caption{Monitorización de sucesos del entorno - Crear base de datos.} 
@@ -8931,7 +8921,7 @@ IP.1			    = [IP Server]
 			\begin{figure}[!ht]   
 				\caption{Monitorización de sucesos del entorno - Directorio y subdirectorios ya existen en el servicio Dropbox.} 
 				\begin{center} 
-					\includegraphics[width=16cm,height=4cm]{Images/userGuide/monitoring/dirDropbox} \\
+					\includegraphics[width=16cm,height=3.5cm]{Images/userGuide/monitoring/dirDropbox} \\
 					\label{fig:userguide_monitoring_dropbox} 
 				\end{center}  
 			\end{figure}	 	
@@ -8944,33 +8934,49 @@ IP.1			    = [IP Server]
 	 		 \begin{figure}[!ht]   
 				\caption{Monitorización de sucesos del entorno - Servidor HC no disponible.} 
 				\begin{center} 
-					\includegraphics[width=16cm,height=2.8cm]{Images/userGuide/monitoring/hcError} \\
+					\includegraphics[width=16cm,height=2.2cm]{Images/userGuide/monitoring/hcError} \\
 					\label{fig:userguide_monitoring_hcError} 
 				\end{center}  
 			\end{figure}	 
-			
+					
 			 \begin{figure}[!ht]   
 				\caption{Monitorización de sucesos del entorno - Servidor HC disponible pero no despliega una red de negocio.} 
 				\begin{center} 
-					\includegraphics[width=16cm,height=3.3cm]{Images/userGuide/monitoring/hcBusiness} \\
+					\includegraphics[width=16cm,height=3cm]{Images/userGuide/monitoring/hcBusiness} \\
 					\label{fig:userguide_monitoring_hcBusiness} 
 				\end{center}  
 			\end{figure}	 
 			
+			% NEW PAGE
+			\newpage
+			
 			\begin{figure}[!ht]   
 				\caption{Monitorización de sucesos del entorno - Comprobación de servidor HC correcta.} 
 				\begin{center} 
-					\includegraphics[width=16cm,height=3.3cm]{Images/userGuide/monitoring/hcOk} \\
+					\includegraphics[width=16cm,height=5cm]{Images/userGuide/monitoring/hcOk} \\
 					\label{fig:userguide_monitoring_hcOk} 
 				\end{center}  
 			\end{figure}	 
 	 	
-	 	Además, se ofrece al usuario la posibilidad de introducir el nombre del poseedor (por defecto, \texttt{hyotRPi}) de los activos (\textit{\glspl{asset}}) \textit{Alert} a generar en la \gls{blockchain-a} y de proporcionar una capa de seguridad extra mediante un \textit{api-key} (por defecto, generado) el cual es introducido en cada petición transmitida\footnote{En el caso de no hacer uso de esta opción, el servidor de \gls{hyperledgercomposer-a} puede ser arrancado con anterioridad. En caso contrario, se debe obtener el \textit{api-key} en primer lugar y después arrancar el servidor indicando este valor en la opción correspondiente.}. En caso de securizar el servidor pero no enviar el \textit{api-key} en la petición o enviar uno diferente, ésta es denegada, tal y como muestra la Figura \ref{fig:userguide_monitoring_hcUnauthorized}. \\
+	 	Además, se ofrece al usuario la posibilidad de introducir la información correspondiente al participante de tipo \texttt{User} de la \gls{blockchain-a} que se va a encargar de registrar las alertas (activos \texttt{Alert}) en dicha capa de persistencia para la monitorización actual. De tal manera, que si el nombre de usuario indicado ya está asociado a un participante existente ninguna acción es realizada, como se muestra en la Figura \ref{fig:userguide_monitoring_hcUser}. Por contra, si no existe un participante con ese nombre de usuario, se procede a su creación como se muestra en la figura anterior y será este participante el poseedor de cualquier alerta registrada en dicha monitorización.
+	 	
+			\begin{figure}[!ht]   
+				\caption{Monitorización de sucesos del entorno - Participante existente en la BC.} 
+				\begin{center} 
+					\includegraphics[width=16cm,height=3.7cm]{Images/userGuide/monitoring/hcUser} \\
+					\label{fig:userguide_monitoring_hcUser} 
+				\end{center}  
+			\end{figure}	 
+	 	 
+	 	 También, con el fin de proporcionar una capa de seguridad extra se ofrece la funcionalidad de securizar el servidor de \gls{hyperledgercomposer-a} mediante un \textit{api-key} (por defecto, generado) el cual es introducido en cada petición transmitida\footnote{En el caso de no hacer uso de esta opción, el servidor de \gls{hyperledgercomposer-a} puede ser arrancado con anterioridad. En caso contrario, se debe obtener el \textit{api-key} en primer lugar y después arrancar el servidor indicando este valor en la opción correspondiente.}. En caso de securizar el servidor pero no enviar el \textit{api-key} en la petición o enviar uno diferente, ésta es denegada, tal y como muestra la Figura \ref{fig:userguide_monitoring_hcUnauthorized}. \\
+	 		
+	 		% NEW PAGE	
+	 		\newpage
 	 			 	 
 	 		\begin{figure}[!ht]   
 				\caption{Monitorización de sucesos del entorno - Petición denegada con servidor HC securizado.} 
 				\begin{center} 
-					\includegraphics[width=16cm,height=3.3cm]{Images/userGuide/monitoring/hcUnauthorized} \\
+					\includegraphics[width=17cm,height=3cm]{Images/userGuide/monitoring/hcUnauthorized} \\
 					\label{fig:userguide_monitoring_hcUnauthorized} 
 				\end{center}  
 			\end{figure}	 
@@ -8988,13 +8994,15 @@ IP.1			    = [IP Server]
 	 	
 	 		\begin{enumerate}
 				\item Almacenar la medición en la \gls{bbdd-a} para que quede constancia de que en ese momento temporal el entorno controlado no presenta ninguna incidencia.
-				\item Subir determinada información de la medición a la plataforma de \gls{iot-a}.	
 			\end{enumerate}
+			
+			% NEW PAGE
+			\newpage
 			
 			\begin{figure}[!ht]   
 				\caption{Monitorización de sucesos del entorno - Medición normal.} 
 				\begin{center} 
-					\includegraphics[width=12cm,height=7.9cm]{Images/userGuide/monitoring/measurementOk} \\
+					\includegraphics[width=12cm,height=8.5cm]{Images/userGuide/monitoring/measurementOk} \\
 					\label{fig:userguide_monitoring_measurementOk} 
 				\end{center}  
 			\end{figure}	 
@@ -9007,7 +9015,6 @@ IP.1			    = [IP Server]
 				\item Encriptación y firmado de la evidencia con la utilidad \gls{gpg-a}.
 				\item Almacenamiento de la evidencia encriptada y firmada en el servicio de almacenamiento en la nube, Dropbox.
 				\item Almacenamiento de la medición con información adicional en la \gls{bbdd-a} para que quede constancia de que en ese momento temporal el entorno vigilado presentó una lectura anómala.				
-				\item Publicación de determinada información de la medición a la plataforma de \gls{iot-a}.
 				\item Registro de la incidencia	en la \gls{blockchain-a} de \gls{hyperledgerfabric-a} con la generación de un activo \textit{Alert}. 		
 				\item Notificación del suceso no controlado mediante el envío de un \textit{email} a la dirección de correo electrónico destino configurada en caso de estar activado (Figura \ref{fig:userguide_monitoring_mailAlert}).
 			\end{enumerate}
@@ -9015,7 +9022,7 @@ IP.1			    = [IP Server]
 			\begin{figure}[!ht]   
 				\caption{Monitorización de sucesos del entorno - Medición anómala.} 
 				\begin{center} 
-					\includegraphics[width=17cm,height=8.5cm]{Images/userGuide/monitoring/measurementAlert} \\
+					\includegraphics[width=17cm,height=6cm]{Images/userGuide/monitoring/measurementAlert} \\
 					\label{fig:userguide_monitoring_measurementAlert} 
 				\end{center}  
 			\end{figure}	 
@@ -9025,7 +9032,7 @@ IP.1			    = [IP Server]
 	 		\begin{figure}[!ht]   
 				\caption{Monitorización de sucesos del entorno - Correo electrónico notificando un suceso anómalo.} 
 				\begin{center} 
-					\includegraphics[width=17cm,height=12cm]{Images/userGuide/monitoring/mailAlert} \\
+					\includegraphics[width=17cm,height=10cm]{Images/userGuide/monitoring/mailAlert} \\
 					\label{fig:userguide_monitoring_mailAlert} 
 				\end{center}  
 			\end{figure}	 
@@ -9038,17 +9045,17 @@ IP.1			    = [IP Server]
 	 		\begin{figure}[!ht]   
 				\caption{Monitorización de sucesos del entorno - Medición con eventos del sensor DHT11 inválidos.} 
 				\begin{center} 
-					\includegraphics[width=14cm,height=3cm]{Images/userGuide/monitoring/measurementInvalid} \\
+					\includegraphics[width=12cm,height=2.5cm]{Images/userGuide/monitoring/measurementInvalid} \\
 					\label{fig:userguide_monitoring_measurementInvalid} 
 				\end{center}  
 			\end{figure}	 
 	 
-	 Si durante alguna acción del protocolo normal de medición o protocolo de alerta se produce un error, la ejecución es finalizada enviando una notificación \textit{email} (si la opción correspondiente está activada) y adjuntado el fichero de \textit{log} (Figura \ref{fig:userguide_monitoring_errorMeasurementMail}) o notificando que es recomendable activar dicha opción para conseguir el aviso instantáneo y la traza (Figura \ref{fig:userguide_monitoring_errorMeasurement}). La Figura \ref{fig:userguide_monitoring_errorMail} muestra el correo electrónico recibido con diseño adaptativo para una notificación \textit{email} de este tipo. \\
+	 Si durante alguna acción del protocolo normal de medición o protocolo de alerta se produce un error, la ejecución es finalizada enviando una notificación \textit{email} (si la opción correspondiente está activada) y adjuntado el fichero de \textit{log} (Figura \ref{fig:userguide_monitoring_errorMeasurementMail}) o notificando que es recomendable activar dicha opción para conseguir el aviso instantáneo y la traza (Figura \ref{fig:userguide_monitoring_errorMeasurement}). La Figura \ref{fig:userguide_monitoring_errorMail} muestra el correo electrónico recibido con diseño adaptativo para una notificación \textit{email} de este tipo.
 	 
 	 	 	\begin{figure}[!ht]   
 				\caption{Monitorización de sucesos del entorno - Error y notificación durante una acción del protocolo normal de medición.} 
 				\begin{center} 
-					\includegraphics[width=15cm,height=4.5cm]{Images/userGuide/monitoring/errorMeasurementMail} \\
+					\includegraphics[width=15cm,height=3.5cm]{Images/userGuide/monitoring/errorMeasurementMail} \\
 					\label{fig:userguide_monitoring_errorMeasurementMail} 
 				\end{center}  
 			\end{figure}	 
@@ -9056,7 +9063,7 @@ IP.1			    = [IP Server]
 			\begin{figure}[!ht]   
 				\caption{Monitorización de sucesos del entorno - Error durante una acción del protocolo normal de medición.} 
 				\begin{center} 
-					\includegraphics[width=15cm,height=4.5cm]{Images/userGuide/monitoring/errorMeasurement} \\
+					\includegraphics[width=15cm,height=4cm]{Images/userGuide/monitoring/errorMeasurement} \\
 					\label{fig:userguide_monitoring_errorMeasurement} 
 				\end{center}  
 			\end{figure}	 
@@ -9064,7 +9071,7 @@ IP.1			    = [IP Server]
 			\begin{figure}[!ht]   
 				\caption{Monitorización de sucesos del entorno - Correo electrónico notificando un error durante alguna acción del protocolo de medición.} 
 				\begin{center} 
-					\includegraphics[width=12cm,height=13cm]{Images/userGuide/monitoring/errorMail} \\
+					\includegraphics[width=12cm,height=12cm]{Images/userGuide/monitoring/errorMail} \\
 					\label{fig:userguide_monitoring_errorMail} 
 				\end{center}  
 			\end{figure}	 
@@ -9101,7 +9108,7 @@ IP.1			    = [IP Server]
 	\begin{figure}[!ht]   
 		\caption{Desencriptación de evidencia - Menú de ayuda.} 
 		\begin{center} 
-			\includegraphics[width=16cm,height=10cm]{Images/userGuide/evidence/help} \\
+			\includegraphics[width=16cm,height=8cm]{Images/userGuide/evidence/help} \\
 			\label{fig:userguide_evidence_help} 
 		\end{center}  
 	\end{figure}
@@ -9133,10 +9140,13 @@ IP.1			    = [IP Server]
 	 		\begin{figure}[!ht]   
 				\caption{Desencriptación de evidencia - Verificación de opción obligatoria -g o --gpghome.} 
 				\begin{center} 
-					\includegraphics[width=14cm,height=2cm]{Images/userGuide/evidence/option_mandatory1} \\
+					\includegraphics[width=14cm,height=1.7cm]{Images/userGuide/evidence/option_mandatory1} \\
 					\label{fig:userguide_evidence_optionmandatory1} 
 				\end{center}  
 			\end{figure}
+			
+			% NEW PAGE
+			\newpage
 			
 			\begin{figure}[!ht]   
 				\caption{Desencriptación de evidencia - Verificación de opción obligatoria -ha o --hash.} 
@@ -9344,13 +9354,12 @@ IP.1			    = [IP Server]
 	% Section
 	\section{Componente - Sistema web}
 	 	 
-	% TODO - URL 
-	 Este componente del proyecto Hyot, desarrollado con el \gls{framework} \gls{grails} y ubicado en el directorio \texttt{Hyot/hyot\_app} según la jerarquía completa del proyecto, hace referencia al sistema web donde el usuario puede consultar en tiempo real la información monitorizada del entorno \gls{iot-a} así como los sucesos anómalos que se produzcan consiguiendo la información necesaria para la obtención y verificación de la prueba irrefutable generada. Este sistema, para el despliegue actual, se encuentra localizado en la \gls{url-a}: XXX y basta con acceder a dicha dirección para poder comenzar a usar la solución web.
+	 Este componente del proyecto Hyot, desarrollado con el \textit{\gls{framework}} \gls{grails} y ubicado en el directorio \texttt{Hyot/hyot\_app} según la jerarquía completa del proyecto, hace referencia al sistema web donde el usuario puede consultar en tiempo real la información monitorizada del entorno \gls{iot-a} así como los sucesos anómalos que se produzcan obteniendo a su vez la información necesaria para la obtención y verificación de la prueba irrefutable generada. Este sistema, para el despliegue actual, se encuentra localizado en la \gls{url-a}: \url{https://hyot.eu-gb.mybluemix.net} y basta con acceder a dicha dirección para poder comenzar a usar la solución web\footnote{Requiere que el servidor de \gls{hyperledgercomposer-a} se encuentre en ejecución para poder hacer las consultas contra la \gls{blockchain-a}.}.
 			
 	% Subsection
 	\subsection{Página de inicio}
 	
-	El sistema web es una solución donde es obligatorio la autenticación, es decir, poseer una cuenta de usuario para poder acceder a la funcionalidad del sistema lo que conlleva a que un usuario no registrado solamente pueda visualizar, las páginas de iniciar sesión y restablecer contraseña. Por tanto, la primera toma de contacto que presenta el usuario es la página correspondiente al inicio de sesión junto con la opción de restaurar contraseña (Figura \ref{fig:web_homepage}). \\
+	El sistema web es una solución donde es obligatorio la autenticación, es decir, poseer una cuenta de usuario para poder acceder a la funcionalidad del sistema lo que conlleva a que un usuario no registrado solamente pueda visualizar las páginas de iniciar sesión y restablecer contraseña. Por tanto, la primera toma de contacto que presenta el usuario es la página correspondiente al inicio de sesión junto con la opción de restaurar contraseña (Figura \ref{fig:web_homepage}). \\
 		
 	El inicio de sesión se presenta a través de la introducción de las credenciales, compuesta por:
 	
@@ -9359,157 +9368,147 @@ IP.1			    = [IP Server]
 		\item Contraseña.
 	\end{itemize}
 	
-	siendo elección del propio usuario la introducción del nombre de usuario o \textit{email}, ambas opciones totalmente válidas\footnote{En algunas casos el botón de realizar una determinada acción (p.ej. botón de iniciar sesión) se presenta como desactivado hasta que el usuario complete los campos necesarios. En ese instante, el botón se activa y se permite pulsar sobre él para efectuar la acción.}. \\
+	siendo elección del propio usuario la introducción del nombre de usuario o \textit{email}, ambas opciones totalmente válidas\footnote{En algunas casos el botón de realizar una determinada acción (p.ej. botón de iniciar sesión) se presenta como desactivado hasta que el usuario complete los campos necesarios. En ese instante, el botón se activa y se permite pulsar sobre él para efectuar la acción.}. Las entradas de texto en el sistema web poseen elementos que mejoran la interacción del usuario con la interfaz como, por ejemplo el contador límite de caracteres que permite el campo de entrada, el icono aspa para borrar el texto introducido o el icono ojo para visualizar la contraseña en un campo confidencial, ambos apareciendo a la derecha de la entrada cuando se comienza a introducir el texto en él.
 		
-%	\begin{figure}[!ht]   
-%		\caption{Sistema web - Página de inicio.} 
-%		\begin{center} 
-%	 		\includegraphics[width=12cm, height=18cm]{Images/userGuide/web} \\
-%			\label{fig:web_homepage} 
-%		\end{center}  	
-%	\end{figure}	
+	\begin{figure}[!ht]   
+		\caption{Sistema web - Página de inicio.} 
+		\begin{center} 
+	 		\includegraphics[width=12cm, height=18cm]{Images/userGuide/web/homepage} \\
+			\label{fig:web_homepage} 
+		\end{center}  	
+	\end{figure}	
+	
+	% NEW PAGE
+	\newpage
 	
 	Respecto a la funcionalidad para iniciar sesión se pueden presentar los siguientes casos:
 	
 	\begin{itemize}
 		\item Inicio de sesión correcto: el usuario introduce correctamente sus credenciales y el sistema le permite el acceso.
-		\item Inicio de sesión incorrecto (Figura \ref{fig:web_loginError}): el usuario introduce erróneamente las credenciales y el sistema muestra una notificación\footnote{Todas las notificaciones que se presentan al usuario, excepto aquellas que requieren de su interacción, poseen un temporizador de 5 segundos tras el cual dejan de estar visibles.} al usuario, denegándole el acceso. \textbf{¡Importante!} La cuenta de usuario es bloqueada tras 5 intentos fallidos donde el número de intento actual se mantiene durante 30 minutos.
+		\item Inicio de sesión incorrecto (Figura \ref{fig:web_loginError}): el usuario introduce erróneamente las credenciales y el sistema muestra una notificación\footnote{Todas las notificaciones que se presentan al usuario, excepto aquellas que requieren de su interacción, poseen un temporizador de 5 segundos tras el cual dejan de ser visibles.} al usuario, denegándole el acceso.
 		
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Iniciar sesión con credenciales erróneas.} 
-%			\begin{center} 
-%	 			\includegraphics[width=9.5cm, height=4.2cm]{Images/userGuide/web/} \\
-%				\label{fig:web_loginError} 
-%			\end{center}  	
-%		\end{figure}	
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Iniciar sesión con credenciales erróneas.} 
+			\begin{center} 
+	 			\includegraphics[width=9.5cm, height=5cm]{Images/userGuide/web/loginError} \\
+				\label{fig:web_loginError} 
+			\end{center}  	
+		\end{figure}	
 		
 		\item Error durante la autenticación: el sistema experimenta un error durante el proceso de autenticación. En este caso, se recomienda intentar de nuevo el inicio de sesión transcurrido un tiempo.
 				
-		\item Cuenta de usuario no habilitada o bloqueada: la cuenta ha sido bloqueada (Figura \ref{fig:web_lockedUser}) explícitamente o implícitamente -por alcanzar el máximo número de intentos posibles de inicio de sesión-  o no habilitada (Figura \ref{fig:web_disabledUser}) por el usuario administrador. En este caso, se muestra una alerta informativa ofreciendo la posibilidad de contactar con el usuario administrador mediante la indicación de la dirección \textit{email} registrada en el sistema con el fin de resolver la incidencia.
+		\item Cuenta de usuario no habilitada o bloqueada: la cuenta ha sido bloqueada o inhabilitada por el usuario administrador. En este caso, se muestra una alerta informativa (Figura \ref{fig:web_lockedUser}).
 				
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Cuenta de usuario bloqueada.} 
-%			\begin{center} 
-%	 			\includegraphics[width=10cm, height=6.5cm]{Images/userGuide/web/} \\
-%				\label{fig:web_lockedUser} 
-%			\end{center}  	
-%		\end{figure}	
-
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Cuenta de usuario no habilitada.} 
-%			\begin{center} 
-%	 			\includegraphics[width=10cm, height=6.5cm]{Images/userGuide/web/} \\
-%				\label{fig:web_disabledUser} 
-%			\end{center}  	
-%		\end{figure}	
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Cuenta de usuario bloqueada.} 
+			\begin{center} 
+	 			\includegraphics[width=10cm, height=6.5cm]{Images/userGuide/web/lockedUser} \\
+				\label{fig:web_lockedUser} 
+			\end{center}  	
+		\end{figure}		
 		
 		\item Cuenta de usuario o contraseña expirada: la cuenta o contraseña se encuentra expirada debido a que un usuario administrador así lo indicó en el sistema. Se proporciona la misma funcionalidad que en el anterior caso.
 	\end{itemize}
 	
-	Tras una autenticación exitosa por parte del usuario, el sistema redirecciona a éste en base a su rol, existiendo dos roles:
+	Tras una autenticación exitosa por parte del usuario el sistema redirecciona a éste en base a su rol, existiendo dos roles:
 	
 	\begin{itemize}
-		\item Rol usuario administrador: aquel usuario encargado de gestionar el contenido del sistema. Accede al panel de control.
-		\item Rol usuario normal: aquel usuario que utiliza el sistema para visualizar la información monitorizada. Accede a la página de usuario.
+		\item Rol usuario administrador: aquel usuario encargado de gestionar los usuarios del sistema y de visualizar la información completa monitorizada. Accede al panel de control.
+		\item Rol usuario normal: aquel usuario que utiliza el sistema para visualizar su propia información monitorizada. Accede a la página de usuario.
 	\end{itemize}
 	
-	Además, existe la opción \textit{Recordarme} la cual permite ofrecer al usuario la posibilidad de recordar las credenciales para próximos inicios de sesión. De esta forma, el usuario al acceder al sistema no deberá introducir las credenciales y se producirá una autenticación automática. \textbf{¡Importante!} No utilizar esta opción en lugares públicos o en dispositivos ajenos. En caso contrario, finalice la sesión. \\
+	Además, existe la opción \textit{Recordarme} la cual permite ofrecer al usuario la posibilidad de recordar las credenciales para próximos inicios de sesión. De esta forma, el usuario al acceder al sistema no deberá introducir las credenciales y se producirá una autenticación automática. Es importante no utilizar esta opción en lugares públicos o en dispositivos ajenos. En caso contrario, es importante cerciorarse de finalizar la sesión. \\
 	
-	Aunque no se presenta durante un funcionamiento correcto, existe un hipotético caso donde un usuario puede que no posea un rol asignado debido a algún fallo o problema interno durante su creación. En este caso el usuario no dispone el privilegio de acceso a las funcionalidades del sistema y por ello cuando inicie sesión es redirigido a una página (Figura \ref{fig:web_noRole}) donde puede contactar con el usuario administrador mediante la indicación de la dirección \textit{email} registrada en el sistema con el fin de resolver el caso.
+	Por último, aunque no se presenta durante un funcionamiento correcto, existe un hipotético caso donde un usuario puede que no posea un rol asignado debido a algún fallo interno durante su creación. En este caso el usuario no dispone del privilegio de acceso a las funcionalidades del sistema y por ello cuando inicia sesión es redirigido a una página informativa (Figura \ref{fig:web_noRole}).
 	
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Cuenta de usuario sin rol.} 
-%			\begin{center} 
-%	 			\includegraphics[width=11cm, height=10cm]{Images/userGuide/web/} \\
-%				\label{fig:web_noRole} 
-%			\end{center}  	
-%		\end{figure}	
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Cuenta de usuario sin rol.} 
+			\begin{center} 
+	 			\includegraphics[width=9cm, height=9cm]{Images/userGuide/web/noRole} \\
+				\label{fig:web_noRole} 
+			\end{center}  	
+		\end{figure}	
 	
 	% Subsection
 	\subsection{Sesiones concurrentes}
 	
-	El concepto de sesiones concurrentes indica el número de veces que un usuario puede iniciar sesión simultáneamente en el sistema desde diferentes lugares, dispositivos y/o navegadores y por tanto encontrarse dentro de él. La política establecida en Hyot con respecto a este aspecto es la siguiente:
+	El concepto de sesiones concurrentes indica el número de veces que un usuario puede iniciar sesión simultáneamente en el sistema desde diferentes lugares, dispositivos y/o navegadores. La política establecida es la siguiente:
 	
 	\begin{itemize}
 		\item Las cuentas de usuario administrador no poseen ninguna restricción, pudiendo iniciar tantas sesiones simultáneas como deseen con su cuenta de usuario.
-		\item Las cuentas de usuario normal y cuentas de usuario sin rol solamente pueden iniciar una sesión simultánea. De tal forma que si ya ha iniciado sesión y accede desde otro lugar, dispositivo y/o navegador se le permite el acceso pero la primera sesión -la anterior- es invalidada y por lo tanto cuando el usuario vaya a ejecutar alguna acción desde esta primera sesión es redirigido a la página de iniciar sesión y una notificación de error es mostrada (Figura \ref{fig:web_concurrency}).
+		\item Las cuentas de usuario normal y cuentas de usuario sin rol solamente pueden iniciar una sesión simultánea, de tal forma que si hay una sesión ya iniciada con un determinado usuario y se intenta iniciar sesión desde otro lugar, dispositivo y/o navegador con el mismo usuario, el inicio de sesión es denegado y se muestra una notificación de error (Figura \ref{fig:web_concurrency}).
 	\end{itemize}
 	
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Sesiones concurrentes con usuario normal} 
-%			\begin{center}
-%		 		\includegraphics[width=10cm, height=1cm]{Images/userGuide/web/} \\
-%				\label{fig:web_concurrency} 
-%			\end{center}  	
-%		\end{figure}
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Sesiones concurrentes con usuario normal} 
+			\begin{center}
+		 		\includegraphics[width=10cm, height=4cm]{Images/userGuide/web/concurrency} \\
+				\label{fig:web_concurrency} 
+			\end{center}  	
+		\end{figure}
 		
 	% Subsection
 	\subsection{Restablecer contraseña}
 	
-	Si el usuario no recuerda su contraseña puede utilizar esta funcionalidad ofrecida para el restablecimiento (Figura \ref{fig:web_restorePassword}). Esta página puede ser accedida pulsando en el enlace ubicado en la página inicial de inicio de sesión. 
+	Si el usuario no recuerda su contraseña puede utilizar esta funcionalidad para su restablecimiento (Figura \ref{fig:web_restorePassword}). Esta página puede ser accedida pulsando en el enlace ubicado en la página inicial de inicio de sesión y basta con introducir el \textit{email} registrado en el sistema y una notificación avisando del envío de un correo electrónico es obtenida\footnote{Únicamente se envía el correo electrónico si la dirección introducida existe en el sistema. En caso de no existir un usuario con dicha dirección también se muestra la notificación de envío de correo electrónico aunque internamente no se envíe con el fin de evitar la enumeración de usuarios.} (Figura \ref{fig:web_restoreAlert}). En el caso de que se produzca un fallo interno durante el envío del \textit{email}, una notificación de error es mostrada.
 	
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Restablecer contraseña.} 
-%			\begin{center} 
-%	 			\includegraphics[width=10cm, height=7cm]{Images/userGuide/web} \\
-%				\label{fig:web_restorePassword} 
-%			\end{center}  	
-%		\end{figure}	
+		% NEW PAGE
+		\newpage
+	
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Restablecer contraseña.} 
+			\begin{center} 
+	 			\includegraphics[width=11cm, height=9cm]{Images/userGuide/web/restorePassword} \\
+				\label{fig:web_restorePassword} 
+			\end{center}  	
+		\end{figure}	
 		
-	Para el restablecimiento de la contraseña, basta con introducir el \textit{email} registrado en el sistema y una notificación avisando del envío de un correo electrónico es obtenida\footnote{Únicamente se envía el correo electrónico si la dirección introducida existe en el sistema.} (Figura \ref{fig:web_restoreAlert}). En el caso de que se produzca un fallo interno durante el envío del \textit{email}, una notificación de error es mostrada (Figura \ref{fig:web_restoreAlertError}).
-		
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Notificación de restablecimiento de contraseña.} 
-%			\begin{center} 
-%	 			\includegraphics[width=10cm, height=1.2cm]{Images/userGuide/web/} \\
-%				\label{fig:web_restoreAlert} 
-%			\end{center}  	
-%		\end{figure}
-%		
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Notificación de error en el restablecimiento de contraseña.} 
-%			\begin{center} 
-%	 			\includegraphics[width=10cm, height=0.8cm]{Images/userGuide/web/} \\
-%				\label{fig:web_restoreAlertError} 
-%			\end{center}  	
-%		\end{figure}
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Notificación de restablecimiento de contraseña.} 
+			\begin{center} 
+	 			\includegraphics[width=11cm, height=6cm]{Images/userGuide/web/notificationRestorePassword} \\
+				\label{fig:web_restoreAlert} 
+			\end{center}  	
+		\end{figure}
 
 	 La Figura \ref{fig:web_restoreEmail} muestra un ejemplo de formato del correo electrónico que se envía el cual contiene las instrucciones a seguir.   \\
 
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Email para restablecer contraseña.} 
-%			\begin{center} 
-%	 			\includegraphics[width=12cm, height=7.2cm]{Images/userGuide/web/} \\
-%				\label{fig:web_restoreEmail} 
-%			\end{center}  	
-%		\end{figure}	
+		% NEW PAGE
+		\newpage
+
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Email para restablecer contraseña.} 
+			\begin{center} 
+	 			\includegraphics[width=12cm, height=7.2cm]{Images/userGuide/web/restorePasswordMail} \\
+				\label{fig:web_restoreEmail} 
+			\end{center}  	
+		\end{figure}	
 	
-	En la página que se redirecciona desde el correo electrónico enviado (Figura \ref{fig:web_newPassword}), el usuario puede introducir la nueva contraseña siguiendo el patrón permitido. Si la contraseña no cumple los requisitos, una notificación de error es mostrada. Esta funcionalidad solamente se encuentra disponible durante los 30 primeros minutos desde la recepción del \textit{email} por parte del usuario, donde una vez transcurrido ese tiempo la petición actual ya no es válida, teniendo que volver a solicitar la petición de restablecimiento de contraseña.
+	En la página que se redirecciona desde el correo electrónico enviado (Figura \ref{fig:web_newPassword}), el usuario puede introducir la nueva contraseña siguiendo el patrón permitido. Si la contraseña no cumple los requisitos, una notificación de error es mostrada. Esta funcionalidad de un solo uso en cada petición solamente se encuentra disponible durante los 30 primeros minutos desde la recepción del \textit{email} por parte del usuario, donde una vez transcurrido ese tiempo la petición actual ya no es válida, teniendo que volver a solicitar la petición de restablecimiento de contraseña.
 	
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Indicación de nueva contraseña.} 
-%			\begin{center} 
-%	 			\includegraphics[width=10cm, height=7cm]{Images/userGuide/web} \\
-%				\label{fig:web_newPassword} 
-%			\end{center}  	
-%		\end{figure}
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Indicación de nueva contraseña.} 
+			\begin{center} 
+	 			\includegraphics[width=10cm, height=8cm]{Images/userGuide/web/newPassword} \\
+				\label{fig:web_newPassword} 
+			\end{center}  	
+		\end{figure}
 
 	% Subsection
 	\subsection{Panel de control}
 	
-	% TODO - Si panel de control incluye ver la monitorización habría que indica que no puede hacer ninguna acción el usuario normal a excepción de la ver los datos de monitorización
-	El panel de control corresponde a la parte del sistema web donde únicamente puede acceder el usuario administrador con el fin de gestionar los usuarios por lo que ninguna acción que se pueda realizar en este panel puede ser efectuada por un usuario normal o un usuario no registrado. En el panel de control se localizan dos tipo de menú, a continuación detallados.
+	El panel de control corresponde a la parte del sistema web donde únicamente puede acceder el usuario administrador con el fin de gestionar los usuarios y consultar la información completa de monitorización por lo que ninguna acción que se pueda realizar en este panel puede ser efectuada por un usuario normal o un usuario no registrado. En el panel de control se localizan dos tipo de menú, a continuación detallados.
 	
 	\begin{itemize}
 		\item Menú superior (Figura \ref{fig:web_adminMenu}), donde se encuentra: 
 		 
-%			\begin{figure}[!ht]   
-%				\caption{Sistema web - Menú superior del panel de control.} 
-%				\begin{center} 
-%	 				\includegraphics[width=18cm, height=0.9cm]{Images/userGuide/web/adminMenuSuperior} \\
-%					\label{fig:web_adminMenu} 
-%				\end{center}  	
-%			\end{figure}
+			\begin{figure}[!ht]   
+				\caption{Sistema web - Menú superior del panel de control.} 
+				\begin{center} 
+	 				\includegraphics[width=16cm, height=1cm]{Images/userGuide/web/adminMenuSuperior} \\
+					\label{fig:web_adminMenu} 
+				\end{center}  	
+			\end{figure}
 			
 			\begin{itemize}
 				\item Logo de Hyot: pulsando sobre él, el usuario es redirigido a la página inicial del panel de control la cual corresponde con el panel de estadísticas para el usuario administrador.
@@ -9518,13 +9517,13 @@ IP.1			    = [IP Server]
 				\item Nombre de usuario del usuario administrador conectado.
 				\item Lista desplegable que contiene las siguientes opciones (Figura \ref{fig:web_adminMenuSuperiorDesplegable}):
 				
-%				\begin{figure}[!ht]   
-%					\caption{Sistema web - Desplegable en el menú superior del panel de control.} 
-%					\begin{center} 
-%	 					\includegraphics[width=4cm, height=3.5cm]{Images/userGuide/web/adminMenuSuperiorDesplegable} \\
-%						\label{fig:web_adminMenuSuperiorDesplegable} 
-%					\end{center}  	
-%				\end{figure}
+				\begin{figure}[!ht]   
+					\caption{Sistema web - Desplegable en el menú superior del panel de control.} 
+					\begin{center} 
+	 					\includegraphics[width=5.5cm, height=3.5cm]{Images/userGuide/web/adminMenuSuperiorDesplegable} \\
+						\label{fig:web_adminMenuSuperiorDesplegable} 
+					\end{center}  	
+				\end{figure}
 			
 				\begin{itemize}
 					\item Mi perfil: permite visualizar el perfil personal del usuario.
@@ -9538,14 +9537,16 @@ IP.1			    = [IP Server]
 				\item Búsqueda rápida de usuarios normales.
 				\item Panel de control $\rightarrow$ Estadísticas: permite visualizar la información y gráficos estadísticos sobre el proyecto Hyot.
 				\item Gestión de cada entidad: permite la gestión completa de los usuarios, usuario administrador y usuario normal.
+				\item Visualización de las mediciones tomadas por todos los usuarios.
+				\item Visualización de las alertas registradas en la \gls{blockchain-a} por todos los usuarios.
 				
-%			 	\begin{figure}[!ht]   
-%					\caption{Sistema web - Menú lateral del panel de control.} 
-%					\begin{center} 
-%	 					\includegraphics[width=4.5cm, height=9.8cm]{Images/userGuide/web/adminMenuLateral} \\
-%						\label{fig:web_adminMenuLateral} 
-%					\end{center}  	
-%				\end{figure}
+			 	\begin{figure}[!ht]   
+					\caption{Sistema web - Menú lateral del panel de control.} 
+					\begin{center} 
+	 					\includegraphics[width=5cm, height=9cm]{Images/userGuide/web/adminMenuLateral} \\
+						\label{fig:web_adminMenuLateral} 
+					\end{center}  	
+				\end{figure}
 			\end{itemize}
 	\end{itemize}
 	
@@ -9557,15 +9558,14 @@ IP.1			    = [IP Server]
 		\item Título y subtítulo de la sección: permite conocer al usuario en qué sección y subsección se encuentra actualmente. Al pulsar sobre el texto que indica la sección, el usuario administrador es redirigido a la acción principal de esa entidad, en el caso de la figura al listado de usuarios administradores.
 	\end{itemize}
 	
-%			\begin{figure}[!ht]   
-%				\caption{Estructura - Guía de navegación, título y subtítulo.} 
-%				\begin{center} 
-% 					\includegraphics[width=8cm, height=2cm]{Images/userGuide/web/breadcrumb} \\	
-% 					\label{fig:web_breadcrumb} 
-%				\end{center}  	
-%			\end{figure}
+			\begin{figure}[!ht]   
+				\caption{Estructura - Guía de navegación, título y subtítulo.} 
+				\begin{center} 
+ 					\includegraphics[width=10cm, height=2cm]{Images/userGuide/web/breadcrumb} \\	
+ 					\label{fig:web_breadcrumb} 
+				\end{center}  	
+			\end{figure}
 		
-	% TODO - Modificar panel estadístico	
 	% Subsubsection
 	\subsubsection{Panel de estadísticas}
 	
@@ -9576,88 +9576,108 @@ IP.1			    = [IP Server]
 		\begin{itemize}
 			\item Número de usuarios administradores registrados en el sistema web.
 			\item Número de usuarios normales registrados en el sistema web.
-			\item Número de mediciones sobre el entorno almacenadas.
-			\item Número de alertas generadas.
+			\item Número de mediciones sobre el entorno almacenadas por todos los usuarios.
+			\item Número de alertas registradas en la \gls{blockchain-a} por todos los usuarios.
+			\item Número de usuarios registrados en la \gls{blockchain-a}.
 		\end{itemize}
 		
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Datos estadísticos.} 
-%			\begin{center}
-%		 		\includegraphics[width=13cm, height=4.5cm]{Images/userGuide/web/esDatosEstadisticos} \\
-%				\label{fig:web_DatosEstadisticos} 
-%			\end{center}  	
-%		\end{figure}
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Datos estadísticos.} 
+			\begin{center}
+		 		\includegraphics[width=13cm, height=8cm]{Images/userGuide/web/esDatosEstadisticos} \\
+				\label{fig:web_DatosEstadisticos} 
+			\end{center}  	
+		\end{figure}
 		
-		\item Usuarios recientes (Figura \ref{fig:web_UsuariosRecientes}): este panel muestra los 10 últimos usuarios normales dados de alta en el sistema web junto con información básica: nombre de usuario, email, fecha de alta y estado de la cuenta. Además, el botón \textit{Editar} permite acceder a la página de edición de este usuario.
+		\item Alertas registradas en la \gls{blockchain-a} por cada sensor y  cada evento (Figura \ref{fig:web_alertsbySensorEvent}).
+		 
+		 \begin{figure}[!ht]   
+			\caption{Sistema web - Alertas registradas por cada sensor y evento.} 
+			\begin{center}
+		 		\includegraphics[width=15cm, height=7cm]{Images/userGuide/web/alertsbySensorEvent} \\
+				\label{fig:web_alertsbySensorEvent} 
+			\end{center}  	
+		\end{figure}
+		
+		\item Relación de medidas tomadas y alertas registradas en la \gls{blockchain-a} por cada usuario existente en este método de persistencia (Figura \ref{fig:web_alertsMeasurements}).
+		 
+		 \begin{figure}[!ht]   
+			\caption{Sistema web - Relación de medidas y alertas por cada usuario.} 
+			\begin{center}
+		 		\includegraphics[width=16cm, height=7cm]{Images/userGuide/web/alertsMeasurements} \\
+				\label{fig:web_alertsMeasurements} 
+			\end{center}  	
+		\end{figure}		
+		 
+		\item Usuarios recientes (Figura \ref{fig:web_UsuariosRecientes}): este panel muestra los 10 últimos usuarios normales dados de alta en el sistema web junto con información básica: nombre de usuario, email, fecha de alta y estado de la cuenta. Además, el botón \textit{Editar} permite acceder a la página de edición de este usuario de forma rápida.
 
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Estadísticas sobre usuarios recientes.} 
-%			\begin{center}
-%		 		\includegraphics[width=8cm, height=7.5cm]{Images/userGuide/web/esUsuariosRecientes} \\
-%				\label{fig:web_UsuariosRecientes} 
-%			\end{center}  	
-%		\end{figure}
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Estadísticas sobre usuarios normales recientes.} 
+			\begin{center}
+		 		\includegraphics[width=10cm, height=4cm]{Images/userGuide/web/esUsuariosRecientes} \\
+				\label{fig:web_UsuariosRecientes} 
+			\end{center}  	
+		\end{figure}
 		
 	\end{itemize}
 		
 	Cada sección del panel estadístico puede contener una serie de iconos (Figura \ref{fig:web_botonesFuncionalidad}) con una determinada funcionalidad\footnote{Se muestran todos los iconos existentes juntos y se explican de izquierda a derecha aunque puede darse el caso que una sección determinada presente todos y otra sección solamente algunos.}.
 	
 	\begin{itemize}
-		\item Pantalla completa: permite poner a pantalla completa la sección seleccionada.
-		\item Recargar: permite recargar de forma individual el gráfico o sección seleccionada de una manera rápida sin tener que recargar la página completa.
+		\item Recargar: permite recargar de forma individual los datos del gráfico o sección seleccionada de una manera rápida sin tener que recargar la página completa.
 		\item Agrupar/Expandir: permite agrupar o expandir la sección seleccionada.
-		\item Remover: permite remover (ocultar) la sección seleccionada. Para visualizarla de nuevo basta con recargar la página completa.
+		\item Remover: permite ocultar la sección seleccionada. Para visualizarla de nuevo basta con recargar la página completa.
 	\end{itemize}
 		
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Funcionalidad de iconos del panel estadístico.} 
-%			\begin{center}
-%		 		\includegraphics[width=2.5cm, height=0.7cm]{Images/userGuide/web/botonesFuncionalidad} \\
-%				\label{fig:web_botonesFuncionalidad} 
-%			\end{center}  	
-%		\end{figure}
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Funcionalidad de iconos del panel estadístico.} 
+			\begin{center}
+		 		\includegraphics[width=2cm, height=1cm]{Images/userGuide/web/botonesFuncionalidad} \\
+				\label{fig:web_botonesFuncionalidad} 
+			\end{center}  	
+		\end{figure}
 			
 
 	% Subsubsection
 	\subsubsection{Gestión de usuarios administradores}
 	
-	La gestión de usuarios administradores permite las actividades\footnote{Las acciones explicadas en este apartado son similares y aplicables a la entidad usuario normal.} principales de: listado, creación, edición, eliminación, importación y exportación -subactividad de listado-. Las acciones de creación, listado e importación de usuarios administradores pueden ser accedidas directamente desde el menú lateral, visualizándose en color verde la entidad de usuario administrador cuando es seleccionada alguna acción. A continuación, se explica en detalle cada acción disponible sobre la gestión de usuarios administradores:
+	La gestión de usuarios administradores permite las actividades\footnote{Las acciones explicadas en este apartado son similares y aplicables a la entidad usuario normal.} principales de: listado, creación, edición, eliminación y exportación -subactividad de listado-. Las acciones de creación y listado de usuarios administradores pueden ser accedidas directamente desde el menú lateral, visualizándose en color verde el título de la entidad de usuario administrador cuando es seleccionada alguna acción. A continuación, se explica en detalle cada acción disponible sobre la gestión de usuarios administradores:
 	
 	\begin{itemize}
 		\item Listado de usuarios administradores (Figura \ref{fig:web_adminList}): permite consultar los usuarios administradores existentes en el sistema web. En esta sección se encuentra:
 		
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Listado de usuarios administradores.} 
-%			\begin{center}
-%		 		\includegraphics[width=15cm, height=6.5cm]{Images/userGuide/web/adminList} \\
-%				\label{fig:web_adminList} 
-%			\end{center}  	
-%		\end{figure}
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Listado de usuarios administradores.} 
+			\begin{center}
+		 		\includegraphics[width=18cm, height=8cm]{Images/userGuide/web/adminList} \\
+				\label{fig:web_adminList} 
+			\end{center}  	
+		\end{figure}
 		
 		\begin{itemize}
 			\item La visualización de todos los usuarios administradores existentes en el sistema ordenados y paginados. Por defecto solamente los campos del usuario administrador marcados como principales son visualizados a través de las columnas. El resto de campos, para el caso actual \textit{Cuenta expirada} y \textit{Contraseña expirada} se encuentran ocultos y pueden ser visualizados en cualquier momento a través de la selección de las columnas correspondientes. En el caso de que no exista ningún usuario administrador en el sistema web o la búsqueda no proporcione ningún resultado coincidente, se muestra un mensaje informativo (Figura \ref{fig:web_adminListEmpty}).	
 			
-%				\begin{figure}[!ht]   
-%					\caption{Sistema web - Listado vacío de usuarios administradores.} 
-%					\begin{center}
-%		 				\includegraphics[width=13cm, height=3cm]{Images/userGuide/web/adminListEmpty} \\
-%						\label{fig:web_adminListEmpty} 
-%					\end{center}  	
-%				\end{figure}
+				\begin{figure}[!ht]   
+					\caption{Sistema web - Listado vacío de usuarios administradores.} 
+					\begin{center}
+		 				\includegraphics[width=15cm, height=4.5cm]{Images/userGuide/web/adminListEmpty} \\
+						\label{fig:web_adminListEmpty} 
+					\end{center}  	
+				\end{figure}
 				
-				Además, si la visualización del sistema web se realiza en un dispositivo con un tamaño de pantalla pequeño, la tabla que muestra el listado de administradores se ajusta a las dimensiones actuales no mostrando por tanto todos los campos visibles. En dicho caso, se muestra un icono que permite extender y replegar la fila para ver el resto de columnas (Figura \ref{fig:web_adminListResponsive}).
+				Además, si la visualización del sistema web se realiza en un dispositivo con un tamaño de pantalla menor, la tabla que muestra el listado de administradores se ajusta a las dimensiones actuales no mostrando por tanto todos los campos visibles. En dicho caso, se muestra un icono que permite extender y replegar la fila para ver el resto de columnas (Figura \ref{fig:web_adminListResponsive}).
 				
-%				\begin{figure}[!ht]   
-%					\caption{Sistema web - Listado adaptativo de usuarios administradores.} 
-%					\begin{center}
-%		 				\includegraphics[width=6cm, height=4cm]{Images/userGuide/web/adminListResponsive} \\
-%						\label{fig:web_adminListResponsive} 
-%					\end{center}  	
-%				\end{figure}
+				\begin{figure}[!ht]   
+					\caption{Sistema web - Listado adaptativo de usuarios administradores.} 
+					\begin{center}
+		 				\includegraphics[width=11cm, height=3.5cm]{Images/userGuide/web/adminListResponsive} \\
+						\label{fig:web_adminListResponsive} 
+					\end{center}  	
+				\end{figure}
 
 			\item La posibilidad de búsqueda de usuarios administradores por cualquier campo existente.
 		 	\item La posibilidad de ordenar de manera ascendente o descendente los registros según una determinada columna. Basta con pulsar en el título de la columna para la ordenación, siendo la flecha morada la que indique el sentido de ordenación.
-			\item La posibilidad de filtrar el número de registros a mostrar (por defecto, 20). En caso de existir más registros que la cantidad filtrada, la barra de navegación situada en la sección inferior Mediante la barra de paginación situada en la sección inferior se activa para poder visualizar las diferentes páginas de usuarios administradores.
+			\item La posibilidad de filtrar el número de registros a mostrar (por defecto, 20). En caso de existir más registros que la cantidad filtrada, la paginación -barra de navegación situada en la sección inferior- se activa para poder visualizar las diferentes páginas de usuarios administradores.
 			\item La posibilidad de modificar el orden de las columnas pulsando sobre una y arrastrándola hacia otra posición. 
 			\item La posibilidad de aplicar las siguientes opciones situadas en la barra de opciones:
 				\begin{itemize}
@@ -9679,67 +9699,70 @@ IP.1			    = [IP Server]
 			\item Información de la cuenta de usuario (Figura \ref{fig:web_adminCreate}), donde todos los campos son requeridos.
 		 
 		 	\begin{itemize}
-		 		\item Nombre de usuario: nombre utilizado para iniciar sesión. Debe ser único en el sistema web\footnote{Todos los campos que sean únicos presentan la funcionalidad de comprobación en la misma página.} y por ello se ofrece la verificación de disponibilidad.
+		 		\item Nombre de usuario: nombre utilizado para iniciar sesión. Debe ser único en el sistema web\footnote{Todos los campos que debe ser únicos presentan la funcionalidad de comprobación de disponibilidad in situ.} y por ello se ofrece la verificación de disponibilidad.
 		 		\item \textit{Email}: dirección electrónica utilizada para iniciar sesión y como medio de contacto. Debe ser única en el sistema web.
 		 		\item Contraseña: credencial de acceso al sistema web. Debe cumplir un patrón específico y a medida que se introduce -nunca es mostrada en texto legible- aparece en la parte inferior una barra indicando su fortaleza.
 		 		\item Confirmar contraseña: mecanismo para asegurar que la contraseña introducida es la deseada. Debe coincidir con el campo \textit{Contraseña}.
 		 		\item Cuenta expirada: permite expirar la cuenta del usuario administrador (por defecto, deshabilitada). Si esta opción se habilita el usuario no puede acceder al sistema.
-		 		\item Cuenta bloqueada: permite bloquear la cuenta del usuario administrador (por defecto, deshabilitada). Si esta opción se habilita el usuario no puede acceder al sistema. Se recomienda utilizar esta funcionalidad para restringir el acceso a los usuarios en caso de ser necesario\footnote{El orden de prioridad de los estados de la cuenta de un usuario es: cuenta bloqueada, cuenta habilitada, cuenta expirada, contraseña expirada.}.
+		 		\item Cuenta bloqueada: permite bloquear la cuenta del usuario administrador (por defecto, deshabilitada). Si esta opción se habilita el usuario no puede acceder al sistema. Se recomienda utilizar esta funcionalidad para restringir el acceso a los usuarios en caso de ser necesario\footnote{El orden de prioridad de los estados de la cuenta de un usuario es: cuenta bloqueada, cuenta habilitada, cuenta expirada y contraseña expirada.}.
 		 		\item Cuenta habilitada: permite activar la cuenta del usuario administrador (por defecto, habilitada). Si esta opción se deshabilita el usuario no puede acceder al sistema.
 		 	 	\item Contraseña expirada: permite expirar la contraseña de la cuenta del usuario administrador (por defecto, deshabilitada). Si esta opción se habilita el usuario no puede acceder al sistema.
 		 	\end{itemize}
 			
-%			\begin{figure}[!ht]   
-%				\caption{Sistema web - Crear nuevo usuario administrador.} 
-%				\begin{center}
-%	 				\includegraphics[width=12cm, height=10cm]{Images/userGuide/web/adminCreate} \\
-%	 				\label{fig:web_adminCreate} 
-%				\end{center}  	
-%			\end{figure}
+			\begin{figure}[!ht]   
+				\caption{Sistema web - Crear nuevo usuario administrador.} 
+				\begin{center}
+	 				\includegraphics[width=16cm, height=11cm]{Images/userGuide/web/adminCreate} \\
+	 				\label{fig:web_adminCreate} 
+				\end{center}  	
+			\end{figure}
 		
 			\item Imagen de perfil (Figura \ref{fig:web_adminImage}): permite seleccionar una imagen para el perfil del usuario. En caso de no establecer ninguna, se muestra una imagen por defecto previamente establecida. Esta imagen debe cumplir una serie de requisitos: ser de tipo PNG, JPEG o GIF y su tamaño no puede superar 1 MB.
 			
-%			\begin{figure}[!ht]   
-%				\caption{Sistema web - Seleccionar imagen de perfil durante la creación de un nuevo usuario administrador.} 
-%				\begin{center}
-%	 				\includegraphics[width=10cm, height=7cm]{Images/userGuide/web/adminImage} \\
-%	 				\label{fig:web_adminImage} 
-%				\end{center}  	
-%			\end{figure}
+			\begin{figure}[!ht]   
+				\caption{Sistema web - Seleccionar imagen de perfil durante la creación de un nuevo usuario administrador.} 
+				\begin{center}
+	 				\includegraphics[width=12cm, height=7cm]{Images/userGuide/web/adminImage} \\
+	 				\label{fig:web_adminImage} 
+				\end{center}  	
+			\end{figure}
 			
-			Durante la introducción de los datos, éstos son validados\footnote{Las validaciones y notificaciones se llevan a cabo durante todas las acciones de una entidad: creación, edición, eliminación e importación.} con respecto a una serie de reglas para informar al usuario sobre si son válidos -aparece un icono verde- o inválidos -aparece un icono rojo. En este último caso se muestra un mensaje informativo, tal y como muestra la Figura \ref{fig:web_adminCreateValidation}.
+			% NEW PAGE
+			\newpage
 			
-%			\begin{figure}[!ht]   
-%				\caption{Sistema web - Validación de campos.} 
-%				\begin{center}
-%	 				\includegraphics[width=14cm, height=3.5cm]{Images/userGuide/web//adminCreateValidation} \\
-%	 				\label{fig:web_adminCreateValidation} 
-%				\end{center}  	
-%			\end{figure}
+			Durante la introducción de los datos, éstos son verificados\footnote{Las validaciones y notificaciones se llevan a cabo durante todas las acciones de una entidad: creación, edición y eliminación.} con respecto a una serie de reglas para informar al usuario sobre si son válidos -aparece un icono verde- o inválidos -aparece un icono rojo. En este último caso se muestra un mensaje informativo, tal y como muestra la Figura \ref{fig:web_adminCreateValidation}.
 			
-			De la anterior figura también se puede observar la aparición de un icono $\times$\footnote{Estos iconos cuya funcionalidad es facilitar la experiencia de usuario aparecen en casi todos los campos de texto del sistema web.} gris situado a la derecha del campo de texto cuando se introducen datos. En el caso de tratarse de un campo normal, el icono permite borrar el texto del campo. Por contra si se trata de un campo contraseña, el icono permite visualizar la contraseña en texto legible.
+			\begin{figure}[!ht]   
+				\caption{Sistema web - Validación de campos.} 
+				\begin{center}
+	 				\includegraphics[width=14cm, height=3.5cm]{Images/userGuide/web/adminCreateValidation} \\
+	 				\label{fig:web_adminCreateValidation} 
+				\end{center}  	
+			\end{figure}
+			
+			De la anterior figura también se puede observar la aparición de un icono aspa\footnote{Estos iconos cuya funcionalidad es facilitar la experiencia de usuario aparecen en casi todos los campos de texto del sistema web.} ($\times$) gris situado a la derecha del campo de texto cuando se introducen datos. En el caso de tratarse de un campo normal, el icono permite borrar el texto del campo. Por contra si se trata de un campo contraseña, el icono permite visualizar la contraseña en texto legible. \\
 			
 			Además existen otras situaciones donde la validación de los campos se produce una vez confirmada la acción de creación. En este caso si existe algún error se muestra mediante una notificación (Figura \ref{fig:web_adminCreateError}).		
 			
-%			\begin{figure}[!ht]   
-%				\caption{Sistema web - Notificación de datos erróneos.} 
-%				\begin{center}
-%	 				\includegraphics[width=11cm, height=1cm]{Images/userGuide/web/adminCreateError} \\
-%	 				\label{fig:web_adminCreateError} 
-%				\end{center}  	
-%			\end{figure}
+			\begin{figure}[!ht]   
+				\caption{Sistema web - Notificación de datos erróneos.} 
+				\begin{center}
+	 				\includegraphics[width=14cm, height=1.5cm]{Images/userGuide/web/adminCreateError} \\
+	 				\label{fig:web_adminCreateError} 
+				\end{center}  	
+			\end{figure}
 			
 		\end{itemize}
 			
-		\item Edición de un usuario administrador: permite editar el usuario administrador seleccionado. En esta pantalla aparecen todos los campos del usuario administrador con su valor actual\footnote{Los campos con contenido sensible como son las contraseñas nunca son reveladas en texto legible.}, excepto la imagen de perfil la cual se edita desde su propio apartado. Para confirmar la edición el usuario debe confirmar la actualización de la información y una notificación de éxito o error se muestra al usuario. A la hora de actualizar se realiza una comprobación de ediciones concurrentes, es decir, si hay otro usuario administrador que está editando la misma instancia de forma simultánea. En este caso no se realiza la actualización para evitar inconsistencias y se muestra una notificación de error. La Figura \ref{fig:web_adminEdit} muestra un ejemplo de edición del nombre de usuario donde observa cómo aparece una ayuda visual sobre el número de caracteres permitidos en el campo.
+		\item Edición de un usuario administrador: permite editar el usuario administrador seleccionado. En esta pantalla aparecen todos los campos del usuario administrador con su valor actual\footnote{Los campos con contenido sensible como son las contraseñas nunca son reveladas en texto legible.}, excepto la imagen de perfil la cual se edita desde su propio apartado. Para confirmar la edición el usuario debe confirmar la actualización de la información y una notificación de éxito o error se muestra al usuario. A la hora de actualizar se realiza una comprobación de edición concurrente, es decir, si hay otro usuario administrador que está editando la misma instancia de forma simultánea. En este caso no se realiza la actualización para evitar inconsistencias y se muestra una notificación de error. La Figura \ref{fig:web_adminEdit} muestra un ejemplo de edición del nombre de usuario donde observa cómo aparece una ayuda visual sobre el número de caracteres permitidos en el campo.
 				
-%			\begin{figure}[!ht]   
-%				\caption{Sistema web - Editar usuario administrador.} 
-%				\begin{center}
-%	 				\includegraphics[width=13cm, height=3.3cm]{Images/userGuide/web/adminEdit} \\
-%	 				\label{fig:web_adminEdit} 
-%				\end{center}  	
-%			\end{figure}
+			\begin{figure}[!ht]   
+				\caption{Sistema web - Editar usuario administrador.} 
+				\begin{center}
+	 				\includegraphics[width=13cm, height=3.3cm]{Images/userGuide/web/adminEdit} \\
+	 				\label{fig:web_adminEdit} 
+				\end{center}  	
+			\end{figure}
 
 		\item Eliminación de un usuario administrador (Figura \ref{fig:web_adminDelete}). Para eliminar un usuario administrador tan solo se debe seleccionar el usuario deseado desde el listado y en la parte superior de la pantalla de edición aparece el botón \textit{Eliminar administrador}. Cuando este botón se pulsa, aparece una ventana de confirmación, donde:
 		
@@ -9748,57 +9771,207 @@ IP.1			    = [IP Server]
 				\item Cancelar: cancela la eliminación del usuario administrador. También se cancela la eliminación si se pulsa en cualquier lugar de la pantalla.
 			\end{itemize}
 			
-%			\begin{figure}[!ht]   
-%				\caption{Sistema web - Eliminar usuario administrador.} 
-%				\begin{center}
-%	 				\includegraphics[width=11cm, height=2cm]{Images/userGuide/web/adminDelete} \\
-%	 				\label{fig:web_adminDelete} 
-%				\end{center}  	
-%			\end{figure}
-		
-		\item Importación de usuarios administradores (Figura \ref{fig:web_adminImport}): permite importar en el sistema de una manera rápida nuevos usuarios administradores. \textbf{Es importante seguir los consejos y cumplir con las instrucciones indicadas para una correcta importación. Para evitar confusiones, se puede obtener desde el sistema web una plantilla.} Para el proceso de importación es obligatorio la selección de un fichero CSV ya que en caso de seleccionar una fichero con otra extensión se muestra una notificación de error. Cuando se selecciona un fichero válido se pueden dar las siguientes situaciones y en cada caso se muestra la notificación asociada: 
-		
-			\begin{itemize}
-				\item El fichero se encuentra vacío y por tanto no se importa ningún registro.
-				\item El fichero solamente contiene la cabecera (primera fila) y por tanto no se importa ningún registro.
-				\item El fichero contiene datos y:
-			
-				\begin{itemize}
-					\item Se importan todos los registros.
-					\item No se importa ningún registro debido a que ya existían con anterioridad en el sistema web. 
-					\item Se importan solamente algunos registros debido a que el resto ya existían con anterioridad en el sistema web.
-				\end{itemize}
-				
-				\item Se produce un error durante la importación, en la validación de los datos a importar o por la falta de columnas obligatorias y por tanto no se almacena ningún registro.
-			\end{itemize}
-		
-%			\begin{figure}[!ht]   
-%				\caption{Sistema web - Importar usuarios administradores.} 
-%				\begin{center}
-%	 				\includegraphics[width=15cm, height=11cm]{Images/userGuide/web/adminImport} \\
-%	 				\label{fig:web_adminImport} 
-%				\end{center}  	
-%			\end{figure}
-			
-			La Figura \ref{fig:web_importOK} muestra un ejemplo de la notificación que se muestra tras una importación correcta de 5 usuarios administradores.
-			
-%			\begin{figure}[!ht]   
-%				\caption{Sistema web - Notificación tras una importación correcta.} 
-%				\begin{center}
-%	 				\includegraphics[width=12cm, height=0.8cm]{Images/userGuide/web/importOK} \\
-%	 				\label{fig:web_importOK} 
-%				\end{center}  	
-%			\end{figure}
-			
+			\begin{figure}[!ht]   
+				\caption{Sistema web - Eliminar usuario administrador.} 
+				\begin{center}
+	 				\includegraphics[width=10cm, height=4cm]{Images/userGuide/web/adminDelete} \\
+	 				\label{fig:web_adminDelete} 
+				\end{center}  	
+			\end{figure}
+					
 	\end{itemize}
 								
 	% Subsubsection
 	\subsubsection{Gestión de usuarios normales}
 	
-	Los usuarios normales representan a los usuarios que consumen la información en tiempo real sobre la monitorización del entorno \gls{iot-a}. Éstos poseen los mismos campos que el usuario administrador, donde a mayores se incluyen dos campos de información obligatorios: nombre y apellidos. \\
+	Los usuarios normales representan a los usuarios que consumen la información propia en tiempo real sobre la monitorización del entorno \gls{iot-a}, es decir, aquella información -mediciones y alertas- que ha sido registrada por un usuario especificado en el componente de monitorización de sucesos con el mismo nombre de usuario. Un usuario normal posee los mismos campos que el usuario administrador donde a mayores se incluyen dos campos de información obligatorios: nombre y apellidos. \\
 	
-	Desde esta sección, el usuario administrador puede gestionar los usuarios normales del sistema web incluyendo todas las acciones detalladas anteriormente para la gestión de usuarios administradores.
+	Desde esta sección, el usuario administrador puede gestionar completamente los usuarios normales del sistema web de una forma similar a la gestión del usuario administrador. Únicamente existe una diferencia durante la creación del usuario normal. Un usuario normal debe estar relacionado por el nombre de usuario con un usuario previamente existente en la \gls{blockchain-a}, de forma que en el sistema web únicamente existen usuarios normales que son usuarios que monitorizan el entorno. Esto implica que a la hora de su creación, el nombre de usuario elegido deba asociarse al nombre de usuario de un usuario de la \gls{blockchain-a} y deba estar disponible en el sistema web. En caso contrario, el usuario normal no puede ser creado en el sistema web, tal y como muestra la Figura \ref{fig:web_userBC}.
+				
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Comprobación de nombre de usuario de un usuario normal.} 
+			\begin{center}
+	 			\includegraphics[width=10cm, height=2.5cm]{Images/userGuide/web/userBC} \\
+	 			\label{fig:web_userBC} 
+			\end{center}  	
+		\end{figure}
+		
+	En el caso de que el servidor de \gls{hyperledgercomposer-a} no se encuentre en ejecución, la petición de comprobación de usuario no puede ser efectuada por lo que el usuario no puede ser creado y se muestra la notificación de la Figura \ref{fig:web_userBCError}. 	
+	
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Servidor Blockchain no se encuentra en ejecución durante la comprobación.} 
+			\begin{center}
+	 			\includegraphics[width=10cm, height=2.5cm]{Images/userGuide/web/userBCError} \\
+	 			\label{fig:web_userBCError} 
+			\end{center}  	
+		\end{figure}
+	
+	% Subsubsection
+	\subsubsection{Visualización de mediciones monitorizadas}
+	
+	En esta sección el usuario administrador puede visualizar todas las mediciones almacenadas en la \gls{bbdd-a} por los distintos usuarios. Al igual que en la acción de listar de las entidades anteriores, aquí también se presentan todas las funcionalidades comentadas anteriormente: buscar, ordenar, filtrar número de registros, copiar, imprimir, exportar, etc. La Figura \ref{fig:web_measurements} muestra el listado donde se observan 3 mediciones del entorno activándose el protocolo de alerta en una de ellas. Además de los campos visibles, existen otros dos: \textit{Enlace} y \textit{Destinatario} los cuales pueden ser visualizables habilitando la columna correspondiente tal y como muestra la Figura \ref{fig:web_measurementFull}. \\
+	
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Listado de mediciones.} 
+			\begin{center}
+	 			\includegraphics[width=17cm, height=8cm]{Images/userGuide/web/measurements} \\
+	 			\label{fig:web_measurements} 
+			\end{center}  	
+		\end{figure}
+		
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Listado de todos los campos de la medición.} 
+			\begin{center}
+	 			\includegraphics[width=17cm, height=5cm]{Images/userGuide/web/measurementFull} \\
+	 			\label{fig:web_measurementFull} 
+			\end{center}  	
+		\end{figure}
+	
+	% Subsubsection
+	\subsubsection{Visualización de alertas registradas}
 			
+	En esta sección el usuario administrador puede visualizar todas las alertas almacenadas en la \gls{blockchain-a} por los distintos usuarios. El listado de alertas (Figura \ref{fig:web_alerts}) contiene las mismas funcionalidades que las ya comentadas y únicamente el campo \textit{Hash} está oculto por defecto. El valor de este campo (Figura \ref{fig:web_alertFull}) es el utilizado por el usuario cuando quiera verificar la originalidad de la evidencia en el componente de desencriptación de evidencia. 
+		
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Listado de alertas.} 
+			\begin{center}
+	 			\includegraphics[width=18cm, height=7cm]{Images/userGuide/web/alerts} \\
+	 			\label{fig:web_alerts} 
+			\end{center}  	
+		\end{figure}
+		
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Listado de todos los campos de la alerta.} 
+			\begin{center}
+	 			\includegraphics[width=14cm, height=3.5cm]{Images/userGuide/web/alertFull} \\
+	 			\label{fig:web_alertFull} 
+			\end{center}  	
+		\end{figure}
+	
+	% Subsection
+	\subsection{Página de usuario}
+	
+	La página de usuario corresponde a la parte del sistema web donde únicamente puede acceder el usuario normal con el fin de consumir la información monitorizada de la que sea poseedor. Cada usuario normal registrado en el sistema web está asociado con un usuario en la \gls{blockchain-a} con el mismo nombre de usuario e incluso pudiendo coincidir el \textit{email}, el nombre y los apellidos. Dentro de la página de usuario, única e independiente para cada uno, se encuentra una barra de menú (Figura \ref{fig:web_normalUserMenu}) en la parte superior con las siguientes funcionalidades:
+	
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Menú superior del panel de control.} 
+			\begin{center} 
+	 			\includegraphics[width=16cm, height=1.5cm]{Images/userGuide/web/normalUserMenuSuperior} \\
+				\label{fig:web_normalUserMenu} 
+			\end{center}  	
+		\end{figure}
+			
+	\begin{itemize}
+	
+		\item Logo de Hyot: pulsando sobre él, el usuario es redirigido a la página inicial de la página de usuario la cual corresponde con la sección estadística del propio usuario normal.
+		\item Mis mediciones: contiene el listado de mediciones de las que el usuario normal actual es poseedor.
+		\item Mis alertas: contiene el listado de alertas de las que el usuario normal actual es poseedor.
+		\item Imagen de perfil del usuario normal conectado. Si el usuario no establece una imagen, se muestra una por defecto como muestra la figura anterior.
+		\item Nombre de usuario del usuario normal conectado.
+		\item Lista desplegable que contiene las siguientes opciones (Figura \ref{fig:web_normalUserMenuSuperiorDesplegable}):
+				
+			\begin{figure}[!ht]   
+				\caption{Sistema web - Desplegable en el menú superior del panel de control.} 
+				\begin{center} 
+	 				\includegraphics[width=5.5cm, height=3cm]{Images/userGuide/web/normalUserMenuSuperiorDesplegable} \\
+					\label{fig:web_normalUserMenuSuperiorDesplegable} 
+				\end{center}  	
+			\end{figure}
+			
+			\begin{itemize}
+				\item Mi perfil: permite visualizar y/o editar el perfil personal del usuario.
+				\item Cerrar sesión: permite cerrar la sesión del usuario invalidando también el inicio automático en el actual dispositivo si estuviese habilitado.
+			\end{itemize}
+			
+		\item Cerrar sesión: misma funcionalidad que la opción situada en la lista desplegable.
+
+	\end{itemize}
+
+	Además en la parte inferior del menú superior se presenta en todas las páginas una guía de navegación. Esta guía permite en todo momento al usuario conocer la ubicación exacta donde se encuentra. Pulsando sobre el texto: \textit{Página de inicio}, se redirige a la página inicial de la página de usuario.
+	
+	% Subsubsection
+	\subsubsection{Sección estadística}
+	
+	La página inicial de la página de usuario contiene una sección con diferentes estadísticas sobre la monitorización llevada a cabo por el usuario normal actual (Figura \ref{fig:web_normalUserEstadisticas}), donde se encuentra:
+	
+	\begin{itemize}
+		\item Número de mediciones propias sobre el entorno almacenadas.
+		\item Número de alertas propias registradas en la \gls{blockchain-a}.
+		\item Alertas propias registradas en la \gls{blockchain-a} por cada sensor y cada evento.
+	\end{itemize}
+	
+	\begin{figure}[!ht]   
+		\caption{Sistema web - Sección estadística del usuario normal.} 
+		\begin{center} 
+			\includegraphics[width=16cm, height=11cm]{Images/userGuide/web/normalUserEstadisticas} \\
+			\label{fig:web_normalUserEstadisticas} 
+		\end{center}  	
+	\end{figure}
+
+	% Subsubsection
+	\subsubsection{Visualización de mis mediciones}
+
+	En esta sección el usuario normal puede visualizar todas las mediciones almacenadas en la \gls{bbdd-a} de las que sea poseedor. Todas las funcionalidades de la acción listar que podía realizar el usuario administrador sobre las entidades, pueden ser efectuadas también por el usuario normal sobre sus mediciones. La Figura \ref{fig:web_userMeasurements} muestra el listado de diferentes mediciones del entorno donde se observa que no todos los campos son visibles. Los campos \textit{Enlace} y \textit{Destinatario} pueden ser visualizables habilitando la columna correspondiente.
+	
+	\begin{figure}[!ht]   
+		\caption{Sistema web - Mediciones propias del usuario normal.} 
+		\begin{center} 
+			\includegraphics[width=18cm, height=8.5cm]{Images/userGuide/web/userMeasurements} \\
+			\label{fig:web_userMeasurements} 
+		\end{center}  	
+	\end{figure}
+	
+	% Subsubsection
+	\subsubsection{Visualización de mis alertas}
+	
+	En esta sección el usuario normal puede visualizar todas las alertas registradas en la \gls{blockchain-a} de las que sea poseedor. La Figura \ref{fig:web_userAlerts} muestra el listado de alertas para el usuario normal actual.
+	 
+ 	\begin{figure}[!ht]   
+		\caption{Sistema web - Mediciones propias del usuario normal.} 
+		\begin{center} 
+			\includegraphics[width=18cm, height=8cm]{Images/userGuide/web/userAlerts} \\
+			\label{fig:web_userAlerts} 
+		\end{center}  	
+	\end{figure}
+ 
+	% Subsubsection
+	\subsubsection{Perfil de usuario}
+	
+	El perfil personal del usuario normal contiene la información detallada sobre los datos personales de éste. Dentro de esta sección, el usuario normal puede visualizar y/o editar su información personal (Figura \ref{fig:web_profile}), su contraseña (Figura \ref{fig:web_passwordProfile}) y su imagen de perfil (Figura \ref{fig:web_imageProfile}). Cabe destacar que:
+	
+	\begin{itemize}
+		\item El propio usuario no puede cambiar su nombre de usuario directamente.
+		\item La nueva contraseña debe cumplir una serie de requisitos por razones de seguridad los cuales son indicados en la página. Además, a medida que se escribe la nueva contraseña se valida frente a una serie de reglas establecidas y se indica la fortaleza de ésta.
+		\item La imagen de perfil debe cumplir los siguientes requisitos: ser de tipo PNG, JPEG o GIF y límite de tamaño 1 MB.
+	\end{itemize}
+	 	
+	 \begin{figure}[!ht]   
+		\caption{Sistema web - Información personal.} 
+		\begin{center} 
+			\includegraphics[width=16cm, height=9cm]{Images/userGuide/web/profile} \\
+			\label{fig:web_profile} 
+		\end{center}  	
+	\end{figure}
+	
+	% NEW PAGE
+	\newpage
+	
+	\begin{figure}[!ht]   
+		\caption{Sistema web - Modificar contraseña.} 
+		\begin{center} 
+			\includegraphics[width=18cm, height=10cm]{Images/userGuide/web/passwordProfile} \\
+			\label{fig:web_passwordProfile} 
+		\end{center}  	
+	\end{figure}
+	
+	\begin{figure}[!ht]   
+		\caption{Sistema web - Modificar imagen de perfil.} 
+		\begin{center} 
+			\includegraphics[width=18cm, height=8cm]{Images/userGuide/web/imageProfile} \\
+			\label{fig:web_imageProfile} 
+		\end{center}  	
+	\end{figure}
+
 	% Subsection
 	\subsection{Situaciones de error}
 	
@@ -9807,6 +9980,7 @@ IP.1			    = [IP Server]
 	 \begin{itemize}
 	 	\item Error 400 - Petición errónea.
 	 	\item Error 401 - Petición no autorizada.
+	 	\item Error 403 - Acceso denegado/prohibido.
 	 	\item Error 404 - Recurso no encontrado.
 	 	\item Error 405 - Método de solicitud no soportado.
 	 	\item Error 500 - Error interno del servidor.
@@ -9815,55 +9989,56 @@ IP.1			    = [IP Server]
 	
 	La Figura \ref{fig:web_error404} muestra un ejemplo de error 404 cuando el usuario intenta acceder a un recurso inexistente mientras que la Figura \ref{fig:web_error403} muestra un ejemplo de acceso a una acción no permitida.
 	
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Error 404.} 
-%			\begin{center} 
-%	 			\includegraphics[width=5.5cm, height=8cm]{Images/userGuide/web/error404} \\
-%				\label{fig:web_error404} 
-%			\end{center}  	
-%		\end{figure}
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Error 404.} 
+			\begin{center} 
+	 			\includegraphics[width=5.5cm, height=8cm]{Images/userGuide/web/error404} \\
+				\label{fig:web_error404} 
+			\end{center}  	
+		\end{figure}
 	
 	
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Error 403.} 
-%			\begin{center} 
-%	 			\includegraphics[width=5.5cm, height=8cm]{Images/userGuide/web/error403} \\
-%				\label{fig:web_error403} 
-%			\end{center}  	
-%		\end{figure}
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Error 403.} 
+			\begin{center} 
+	 			\includegraphics[width=5cm, height=5cm]{Images/userGuide/web/error403} \\
+				\label{fig:web_error403} 
+			\end{center}  	
+		\end{figure}
 
+	% Subsection 
+	\subsection{Idiomas}
+	
+	Actualmente el sistema web está disponible en dos idiomas, español e inglés. La imposición de uno u otro depende del idioma establecido en el propio navegador por lo que su modificación implica el cambio de idioma en el sistema web de Hyot, siempre y cuando el nuevo idioma establecido sea soportado por éste. En caso contrario, se muestra el idioma por defecto, inglés. La Figura \ref{fig:web_english} muestra la página de inicio en el idioma inglés.
+
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Página de inicio en inglés.} 
+			\begin{center} 
+	 			\includegraphics[width=5.5cm, height=8cm]{Images/userGuide/web/english} \\
+				\label{fig:web_english} 
+			\end{center}  	
+		\end{figure}
+	
 	% Subsection 
 	\subsection{Diseño adaptativo}
 	
-	Hyot está diseñado para una presentación óptima de la interfaz de usuario (\textit{\gls{ui}} -\gls{ui-a}-) en diferentes dispositivos con diversidad de tamaños de pantallas, gracias al diseño adaptativo. En todos los casos se ofrece la misma funcionalidad que pudiera tener si su visualización se realizase en dispositivos con pantallas de mayor tamaño. \\
-	
-	La Figura \ref{fig:web_responsive10} muestra cómo se visualiza Hyot en dispositivos \textit{tablet} de tamaño 10,5" o dispositivos con tamaño de pantalla similar mientras que la Figura \ref{fig:web_responsive5} muestra la visualización en un dispositivo móvil con tamaño de pantalla 5,5". En ambos casos, el icono situado en el extremo derecho del menú superior permite desplegar y replegar las distintas opciones de funcionalidad del sistema.
+	Hyot está diseñado para una presentación óptima de la interfaz de usuario (\textit{\gls{ui}} -\gls{ui-a}-) en diferentes dispositivos con diversidad de tamaños de pantallas, gracias al diseño adaptativo. En todos los casos se ofrece la misma funcionalidad que pudiera tener si su visualización se realizase en dispositivos con pantallas de mayor tamaño. La Figuras \ref{fig:web_responsive1} y \ref{fig:web_responsive2} muestran la visualización del panel de control y de la página de usuario, respectivamente desde un dispositivo con un tamaño de pantalla menor. En ambos casos, el icono situado en el extremo derecho del menú superior permite desplegar y replegar las distintas opciones de funcionalidad del sistema.
 
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Visualización vertical en un dispositivo tablet.} 
-%			\begin{center} 
-%	 			\includegraphics[width=13cm, height=6cm]{Images/userGuide/web/adaptativo10} \\
-%				\label{fig:web_responsive10} 
-%			\end{center}  	
-%		\end{figure}
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Visualización del panel de control en un dispositivo móvil.} 
+			\begin{center} 
+	 			\includegraphics[width=7cm, height=7cm]{Images/userGuide/web/responsive1} \\
+				\label{fig:web_responsive1} 
+			\end{center}  	
+		\end{figure}
 	
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Visualización vertical en un dispositivo móvil.} 
-%			\begin{center} 
-%	 			\includegraphics[width=7cm, height=10cm]{Images/userGuide/adaptativo5} \\
-%				\label{fig:web_responsive5} 
-%			\end{center}  	
-%		\end{figure}
-	
-	Además, cualquier correo electrónico enviado por el sistema web presenta un formato adaptativo como muestra la Figura \ref{fig:web_adaptativoEmail} y la visualización es correcta en diferentes gestores de correo electrónico.
-	
-%		\begin{figure}[!ht]   
-%			\caption{Sistema web - Visualización de email en un dispositivo móvil.} 
-%			\begin{center} 
-%	 			\includegraphics[width=7cm, height=10cm]{Images/userGuide/web/adaptativoEmail} \\
-%				\label{fig:web_adaptativoEmail} 
-%			\end{center}  	
-%		\end{figure}
+		\begin{figure}[!ht]   
+			\caption{Sistema web - Visualización de la página de usuario en un dispositivo móvil.} 
+			\begin{center} 
+	 			\includegraphics[width=7cm, height=6cm]{Images/userGuide/web/responsive2} \\
+				\label{fig:web_responsive2} 
+			\end{center}  	
+		\end{figure}
 	
 \end{document}
 	
