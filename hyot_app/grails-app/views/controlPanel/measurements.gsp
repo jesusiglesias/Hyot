@@ -237,7 +237,7 @@
                                         <g:else>
                                             <span class="label label-sm label-warning">
                                         </g:else>
-                                            ${measurement?.alert_triggered}
+                                            <g:formatBoolean boolean="${measurement?.alert_triggered}"/>
                                             </span>
                                         </td>
                                         <td class="break-word">${measurement?.sensor_origin}</td>

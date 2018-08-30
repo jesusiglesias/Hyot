@@ -1,6 +1,7 @@
 package User
 
 import grails.gorm.transactions.Transactional
+import groovy.json.JsonSlurper
 import org.springframework.beans.factory.annotation.Value
 import Security.SecRole
 import Security.SecUser
@@ -69,28 +70,32 @@ class UserController {
 
         try {
 
-            new URL(blockchain_getUserID + params.username).getText(requestProperties: [Accept: 'application/json'])
+            def response = new URL(blockchain_getUserID + params.username).getText(requestProperties: [Accept: 'application/json'])
 
-            if (SecUser.countByUsername(params.username)) { // Username found
-                responseData = [
-                        'status': "ERROR",
-                        'message': g.message(code: 'secUser.checkUsernameAvailibility.notAvailable', default:'Username is not available. Please, choose another one.')
+            def response_json = new JsonSlurper().parseText(response)
+
+            if (response_json.size() == 0) {
+                log.error("UserController():checkUsernameAvailibilityAndBlockchain():Exception:NormalUserNotExistBlockchain")
+
+                responseData = ['status': "ERROR", 'message': g.message(code: 'secUser.checkUsernameAvailibility.notAvailable.user.blockchain',
+                        default:'Username does not exist in the Blockchain. Please, create this user before continuing.')
                 ]
-            } else { // Username not found
-                responseData = [
-                        'status': "OK",
-                        'message':g.message(code: 'secUser.checkUsernameAvailibility.available', default:'Username available.')
-                ]
+
+            } else {
+
+                if (SecUser.countByUsername(params.username)) { // Username found
+                    responseData = [
+                            'status' : "ERROR",
+                            'message': g.message(code: 'secUser.checkUsernameAvailibility.notAvailable', default: 'Username is not available. Please, choose another one.')
+                    ]
+                } else { // Username not found
+                    responseData = [
+                            'status' : "OK",
+                            'message': g.message(code: 'secUser.checkUsernameAvailibility.available', default: 'Username available.')
+                    ]
+                }
             }
 
-        } catch (FileNotFoundException exception) {
-            log.error("UserController():checkUsernameAvailibilityAndBlockchain():Exception:NormalUserNotExistBlockchain:${exception}")
-
-            responseData = [
-                    'status': "ERROR",
-                    'message': g.message(code: 'secUser.checkUsernameAvailibility.notAvailable.user.blockchain',
-                            default:'Username does not exist in the Blockchain. Please, create this user before continuing.')
-            ]
         } catch (ConnectException exception) {
             log.error("UserController():checkUsernameAvailibilityAndBlockchain():Exception:BlockchainNotAvailable:${exception}")
 
