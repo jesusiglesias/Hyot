@@ -264,11 +264,11 @@ breaklines=true,
 	
 	\vspace{-0.3cm}
 	
-	En la actualidad un grueso importante de empresas tienen un interés especial en construir una nueva generación de aplicaciones transaccionales que establezcan confianza, responsabilidad y transparencia en su núcleo junto con una arquitectura abierta y distribuida. Aquí, es de especial relevancia el sistema de pago de gestión no centralizado \gls{bitcoin} \cite{bitcoin}, que está basado en la tecnología \Gls{blockchain} (\gls{blockchain-a}) \cite{iansiti:2017:ttab} la cual habilita la creación de un sistema inmutable de registro de sucesos. Desde su origen ha propiciado todo un conjunto de iniciativas que, prescindiendo de la existencia de una tercera parte de confianza (\gls{tpc-a}), puedan proporcionar protocolos para la protección de la integridad de la información. \\
+	En la actualidad un grueso importante de empresas tiene un interés especial en construir una nueva generación de aplicaciones transaccionales que establezcan confianza, responsabilidad y transparencia en su núcleo junto con una arquitectura abierta y distribuida. Aquí, es de especial relevancia el sistema de pago de gestión no centralizado \gls{bitcoin} \cite{bitcoin}, que está basado en la tecnología \Gls{blockchain} (\gls{blockchain-a}) \cite{iansiti:2017:ttab} la cual habilita la creación de un sistema inmutable de registro de sucesos. Desde su origen ha propiciado todo un conjunto de iniciativas que, prescindiendo de la existencia de una tercera parte de confianza (\gls{tpc-a}), puedan proporcionar protocolos para la protección de la integridad de la información. \\
 	
 	Una de estas iniciativas es \gls{hyperledger} \cite{hyperledger:url} -estándar \textit{\gls{opensource}} de investigación y evolución de la tecnología \gls{blockchain-a} permisionada anunciada por la fundación Linux en 2015-, se centra en apoyar este tipo de transacciones de negocio para mejorar numerosos aspectos de rendimiento y empresariales. \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) \cite{hyperledgerfabric:url}, es el proyecto más conocido dentro de este consorcio. Implementa la tecnología de libro de registros distribuido (\textit{\gls{dlt}} -\gls{dlt-a}-) \cite{wattenhofer:DLT} en una \gls{blockchain-a} permisionada donde la inserción de la información requiere que las entidades estén previamente autenticadas. Este modelo de control de acceso es de alto interés en el contexto de la trazabilidad de recursos ya que limita quién puede tener acceso y a qué recursos gracias a la existencia de roles. \\
 		
-	El surgimiento de nuevos paradigmas, como el Internet de las Cosas (\textit{\gls{iot}} -\gls{iot-a}-) \cite{christidis:2016:bsciot}, \cite{dorri:2017:TOBI} donde cualquier objeto del mundo real puede estar totalmente conectado a la red, ha evolucionado la forma de uso, de comunicación y de transmisión de información a través de Internet. Hasta hace poco, estos dispositivos eran meros consumidores de datos. Actualmente, exponen de forma permanente servicios y datos recolectados del entorno con lo que aparte de traer consigo numerosos beneficios, también abren la puerta a numerosos problemas de seguridad y privacidad. La importancia de mantener un registro de información inmutable y confidencial es esencial para garantizar la veracidad e integridad de los sucesos y de la información recogida. El presente proyecto aborda el desarrollo de una prueba de concepto (\textit{\gls{poc}} -\gls{poc-a}-) para implementar \gls{hyperledgerfabric-a} en el \gls{iot-a}. El objetivo será la recolección de eventos mediante sensores situados en una \gls{raspberry} 3 (\gls{raspberry-a}), y la inclusión de incidencias en la \gls{blockchain-a} de \gls{hyperledgerfabric-a}. Asimismo, toda la información recolectada podrá ser consumida en tiempo real mediante un sistema web.
+	El surgimiento de nuevos paradigmas, como el Internet de las Cosas (\textit{\gls{iot}} -\gls{iot-a}-) \cite{christidis:2016:bsciot}, \cite{dorri:2017:TOBI} donde cualquier objeto del mundo real puede estar totalmente conectado a la red, ha evolucionado la forma de uso, de comunicación y de transmisión de información a través de Internet. Hasta hace poco, estos dispositivos eran meros consumidores de datos. Actualmente, exponen de forma permanente servicios y datos recolectados del entorno con lo que aparte de traer consigo numerosos beneficios, también abren la puerta a numerosos problemas de seguridad y privacidad. La importancia de mantener un registro de información inmutable y confidencial es esencial para garantizar la veracidad e integridad de los sucesos y de la información recogida. El presente proyecto aborda el desarrollo de una prueba de concepto (\textit{\gls{poc}} -\gls{poc-a}-) para implementar \gls{hyperledgerfabric-a} en el \gls{iot-a}. El objetivo es la recolección de eventos mediante sensores situados en una \gls{raspberry} 3 (\gls{raspberry-a}), y la inclusión de incidencias en la \gls{blockchain-a} de \gls{hyperledgerfabric-a}. Asimismo, toda la información recolectada puede ser consumida en tiempo real mediante un sistema web.
 	
 	% NEW PAGE		
 	\newpage	
@@ -289,7 +289,7 @@ breaklines=true,
 		
 	One of these initiatives is \gls{hyperledger} \cite{hyperledger:url} -\gls{opensource} standard of research and evolution of the permissive \gls{blockchain-a} technology announced by the Linux Foundation in 2015-, focuses on supporting this type of business \glspl{transaction} to improve numerous aspects of performance and business. \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) \cite{hyperledgerfabric:url}, is the most well-known project within this consortium. It implements the \gls{dlt} (\gls{dlt-a}) \cite{wattenhofer:DLT} in a permissioned \gls{blockchain-a} where inserting information requires entities to be previously authenticated. This model of access control is of high interest in the context of resource traceability, since it limits who can access and what resources thanks to the existence of roles. \\
 	
-	The emergence of new paradigms, such as the \gls{iot} (\gls{iot-a}) \cite{christidis:2016:bsciot}, \cite{dorri:2017:TOBI} where any real-world object can be totally connected to the network, have evolved the way of using, communication and transmission of information through the Internet. Until recently, these devices were mere data consumers. Currently, they expose services and data collected from the environment on a permanent basis, which apart from bringing numerous benefits, also open the door to numerous security and privacy problems. The importance of maintaining a record of immutable and confidential information is essential to guarantee the veracity and integrity of the events and the information collected. This project addresses the development of a \gls{poc} (\gls{poc-a}) to implement \gls{hyperledgerfabric-a} in the \gls{iot-a}. The objective will be the collection of events using sensors located on a \gls{raspberry} 3 (\gls{raspberry-a}), and the inclusion of incidents in the \gls{blockchain-a} of \gls{hyperledgerfabric-a}. Likewise, the information collected may be consumed in real time through a web system.
+	The emergence of new paradigms, such as the \gls{iot} (\gls{iot-a}) \cite{christidis:2016:bsciot}, \cite{dorri:2017:TOBI} where any real-world object can be totally connected to the network, have evolved the way of using, communication and transmission of information through the Internet. Until recently, these devices were mere data consumers. Currently, they expose services and data collected from the environment on a permanent basis, which apart from bringing numerous benefits, also open the door to numerous security and privacy problems. The importance of maintaining a record of immutable and confidential information is essential to guarantee the veracity and integrity of the events and the information collected. This project addresses the development of a \gls{poc} (\gls{poc-a}) to implement \gls{hyperledgerfabric-a} in the \gls{iot-a}. The purpose is the collection of events using sensors located on a \gls{raspberry} 3 (\gls{raspberry-a}), and the inclusion of incidents in the \gls{blockchain-a} of \gls{hyperledgerfabric-a}. Likewise, the information collected may be consumed in real time through a web system.
 	
 	% NEW PAGE
 	\newpage
@@ -405,9 +405,137 @@ breaklines=true,
 	
 	% State of the art
 	\chapter{Estado del arte} \label{stateArtChapter}
+		
+	Conocer los inicios, pilares y fundamentos básicos sobre los que se sustenta la tecnología principal del proyecto es esencial para entender el contexto y la jerga que engloba. En este capítulo se aborda un breve estudio sobre la tecnología \Gls{blockchain} (\gls{blockchain-a}) para que el lector pueda adquirir un conocimiento general y superficial.
+
+	% Section
+	\section{Introducción}
 	
-	Conocer los inicios, pilares y fundamentos básicos sobre los que se sustenta la tecnología principal del proyecto es esencial para entender el contexto y la jerga que engloba. En este capítulo se aborda un breve estudio sobre la tecnología Blockchain para que el lector pueda adquirir un conocimiento general y superficial.
+	Los servicios tecnológicos de hoy en día y los sistemas en general en los que se basan el funcionamiento de la sociedad y el mundo económico y financiero siguen la filosofía tradicional articulada bajo la confianza en terceras partes. Un ejemplo muy a la mano del día a día es la funcionalidad ofrecida por entidades bancarias respecto a la gestión de las cuentas de clientes. El banco, que actúa como una tercera parte de confianza (\gls{tpc-a}), tiene la responsabilidad de garantizar la veracidad de la información personal asociada a dicha cuenta y del saldo disponible en ella. Los clientes son por tanto la parte que emite y entrega la confianza a las entidades bancarias por lo que quedan a merced del buen hacer de éstas. Como garante de la integridad y veracidad de los datos, estas entidades han desarrollado grandes sistemas con un enfoque normalmente centralizado por lo que únicamente una autoridad central es la encargada de gobernar y velar por la coherencia y seguridad de la información existiendo de tal manera puntos únicos de fallo. \\
+	
+	Estos sistemas, considerados como complejos y costosos, no han considerado en general dentro de sus objetivos principales facilitar la interoperabilidad y colaboración con otros sistemas. La gran cantidad de información que almacenan y manejan provoca que sea inviable y nada fácil de conseguir una transferencia de información eficiente y rápida entre distintos sistemas e incluso organizaciones por lo que estos datos se pueden encontrar en múltiples silos de información, impactando negativamente en el rendimiento y en la efectividad a la hora de trabajar, tomar decisiones o incluso gestionar áreas o unidades de negocio. Frente a este escenario, surgieron sistemas tales como las redes sociales donde la información se localiza de manera descentralizada en multiples puntos de almacenamiento omitiendo la existencia de un almacenamiento central y por tanto el punto único de fallo. Sin embargo, la falta de una interconexión total mediante una red de comunicaciones desemboca en que no sea adecuado para determinadas áreas donde se require interoperabilidad. Aquí, es donde las propiedades de \gls{blockchain-a} entran en juego ya que habilitan nuevos escenarios totalmente distribuidos gracias a la transformación de la topología de las redes económicas y sociales, tal y como muestra la Figura \ref{fig:stateArt_intro}. \\
+
+	\begin{figure}[!ht]   
+		\caption{Topologías de red.} 
+		\begin{center} 
+			\includegraphics[width=15cm,height=9cm]{Images/stateArt/intro} \\
+			\label{fig:stateArt_intro} 
+		\end{center}  
+	\end{figure}
+	
+	\gls{blockchain-a} es un nuevo paradigma llamado a transicionar un Internet de la Información, en el que la información puede ser replicada indefinidamente, hacia un Internet del Valor, en el que los activos se comparten de una manera segura y descentralizada, son únicos y tienen una historia trazable que está almacenada en un \textit{ledger} (libro de contabilidad o de registros) distribuido. Esta transición implica transformar los modelos existentes en muchos negocios con la definición de nuevas plataformas distribuidas en las que la figura de los intermediarios o \gls{tpc-a} pierde vigencia en favor de planteamientos de consenso y confianza distribuida. En primer lugar, el modelo de confianza distribuido que provee mediante su tecnología de consenso supone un cambio fundamental respecto a la figura de la \gls{tpc-a}. La existencia de una tecnología que permite la creación de redes totalmente distribuidas en las que sus participantes no necesitan una autoridad central o de confianza representa un giro radical en el diseño de nuevos modelos de sistemas ya que reduce la fricción en las operaciones y disminuye las barreras de colaboración. Por otra parte, el modelo distribuido en el que todos los participantes mantienen una copia del \textit{ledger}, hace que la información se encuentre repartida y replicada, lo que garantiza la inmutabilidad e integridad de los registros y da lugar a sistemas resilientes altamente transparente y auditables y con gran tolerancia a fallos, a la vez que acaba con el problema de los silos de información. Esto permite la instauración de una \textit{fuente única de verdad}, que es común a todas las organizaciones involucradas, además de compartida y supervisada por todas ellas. \\
+		
+	Tecnológicamente hablando, \gls{blockchain-a} es incipiente pero está creciendo a gran velocidad y ya existen numerosas soluciones tecnológicas que derivan total o parcialmente su lógica de negocio a esta capa de persistencia ya sea en \glspl{blockchain-a} de carácter público o privado, éstas últimas orientadas a soportar aplicaciones en el ámbito corporativo y poniendo el foco sobre la privacidad de la información y el rendimiento. El caso de uso, los participantes y los objetivos perseguidos son los determinantes de qué plataforma es la más idónea para hacer realidad la solución de negocio necesaria. La creación de consorcios tanto nacionales como internacionales, así como la proliferación de pruebas de concepto (\textit{\gls{poc}} -\gls{poc-a}-), pilotos, plataformas y servicios en gran variedad de sectores muestra cómo la capacidad transformadora de \gls{blockchain-a} ya está impactando en los negocios y el foco ya está puesto en cómo materializar los beneficios de este paradigma. \\
+	
+	Aunque en un primer momento el sector financiero fue el abanderado de la transformación, actualmente en todos los ámbitos hay un gran interés. El ámbito de la logística y el transporte no es ajeno al desarrollo de iniciativas en torno a \gls{blockchain-a} y, aunque se encuentra en una fase inicial respecto a otros sectores, se empieza a observar una actividad relevante y la expectativa es que ésta se incremente a corto plazo. A día de hoy, se están llevando a cabo ya varios proyectos referentes al comercio internacional, el transporte terrestre de mercancías, la trazabilidad de productos, etc. \\
+
+	El potencial impacto de \gls{blockchain-a} exige a todos los actores del sector un posicionamiento al respecto, así como una valoración rigurosa de las amenazas y oportunidades que puede introducir, para evitar quedarse al margen en la transformación del negocio y poder así dar respuesta a los nuevos modelos que puedan surgir y definir un planteamiento estratégico que les permita obtener ventajas competitivas. Este análisis debe partir de la comprensión de las implicaciones que \gls{blockchain-a} representa en cuanto a nuevos modelos de desintermediación y los beneficios que aporta en estos nuevos escenarios en relación a la confianza, la transparencia, la trazabilidad y la automatización de operaciones.
+	
+	% Section
+	\section{Revisión del estado actual de la tecnología Blockchain}
+	
+	% Section
+	\section{Concepto de Blockchain}
+	
+	% Section
+	\section{Principales implementaciones de Blockchain}
+		
+	% Section
+	\section{Blockchain orientado al entorno IoT}
+	
+		
+	% Section
+	\section{Hyperledger}
+	
+	Hyperledger es un consorcio de carácter colaborativo y de código abierto (\textit{\gls{opensource}}) anunciado en diciembre del año 2015 por la fundación Linux -organización referente a nivel tecnológico sin ánimo de lucro creada a principios de 2010 para promover y acoger proyectos \textit{\gls{opensource}}- para investigar y evolucionar la tecnología \gls{dlt-a} (\textit{\gls{dlt}}), en concreto la \gls{blockchain-a} de uso privado y orientada al ámbito económico y empresarial donde gracias a la capacidad de ejecución de transacciones privadas y a la inclusión de novedosas características se reconducirá la forma en la cual los negocios y procesos comerciales tienen lugar. El objetivo de esta iniciativa, que trabaja de la mano con la \textit{Enterprise Ethereum Alliance}, es establecer los estándares para garantizar la interoperabilidad y estabilidad de los diferentes proyectos y así evitar  los riesgos asociados a un ecosistema fragmentado, junto con la idea de promover gran variedad de negocios basados en esta tecnología con un amplio abanico de soluciones y usos diferentes. \\
+	 		
+	Esta línea de trabajo es posible al esfuerzo, conocimiento y a la dedicación por parte de numerosos socios y miembros, cuyo número cada vez es mayor, donde se incluyen compañías centradas en la \gls{blockchain-a} (Blockchain, R3, etc.), compañías tecnológicas (IBM, Intel, Red Hat, VMware, Cisco, etc.), compañías financieras (J.P. Morgan, SWIFT, etc.) y entidades bancarias (BBVA), entre otras. Treinta miembros iniciales fueron los originarios de comenzar con esta andadura con dos de los proyectos actualmente en desarrollo donde en numerosas ocasiones son los propios desarrolladores y compañías las que desean ceder el proyecto para su incubación con el propósito de ganar visibilidad y favorecer su impulso al generar una comunidad a su alrededor. Este es el caso de Monax Industries (Hyperledger Burrow) y Sovrin (Hyperledger Indy), dos de los proyectos actualmente en desarrollo. El primer proyecto en entrar en fase de incubación -fase de prueba, desarrollo y difusión- fue el introducido por la compañía tecnológica IBM, el cual recibió posteriormente el nombre de  \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}), y actualmente se encuentra en un estado activo, siendo también el primer proyecto en adquirir esta condición.	 \\
+	
+	Aunque la estandarización es uno de los principales objetivos de Hyperledger, también se pueden encontrar otros no menos importantes como:
+	
+	\begin{enumerate}
+		\item Proporcionar una infraestructura neutral, abierta e impulsada por la comunidad y respaldada por una gobernanza técnica.
+		\item Difundir la transferencia de conocimiento sobre esta tecnología y sus oportunidades en el contexto empresarial existente.
+		\item Crear \textit{\glspl{framework}} \textit{\gls{opensource}} que permitan soportar operaciones de negocio multisectoriales.
+		\item Desarrollar comunidades técnicas que definan casos de uso y desarrollen pruebas de concepto (\textit{\gls{poc}} -\gls{poc-a}-).	
+	\end{enumerate}
+
+	Estos objetivos son alcanzados gracias al enfoque modular que proporciona Hyperledger donde se ubican todos los componentes que lo conforman actualmente, tal y como muestra la Figura \ref{fig:stateArt_hyperledger}, donde:
+	
+	\begin{enumerate}
+		\item En primer nivel se encuentra la infraestructura que hace referencia al ecosistema que difunde el aceleramiento del desarrollo abierto y la adopción comercial junto con la cobertura técnica, legal, \textit{marketing} y organizacional que se proporciona.
+		\item En segundo nivel se localizan los \textit{\glspl{framework}} que proporcionan los elementos necesarios (\textit{ledger}, algoritmo de consenso, contratos inteligentes, etc.) para el despliegue de la \gls{blockchain-a}.
+		\item En último nivel se ubican todas aquellas herramientas 	auxiliares que complementan a los \textit{\glspl{framework}} ya sea en el despliegue, mantenimiento o diseño y prototipado de las redes \gls{blockchain-a}. 
+	\end{enumerate}
+	
+	 \begin{figure}[!ht]   
+		\caption{Proyectos de la iniciativa Hyperledger.} 
+		\begin{center} 
+			\includegraphics[width=16cm,height=7cm]{Images/stateArt/hyperledger} \\
+			\label{fig:stateArt_hyperledger} 
+			\textbf{Fuente:} \url{https://www.hyperledger.org/}
+		\end{center}  
+	\end{figure}
+	
+	% Subsection
+	\subsection{Hyperledger Fabric}
+		
+	% Subsection
+	\subsection{Hyperledger Composer}
+
+	\Gls{hyperledgercomposer} (\gls{hyperledgercomposer-a}) es una herramienta \textit{\gls{opensource}}, perteneciente también a la iniciativa Hyperledger, para desarrollar redes de negocio (\textit{Business Network Definition} -BND-) de \gls{blockchain-a} de soluciones construidas sobre la infraestructura de \gls{hyperledgerfabric-a}. Su finalidad no es otra que acelerar y facilitar el proceso de definición de la BND y del desarrollo de los \textit{chaincodes} en una \gls{dlt-a}. Si bien es cierto que esta red puede desarrollarse de forma nativa con la propia tecnología \gls{hyperledgerfabric-a} en lenguaje Go, también es cierto que implica el conocimiento de detalles de bajo nivel involucrados en las redes \gls{blockchain-a} lo que ralentiza a su vez el desarrollo y puesta en producción de soluciones descentralizadas. Este conjunto de abstracciones que ofrece para modelar e integrar la solución \gls{blockchain-a} provoca que el desarrollador tome un menor tiempo y esfuerzo para la definición del modelo y que únicamente se centre en la lógica de la red. \\
+	
+	Esta herramienta está construida con \gls{js} (\gls{js-a}), aprovechando herramientas modernas como \gls{nodejs}, \gls{npm-a} (\textit{\gls{npm}}), etc. y el desarrollo del componente principal, la BND, implica la definición utilizando el lenguaje de modelado CTO de:
+	
+	\begin{itemize}
+		\item Modelo de negocio: hace referencia al modelo de datos de la red compuesto por los activos, participantes, transacciones y eventos. Este modelo, que también define las relaciones y reglas de validación, se encuentra serializado en formato \gls{json-a} (\textit{\gls{json}}) y es validado en tiempo de ejecución. 
+		
+		\item Procesador de transacciones: define en \gls{js-a} la lógica y requerimientos de negocio de cada transacción en funciones procesadoras. Este componente se considera el \textit{\gls{chaincode}} de \gls{hyperledgerfabric-a} ya que es el código que se despliega y ejecuta en cada nodo de la \gls{blockchain-a} en tiempo de ejecución.
+	
+		\item Lista de control de acceso (\textit{Access Control List} -ACL-): determina las reglas de quién tiene acceso y a qué recursos en tiempo de ejecución, es decir, establece la configuración de privacidad y compartición.
+	\end{itemize}
+
+	A mayores de posibilitar la definición de la red, \gls{hyperledgercomposer-a} ofrece:
+
+	\begin{itemize}
+		\item Composer Playground: herramienta web para probar una BND en una instancia de una red \gls{blockchain-a} sin realizar ninguna instalación ni despliegue adicional lo que facilita el conocer si la funcionalidad definida es correcta o no antes de su puesta en producción.
+		\item Soporte \gls{rest-a} \gls{api-a} y capacidades de integración con lo que la red desplegada puede ser fácilmente consumida por soluciones externas gracias a la \gls{api-a} generada dinámicamente en el momento del despliegue.
+	\end{itemize}
+	
+	La BND posee un nombre y una versión y cuando se quiere desplegar en la \gls{blockchain-a} de \gls{hyperledgerfabric-a} como un \textit{\gls{chaincode}} genérico debe ser empaquetada en un fichero banana (\texttt{.bna}), tal y como muestra la Figura \ref{fig:stateArt_hyperledgercomposer}. La conexión con \gls{hyperledgerfabric-a} se realiza mediante los perfiles de conexión, documento \gls{json-a} que especifica cómo se debe establecer la conexión con el sistema e incluye información como, direcciones TCP/IP y puertos para los pares (\textit{peers}), certificados criptográficos, etc.
+	
+	\begin{figure}[!ht]   
+		\caption{Definición y despliegue de la red con Hyperledger Composer.} 
+		\begin{center} 
+			\includegraphics[width=17cm,height=8cm]{Images/stateArt/hc} \\
+			\label{fig:stateArt_hyperledgercomposer} 
+			\textbf{Fuente:} \url{https://hyperledger.github.io/composer/latest/index.html}
+		\end{center}  
+	\end{figure}
+	
+	% Subsection
+	\subsection{Otro proyectos de Hyperledger}
+
+	Además de \gls{hyperledgerfabric-a} y \gls{hyperledgercomposer-a}, el consorcio Hyperledger mantiene actualmente otros ocho marcos de trabajo, descritos brevemente a continuación:
+	
+	\begin{enumerate}
+		\item Hyperledger Burrow: anteriormente Monax, fue impulsada por la \textit{startup} Monax Industries y co-patrocinada por Intel. Es una \gls{blockchain-a} privada basada en el código de \gls{ethereum} por lo que permite la ejecución de \textit{smart contracts} desarrollados en Solidity sobre la base de las especificaciones de la máquina virtual de esta tecnología (EVM).
 				
+		\item Hyperledger Indy: plataforma cuyo principal objetivo es proponer una solución para la identidad descentralizada que apuesta por el protocolo criptográfico de conocimiento cero (\textit{Zero Knowledge Proof}) el cual sienta sus bases en reducir la cantidad de información personal en procesos en los que se usa la identidad digital. Para ello, proporciona herramientas para crear y usar identidades digitales independientes que sean interoperables entre dominios y aplicaciones.
+		
+		\item Hyperledger Iroha: \textit{\gls{framework}} desarrollado por Hitachi, NTT Data, entre otras compañías para incorporar a diversos proyectos, en especial a proyectos móviles, una plataforma \gls{blockchain-a} simple, moderna y modularizada que permita el despliegue de \textit{smart contracts} desarrollados en Java. Esta plataforma utilizada una variación del algoritmo de consenso tolerante a errores bizantinos (\textit{Byzantine Fault Tolerant} -BFT-) llamado Sumeragi, conocido por su alto grado de tolerancia.
+				 
+		\item Hyperledger Sawtooth: \gls{blockchain-a} privada de ámbito empresarial desarrollada mayormente por la compañía Intel. Está diseñado para la versatilidad y escalabilidad permitiendo crear redes altamente configurables. Dispone de un consenso propio denominado PoET (prueba de tiempo transcurrido -\textit{Proof-of-Elapsed-Time}-) y la capacidad de ejecutar transacciones paralelas mediante \textit{smart contracts} y \textit{ledgers} verdaderamente distribuidos.
+		
+		\item Hyperledger Caliper: herramienta que genera informes con diferentes indicadores de rendimiento como, por ejemplo el número de transacciones por segundo (TPS), la latencia de transacción, utilización de recursos, etc.
+		
+		\item Hyperledger Cello: herramienta inicialmente aportada por IBM para ofrecer el modelo de implementación bajo demanda (\textit{as-a-service}) al ecosistema de \gls{blockchain-a} con la consiguiente reducción de esfuerzo a la hora crear, administrar y finalizar la infraestructura de red.
+				
+		\item Hyperledger Explorer: herramienta inicialmente contribuida por IBM, Intel y DTCC que proporciona un sistema web para la consulta de la información de la red: listado de nodos, códigos de cadena, bloques, transacciones, etc.
+		
+		\item Hyperledger Quilt: herramienta que ofrece interoperabilidad entre distintas redes \gls{blockchain-a} mediante el protocolo ILP (\textit{Interledger Protocol}). Este protocolo, creado por Ripple, es un protocolo de pagos que nació para solucionar la necesidad de transferir valor a través de \textit{ledgers} distribuidos y no distribuidos.
+	\end{enumerate}
+
 	% Analysis
 	\chapter{Análisis} \label{analysisChapter}
 		
@@ -8016,7 +8144,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 	\subsection{Raspberry Pi - Fichero de configuración}
 		Para que el componente de monitorización de sucesos del proyecto Hyot funcione correctamente es necesario proporcionar determinada información 	de configuración de servicios y herramientas utilizadas. En concreto, es obligatorio ubicar un fichero en formato \gls{yaml-a} con nombre \texttt{hyot.yml} en un directorio llamado \texttt{conf} dentro del código de este componente, siendo la ruta completa \texttt{hyot\_raspberrypi/hyot/conf} para el caso de clonar el repositorio de código completo. \\
 
-	% TODO
+	% TODO - Completar
 	Este fichero, que contiene la configuración de 6 utilidades\footnote{En el apartado TODO se detalla la configuración necesaria a realizar para cada servicio.} empleadas, no está bajo el control de versiones por lo que el usuario debe crear una copia con la estructura indicada a continuación y ubicarlo en la ruta citada anteriormente. Ambos aspectos son comprobados durante la ejecución mostrando un error al usuario en caso de fallo. \\
 
 \begin{lstlisting}[language=json, basicstyle=\ttfamily\footnotesize, numbers=none, escapechar=ß]
