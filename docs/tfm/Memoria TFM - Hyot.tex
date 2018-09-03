@@ -2,6 +2,17 @@
 % Document type
 \documentclass[12pt,a4paper, twoside]{report}
 
+
+%%%% comentarios para revisiones
+\usepackage[normalem]{ulem}
+\newcommand\todo[1]{\colorbox{red}{TODO}\textcolor{red}{#1}}
+\newcommand\comments[1]{\textcolor{blue}{#1}}% my comments
+\newcommand\commented[1]{\textcolor{red}{#1}} % your original texts commented by me
+\newcommand\modified[1]{\textcolor{dgreen}{#1}} % added or modified texts
+\newcommand\modifiedsout[1]{\textcolor{dgreen}{\sout{#1}}}
+\newcommand\doubtwho[2]{\textcolor{red}{#1: #2}}
+\newcommand\commentswho[2]{\textcolor{blue}{#1: #2}}
+
 % Packages
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage{amsmath}
@@ -263,12 +274,65 @@ breaklines=true,
 	\thispagestyle{empty}
 	
 	\vspace{-0.3cm}
+
+        \comments{No conviene poner referencias en el resumen. Por
+          otro lado, te falta la referencia de bitcoin} En la
+        actualidad un grueso importante de empresas tiene un interés
+        especial en construir una nueva generación de aplicaciones
+        transaccionales que establezcan confianza, responsabilidad y
+        transparencia en su núcleo junto con una arquitectura abierta
+        y distribuida. Aquí, es de especial relevancia el sistema de
+        pago de gestión no centralizado \gls{bitcoin} \cite{bitcoin},
+        que está basado en la tecnología \Gls{blockchain}
+        (\gls{blockchain-a}) \cite{iansiti:2017:ttab} la cual habilita
+        la creación de un sistema inmutable de registro de
+        sucesos. Desde su origen ha propiciado todo un conjunto de
+        iniciativas que, prescindiendo de la existencia de una tercera
+        parte de confianza (\gls{tpc-a}), puedan proporcionar
+        protocolos para la protección de la integridad de la
+        información.
 	
-	En la actualidad un grueso importante de empresas tiene un interés especial en construir una nueva generación de aplicaciones transaccionales que establezcan confianza, responsabilidad y transparencia en su núcleo junto con una arquitectura abierta y distribuida. Aquí, es de especial relevancia el sistema de pago de gestión no centralizado \gls{bitcoin} \cite{bitcoin}, que está basado en la tecnología \Gls{blockchain} (\gls{blockchain-a}) \cite{iansiti:2017:ttab} la cual habilita la creación de un sistema inmutable de registro de sucesos. Desde su origen ha propiciado todo un conjunto de iniciativas que, prescindiendo de la existencia de una tercera parte de confianza (\gls{tpc-a}), puedan proporcionar protocolos para la protección de la integridad de la información. \\
-	
-	Una de estas iniciativas es \gls{hyperledger} \cite{hyperledger:url} -estándar \textit{\gls{opensource}} de investigación y evolución de la tecnología \gls{blockchain-a} permisionada anunciada por la fundación Linux en 2015-, se centra en apoyar este tipo de transacciones de negocio para mejorar numerosos aspectos de rendimiento y empresariales. \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) \cite{hyperledgerfabric:url}, es el proyecto más conocido dentro de este consorcio. Implementa la tecnología de libro de registros distribuido (\textit{\gls{dlt}} -\gls{dlt-a}-) \cite{wattenhofer:DLT} en una \gls{blockchain-a} permisionada donde la inserción de la información requiere que las entidades estén previamente autenticadas. Este modelo de control de acceso es de alto interés en el contexto de la trazabilidad de recursos ya que limita quién puede tener acceso y a qué recursos gracias a la existencia de roles. \\
+	Una de estas iniciativas es \gls{hyperledger}
+        \cite{hyperledger:url} -estándar \textit{\gls{opensource}} de
+        investigación y evolución de la tecnología \gls{blockchain-a}
+        permisionada anunciada por la fundación Linux en 2015-, se
+        centra en apoyar este tipo de transacciones de negocio para
+        mejorar numerosos aspectos de rendimiento y
+        empresariales. \gls{hyperledgerfabric}
+        (\gls{hyperledgerfabric-a}) \cite{hyperledgerfabric:url}, es
+        el proyecto más conocido dentro de este consorcio. Implementa
+        la tecnología de libro de registros distribuido
+        (\textit{\gls{dlt}} -\gls{dlt-a}-) \cite{wattenhofer:DLT} en
+        una \gls{blockchain-a} permisionada donde la inserción de la
+        información requiere que las entidades estén previamente
+        autenticadas. Este modelo de control de acceso es de alto
+        interés en el contexto de la trazabilidad de recursos ya que
+        limita quién puede tener acceso y a qué recursos gracias a la
+        existencia de roles.
 		
-	El surgimiento de nuevos paradigmas, como el Internet de las Cosas (\textit{\gls{iot}} -\gls{iot-a}-) \cite{christidis:2016:bsciot}, \cite{dorri:2017:TOBI} donde cualquier objeto del mundo real puede estar totalmente conectado a la red, ha evolucionado la forma de uso, de comunicación y de transmisión de información a través de Internet. Hasta hace poco, estos dispositivos eran meros consumidores de datos. Actualmente, exponen de forma permanente servicios y datos recolectados del entorno con lo que aparte de traer consigo numerosos beneficios, también abren la puerta a numerosos problemas de seguridad y privacidad. La importancia de mantener un registro de información inmutable y confidencial es esencial para garantizar la veracidad e integridad de los sucesos y de la información recogida. El presente proyecto aborda el desarrollo de una prueba de concepto (\textit{\gls{poc}} -\gls{poc-a}-) para implementar \gls{hyperledgerfabric-a} en el \gls{iot-a}. El objetivo es la recolección de eventos mediante sensores situados en una \gls{raspberry} 3 (\gls{raspberry-a}), y la inclusión de incidencias en la \gls{blockchain-a} de \gls{hyperledgerfabric-a}. Asimismo, toda la información recolectada puede ser consumida en tiempo real mediante un sistema web.
+	El surgimiento de nuevos paradigmas, como el Internet de las
+        Cosas (\textit{\gls{iot}} -\gls{iot-a}-)
+        \cite{christidis:2016:bsciot}, \cite{dorri:2017:TOBI} donde
+        cualquier objeto del mundo real puede estar totalmente
+        conectado a la red, ha evolucionado la forma de uso, de
+        comunicación y de transmisión de información a través de
+        Internet. Hasta hace poco, estos dispositivos eran meros
+        consumidores de datos. Actualmente, exponen de forma
+        permanente servicios y datos recolectados del entorno con lo
+        que aparte de traer consigo numerosos beneficios, también
+        abren la puerta a numerosos problemas de seguridad y
+        privacidad. La importancia de mantener un registro de
+        información inmutable y confidencial es esencial para
+        garantizar la veracidad e integridad de los sucesos y de la
+        información recogida. El presente proyecto aborda el
+        desarrollo de una prueba de concepto (\textit{\gls{poc}}
+        -\gls{poc-a}-) para implementar \gls{hyperledgerfabric-a} en
+        el \gls{iot-a}. El objetivo es la recolección de eventos
+        mediante sensores situados en una \gls{raspberry} 3
+        (\gls{raspberry-a}), y la inclusión de incidencias en la
+        \gls{blockchain-a} de \gls{hyperledgerfabric-a}. Asimismo,
+        toda la información recolectada puede ser consumida en tiempo
+        real mediante un sistema web.
 	
 	% NEW PAGE		
 	\newpage	
@@ -276,7 +340,9 @@ breaklines=true,
 	\paragraph{Palabras clave \\}
 	\thispagestyle{empty}
 
-	Cadena de bloques, Contratos inteligentes, Hyperledger, Hyperledger Fabric, Internet de las Cosas, Libro principal, Privacidad, Raspberry Pi, Seguridad, Sensor
+	Cadena de bloques, Contratos inteligentes, Hyperledger,
+        Hyperledger Fabric, Internet de las Cosas, Libro principal,
+        Privacidad, Raspberry Pi, Seguridad, Sensor
 	
 	% Abstract
 	\chapter*{Abstract}
@@ -285,11 +351,58 @@ breaklines=true,
 		
 	\vspace{-0.3cm}
 
-	Currently, a significant number of companies have a special interest in developing a new generation of transactional applications which establish trust, responsibility and transparency in their core, together with an open and distributed architecture. Of particular relevance here it is the non-centralized payment system \gls{bitcoin} \cite{bitcoin}, which is based on the \Gls{blockchain} (\gls{blockchain-a}) \cite{iansiti:2017:ttab} technology that enables the creation of an immutable system of event registration. Since its inception, it has led to a whole set of initiatives that, regardless of the existence of a trusted third party (\gls{tpc-a}), can provide protocols for the protection of the integrity of information. \\
+	Currently, a significant number of companies have a special
+        interest in developing a new generation of transactional
+        applications which establish trust, responsibility and
+        transparency in their core, together with an open and
+        distributed architecture. Of particular relevance here it is
+        the non-centralized payment system \gls{bitcoin}
+        \cite{bitcoin}, which is based on the \Gls{blockchain}
+        (\gls{blockchain-a}) \cite{iansiti:2017:ttab} technology that
+        enables the creation of an immutable system of event
+        registration. Since its inception, it has led to a whole set
+        of initiatives that, regardless of the existence of a trusted
+        third party (\gls{tpc-a}), can provide protocols for the
+        protection of the integrity of information.
 		
-	One of these initiatives is \gls{hyperledger} \cite{hyperledger:url} -\gls{opensource} standard of research and evolution of the permissive \gls{blockchain-a} technology announced by the Linux Foundation in 2015-, focuses on supporting this type of business \glspl{transaction} to improve numerous aspects of performance and business. \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) \cite{hyperledgerfabric:url}, is the most well-known project within this consortium. It implements the \gls{dlt} (\gls{dlt-a}) \cite{wattenhofer:DLT} in a permissioned \gls{blockchain-a} where inserting information requires entities to be previously authenticated. This model of access control is of high interest in the context of resource traceability, since it limits who can access and what resources thanks to the existence of roles. \\
+	One of these initiatives is \gls{hyperledger}
+        \cite{hyperledger:url} -\gls{opensource} standard of research
+        and evolution of the permissioned \gls{blockchain-a}
+        technology announced by the Linux Foundation in 2015-, focuses
+        on supporting this type of business \glspl{transaction} as a
+        means to improve numerous \modified{aspects of the techology
+          performance and the business
+          activities}. \gls{hyperledgerfabric}
+        (\gls{hyperledgerfabric-a}) \cite{hyperledgerfabric:url}, is
+        the most well-known project within this consortium. It
+        implements the \gls{dlt} (\gls{dlt-a}) \cite{wattenhofer:DLT}
+        in a permissioned \gls{blockchain-a} where inserting
+        information requires entities to be previously
+        authenticated. This model of access control is of high
+        interest in the context \modified{of asset tracking and
+          traceability}, since it limits \modified{who can access an
+          asset and which operations are allowed}.
 	
-	The emergence of new paradigms, such as the \gls{iot} (\gls{iot-a}) \cite{christidis:2016:bsciot}, \cite{dorri:2017:TOBI} where any real-world object can be totally connected to the network, have evolved the way of using, communication and transmission of information through the Internet. Until recently, these devices were mere data consumers. Currently, they expose services and data collected from the environment on a permanent basis, which apart from bringing numerous benefits, also open the door to numerous security and privacy problems. The importance of maintaining a record of immutable and confidential information is essential to guarantee the veracity and integrity of the events and the information collected. This project addresses the development of a \gls{poc} (\gls{poc-a}) to implement \gls{hyperledgerfabric-a} in the \gls{iot-a}. The purpose is the collection of events using sensors located on a \gls{raspberry} 3 (\gls{raspberry-a}), and the inclusion of incidents in the \gls{blockchain-a} of \gls{hyperledgerfabric-a}. Likewise, the information collected may be consumed in real time through a web system.
+	The emergence of new paradigms, such as the \gls{iot}
+        (\gls{iot-a}) \cite{christidis:2016:bsciot},
+        \cite{dorri:2017:TOBI} where any real-world object can be
+        totally connected to the network, \modified{have modified the way
+        information is used, exchanged, and transmitted through the
+        Internet}. Until recently, these devices were mere data
+        consumers. Currently, \modified{they provide services and data that is collected
+        continuously from their environment}, which apart from
+        bringing numerous benefits, also open the door to numerous
+        security and privacy problems. The importance of maintaining a
+        record of immutable and confidential information is essential
+        to guarantee the veracity and integrity of the events and the
+        information collected in such an environments. This project addresses the development
+        of a \gls{poc} (\gls{poc-a}) to implement
+        \gls{hyperledgerfabric-a} in the \gls{iot-a}. The purpose is
+        the gathering of events using sensors located on a
+        \gls{raspberry} 3 (\gls{raspberry-a}), and the inclusion of
+        incidents in the \gls{blockchain-a} of
+        \gls{hyperledgerfabric-a}. Likewise, the information collected
+        may be consumed in real time through a web system.
 	
 	% NEW PAGE
 	\newpage
