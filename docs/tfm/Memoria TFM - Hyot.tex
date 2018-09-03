@@ -1,3 +1,4 @@
+
 % Document type
 \documentclass[12pt,a4paper, twoside]{report}
 
@@ -33,13 +34,12 @@
 \usepackage[utf8]{inputenc}
 \usepackage{xcolor,colortbl}
 \usepackage{wrapfig} 					% Position of image
-\usepackage{ifthen}
      
 % Make glossary
 \makeglossaries
 
 % Import glossary
-\input{./glossary.tex}
+\input{glossary}
 
 % Colours
 \definecolor{gray96}{gray}{.96}
@@ -160,7 +160,7 @@ breaklines=true,
 \begin{document}
 
 	% Start roman numerals
-	\pagenumbering{roman}
+	\pagenumbering{Roman}
 	
 	% TITLE 
 	\begin{titlepage}
@@ -236,7 +236,7 @@ breaklines=true,
 			\small{SEPTIEMBRE 2018} \\
 		\end{center}
 	\end{titlepage}
-	
+		
 	\blankpage
 	
 	% Acknowledgments
@@ -298,7 +298,7 @@ breaklines=true,
 	\thispagestyle{empty}
 
 	Blockchain, Hyperledger, Hyperledger Fabric, Internet of Things, Ledger, Raspberry Pi, Security, Sensor, Smart Contracts, Privacy
- 			
+			
 	% Index
 	\tableofcontents
 	\addcontentsline{toc}{chapter}{Índice general}	
@@ -317,11 +317,9 @@ breaklines=true,
 
 	% Glossary of terms	
 	\printglossary
-	\thispagestyle{empty}
 		
 	% Acronyms	
 	\printglossary[title=Acrónimos, type=\acronymtype]	
-	\thispagestyle{empty}
 	
 	% Header
 	\pagestyle{fancy}
@@ -340,7 +338,7 @@ breaklines=true,
 	%\setlength{\topmargin}{0.1cm}
 	\setlength{\headsep}{1.1cm}
 	%\oddsidemargin = 10pt
-	
+		
 	% Introduction and objectives
 	\chapter{Introducción y objetivos} \label{introductionChapter}
 		
@@ -408,12 +406,13 @@ breaklines=true,
 		
 	Conocer los inicios, pilares y fundamentos básicos sobre los que se sustenta la tecnología principal del proyecto es esencial para entender el contexto y la jerga que engloba. En este capítulo se aborda un breve estudio sobre la tecnología de cadena de bloques o \Gls{blockchain} (\gls{blockchain-a}) para que el lector pueda adquirir un conocimiento general y superficial.
 
+
 	% Section
 	\section{Introducción}
 	
 	Los servicios tecnológicos de hoy en día y los sistemas en general en los que se basa el funcionamiento de la sociedad y el mundo económico y financiero siguen la filosofía tradicional articulada bajo la confianza en terceras partes. Un ejemplo muy a la mano del día a día es la funcionalidad ofrecida por entidades bancarias respecto a la gestión de las cuentas de clientes. El banco, que actúa como una tercera parte de confianza (\gls{tpc-a}), tiene la responsabilidad de garantizar la veracidad de la información personal asociada a dicha cuenta, de las transferencias emitidas y recibidas y del saldo disponible en ella. Los clientes son por tanto la parte que emite y entrega la confianza a las entidades bancarias por lo que quedan a merced del buen hacer de éstas. Como garante de la integridad y veracidad de los datos, estas entidades han desarrollado grandes sistemas con un enfoque normalmente centralizado por lo que únicamente una autoridad central es la encargada de gobernar y velar por la coherencia y seguridad de la información existiendo de tal manera puntos únicos de fallo. \\
 	
-	Estos sistemas, considerados como complejos y costosos, no han considerado en general dentro de sus objetivos principales facilitar la interoperabilidad y colaboración con otros sistemas. La gran cantidad de información que almacenan y manejan provoca que sea inviable y nada fácil de conseguir una transferencia de información eficiente y rápida entre distintos sistemas e incluso organizaciones por lo que estos datos se pueden encontrar en múltiples silos de información, impactando negativamente en el rendimiento y en la efectividad a la hora de trabajar, tomar decisiones o incluso gestionar áreas o unidades de negocio. Frente a este escenario, surgieron sistemas tales como las redes sociales donde la información se localiza de manera descentralizada en múltiples puntos de almacenamiento omitiendo la existencia de un almacenamiento central y por tanto el punto único de fallo. Sin embargo, la falta de una interconexión total mediante una red de comunicaciones desemboca en que no sea adecuado para determinadas áreas donde se require interoperabilidad. Aquí, es donde las propiedades de \gls{blockchain-a} entran en juego ya que habilitan nuevos escenarios totalmente distribuidos gracias a la transformación de la topología de las redes económicas y sociales, tal y como muestra la Figura \ref{fig:stateArt_intro}. \\
+	Estos sistemas, considerados como complejos y costosos, no han tenido en cuenta en general dentro de sus objetivos principales facilitar la interoperabilidad y colaboración con otros sistemas. La gran cantidad de información que almacenan y manejan provoca que sea inviable y nada fácil de conseguir una transferencia de información eficiente y rápida entre distintos sistemas e incluso organizaciones por lo que estos datos se pueden encontrar en múltiples silos de información, impactando negativamente en el rendimiento y en la efectividad a la hora de trabajar, tomar decisiones o incluso gestionar áreas o unidades de negocio. Frente a este escenario, surgieron sistemas tales como las redes sociales donde la información se localiza de manera descentralizada en múltiples puntos de almacenamiento omitiendo la existencia de un almacenamiento central y por tanto el punto único de fallo. Sin embargo, la falta de una interconexión total mediante una red de comunicaciones desemboca en que no sea adecuado para determinadas áreas donde se require interoperabilidad. Aquí, es donde las propiedades de \gls{blockchain-a} entran en juego ya que habilitan nuevos escenarios totalmente distribuidos gracias a la transformación de la topología de las redes económicas y sociales, tal y como muestra la Figura \ref{fig:stateArt_intro}. \\
 
 	\begin{figure}[!ht]   
 		\caption{Topologías de red.} 
@@ -440,12 +439,12 @@ breaklines=true,
 	% Section
 	\section{Concepto de Blockchain}
 	
-	La cadena de bloques o \Gls{blockchain} (\gls{blockchain-a}) es una estructura de datos distribuida, también conocida como libro de registros o \textit{ledger}, que es replicada y compartida entre todos aquellos miembros (nodos) que pertenezcan a una red \gls{p2p-a} (\textit{\gls{p2p}}), es decir, una red distribuida. Este \textit{ledger} contiene todas las transacciones registradas en la red estableciendo a quién pertenece qué. Las transacciones en sí no son almacenadas de forma aleatoria e individual, si no que son agrupadas en bloques y es el propio bloque el que finalmente se registra en la cadena junto con información adicional, viculando uno con otro (Figura \ref{fig:stateArt_linkblock}) para facilitar la recuperación de la información y asegurar la no alteración de la información ya que una posible modificación en el contenido de una transacción requiere la perturbación de cada bloque de la cadena para ocultar esta manipulación. Cuando una transacción es registrada en la \gls{blockchain-a} se considerada válida y tras ciertas inclusiones posteriores de bloques es considerada como inmutable.
+	La cadena de bloques o \Gls{blockchain} (\gls{blockchain-a}), tipo de tecnología de registro distribuido (\textit{\gls{dlt}} -\gls{dlt-a}-), es una estructura de datos distribuida, también conocida como libro de registros o \textit{ledger}, que es replicada y compartida entre todos aquellos miembros (nodos) que pertenezcan a una red \gls{p2p-a} (\textit{\gls{p2p}}), es decir, una red distribuida. Este \textit{ledger} contiene todas las transacciones registradas en la red estableciendo a quién pertenece qué. Las transacciones en sí no son almacenadas de forma aleatoria e individual, si no que son agrupadas en bloques y es el propio bloque el que finalmente se registra en la cadena junto con información adicional, vinculando uno con otro (Figura \ref{fig:stateArt_linkblock}) para facilitar la recuperación de la información y asegurar la no alteración de la información ya que una posible modificación en el contenido de una transacción requiere la perturbación de cada bloque de la cadena para ocultar esta manipulación. Cuando una transacción es registrada en la \gls{blockchain-a} se considerada válida y tras ciertas inclusiones posteriores de bloques es considerada como inmutable.
 		
 		\begin{figure}[!ht]   
 			\caption{Estructura de una cadena de bloques.} 
 			\begin{center} 
-				\includegraphics[width=12cm,height=5cm]{Images/stateArt/link_blocks} \\
+				\includegraphics[width=14cm,height=5.7cm]{Images/stateArt/link_blocks} \\
 				\label{fig:stateArt_linkblock} 
 			\end{center}  
 		\end{figure}
@@ -455,7 +454,7 @@ breaklines=true,
 	 \begin{figure}[!ht]   
 		\caption{Contenido de un bloque.} 
 		\begin{center} 
-			\includegraphics[width=10cm,height=6cm]{Images/stateArt/block} \\
+			\includegraphics[width=12cm,height=5.7cm]{Images/stateArt/block} \\
 			\label{fig:stateArt_block} 
 		\end{center}  
 	\end{figure}
@@ -465,20 +464,20 @@ breaklines=true,
 	 	\item Árbol de Merkel el cual es una estructura de datos que sintetiza las transacciones contenidas en el bloque. Esta estructura es construida recursivamente aplicando \glspl{hash} a pares de transacciones hasta obtener un único valor \textit{hash}, llamado raíz o raíz de Merkle.
 	 \end{itemize}
 	 
-	 	\begin{figure}[!ht]   
+	 \begin{figure}[!ht]   
 		\caption{Estructura del árbol de Merkle.} 
 		\begin{center} 
-			\includegraphics[width=13cm,height=6cm]{Images/stateArt/merkle} \\
+			\includegraphics[width=15cm,height=10cm]{Images/stateArt/merkle} \\
 			\label{fig:stateArt_merkle} 
 		\end{center}  
 	\end{figure}
 
-	Cualquier nodo o \textit{peer} con acceso a la \gls{blockchain-a} puede leer los bloques y el conjunto de transacciones que alberga y descubrir cuál es el estado mundial de los datos que se intercambian en la red. Cada nodo, que puede considerarse como punto de entrada para varios usuarios diferentes de \gls{blockchain-a} en la red, contiene una copia ordenada y actualizada del libro de registros, donde:
+	Cualquier nodo o \textit{peer} con acceso a la \gls{blockchain-a} puede leer los bloques y el conjunto de transacciones que alberga y descubrir cuál es el estado mundial de los datos que se intercambian en la red. Cada nodo, que puede considerarse como punto de entrada para varios usuarios diferentes de \gls{blockchain-a} en la red, contiene una copia ordenada y actualizada del \textit{ledger}, donde:
 
  \begin{enumerate}
- 	\item Cada usuario o nodo individual interactúa con la \gls{blockchain-a} a través del par de claves, firmando las transacciones propias con la clave privada y direccionándolas en la red a través de la clave pública\footnote{Dependiendo de la implementación, la clave pública puede ser la dirección o un código \textit{hash} de esta dirección.}. El uso de \gls{criptoasim} proporciona autenticación, integridad y no repudio a la red.
- 	\item Los nodos vecinos se encargan de validar cada transacción entrante ante de retransmitirla para que aquellas que sean consideradas inválidas puedan ser descartadas y no afecten negativamente al estado de la red. Cuando la transacción es validada se extiende a toda la red. 
- 	\item Todas las transacciones que han sido recopiladas y validadas por la red utilizando el proceso anterior durante un intervalo de tiempo acordado, se ordenan y empaquetan en un bloque candidato junto con la marca de tiempo. Este es un proceso llamado minería. El primer nodo que consigue formar un bloque candidato lo transmite a la red donde la elección de este nodo y el contenido del bloque depende del mecanismo de consenso que emplee la red. minería transmite este bloque a la red.
+ 	\item Cada usuario o nodo individual interactúa con la \gls{blockchain-a} a través de su par de claves, firmando las transacciones propias con la clave privada y direccionándolas en la red a través de la clave pública\footnote{Dependiendo de la implementación, la clave pública puede ser la dirección o un código \textit{hash} de esta dirección.}. El uso de \gls{criptoasim} proporciona autenticación, integridad y no repudio a la red.
+ 	\item Los nodos vecinos se encargan de validar cada transacción entrante antes de retransmitirla para que aquellas que sean consideradas inválidas puedan ser descartadas y no afecten negativamente al estado de la red. Cuando la transacción es validada se extiende a toda la red. 
+ 	\item Todas las transacciones que han sido recopiladas y validadas por la red utilizando el proceso anterior durante un intervalo de tiempo acordado, se ordenan y empaquetan en un bloque candidato junto con la marca de tiempo. Este es un proceso llamado minería. El primer nodo que consigue formar un bloque candidato lo transmite a la red donde la elección de este nodo y el contenido del bloque depende del mecanismo de consenso que se emplee. 
  	\item El resto de nodos verifican que el bloque sugerido a ser almacenado en la \gls{blockchain-a} contenga transacciones válidas y referencia vía \textit{hash} al bloque previo correcto de la cadena. Si ese es el caso, se agrega el bloque a la cadena y aplica las transacciones que contiene para actualizar el estado del mundo. En caso contrario, el bloque propuesto se descarta, marcando como el final de una ronda.
   \end{enumerate}
  	 
@@ -489,29 +488,31 @@ breaklines=true,
 	La principales características que proporciona esta tecnología son: 
 	
 	\begin{itemize}
-		\item \textit{ledger} o base de datos (\gls{bbdd-a}) distribuida,  protegida criptográficamente, en la que cada nodo tiene una copia de toda la información almacenada.		
+		\item \textit{Ledger} o base de datos (\gls{bbdd-a}) distribuida y  protegida criptográficamente en la que cada nodo tiene una copia de toda la información almacenada.		
 		\item Red de confianza. Esta confianza reside en el consenso y acuerdo alcanzado entre todos los participantes, sin que exista la figura de un tercero que controle y gobierne todo lo que sucede.
 		\item La actividad de la red (transacciones) es transparente, verificable y auditable por cualquier usuario en \gls{blockchain-a} públicas y por usuarios identificados en \gls{blockchain-a} privadas.
-		\item Inmutabilidad. Una vez introducida la información, no se puede modificar por parte de ningún actor implicado ni ningún administrador.
+		\item Inmutabilidad. Una vez introducida la información, ésta no se puede modificar por parte de ningún actor implicado ni ningún administrador.
 		\item Paradigma de colaboración con lo que se reduce la fricción entre  los distintos participantes en base a unas reglas bien definidas y de fácil adopción, sin necesidad de un gran nivel de acuerdo.
 	\end{itemize}	
 	
 	% Subsection
 	\subsection{Criptografía}
 	
-	La tecnología de \gls{blockchain-a} está construida sobre dos conceptos claves de criptografía: \gls{hash} y firma digital. Las \glspl{hash} son funciones matemáticas con las propiedades esenciales:
+	La tecnología de \gls{blockchain-a} está construida sobre dos conceptos claves de criptografía: \gls{hash} y firma digital. Las \glspl{hash} son funciones matemáticas con las siguientes propiedades:
 	
 	\begin{itemize}
 		\item La entrada de la función es una cadena de cualquier tamaño.
 		\item La salida de la función tiene siempre un tamaño fijo por lo que ante un mínimo cambio en la entrada, la salida varía significativamente.
-		\item Es eficiente de computar. La complejidad computacional en el peor caso es O(n).
+		\item Es eficiente de computar. La complejidad computacional en el peor caso es $\mathcal{O}$(n).
 		\item Es resistente frente a colisiones lo que implica que no es factible encontrar un número \textit{x} e \textit{y}, tal que H(x) = H(y) siendo H la \gls{hash}.
 	\end{itemize}	
+	
+	Por su parte, la firma digital es un método criptográfico que permite garantizar la autoría e integridad de la información por medio de asociar la identidad de un usuario o sistema a un mensaje o documento.
 
 	% Subsection
 	\subsection{Consenso}
 	
-	Las firmas digitales son utilizadas para verificar que una transacción es firmada por quién dice ser el firmante. Sin embargo, aquí surge el problema de que cualquiera puede enviar una misma transacción o criptomoneda dos veces, cada una con una firma totalmente válida. En los sistemas centralizados, la autoridad central es la gobernante de la red y por tanto la controladora de prevenir el problema del doble gasto \cite{karame:2012:double}. En un sistema totalmente descentralizado, los participantes de la red, independientemente de que tenga plena confianza o no entre ellos, necesitan acordar las reglas de ciertos principios y funcionalidades que serán comunes para todos y de validez de transacciones para prevenir este problema. El protocolo de consenso distribuido es empleado para conseguir este fin, donde se tiene en cuenta el número de nodos que forman la red y un número arbitrario de ellos que podrían ser maliciosos. Este consenso por tanto asegura que:
+	Las firmas digitales son utilizadas para verificar que una transacción es firmada por quién dice ser el firmante. Sin embargo, aquí surge el problema de que cualquiera puede enviar una misma transacción o criptomoneda -moneda digital- dos veces, cada una con una firma totalmente válida. En los sistemas centralizados, la autoridad central es la gobernante de la red y por tanto la controladora de prevenir el problema del doble gasto \cite{karame:2012:double}. En un sistema totalmente descentralizado, los participantes de la red, independientemente de que tenga plena confianza o no entre ellos, necesitan acordar las reglas de ciertos principios y funcionalidades que serán comunes para todos y de validez de transacciones para prevenir este problema. El protocolo de consenso distribuido es empleado para conseguir este fin, donde se tiene en cuenta el número de nodos que forman la red y un número arbitrario de ellos que podrían ser maliciosos. Este consenso por tanto asegura que:
 	
 	\begin{itemize}
 		\item Todos los nodos honestos acuerden un único valor.
@@ -521,28 +522,28 @@ breaklines=true,
 	 En la actualizad existen multitud de algoritmos de consenso donde el uso de uno u otro depende de las necesidades requeridas. Los más conocidos son:
 	 	 
 	 \begin{itemize}
-	 	\item Algoritmo de prueba de trabajo (\textit{Proof of Work} -PoW-): protocolo donde se utiliza el poder computacional del \textit{hardware} para resolver cálculo matemáticos y determinar quién es el creador de un nuevo bloque el cual recibe una recompensa en forma de una nueva criptomoneda. Tiene como principal objetivo detener los ciberataques como los ataques de denegación de servicios (DDoS)\footnote{Ataque cuya finalidad es saturar los recursos de un sistema al enviar múltiples peticiones falsas.}. Este concepto no es nuevo y la idea subyacente fue publicada por Cynthia Dwork y Moni Naor en 1993 \cite{dwork:1993}.
+	 	\item Algoritmo de prueba de trabajo (\textit{Proof of Work} -PoW-): protocolo donde se utiliza el poder computacional del \textit{hardware} para resolver cálculos matemáticos y determinar quién es el creador de un nuevo bloque el cual recibe una recompensa en forma de una nueva criptomoneda. Tiene como principal objetivo detener los ciberataques como los ataques de denegación de servicios (DDoS)\footnote{Ataque cuya finalidad es saturar los recursos de un sistema al enviar múltiples peticiones falsas.}. Este concepto no es nuevo y la idea subyacente fue publicada por Cynthia Dwork y Moni Naor en 1993 \cite{dwork:1993}.
 	 	\item Algoritmo de prueba de participación (\textit{Proof of Stake} -PoS-): protocolo cuya idea fue sugerida en el foro de \textit{bitcointalk} en el año 2011 y que se basa en la idea de seleccionar de forma determinista el creador de un nuevo bloque en base a su riqueza o participación. En este protocolo la recompensa recibida es la comisión pagada por cada transacción.
 	 \end{itemize}
 	
 	% Subsection
 	\subsection{Smart Contracts}
 	
-	El concepto de \textit{smart contract} o contrato inteligente hace referencia a un acuerdo entre dos o más partes donde se define lo que se puede hacer, cómo se puede hacer, qué pasa si algo no se hace, etc. que es capaz de ejecutarse y hacerse cumplir por sí mismo, de manera autónoma y automática y sin intermediarios. Estos contratos aplicados a la \gls{blockchain-a} son programas informáticos escritos con algún lenguaje de programación que ejecutan acuerdos establecidos entre dos o más partes haciendo que ciertas acciones sucedan como resultado de que se cumplan una serie de condiciones específicas, implicando un avance al permitir mayor funcionalidad distribuida que la hasta entonces utilizada en \gls{blockchain-a}, pagos descentralizado. \\
+	El concepto de \textit{smart contract} o contrato inteligente hace referencia a un acuerdo entre dos o más partes donde se define lo que se puede hacer, cómo se puede hacer, qué pasa si algo no se hace, etc. que es capaz de ejecutarse y hacerse cumplir por sí mismo, de manera autónoma, automática y sin intermediarios. Estos contratos aplicados a la \gls{blockchain-a} son programas informáticos escritos con algún lenguaje de programación que ejecutan acuerdos establecidos entre dos o más partes haciendo que ciertas acciones sucedan como resultado de que se cumplan una serie de condiciones específicas, implicando un avance al permitir mayor funcionalidad distribuida que la hasta entonces utilizada en \gls{blockchain-a}, pagos descentralizado. \\
 	
 	Este concepto no es reciente si no que llevan desarrollándose desde el año 1996, cuando el famoso criptógrafo Nick Szabo acuñó el término por primera vez. Nick propuso este sistema de contratos por aquel entonces, sin embargo la infraestructura tecnológica del momento lo hacía inviable. El \textit{smart contract} se puede decir que vive en una atmósfera no controlada por ninguna de las partes implicadas en el contrato en un sistema descentralizado aunque esté almacenado en cada uno de ellos. Esto significa que:
 	
 	\begin{enumerate}
 		\item Se programan las condiciones.
 		\item Se firman por ambas partes implicadas.
-		\item Se despliega en una \gls{blockchain-a} para que no pueda modificarse.
-		\item Se ejecuta resultando en un resultado inmutable y totalmente transparente.
+		\item Se despliega en una \gls{blockchain-a} para que no pueda ser modificado.
+		\item Se ejecuta desembocando en un resultado inmutable y totalmente transparente.
 	\end{enumerate}
 
 	Como beneficios principales se pueden encontrar los siguientes:
 	
 	\begin{enumerate}
-		\item Implementar una estado de seguridad mayor al del contrato tradicional debido a que estos contratos se almacenan de forma encriptada y permite la interacción entre personas que no se conocen entre sí sin que haya riesgo de estafa alguno.
+		\item Implementar un estado de seguridad mayor al del contrato tradicional debido a que estos contratos se almacenan de forma encriptada y permite la interacción entre personas que no se conocen entre sí sin que haya riesgo de estafa alguno.
 		\item Reducir costes al no ser necesario una persona o entidad que valide el contrato.		
 		\item Reducir el tiempo asociado a este tipo de interacciones al automatizar las tareas.
 		\item Ampliar el horizonte de los modelos de negocio.
@@ -558,19 +559,22 @@ breaklines=true,
 		
 		\item Quién puede registrar transacciones o minar. Principalmente aplica a \glspl{blockchain-a} de carácter privado puesto que todo participante conectado posee un identidad única y por tanto pueden existir roles que diferencien quién puede desplegar \textit{smart contracts} o \textit{\glspl{chaincode}}, quién posee el privilegio de registrar transacciones \cite{hyperledgercomposer:acl} o quién puede participar en el proceso de minado \cite{multichain:permissions}.
 		
-		\item Arquitectura de descentralización. Esta característica está directamente relacionada con la categorización en función del privilegio de acceso a la red puesto que las \gls{blockchain-a} públicas son completamente descentralizadas (el consenso es alcanzado por todos los nodos sin que haya una confianza plena entre ellos), mientras que las \gls{blockchain-a} híbridas y privadas son parcialmente centralizadas o centralizadas, respectivamente (el consenso es alcanzado únicamente por un grupo de nodos seleccionados confiando por tanto el resto de nodos en esa autoridad central).
+		\item Arquitectura de descentralización. Esta característica está directamente relacionada con la categorización en función del privilegio de acceso a la red puesto que las \gls{blockchain-a} públicas son completamente descentralizadas (el consenso es alcanzado por todos los nodos sin que haya una confianza plena entre ellos), mientras que las \gls{blockchain-a} híbridas y privadas son parcialmente centralizadas o centralizadas, respectivamente (el consenso es alcanzado únicamente por un grupo de nodos seleccionados confiando por tanto el resto de nodos en ese grupo seleccionado).
 		
 		\item Quién puede tomar parte del proceso de consenso. Todos los nodos son capaces de participar en el proceso de consenso y por tanto validar transacciones (\gls{blockchain-a} públicas) o solamente un subconjunto seleccionados de nodos puede participar (\gls{blockchain-a} híbridas y privadas). Debido al ataque Sybil \cite{douceur:2002:sybil}, donde los atacantes crean gran cantidad de nodos anónimos con el fin de corromper el sistema e influir en las decisiones tomadas de forma distribuida, los consensos en redes públicas son computacionalmente costosos incentivando de forma económica -criptomonedas- a los mineros que mantienen la red mientras que las redes privadas al operar en un entorno regulado y controlado con nodos identificados pueden emplear consensos más livianos al estar exentos de este tipo de ataque.
 		
-		\item Tipología de las transacciones \cite{uxto:2018}, basadas en el modelo UTXO o \textit{Unspent Transaction Output} (transacciones de estilo \gls{bitcoin}) o basadas en el modelo cuenta-balance (\textit{smart contracts} de \gls{ethereum}). En el primer modelo, cada transacción únicamente puede gastar una cantidad límite procedente de una transacción no gastada anterior generando así una nueva transacción no gastada con una cantidad resultante de tal manera que la cartera (\textit{wallet}) de un usuario contiene una lista de transacciones no utilizadas asociadas con todas las direcciones propiedad del usuario que resultarán en el balance global de la cuenta. Este modelo favorece la escalabilidad al poder ejecutar transacciones en paralelo y la privacidad debido al uso de nuevas direcciones para cada transacción. Mientras que el modelo cuenta-balance mantiene el balance de cada cuenta como un estado global comprobando en cada transacción que dicho balance sea mayor a la cantidad que se desea transferir. Por su parte, este modelo es más simple y eficiente.
+		\item Tipología de las transacciones \cite{uxto:2018}, basadas en el modelo UTXO o \textit{Unspent Transaction Output} (transacciones de estilo \gls{bitcoin}) o basadas en el modelo cuenta-balance (\textit{smart contracts} de \gls{ethereum}). En el primer modelo, cada transacción únicamente puede gastar una cantidad límite procedente de una transacción no gastada anterior generando así una nueva transacción no gastada con una cantidad resultante de tal manera que la cartera (\textit{wallet}\footnote{Monedero digital para gestionar criptomonedas.}) de un usuario contiene una lista de transacciones no utilizadas asociadas con todas las direcciones propiedad del usuario que resultarán en el balance global de la cuenta. Este modelo favorece la escalabilidad al poder ejecutar transacciones en paralelo y la privacidad debido al uso de nuevas direcciones para cada transacción. Mientras que el modelo cuenta-balance mantiene el balance de cada cuenta como un estado global comprobando en cada transacción que dicho balance sea mayor a la cantidad que se desea transferir. Por su parte, este modelo es más simple y eficiente.
 
 	\end{itemize}
 
 	% Section
 	\section{Revisión del estado actual de la tecnología Blockchain}
 	
-	Tecnológicamente hablando, \gls{blockchain-a} es incipiente pero está creciendo a gran velocidad y ya existen numerosas soluciones tecnológicas que derivan total o parcialmente su lógica de negocio a esta capa de persistencia ya sea en \glspl{blockchain-a} de carácter público o privado, éstas últimas orientadas a soportar aplicaciones en el ámbito corporativo y poniendo el foco sobre la privacidad de la información y el rendimiento. La creación de consorcios tanto nacionales como internacionales, así como la proliferación de pruebas de concepto (\textit{\gls{poc}} -\gls{poc-a}-), pilotos, plataformas y servicios en gran variedad de sectores muestra cómo la capacidad transformadora de \gls{blockchain-a} ya está impactando en los negocios y el foco ya está puesto en cómo materializar los beneficios de este paradigma. Pero esta tecnología no solamente se emplea para la trazabilidad de activos en diferentes sectores, su primera implementación fue para originar un sistema de pago de gestión no centralizado (\gls{bitcoin}) a través de una criptomoneda -moneda digital-. Aunque actualmente sea principalmente de carácter especulativo, la Figura \ref{fig:stateArt_transactions} muestra este crecimiento experimentado en el número de transacciones totales realizadas así como el número de usuarios que poseen una cartera o \textit{wallet} -monedero digital para gestionar criptomonedas- \gls{blockchain-a} (Figura \ref{fig:stateArt_wallet}).
+	Tecnológicamente hablando, \gls{blockchain-a} es incipiente pero está creciendo a gran velocidad y ya existen numerosas soluciones tecnológicas que derivan total o parcialmente su lógica de negocio a esta capa de persistencia ya sea en \glspl{blockchain-a} de carácter público o privado, éstas últimas orientadas a soportar aplicaciones en el ámbito corporativo y poniendo el foco sobre la privacidad de la información y el rendimiento. La creación de consorcios tanto nacionales como internacionales, así como la proliferación de pruebas de concepto (\textit{\gls{poc}} -\gls{poc-a}-), pilotos, plataformas y servicios en gran variedad de sectores muestra cómo la capacidad transformadora de \gls{blockchain-a} ya está impactando en los negocios y el foco ya está puesto en cómo materializar los beneficios de este paradigma. Pero esta tecnología no solamente se emplea para la trazabilidad de activos en diferentes sectores, su primera implementación fue para originar un sistema de pago de gestión no centralizado (\gls{bitcoin}) a través de una criptomoneda. Aunque actualmente sea principalmente de carácter especulativo, la Figura \ref{fig:stateArt_transactions} muestra este crecimiento experimentado en el número de transacciones totales realizadas así como el número de usuarios que poseen un \textit{wallet}  \gls{blockchain-a} (Figura \ref{fig:stateArt_wallet}).
 
+	% NEW PAGE
+	\newpage
+	
 		\begin{figure}[!ht]   
 			\caption{Número total de transacciones Bitcoin.} 
 			\begin{center} 
@@ -597,9 +601,9 @@ breaklines=true,
 	% Section
 	\section{Principales implementaciones de Blockchain}
 	
-	El paradigma \gls{blockchain-a} puede considerarse que surge de la mano de \gls{bitcoin} en un enfoque de red pública en el año 2009 por Satoshi Nakamoto, red en la cual no hay restricciones para sumar nuevos nodos y cualquiera puede utilizar un cliente para unirse y empezar a participar en la red. Este protocolo y red \gls{p2p-a} (\textit{\gls{p2p}}) consensuada que se utiliza como sistema de pago a través de su criptomoneda bitcoin -primera criptomoneda por capitalización en el mundo- se caracteriza por ser descentralizado y no estar respaldado ni controlado por ningún gobierno ni banco central, fin para el que surgió junto a las necesidades de imposibilitar la falsificación o duplicación, a la irreversibilidad en las transacciones (inmutabilidad) y a la perseveración de la identidad (pseudoanónimo). \\
+	El paradigma \gls{blockchain-a} puede considerarse que surge de la mano de \gls{bitcoin} en un enfoque de red pública en el año 2009 por Satoshi Nakamoto, red en la cual no hay restricciones para sumar nuevos nodos y cualquiera puede utilizar un cliente para unirse y empezar a participar en la red. Este protocolo y red \gls{p2p-a} consensuada que se utiliza como sistema de pago a través de su criptomoneda bitcoin -primera criptomoneda por capitalización en el mundo- se caracteriza por ser descentralizado y no estar respaldado ni controlado por ningún gobierno ni banco central, fin para el que surgió junto a las necesidades de imposibilitar la falsificación o duplicación, a la irreversibilidad en las transacciones (inmutabilidad) y a la perseveración de la identidad (pseudoanónimo). \\
 	
-	Para alcanzar el consenso entre todos los nodos que integran la red no confiable intercambiando información y que puede estar potencialmente comprometida se utiliza el sistema de prueba de trabajo (\textit{Proof of Work} -PoW-), basado en la idea del algoritmo Hashcash \cite{hashcash} para evitar el correo \textit{spam}. Este algoritmo de consenso se usa para confirmar transacciones y producir nuevos bloques en la cadena donde los mineros, encargados de velar por la seguridad y la no alteración de la red, compiten entre ellos para completar transacciones en la red mediante cálculos matemáticos (función \textit{hash}, factorización de enteros, protocolo de rompecabezas guiado, etc.), fáciles de comprobar y cuya dificultad es ajustada cada cierto tiempo en base a la cantidad de usuarios, la potencia actual y la carga de la red y obtener así recompensas en forma de bitcoins a la vez que se introducen nuevas monedas en la red, utilizando para ello el poder computacional del \textit{hardware}. Con su uso se resuelve el problema de los ataques ataques de denegación de servicio (DDoS) y el problema los generales bizantinos \cite{bizantinos:2014}, juego de lógica donde en un asedio hay un número indeterminado de generales que debe coordinarse para la conquista y únicamente uno, el comandante, cursa la orden (atacar o retirarse) siendo el resto tenientes. En este grupo de generales puede existir uno o más traidores  con el objetivo de que no se cumpla la orden. \\
+	Para alcanzar el consenso entre todos los nodos que integran la red no confiable intercambiando información y que puede estar potencialmente comprometida se utiliza el algoritmo PoW, basado en la idea del algoritmo Hashcash \cite{hashcash} para evitar el correo \textit{spam}. Este algoritmo de consenso se usa para confirmar transacciones y producir nuevos bloques en la cadena donde los mineros, encargados de velar por la seguridad y la no alteración de la red, compiten entre ellos para completar transacciones en la red mediante cálculos matemáticos (función \textit{hash}, factorización de enteros, protocolo de rompecabezas guiado, etc.), fáciles de comprobar y cuya dificultad es ajustada cada cierto tiempo en base a la cantidad de usuarios, la potencia actual y la carga de la red y obtener así recompensas en forma de bitcoins a la vez que se introducen nuevas monedas en la red, utilizando para ello el poder computacional del \textit{hardware}. Con su uso se resuelve el problema de los ataques ataques de denegación de servicio (DDoS) y el problema los generales bizantinos \cite{bizantinos:2014}, juego de lógica donde en un asedio hay un número indeterminado de generales que debe coordinarse para la conquista y únicamente uno, el comandante, cursa la orden (atacar o retirarse) siendo el resto tenientes. En este grupo de generales puede existir uno o más traidores  con el objetivo de que no se cumpla la orden. \\
 	
 	El gran problema que presenta \gls{bitcoin}, a parte del gran gasto energético que requiere hoy en día debido al algoritmo de consenso utilizado, es la limitación a ser utilizado como medio de pago o almacén de valor. \gls{ethereum} desarrollada por la fundación Ethereum con base en Suiza fue concebido originalmente como una versión mejorada de la criptomoneda \gls{bitcoin}, para superar las limitaciones de su lenguaje de programación, proporcionando características avanzadas tales como la creación y ejecucción de aplicaciones en la \gls{blockchain-a} y, lo que es más importante, establecer acuerdos o contratos inteligentes. Esta tecnología posee una \gls{blockchain-a} pública, permitiendo también la creación de privadas que utilizan el mismo protocolo y la misma base tecnológica. La red pública posee una criptomoneda nativa, el Ether, que es actualmente la segunda criptomoneda por capitalización en el mundo. Pero realmente no destaca por la moneda virtual en sí, si no por el potencial para aumentar sustancialmente la eficiencia de la industria computacional, y proporcionar un gran impulso a otros protocolos \gls{p2p-a} adicionando por primera vez una capa económica.
 
@@ -610,7 +614,7 @@ breaklines=true,
 	
 	Este paradigma que está creando nuevos desafíos tecnológicos y ofreciendo ventajas competitivas en múltiples sectores está variando la forma en la que la comunicación tiene lugar. Donde antes era requerido una interacción explícita para la toma de datos, ahora esos datos pueden ser solicitados y obtenidos sin intervención humana alguna y en numerosos casos en un dominio no controlado ni confiable. La protección de estos datos a lo largo de su ciclo de vida es evidente, ya que la \textit{International Data Corporation} (IDC) estima que el 90\% de las organizaciones que implantan este ecosistema son más vulnerables a sufrir ataques a través de estos dispositivos. \\
 	
-	La privacidad se encuentra en riesgo cuando la información es gestionada por una compañía o autoridad central la cual puede hacer un uso ilegítimo de ésta. Con el propósito de prevenir esta situación, la implantación de la tecnología \gls{blockchain-a} con una red \gls{p2p-a} fomenta un diseño privado, descentralizado y sin puntos únicos de fallos donde la privacidad y seguridad es garantizada por lo que los datos recolectados del entorno son garantes de su veracidad e inmutabilidad. Esta combinación \gls{blockchain-a}-\gls{iot-a} \cite{iot2:2016} \cite{iot1:2016} permite la creación de una infraestructura distribuida segura sobre la que transaccionar abriendo nuevos horizontes para plantear sistemas en los que los distintos dispositivos se comuniquen más directamente. Estas operaciones, que gracias a los contratos inteligentes pueden ser más complejas, son registradas y autenticadas independientemente de su finalidad (creación, modificación o eliminación) en el \textit{ledger} asegurando así cualquier intento de alteración no autorizada y habilitando la confianza sobre un entorno a priori no confiable. Este nuevo enfoque proporciona las siguientes ventajas frente a un entorno centralizado:
+	La privacidad se encuentra en riesgo cuando la información es gestionada por una compañía o autoridad central la cual puede hacer un uso ilegítimo de ésta. Con el propósito de prevenir esta situación, la implantación de la tecnología \gls{blockchain-a} con una red \gls{p2p-a} fomenta un diseño privado, descentralizado y sin puntos únicos de fallos donde la privacidad y seguridad es garantizada por lo que los datos recolectados del entorno son garantes de su veracidad e inmutabilidad. Esta combinación \gls{blockchain-a}-\gls{iot-a} \cite{iot2:2016}, \cite{iot1:2016} permite la creación de una infraestructura distribuida segura sobre la que transaccionar abriendo nuevos horizontes para plantear sistemas en los que los distintos dispositivos se comuniquen más directamente. Estas operaciones, que gracias a los contratos inteligentes pueden ser más complejas, son registradas y autenticadas independientemente de su finalidad (creación, modificación o eliminación) en el \textit{ledger} asegurando así cualquier intento de alteración no autorizada y habilitando la confianza sobre un entorno a priori no confiable. Este nuevo enfoque proporciona las siguientes ventajas frente a un entorno centralizado:
 	
 	\begin{itemize}
 		\item Mejora la seguridad al evitar información incosistente gracias al consenso de todos los hosteadores de las red.
@@ -623,7 +627,7 @@ breaklines=true,
 	% Section
 	\section{Hyperledger}
 	
-	Hyperledger es un consorcio de carácter colaborativo y de código abierto (\textit{\gls{opensource}}) anunciado en diciembre del año 2015 por la fundación Linux -organización referente a nivel tecnológico sin ánimo de lucro creada a principios de 2010 para promover y acoger proyectos \textit{\gls{opensource}}- para investigar y evolucionar la tecnología \gls{dlt-a} (\textit{\gls{dlt}}), en concreto la \gls{blockchain-a} de uso privado y orientada al ámbito económico y empresarial donde gracias a la capacidad de ejecución de transacciones privadas y a la inclusión de novedosas características se reconducirá la forma en la cual los negocios y procesos comerciales tienen lugar. El objetivo de esta iniciativa, que trabaja de la mano con la \textit{Enterprise Ethereum Alliance} (EEA), es establecer los estándares para garantizar la interoperabilidad y estabilidad de los diferentes proyectos y así evitar  los riesgos asociados a un ecosistema fragmentado, junto con la idea de promover gran variedad de negocios basados en esta tecnología con un amplio abanico de soluciones y usos diferentes. \\
+	Hyperledger es un consorcio de carácter colaborativo y de código abierto (\textit{\gls{opensource}}) anunciado en diciembre del año 2015 por la fundación Linux -organización referente a nivel tecnológico sin ánimo de lucro creada a principios de 2010 para promover y acoger proyectos \textit{\gls{opensource}}- para investigar y evolucionar la tecnología \gls{dlt-a}, en concreto la \gls{blockchain-a} de uso privado y orientada al ámbito económico y empresarial donde gracias a la capacidad de ejecución de transacciones privadas y a la inclusión de novedosas características se reconducirá la forma en la cual los negocios y procesos comerciales tienen lugar. El objetivo de esta iniciativa, que trabaja de la mano con la \textit{Enterprise Ethereum Alliance} (EEA), es establecer los estándares para garantizar la interoperabilidad y estabilidad de los diferentes proyectos y así evitar  los riesgos asociados a un ecosistema fragmentado, junto con la idea de promover gran variedad de negocios basados en esta tecnología con un amplio abanico de soluciones y usos diferentes. \\
 	 		
 	Esta línea de trabajo es posible al esfuerzo, conocimiento y a la dedicación por parte de numerosos socios y miembros, cuyo número cada vez es mayor, donde se incluyen compañías centradas en la \gls{blockchain-a} (Blockchain, R3, etc.), compañías tecnológicas (IBM, Intel, Red Hat, VMware, Cisco, etc.), compañías financieras (J.P. Morgan, SWIFT, etc.) y entidades bancarias (BBVA), entre otras. Treinta miembros iniciales fueron los originarios de comenzar con esta andadura con dos de los proyectos actualmente en desarrollo donde en numerosas ocasiones son los propios desarrolladores y compañías las que desean ceder el proyecto para su incubación con el propósito de ganar visibilidad y favorecer su impulso al generar una comunidad a su alrededor. Este es el caso de Monax Industries (Hyperledger Burrow) y Sovrin (Hyperledger Indy), dos de los proyectos actualmente en desarrollo. El primer proyecto en entrar en fase de incubación -fase de prueba, desarrollo y difusión- fue el introducido por la compañía tecnológica IBM, el cual recibió posteriormente el nombre de  \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}), y actualmente se encuentra en un estado activo, siendo también el primer proyecto en adquirir esta condición.	 \\
 	
@@ -633,7 +637,7 @@ breaklines=true,
 		\item Proporcionar una infraestructura neutral, abierta e impulsada por la comunidad y respaldada por una gobernanza técnica.
 		\item Difundir la transferencia de conocimiento sobre esta tecnología y sus oportunidades en el contexto empresarial existente.
 		\item Crear \textit{\glspl{framework}} \textit{\gls{opensource}} que permitan soportar operaciones de negocio multisectoriales.
-		\item Desarrollar comunidades técnicas que definan casos de uso y desarrollen pruebas de concepto (\textit{\gls{poc}} -\gls{poc-a}-).	
+		\item Desarrollar comunidades técnicas que definan casos de uso y desarrollen \gls{poc-a}.	
 	\end{itemize}
 
 	Estos objetivos son alcanzados gracias al enfoque modular que proporciona Hyperledger donde se ubican todos los componentes que lo conforman actualmente, tal y como muestra la Figura \ref{fig:stateArt_hyperledger}, donde:
@@ -740,10 +744,7 @@ breaklines=true,
 		\item Soporte \gls{rest-a} \gls{api-a} y capacidades de integración con lo que la red desplegada puede ser fácilmente consumida por soluciones externas gracias a la \gls{api-a} generada dinámicamente en el momento del despliegue.
 	\end{itemize}
 	
-	La BND posee un nombre y una versión y cuando se quiere desplegar en la \gls{blockchain-a} de \gls{hyperledgerfabric-a} como un \textit{\gls{chaincode}} genérico debe ser empaquetada en un fichero banana (\texttt{.bna}), tal y como muestra la Figura \ref{fig:stateArt_hyperledgercomposer}. La conexión con \gls{hyperledgerfabric-a} se realiza mediante los perfiles de conexión, documento \gls{json-a} que especifica cómo se debe establecer la conexión con el sistema e incluye información como, direcciones TCP/IP y puertos para los pares (\textit{peers}), certificados criptográficos, etc.
-	
-	% NEW PAGE
-	\newpage
+	La BND posee un nombre y una versión y cuando se quiere desplegar en la \gls{blockchain-a} de \gls{hyperledgerfabric-a} como un \textit{\gls{chaincode}} genérico debe ser empaquetada en un fichero banana (\texttt{.bna}), tal y como muestra la Figura \ref{fig:stateArt_hyperledgercomposer}. La conexión con \gls{hyperledgerfabric-a} se realiza mediante los perfiles de conexión, documento \gls{json-a} que especifica cómo se debe establecer la conexión con el sistema e incluye información como, direcciones TCP/IP y puertos para los \textit{peers}, certificados criptográficos, etc.
 	
 	\begin{figure}[!ht]   
 		\caption{Definición y despliegue de la red con Hyperledger Composer.} 
