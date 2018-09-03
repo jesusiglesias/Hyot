@@ -5,6 +5,8 @@
 
 %%%% comentarios para revisiones
 \usepackage[normalem]{ulem}
+\usepackage{color}
+\definecolor{dgreen}{rgb}{0,.6,0}
 \newcommand\todo[1]{\colorbox{red}{TODO}\textcolor{red}{#1}}
 \newcommand\comments[1]{\textcolor{blue}{#1}}% my comments
 \newcommand\commented[1]{\textcolor{red}{#1}} % your original texts commented by me
@@ -730,7 +732,40 @@ breaklines=true,
 		\end{center}  
 	\end{figure}
 	
-	\gls{blockchain-a} es un nuevo paradigma llamado a transicionar un Internet de la Información, en el que la información puede ser replicada indefinidamente, hacia un Internet del Valor, en el que los activos se comparten de una manera segura y descentralizada, son únicos y tienen una historia trazable que está almacenada en un \textit{ledger} (libro de contabilidad o de registros) distribuido. Esta transición implica transformar los modelos existentes en muchos negocios con la definición de nuevas plataformas distribuidas en las que la figura de los intermediarios o \gls{tpc-a} pierde vigencia en favor de planteamientos de consenso y confianza distribuida. En primer lugar, el modelo de confianza distribuido que provee mediante su tecnología de consenso supone un cambio fundamental respecto a la figura de la \gls{tpc-a}. La existencia de una tecnología que permite la creación de redes totalmente distribuidas en las que sus participantes no necesitan una autoridad central o de confianza representa un giro radical en el diseño de nuevos modelos de sistemas ya que reduce la fricción en las operaciones y disminuye las barreras de colaboración. Por otra parte, el modelo distribuido en el que todos los participantes mantienen una copia del \textit{ledger}, hace que la información se encuentre repartida y replicada lo que garantiza la inmutabilidad e integridad de los registros y da lugar a sistemas resilientes altamente transparente y auditables y con gran tolerancia a fallos, a la vez que acaba con el problema de los silos de información. Esto permite la instauración de una \textit{fuente única de verdad}, que es común a todas las organizaciones involucradas, además de compartida y supervisada por todas ellas. \\
+	\gls{blockchain-a} es un nuevo paradigma llamado a
+        \modified{liderar el tránsito de una Internet de la
+          Información (en el que la información puede ser replicada
+          indefinidamente) hacia un Internet del Valor. En esta nueva
+          Internet los activos de información} se comparten de una
+        manera segura y descentralizada, son únicos y tienen una
+        historia trazable que está almacenada en un \textit{ledger}
+        (libro de contabilidad o de registros) distribuido. Esta
+        transición implica \modified{modificar} los modelos existentes
+        en muchos negocios con la definición de nuevas plataformas
+        distribuidas en las que la figura de los intermediarios o
+        \gls{tpc-a} pierde vigencia en favor de planteamientos de
+        consenso y confianza distribuida. En primer lugar,
+        \modified{el modelo de confianza distribuido deparado por
+          tecnología de consenso de la \gls{blockchain-a}} supone un
+        cambio fundamental respecto a la figura de la \gls{tpc-a}. La
+        existencia de una tecnología que permite la creación de redes
+        totalmente distribuidas en las que sus participantes no
+        necesitan una autoridad central o de confianza representa un
+        giro radical en el diseño de nuevos modelos de sistemas ya que
+        reduce la fricción en las operaciones y disminuye las barreras
+        de colaboración. Por otra parte, el modelo distribuido en el
+        que todos los participantes mantienen una copia del
+        \textit{ledger}, hace que la información se encuentre
+        repartida y replicada. \modified{Este factor, unido a la forma en al que
+        se construye el consenso entre los nodos de transferencia y
+        almacenamiento de información,} garantiza la
+        inmutabilidad e integridad de los registros y da lugar a
+        sistemas resilientes altamente transparente y auditables y con
+        gran tolerancia a fallos, a la vez que acaba con el problema
+        de los silos de información. \modified{En definitiva, se habilita} instauración de
+        una \textit{fuente única de verdad}, que es común a todas las
+        organizaciones involucradas, además de compartida y
+        supervisada por todas ellas.
 	
 	Sin embargo, este nuevo paradigma no siempre es válido o es el más adecuado para implementar en un proyecto ya que una solución tradicional puede ser perfectamente lo que se necesita. El caso de uso, los participantes y los objetivos perseguidos son los determinantes de qué red o plataforma es la más idónea para hacer realidad la solución de negocio necesaria y para ello existen cinco preguntas que se deberían formular antes de la toma de decisión:
 	
