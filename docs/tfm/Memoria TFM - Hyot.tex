@@ -458,44 +458,188 @@ breaklines=true,
 	% Start arabic numerals
 	\pagenumbering{arabic}
 	
-	Todo proyecto requiere de una descripción previa que empape al lector en el panorama general del mismo con el fin de que éste llegue a comprender con perfección las ideas y metas que se persiguen con su desarrollo. En este capítulo se aborda de forma general los principales rasgos de este documento.
+	Todo proyecto requiere de una descripción previa que
+        \modified{situé} al lector en el panorama general del mismo,
+        con el fin de que éste llegue a comprender con perfección las
+        ideas y metas que se persiguen con su desarrollo. En este
+        capítulo se aborda de forma general los principales rasgos de
+        este documento.
 		
 	% Section
 	\section{Definición del problema}
 		
-	Internet ha cambiado la forma de vida y la sociedad en general. Nuestra actividad diaria depende cada vez más de la información que se obtiene de Internet, de forma que es necesario contar con mecanismos que permitan dirimir si los datos que se obtienen son fiables. Esta cuestión se ha resuelto tradicionalmente a través de alguna suerte de Tercera Parte Confiable (\gls{tpc-a}). Sin embargo, la participación de intermediarios también presenta desventajas, entre las que se encuentra la posible degradación de la propia privacidad si la \gls{tpc-a} accede, sin el consentimiento expreso, a la información sensible y personal. \\
+	Internet ha cambiado la forma de vida y la sociedad en
+        general. Nuestra actividad diaria depende cada vez más de la
+        información que se obtiene de Internet, de forma que es
+        necesario contar con mecanismos que permitan dirimir si los
+        datos que se obtienen son fiables. Esta cuestión se ha
+        resuelto tradicionalmente a través de alguna suerte de Tercera
+        Parte Confiable (\gls{tpc-a}). Sin embargo, la participación
+        de intermediarios también presenta desventajas, entre las que
+        se encuentra la posible degradación de la propia privacidad si
+        la \gls{tpc-a} accede, sin el consentimiento expreso, a la
+        información sensible y personal.
 	
-	Una posible solución es la descentralización de la gestión de la información, de forma que no es necesario una autoridad central intermediaria que tenga acceso a los datos. Aquí, es donde nace el concepto de cadena de bloques o \Gls{blockchain} (\gls{blockchain-a}), un libro de registros o transacciones (\textit{ledger}) distribuido y descentralizado, del que todos los que participan en la red almacenan una copia que se actualiza mediante un protocolo \textit{\gls{p2p}} (\gls{p2p-a}) de consenso y que habilita una red a priori sin confianza a ser completamente funcional y con la misma seguridad que una totalmente confiable. En este contexto, el protocolo de consenso distribuido se constituye en garante de la integridad de la información y, por ende, de su veracidad. \\
+	Una posible solución es la descentralización de la gestión de
+        la información, de forma que no es necesario una autoridad
+        central intermediaria que tenga acceso a los datos. Aquí, es
+        donde nace el concepto de cadena de bloques o \Gls{blockchain}
+        (\gls{blockchain-a}), un libro de registros o transacciones
+        (\textit{ledger}) distribuido y descentralizado, del que todos
+        los que participan en la red almacenan una copia que se
+        actualiza mediante un protocolo \textit{\gls{p2p}}
+        (\gls{p2p-a}) de consenso y que habilita una red a priori sin
+        confianza a ser completamente funcional y con la misma
+        seguridad que una totalmente confiable. En este contexto, el
+        protocolo de consenso distribuido se constituye en garante de
+        la integridad de la información y, por ende, de su veracidad.
 
-	En su origen, \gls{blockchain-a} se inventó para sustentar \gls{bitcoin}, la primera criptomoneda -medio digital de intercambio- descentralizada no emitida por un banco central 	\cite{franco:2014:UB}. Sin embargo, su aplicación no queda limitada a las criptomonedas. En efecto, la \gls{blockchain-a} de \gls{bitcoin} habilita la escritura de información no vinculada a transacciones (por ejemplo, mediante el campo \textit{OP\_RETURN}). Esta información puede ser utilizada como canal de control de trazabilidad de las cadenas de producción (p.ej. Everledger \cite{everledger}), de certificación de documentación (como es el caso de Stampery \cite{stampery} y MaidSafe \cite{maidsafe}), de hipotecas (p.ej. Zensar \cite{zensar}), de títulos o cualquier otro documento oficial (p.ej. Bitfury \cite{bitfury}, Factom \cite{factom}, ChromaWay \cite{chromaway} y Velox.re \cite{velox} son ejemplos de \textit{start-ups} que ofrecen este tipo de servicio), así como aplicaciones de control de integridad de información en ámbitos relacionados con la seguridad lógica, destacando el proyecto Guardtime \cite{guardtime} el cual cuenta con el patrocinio de la Agencia de Proyectos de Investigación Avanzados de Defensa, DARPA \cite{darpa}. \\
+	En su origen, \gls{blockchain-a} se inventó para sustentar
+        \gls{bitcoin}, la primera criptomoneda -medio digital de
+        intercambio- descentralizada no emitida por un banco central
+        \cite{franco:2014:UB}. Sin embargo, su aplicación no queda
+        limitada a las criptomonedas. En efecto, la \gls{blockchain-a}
+        de \gls{bitcoin} habilita la escritura de información no
+        vinculada a transacciones (por ejemplo, mediante el campo
+        \textit{OP\_RETURN}). Esta información puede ser utilizada
+        como canal de control de trazabilidad de las cadenas de
+        producción (p.ej. Everledger \cite{everledger}), de
+        certificación de documentación (como es el caso de Stampery
+        \cite{stampery} y MaidSafe \cite{maidsafe}), de hipotecas
+        (p.ej. Zensar \cite{zensar}), de títulos o cualquier otro
+        documento oficial (p.ej. Bitfury \cite{bitfury}, Factom
+        \cite{factom}, ChromaWay \cite{chromaway} y Velox.re
+        \cite{velox} son ejemplos de \textit{start-ups} que ofrecen
+        este tipo de servicio), así como aplicaciones de control de
+        integridad de información en ámbitos relacionados con la
+        seguridad lógica, destacando el proyecto Guardtime
+        \cite{guardtime} el cual cuenta con el patrocinio de la
+        Agencia de Proyectos de Investigación Avanzados de Defensa,
+        DARPA \cite{darpa}.
 
-	Uno de los ámbitos donde \gls{blockchain-a} tiene especial interés es en el Internet de las Cosas (\textit{\gls{iot}} -\gls{iot-a}-). La \gls{iot-a} constituye una red de dispositivos físicos que por naturaleza se conectan entre sí e intercambian datos para hacer nuestras vidas más sencillas y eficientes. Sin embargo, cada dispositivo puede ser cualquier \textit{cosa} desde una televisión, un vehículo, un aspirador o hasta un frigorífico y todos funcionan de forma diferente y con diferentes niveles de seguridad implementados. Esta variabilidad en las interfaces de acceso a la información y los mecanismos de intercambios de datos, introduce una incertidumbre en lo referente a las diversas fuentes de datos. Aquí es donde entra en juego la \gls{blockchain-a}, en específico aquellas evoluciones de la \gls{blockchain-a} de \gls{bitcoin} mediante la incorporación de los denominados \textit{smart contracts} o \textit{\glspl{chaincode}\footnote{Se trata de los \textit{smart contract} de \gls{ethereum}. Consultar \cite{ethereum} para obtener más información.}} -concepto introducido por Nick Szabo en 1996 \cite{szabo:1997:FSRPN}- y de modelos de control de acceso.	\\
+	Uno de los ámbitos donde \gls{blockchain-a} tiene especial
+        interés es en el Internet de las Cosas (\textit{\gls{iot}}
+        -\gls{iot-a}-). La \gls{iot-a} constituye una red de
+        dispositivos físicos que por naturaleza se conectan entre sí e
+        intercambian datos para hacer nuestras vidas más sencillas y
+        eficientes. Sin embargo, cada dispositivo puede ser cualquier
+        \textit{cosa} desde una televisión, un vehículo, un aspirador
+        o hasta un frigorífico y todos funcionan de forma diferente y
+        con diferentes niveles de seguridad implementados. Esta
+        variabilidad en las interfaces de acceso a la información y
+        los mecanismos de intercambios de datos, introduce una
+        incertidumbre en lo referente a las diversas fuentes de
+        datos. Aquí es donde entra en juego la \gls{blockchain-a}, en
+        específico aquellas evoluciones de la \gls{blockchain-a} de
+        \gls{bitcoin} mediante la incorporación de los denominados
+        \textit{smart contracts} o
+        \textit{\glspl{chaincode}\footnote{Se trata de los
+            \textit{smart contract} de \gls{ethereum}. Consultar
+            \cite{ethereum} para obtener más información.}} -concepto
+        introducido por Nick Szabo en 1996 \cite{szabo:1997:FSRPN}- y
+        de modelos de control de acceso.
 	
-	Motivado por la reciente explosión de interés de esta tecnología y este ámbito, en este proyecto se examina si la combinación de \gls{blockchain-a}-\gls{iot-a} proporciona ventajas frente a otras combinaciones a la hora de la securización de un entorno \gls{iot-a} ya que no siempre la transición o uso de una red descentralizada tiene sentido y aunque tuviese sentido podría darse el caso de que los requerimientos de la aplicación no se adaptasen a una red de este tipo. La securización del entorno se efectúa mediante la trazabilidad de los sucesos que se produzcan en él de forma que si ocurre un suceso no previsto pueda ser detectado el motivo y origen de éste. Esta prueba o evidencia, consistente de una grabación del entorno en el momento en el que se produjo la incidencia y que permite detectar falsos positivos, debe ser salvaguardada de cualquier alteración no autorizada y para ello se utiliza el método de almacenamiento de \gls{blockchain-a}. Otra solución podría ser utilizar un método tradicional de almacenamiento como, una base de datos (\gls{bbdd-a}) o un servicio de almacenamiento en la nube aunque en estas situaciones no se podría garantizar la integridad del contenido original de la evidencia.
+	Motivado por la reciente explosión de interés de esta
+        tecnología y este ámbito, en este proyecto se examina si la
+        combinación de \gls{blockchain-a}-\gls{iot-a} proporciona
+        ventajas frente a otras combinaciones a la hora de la
+        securización de un entorno \gls{iot-a} ya que no siempre la
+        transición o uso de una red descentralizada tiene sentido y
+        aunque tuviese sentido podría darse el caso de que los
+        requerimientos de la aplicación no se adaptasen a una red de
+        este tipo. La securización del entorno se efectúa mediante la
+        trazabilidad de los sucesos que se produzcan en él de forma
+        que si ocurre un suceso no previsto pueda ser detectado el
+        motivo y origen de éste. Esta prueba o evidencia, consistente
+        de una grabación del entorno en el momento en el que se
+        produjo la incidencia y que permite detectar falsos positivos,
+        debe ser salvaguardada de cualquier alteración no autorizada y
+        para ello se utiliza el método de almacenamiento de
+        \gls{blockchain-a}. Otra solución podría ser utilizar un
+        método tradicional de almacenamiento como, una base de datos
+        (\gls{bbdd-a}) o un servicio de almacenamiento en la nube
+        aunque en estas situaciones no se podría garantizar la
+        integridad del contenido original de la evidencia.
 	
 	% Section
 	\section{Estudio de implementaciones similares}
 	
-	El contexto en el que se ubica el presente proyecto, aunque es de un amplio interés, es tan novedoso y concreto que actualmente no existe o no se ha encontrado una implementación final o una prueba de concepto (\textit{\gls{poc}} -\gls{poc-a}-) con las mismas o similares líneas de trabajo -securización de un entorno con \gls{blockchain-a}- y tecnologías. \\
+	El contexto en el que se ubica el presente proyecto, aunque es
+        de un amplio interés, es tan novedoso y concreto que
+        actualmente no existe o no se ha encontrado una implementación
+        final o una prueba de concepto (\textit{\gls{poc}}
+        -\gls{poc-a}-) con las mismas o similares líneas de trabajo
+        -securización de un entorno con \gls{blockchain-a}- y
+        tecnologías.
 	
-	Sí es verdad, que a raíz de este enorme interés por parte del ecosistema tecnológico y empresarial, han surgido y están surgiendo numerosas soluciones ubicadas en muy diferentes sectores, algunas de ellas propietarias mientras que otras \textit{\gls{opensource}}, que aplican \gls{blockchain-a} al entorno \gls{iot-a}. Entre ellas, se pueden encontrar soluciones para gestionar el acceso a dispositivos \gls{iot-a} \cite{blockchain:iot:novo}, para preservar la privacidad en transacciones de sistemas energéticos \cite{blockchain:iot:laszka}, para comunicar los \textit{Smart Things} -pequeñas cosas inteligentes situadas en dispositivos \gls{iot-a}- \cite{blockchain:iot:iost}, para trazar productos de una cadena de suministro (calidad del mismo, prueba de origen, etc.) \cite{blockchain:iot:ambrosus}, para proveer analíticas inteligentes y datos del entorno en tiempo real con el objetivo de conocer, por ejemplo si se está realizando una construcción ilegal o existen partículas inusuales en el aire \cite{blockchain:iot:nokia}, para digitalizar el mundo físico y poder llevar un control de personas y activos, de experiencia del cliente, etc. \cite{blockchain:iot:kontakt}.
+	Sí es verdad que,  a raíz de este enorme interés por parte del
+        ecosistema tecnológico y empresarial, han surgido y están
+        surgiendo numerosas soluciones ubicadas en muy diferentes
+        sectores, algunas de ellas propietarias mientras que otras
+        \textit{\gls{opensource}}, que aplican \gls{blockchain-a} al
+        entorno \gls{iot-a}. Entre ellas, se pueden encontrar
+        soluciones para gestionar el acceso a dispositivos \gls{iot-a}
+        \cite{blockchain:iot:novo}, para preservar la privacidad en
+        transacciones de sistemas energéticos
+        \cite{blockchain:iot:laszka}, para comunicar los \textit{Smart
+          Things} -pequeñas cosas inteligentes situadas en
+        dispositivos \gls{iot-a}- \cite{blockchain:iot:iost}, para
+        trazar productos de una cadena de suministro (calidad del
+        mismo, prueba de origen, etc.) \cite{blockchain:iot:ambrosus},
+        para proveer analíticas inteligentes y datos del entorno en
+        tiempo real con el objetivo de conocer, por ejemplo si se está
+        realizando una construcción ilegal o existen partículas
+        inusuales en el aire \cite{blockchain:iot:nokia}, para
+        digitalizar el mundo físico y poder llevar un control de
+        personas y activos, de experiencia del cliente,
+        etc. \cite{blockchain:iot:kontakt}.
 	
 	% Section
 	\section{Objetivo general}
 
-	A resultas de la actual carencia de la existencia de implementaciones que aborden la problemática de cómo asegurar la veracidad de una manera irrefutable de sucesos no controlados en entornos \gls{iot-a} se propone el proyecto actual empleando las herramientas citadas en el anexo \ref{tools} y con el que se consigue satisfacer los siguientes objetivos:
+	A resultas de la actual carencia de la existencia de
+        implementaciones que aborden la problemática de cómo asegurar
+        la veracidad de una manera irrefutable de sucesos no
+        controlados en entornos \gls{iot-a} se propone el proyecto
+        actual empleando las herramientas citadas en el anexo
+        \ref{tools} y con el que se consigue satisfacer los siguientes
+        objetivos:
 		
 	\begin{itemize}
-		\item Comprender el concepto de \gls{blockchain-a} (origen, conceptos clave, modo de funcionamiento, taxonomía, beneficios frente al almacenamiento de información tradicional, etc.) y todo el ecosistema que engloba. 
-		\item Revisión del estado actual de la tecnología \gls{blockchain-a} y qué ha supuesto en los diferentes sectores.
-		\item Analizar cuáles son las principales implementaciones de \gls{blockchain-a} hoy en día, sus características, ventajas y limitaciones.
-		\item Conocer qué es \gls{hyperledger} y comprender el motivo de su aparición. 
-		\item Conocer los proyectos existentes en \gls{hyperledger} y analizar con mayor profundidad la tecnología de \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) y \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a}) \cite{hyperledgercomposer:url} asimilando la jerga de las que está compuesta. 
-		\item Aprender a desplegar una \gls{blockchain-a} permisionada en \gls{hyperledgerfabric-a} y desarrollar \textit{\glspl{chaincode}}.
-		\item Entender qué es el \gls{iot-a} y cómo puede mejorar la trazabilidad de los sistemas y la seguridad al combinarse con la \gls{blockchain-a}.
-		\item Aprender conceptos relacionados con el área de la electrónica para poder construir un \gls{prototipo} \textit{hardware}.
-		\item Desplegar una configuración \gls{iot-a} mediante una \gls{raspberry} (\gls{raspberry-a}) y diversos \glspl{sensor} y dispositivos de entrada y salida (E/S).
-		\item Desarrollar una \gls{poc-a} sobre \gls{hyperledgerfabric-a} que permita garantizar la veracidad e integridad de sucesos anómalos registrados en entornos \gls{iot-a}.
+          \item Comprender el concepto de \gls{blockchain-a} (origen,
+            conceptos clave, modo de funcionamiento, taxonomía,
+            beneficios frente al almacenamiento de información
+            tradicional, etc.) y todo el ecosistema que engloba.
+          \item Revisión del estado actual de la tecnología
+            \gls{blockchain-a} y qué ha supuesto en los diferentes
+            sectores.
+          \item Analizar cuáles son las principales implementaciones
+            de \gls{blockchain-a} hoy en día, sus características,
+            ventajas y limitaciones.
+          \item Conocer qué es \gls{hyperledger} y comprender el
+            motivo de su aparición.
+          \item Conocer los proyectos existentes en \gls{hyperledger}
+            y analizar con mayor profundidad la tecnología de
+            \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) y
+            \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a})
+            \cite{hyperledgercomposer:url} asimilando la jerga de las
+            que está compuesta.
+          \item Aprender a desplegar una \gls{blockchain-a}
+            permisionada en \gls{hyperledgerfabric-a} y desarrollar
+            \textit{\glspl{chaincode}}.
+          \item Entender qué es el \gls{iot-a} y cómo puede mejorar la
+            trazabilidad de los sistemas y la seguridad al combinarse
+            con la \gls{blockchain-a}.
+          \item Aprender conceptos relacionados con el área de la
+            electrónica para poder construir un \gls{prototipo}
+            \textit{hardware}.
+          \item Desplegar una configuración \gls{iot-a} mediante una
+            \gls{raspberry} (\gls{raspberry-a}) y diversos
+            \glspl{sensor} y dispositivos de entrada y salida (E/S).
+          \item Desarrollar una \gls{poc-a} sobre
+            \gls{hyperledgerfabric-a} que permita garantizar la
+            veracidad e integridad de sucesos anómalos registrados en
+            entornos \gls{iot-a}.
 	\end{itemize}
 		
 	% Section
@@ -504,7 +648,10 @@ breaklines=true,
 	El presente documento presenta una estructura dividida en siete capítulos: 
 		
 	\begin{itemize}
-		\item \textbf{Capítulo 1 - \nameref{introductionChapter}:} presenta la introducción al actual proyecto, exponiendo la motivación y objetivos así como el material y herramientas empleadas para su implementación.		
+          \item \textbf{Capítulo 1 - \nameref{introductionChapter}:}
+            presenta la introducción al actual proyecto, exponiendo la
+            motivación y objetivos así como el material y herramientas
+            empleadas para su implementación.
 		\item \textbf{Capítulo 2 - \nameref{stateArtChapter}:} proporciona al lector un acercamiento al contexto y marco tecnológico que engloba a este proyecto junto a la justificación de su utilización sobre otras tecnologías que podrían producir resultados similares.		
 		\item \textbf{Capítulo 3 - \nameref{analysisChapter}:} reúne los requerimientos, funcionalidades y características que el sistema debe implementar para satisfacer las necesidades del cliente.
 		\item \textbf{Capítulo 4 - \nameref{designChapter}:} modela el diseño y la arquitectura que debe poseer el sistema gracias a la información obtenida durante la etapa análisis. 
@@ -517,15 +664,63 @@ breaklines=true,
 	% State of the art
 	\chapter{Estado del arte} \label{stateArtChapter}
 		
-	Conocer los inicios, pilares y fundamentos básicos sobre los que se sustenta la tecnología principal del proyecto es esencial para entender el contexto y la jerga que engloba. En este capítulo se aborda un breve estudio sobre la tecnología de cadena de bloques o \Gls{blockchain} (\gls{blockchain-a}) para que el lector pueda adquirir un conocimiento general y superficial.
+	Conocer los inicios, pilares y fundamentos básicos sobre los
+        que se sustenta la tecnología principal del proyecto es
+        esencial para entender el contexto y la jerga que engloba. En
+        este capítulo se aborda un breve estudio sobre la tecnología
+        de cadena de bloques o \Gls{blockchain} (\gls{blockchain-a})
+        para que el lector pueda adquirir un conocimiento general y
+        superficial.
 
 
 	% Section
 	\section{Introducción}
 	
-	Los servicios tecnológicos de hoy en día y los sistemas en general en los que se basa el funcionamiento de la sociedad y el mundo económico y financiero siguen la filosofía tradicional articulada bajo la confianza en terceras partes. Un ejemplo muy a la mano del día a día es la funcionalidad ofrecida por entidades bancarias respecto a la gestión de las cuentas de clientes. El banco, que actúa como una tercera parte de confianza (\gls{tpc-a}), tiene la responsabilidad de garantizar la veracidad de la información personal asociada a dicha cuenta, de las transferencias emitidas y recibidas y del saldo disponible en ella. Los clientes son por tanto la parte que emite y entrega la confianza a las entidades bancarias por lo que quedan a merced del buen hacer de éstas. Como garante de la integridad y veracidad de los datos, estas entidades han desarrollado grandes sistemas con un enfoque normalmente centralizado por lo que únicamente una autoridad central es la encargada de gobernar y velar por la coherencia y seguridad de la información existiendo de tal manera puntos únicos de fallo. \\
+	Los servicios tecnológicos de hoy en día y los sistemas en
+        general en los que se basa el funcionamiento de la sociedad y
+        el mundo económico y financiero siguen la filosofía
+        tradicional articulada bajo la confianza en terceras
+        partes. Un ejemplo muy a la mano del día a día es la
+        funcionalidad ofrecida por entidades bancarias respecto a la
+        gestión de las cuentas de clientes. El banco, que actúa como
+        una tercera parte de confianza (\gls{tpc-a}), tiene la
+        responsabilidad de garantizar la veracidad de la información
+        personal asociada a dicha cuenta, de las transferencias
+        emitidas y recibidas y del saldo disponible en ella. Los
+        clientes son por tanto la parte que emite y entrega la
+        confianza a las entidades bancarias por lo que quedan a merced
+        del buen hacer de éstas. Como garante de la integridad y
+        veracidad de los datos, estas entidades han desarrollado
+        grandes sistemas con un enfoque normalmente centralizado por
+        lo que únicamente una autoridad central es la encargada de
+        gobernar y velar por la coherencia y seguridad de la
+        información existiendo de tal manera puntos únicos de fallo.
 	
-	Estos sistemas, considerados como complejos y costosos, no han tenido en cuenta en general dentro de sus objetivos principales facilitar la interoperabilidad y colaboración con otros sistemas. La gran cantidad de información que almacenan y manejan provoca que sea inviable y nada fácil de conseguir una transferencia de información eficiente y rápida entre distintos sistemas e incluso organizaciones por lo que estos datos se pueden encontrar en múltiples silos de información, impactando negativamente en el rendimiento y en la efectividad a la hora de trabajar, tomar decisiones o incluso gestionar áreas o unidades de negocio. Frente a este escenario, surgieron sistemas tales como las redes sociales donde la información se localiza de manera descentralizada en múltiples puntos de almacenamiento omitiendo la existencia de un almacenamiento central y por tanto el punto único de fallo. Sin embargo, la falta de una interconexión total mediante una red de comunicaciones desemboca en que no sea adecuado para determinadas áreas donde se require interoperabilidad. Aquí, es donde las propiedades de \gls{blockchain-a} entran en juego ya que habilitan nuevos escenarios totalmente distribuidos gracias a la transformación de la topología de las redes económicas y sociales, tal y como muestra la Figura \ref{fig:stateArt_intro}. \\
+	Estos sistemas, considerados como complejos y costosos, no han
+        tenido en cuenta en general dentro de sus objetivos
+        principales facilitar la interoperabilidad y colaboración con
+        otros sistemas. La gran cantidad de información que almacenan
+        y manejan provoca que sea inviable y nada fácil de conseguir
+        una transferencia de información eficiente y rápida entre
+        distintos sistemas e incluso organizaciones por lo que estos
+        datos se pueden encontrar en múltiples silos de información,
+        impactando negativamente en el rendimiento y en la efectividad
+        a la hora de trabajar, tomar decisiones o incluso gestionar
+        áreas o unidades de negocio. \commented{Frente a este
+          escenario, surgieron sistemas tales como las redes sociales
+          donde la información se localiza de manera descentralizada
+          en múltiples puntos de almacenamiento omitiendo la
+          existencia de un almacenamiento central y por tanto el punto
+          único de fallo} \commented{supongo que te refieres a las
+          redes P2P. En general, las redes sociales no son
+          descentralizadas. }. Sin embargo, la falta de una
+        interconexión total mediante una red de comunicaciones
+        desemboca en que no sea adecuado para determinadas áreas donde
+        se requiere interoperabilidad. Aquí, es donde las propiedades
+        de \gls{blockchain-a} entran en juego ya que habilitan nuevos
+        escenarios totalmente distribuidos gracias a la transformación
+        de la topología de las redes económicas y sociales, tal y como
+        muestra la Figura \ref{fig:stateArt_intro}.
 
 	\begin{figure}[!ht]   
 		\caption{Topologías de red.} 
