@@ -2,19 +2,6 @@
 % Document type
 \documentclass[12pt,a4paper, twoside]{report}
 
-
-%%%% comentarios para revisiones
-\usepackage[normalem]{ulem}
-\usepackage{color}
-\definecolor{dgreen}{rgb}{0,.6,0}
-\newcommand\todo[1]{\colorbox{red}{TODO}\textcolor{red}{#1}}
-\newcommand\comments[1]{\textcolor{blue}{#1}}% my comments
-\newcommand\commented[1]{\textcolor{red}{#1}} % your original texts commented by me
-\newcommand\modified[1]{\textcolor{dgreen}{#1}} % added or modified texts
-\newcommand\modifiedsout[1]{\textcolor{dgreen}{\sout{#1}}}
-\newcommand\doubtwho[2]{\textcolor{red}{#1: #2}}
-\newcommand\commentswho[2]{\textcolor{blue}{#1: #2}}
-
 % Packages
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage{amsmath}
@@ -277,44 +264,40 @@ breaklines=true,
 	
 	\vspace{-0.3cm}
 
-        \comments{No conviene poner referencias en el resumen. Por
-          otro lado, te falta la referencia de bitcoin} En la
-        actualidad un grueso importante de empresas tiene un interés
+        En la actualidad un grueso importante de empresas tiene un interés
         especial en construir una nueva generación de aplicaciones
         transaccionales que establezcan confianza, responsabilidad y
         transparencia en su núcleo junto con una arquitectura abierta
         y distribuida. Aquí, es de especial relevancia el sistema de
-        pago de gestión no centralizado \gls{bitcoin} \cite{bitcoin},
+        pago de gestión no centralizado \gls{bitcoin},
         que está basado en la tecnología \Gls{blockchain}
-        (\gls{blockchain-a}) \cite{iansiti:2017:ttab} la cual habilita
+        (\gls{blockchain-a}) la cual habilita
         la creación de un sistema inmutable de registro de
         sucesos. Desde su origen ha propiciado todo un conjunto de
         iniciativas que, prescindiendo de la existencia de una tercera
         parte de confianza (\gls{tpc-a}), puedan proporcionar
         protocolos para la protección de la integridad de la
-        información.
+        información. \\
 	
-	Una de estas iniciativas es \gls{hyperledger}
-        \cite{hyperledger:url} -estándar \textit{\gls{opensource}} de
+	Una de estas iniciativas es \gls{hyperledger} -estándar \textit{\gls{opensource}} de
         investigación y evolución de la tecnología \gls{blockchain-a}
         permisionada anunciada por la fundación Linux en 2015-, se
         centra en apoyar este tipo de transacciones de negocio para
         mejorar numerosos aspectos de rendimiento y
         empresariales. \gls{hyperledgerfabric}
-        (\gls{hyperledgerfabric-a}) \cite{hyperledgerfabric:url}, es
+        (\gls{hyperledgerfabric-a}), es
         el proyecto más conocido dentro de este consorcio. Implementa
         la tecnología de libro de registros distribuido
-        (\textit{\gls{dlt}} -\gls{dlt-a}-) \cite{wattenhofer:DLT} en
+        (\textit{\gls{dlt}} -\gls{dlt-a}-) en
         una \gls{blockchain-a} permisionada donde la inserción de la
         información requiere que las entidades estén previamente
         autenticadas. Este modelo de control de acceso es de alto
         interés en el contexto de la trazabilidad de recursos ya que
         limita quién puede tener acceso y a qué recursos gracias a la
-        existencia de roles.
+        existencia de roles. \\
 		
 	El surgimiento de nuevos paradigmas, como el Internet de las
-        Cosas (\textit{\gls{iot}} -\gls{iot-a}-)
-        \cite{christidis:2016:bsciot}, \cite{dorri:2017:TOBI} donde
+        Cosas (\textit{\gls{iot}} -\gls{iot-a}-) donde
         cualquier objeto del mundo real puede estar totalmente
         conectado a la red, ha evolucionado la forma de uso, de
         comunicación y de transmisión de información a través de
@@ -358,47 +341,42 @@ breaklines=true,
         applications which establish trust, responsibility and
         transparency in their core, together with an open and
         distributed architecture. Of particular relevance here it is
-        the non-centralized payment system \gls{bitcoin}
-        \cite{bitcoin}, which is based on the \Gls{blockchain}
-        (\gls{blockchain-a}) \cite{iansiti:2017:ttab} technology that
+        the non-centralized payment system \gls{bitcoin}, which is based on the \Gls{blockchain}
+        (\gls{blockchain-a}) technology that
         enables the creation of an immutable system of event
         registration. Since its inception, it has led to a whole set
         of initiatives that, regardless of the existence of a trusted
         third party (\gls{tpc-a}), can provide protocols for the
-        protection of the integrity of information.
+        protection of the integrity of information. \\
 		
-	One of these initiatives is \gls{hyperledger}
-        \cite{hyperledger:url} -\gls{opensource} standard of research
+	One of these initiatives is \gls{hyperledger} -\gls{opensource} standard of research
         and evolution of the permissioned \gls{blockchain-a}
         technology announced by the Linux Foundation in 2015-, focuses
         on supporting this type of business \glspl{transaction} as a
-        means to improve numerous \modified{aspects of the techology
+        means to improve numerous aspects of the technology
           performance and the business
-          activities}. \gls{hyperledgerfabric}
-        (\gls{hyperledgerfabric-a}) \cite{hyperledgerfabric:url}, is
+          activities. \gls{hyperledgerfabric}
+        (\gls{hyperledgerfabric-a}), is
         the most well-known project within this consortium. It
-        implements the \gls{dlt} (\gls{dlt-a}) \cite{wattenhofer:DLT}
-        in a permissioned \gls{blockchain-a} where inserting
+        implements the \gls{dlt} (\gls{dlt-a}) in a permissioned \gls{blockchain-a} where inserting
         information requires entities to be previously
         authenticated. This model of access control is of high
-        interest in the context \modified{of asset tracking and
-          traceability}, since it limits \modified{who can access an
-          asset and which operations are allowed}.
+        interest in the context of asset tracking and
+          traceability, since it limits who can access an
+          asset and which operations are allowed. \\
 	
 	The emergence of new paradigms, such as the \gls{iot}
-        (\gls{iot-a}) \cite{christidis:2016:bsciot},
-        \cite{dorri:2017:TOBI} where any real-world object can be
-        totally connected to the network, \modified{have modified the way
+        (\gls{iot-a}) where any real-world object can be
+        totally connected to the network, have modified the way
         information is used, exchanged, and transmitted through the
-        Internet}. Until recently, these devices were mere data
-        consumers. Currently, \modified{they provide services and data that is collected
-        continuously from their environment}, which apart from
+        Internet. Until recently, these devices were mere data
+        consumers. Currently, they provide services and data that is collected
+        continuously from their environment, which apart from
         bringing numerous benefits, also open the door to numerous
         security and privacy problems. The importance of maintaining a
         record of immutable and confidential information is essential
         to guarantee the veracity and integrity of the events and the
-        information collected in such an environments. This project addresses the development
-        of a \gls{poc} (\gls{poc-a}) to implement
+        information collected in such an environments. This project addresses the development of a \gls{poc} (\gls{poc-a}) to implement
         \gls{hyperledgerfabric-a} in the \gls{iot-a}. The purpose is
         the gathering of events using sensors located on a
         \gls{raspberry} 3 (\gls{raspberry-a}), and the inclusion of
@@ -461,7 +439,7 @@ breaklines=true,
 	\pagenumbering{arabic}
 	
 	Todo proyecto requiere de una descripción previa que
-        \modified{situé} al lector en el panorama general del mismo,
+        sitúe al lector en el panorama general del mismo,
         con el fin de que éste llegue a comprender con perfección las
         ideas y metas que se persiguen con su desarrollo. En este
         capítulo se aborda de forma general los principales rasgos de
@@ -480,13 +458,13 @@ breaklines=true,
         de intermediarios también presenta desventajas, entre las que
         se encuentra la posible degradación de la propia privacidad si
         la \gls{tpc-a} accede, sin el consentimiento expreso, a la
-        información sensible y personal.
+        información sensible y personal. \\
 	
 	Una posible solución es la descentralización de la gestión de
         la información, de forma que no es necesario una autoridad
         central intermediaria que tenga acceso a los datos. Aquí, es
         donde nace el concepto de cadena de bloques o \Gls{blockchain}
-        (\gls{blockchain-a}), un libro de registros o transacciones
+        (\gls{blockchain-a}) \cite{iansiti:2017:ttab}, un libro de registros o transacciones
         (\textit{ledger}) distribuido y descentralizado, del que todos
         los que participan en la red almacenan una copia que se
         actualiza mediante un protocolo \textit{\gls{p2p}}
@@ -494,10 +472,10 @@ breaklines=true,
         confianza a ser completamente funcional y con la misma
         seguridad que una totalmente confiable. En este contexto, el
         protocolo de consenso distribuido se constituye en garante de
-        la integridad de la información y, por ende, de su veracidad.
+        la integridad de la información y, por ende, de su veracidad. \\
 
 	En su origen, \gls{blockchain-a} se inventó para sustentar
-        \gls{bitcoin}, la primera criptomoneda -medio digital de
+        \gls{bitcoin} \cite{bitcoin}, la primera criptomoneda -medio digital de
         intercambio- descentralizada no emitida por un banco central
         \cite{franco:2014:UB}. Sin embargo, su aplicación no queda
         limitada a las criptomonedas. En efecto, la \gls{blockchain-a}
@@ -517,11 +495,12 @@ breaklines=true,
         seguridad lógica, destacando el proyecto Guardtime
         \cite{guardtime} el cual cuenta con el patrocinio de la
         Agencia de Proyectos de Investigación Avanzados de Defensa,
-        DARPA \cite{darpa}.
+        DARPA \cite{darpa}. \\
 
 	Uno de los ámbitos donde \gls{blockchain-a} tiene especial
         interés es en el Internet de las Cosas (\textit{\gls{iot}}
-        -\gls{iot-a}-). La \gls{iot-a} constituye una red de
+        -\gls{iot-a}-) \cite{christidis:2016:bsciot},
+        \cite{dorri:2017:TOBI}. La \gls{iot-a} constituye una red de
         dispositivos físicos que por naturaleza se conectan entre sí e
         intercambian datos para hacer nuestras vidas más sencillas y
         eficientes. Sin embargo, cada dispositivo puede ser cualquier
@@ -539,7 +518,7 @@ breaklines=true,
             \textit{smart contract} de \gls{ethereum}. Consultar
             \cite{ethereum} para obtener más información.}} -concepto
         introducido por Nick Szabo en 1996 \cite{szabo:1997:FSRPN}- y
-        de modelos de control de acceso.
+        de modelos de control de acceso. \\
 	
 	Motivado por la reciente explosión de interés de esta
         tecnología y este ámbito, en este proyecto se examina si la
@@ -572,7 +551,7 @@ breaklines=true,
         final o una prueba de concepto (\textit{\gls{poc}}
         -\gls{poc-a}-) con las mismas o similares líneas de trabajo
         -securización de un entorno con \gls{blockchain-a}- y
-        tecnologías.
+        tecnologías. \\
 	
 	Sí es verdad que,  a raíz de este enorme interés por parte del
         ecosistema tecnológico y empresarial, han surgido y están
@@ -618,11 +597,11 @@ breaklines=true,
           \item Analizar cuáles son las principales implementaciones
             de \gls{blockchain-a} hoy en día, sus características,
             ventajas y limitaciones.
-          \item Conocer qué es \gls{hyperledger} y comprender el
+          \item Conocer qué es \gls{hyperledger} \cite{hyperledger:url} y comprender el
             motivo de su aparición.
           \item Conocer los proyectos existentes en \gls{hyperledger}
             y analizar con mayor profundidad la tecnología de
-            \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) y
+            \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) \cite{hyperledgerfabric:url} y
             \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a})
             \cite{hyperledgercomposer:url} asimilando la jerga de las
             que está compuesta.
@@ -674,7 +653,6 @@ breaklines=true,
         para que el lector pueda adquirir un conocimiento general y
         superficial.
 
-
 	% Section
 	\section{Introducción}
 	
@@ -696,7 +674,7 @@ breaklines=true,
         grandes sistemas con un enfoque normalmente centralizado por
         lo que únicamente una autoridad central es la encargada de
         gobernar y velar por la coherencia y seguridad de la
-        información existiendo de tal manera puntos únicos de fallo.
+        información existiendo de tal manera puntos únicos de fallo. \\
 	
 	Estos sistemas, considerados como complejos y costosos, no han
         tenido en cuenta en general dentro de sus objetivos
@@ -708,14 +686,8 @@ breaklines=true,
         datos se pueden encontrar en múltiples silos de información,
         impactando negativamente en el rendimiento y en la efectividad
         a la hora de trabajar, tomar decisiones o incluso gestionar
-        áreas o unidades de negocio. \commented{Frente a este
-          escenario, surgieron sistemas tales como las redes sociales
-          donde la información se localiza de manera descentralizada
-          en múltiples puntos de almacenamiento omitiendo la
-          existencia de un almacenamiento central y por tanto el punto
-          único de fallo} \comments{supongo que te refieres a las
-          redes P2P. En general, las redes sociales no son
-          descentralizadas. }. Sin embargo, la falta de una
+        áreas o unidades de negocio. Frente a este
+          escenario, surgieron sistemas donde la información se localiza de manera descentralizada en múltiples puntos de almacenamiento omitiendo la existencia de un almacenamiento central y por tanto el punto único de fallo. Sin embargo, la falta de una
         interconexión total mediante una red de comunicaciones
         desemboca en que no sea adecuado para determinadas áreas donde
         se requiere interoperabilidad. Aquí, es donde las propiedades
@@ -732,21 +704,18 @@ breaklines=true,
 		\end{center}  
 	\end{figure}
 	
-	\gls{blockchain-a} es un nuevo paradigma llamado a
-        \modified{liderar el tránsito de una Internet de la
+	\gls{blockchain-a} es un nuevo paradigma llamado a liderar el tránsito de una Internet de la
           Información (en el que la información puede ser replicada
           indefinidamente) hacia un Internet del Valor. En esta nueva
-          Internet los activos de información} se comparten de una
+          Internet los activos de información se comparten de una
         manera segura y descentralizada, son únicos y tienen una
         historia trazable que está almacenada en un \textit{ledger}
         (libro de contabilidad o de registros) distribuido. Esta
-        transición implica \modified{modificar} los modelos existentes
+        transición implica modificar los modelos existentes
         en muchos negocios con la definición de nuevas plataformas
         distribuidas en las que la figura de los intermediarios o
         \gls{tpc-a} pierde vigencia en favor de planteamientos de
-        consenso y confianza distribuida. En primer lugar,
-        \modified{el modelo de confianza distribuido deparado por
-          tecnología de consenso de la \gls{blockchain-a}} supone un
+        consenso y confianza distribuida. En primer lugar, el modelo de confianza distribuido deparado por la tecnología de consenso de la \gls{blockchain-a} supone un
         cambio fundamental respecto a la figura de la \gls{tpc-a}. La
         existencia de una tecnología que permite la creación de redes
         totalmente distribuidas en las que sus participantes no
@@ -756,16 +725,16 @@ breaklines=true,
         de colaboración. Por otra parte, el modelo distribuido en el
         que todos los participantes mantienen una copia del
         \textit{ledger}, hace que la información se encuentre
-        repartida y replicada. \modified{Este factor, unido a la forma en al que
+        repartida y replicada. Este factor, unido a la forma en al que
         se construye el consenso entre los nodos de transferencia y
-        almacenamiento de información,} garantiza la
+        almacenamiento de información, garantiza la
         inmutabilidad e integridad de los registros y da lugar a
         sistemas resilientes altamente transparente y auditables y con
         gran tolerancia a fallos, a la vez que acaba con el problema
-        de los silos de información. \modified{En definitiva, se habilita} instauración de
+        de los silos de información. En definitiva, se habilita la instauración de
         una \textit{fuente única de verdad}, que es común a todas las
         organizaciones involucradas, además de compartida y
-        supervisada por todas ellas.
+        supervisada por todas ellas. \\
 	
 	Sin embargo, este nuevo paradigma no siempre es válido o es el
         más adecuado para implementar en un proyecto ya que una
@@ -774,8 +743,7 @@ breaklines=true,
         perseguidos son los determinantes de qué red o plataforma es
         la más idónea para hacer realidad la solución de negocio
         necesaria y para ello existen cinco preguntas que se deberían
-        formular antes de la toma de decisión:
-        \comments{puedes citar este artículo aquí: https://eprint.iacr.org/2017/375.pdf}
+        formular antes de la toma de decisión \cite{2017:needBC}:
 	
 	\begin{enumerate}
         \item ¿Hay más de una organización, área o unidad de negocio
@@ -806,22 +774,14 @@ breaklines=true,
 			
 	% Section
 	\section{Concepto de Blockchain}
-	\comments{no viene mal decir que es un concepto amplio, cuya
-          definición no está del todo cerrada. No obstante, se pueden
-          establecer una serie de elementos comunes a las diversas
-          variantes de blockchain. Ten en cuenta, por otro lado,  que
-          en Hyperledger no hay minado de bloques. }
-	La cadena de bloques o \Gls{blockchain} (\gls{blockchain-a}),
-        tipo de tecnología de registro distribuido (\textit{\gls{dlt}}
-        -\gls{dlt-a}-), es una estructura de datos distribuida,
+
+	La cadena de bloques o \Gls{blockchain} (\gls{blockchain-a}) es un concepto amplio cuya definición no se encuentra del todo cerrada. No obstante, se pueden establecer una serie de elementos comúnes a las diversas
+          variantes existentes. Se puede considerar como un tipo de tecnología de registro distribuido (\textit{\gls{dlt}}
+        -\gls{dlt-a}-)  \cite{wattenhofer:DLT}, es una estructura de datos distribuida,
         también conocida como libro de registros o \textit{ledger},
-        que es replicada y compartida entre todos aquellos miembros
+        que es replicada\footnote{No necesariamente tiene que ser replicada por todos los nodos. En algunas \gls{blockchain-a} un puede ser ligero, de forma que localmente solo posee una versión reducida de la cadena.} y compartida entre todos aquellos miembros
         (nodos) que pertenezcan a una red \gls{p2p-a}
-        (\textit{\gls{p2p}}), es decir, una red distribuida
-        \comments{No necesariamente tiene que ser replicada por todos
-          los nodos. Ten en cuenta que, por ejemplo, en bitcoin o
-          ethereum un nodo puedo ser ligero, de forma que en local
-          solo tiene una versión reducida de la cadena.}. Este
+        (\textit{\gls{p2p}}), es decir, una red distribuida. Este
         \textit{ledger} contiene todas las transacciones registradas
         en la red estableciendo a quién pertenece qué. Las
         transacciones en sí no son almacenadas de forma aleatoria e
@@ -840,13 +800,13 @@ breaklines=true,
 		\begin{figure}[!ht]   
 			\caption{Estructura de una cadena de bloques.} 
 			\begin{center} 
-				\includegraphics[width=14cm,height=5.7cm]{Images/stateArt/link_blocks} \\
+				\includegraphics[width=14cm,height=5.2cm]{Images/stateArt/link_blocks} \\
 				\label{fig:stateArt_linkblock} 
 			\end{center}  
 		\end{figure}
 		
 	 Cada bloque en la cadena se identifica por un valor \textit{hash} criptográfico generado por medio de aplicar dos veces una \gls{hash} a la cabecera del bloque con el algoritmo \gls{sha-a}-256. Además, contiene la siguiente información (Figura \ref{fig:stateArt_block}):
-	 
+
 	 \begin{figure}[!ht]   
 		\caption{Contenido de un bloque.} 
 		\begin{center} 
@@ -857,7 +817,7 @@ breaklines=true,
 	
 	 \begin{itemize}
 	 	\item Cabecera de bloque conteniendo metadatos sobre el mismo como, por ejemplo la versión, la marca de tiempo (\textit{timestamp}), el valor \textit{hash} del bloque anterior, un valor \textit{nonce}\footnote{Número arbitrario de un solo uso.} para efectos de minería y el valor \textit{hash} de la raíz del árbol de Merkle.
-	 	\item Árbol de Merkel el cual es una estructura de datos que sintetiza las transacciones contenidas en el bloque. Esta estructura es construida recursivamente aplicando \glspl{hash} a pares de transacciones hasta obtener un único valor \textit{hash}, llamado raíz o raíz de Merkle.
+	 	\item Árbol de Merkel el cual es una estructura de datos que sintetiza las transacciones contenidas en el bloque. Esta estructura es construida recursivamente aplicando \glspl{hash} a pares de transacciones hasta obtener un único valor \textit{hash}, llamado raíz o raíz de Merkle (Figura \ref{fig:stateArt_merkle}).
 	 \end{itemize}
 	 
 	 \begin{figure}[!ht]   
@@ -897,9 +857,7 @@ breaklines=true,
 	La tecnología de \gls{blockchain-a} está construida sobre dos
         conceptos claves de criptografía: \gls{hash} y firma
         digital. Las \glspl{hash} son funciones matemáticas con las
-        siguientes propiedades: \comments{pondría alguna referencia a
-          algún libro de criptografía. Por ejemplo, el libro de
-          Menezes o el de Schneier.}
+        siguientes propiedades \cite{menezes}:
 	
 	\begin{itemize}
 		\item La entrada de la función es una cadena de cualquier tamaño.
@@ -933,21 +891,16 @@ breaklines=true,
                   como los ataques de denegación de servicios
                   (DDoS)\footnote{Ataque cuya finalidad es saturar los
                     recursos de un sistema al enviar múltiples
-                    peticiones falsas.}. Este concepto no es nuevo y
+                    peticiones falsas.}. Este concepto no es nuevo \cite{forgotten} y
                   la idea subyacente fue publicada por Cynthia Dwork y
-                  Moni Naor en 1993 \cite{dwork:1993}. \comments{En
-                    realidad, hay pocos conceptos realmente nuevos en
-                    la blockchain de bitcoin. Por si quieres tenerlo
-                    en cuenta: https://queue.acm.org/detail.cfm?id=3136559}
+                  Moni Naor en 1993 \cite{dwork:1993}.
 	 	\item Algoritmo de prueba de participación (\textit{Proof of Stake} -PoS-): protocolo cuya idea fue sugerida en el foro de \textit{bitcointalk} en el año 2011 y que se basa en la idea de seleccionar de forma determinista el creador de un nuevo bloque en base a su riqueza o participación. En este protocolo la recompensa recibida es la comisión pagada por cada transacción.
 	 \end{itemize}
 	
 	% Subsection
 	\subsection{Smart Contracts}
-	\comments{Para que lo tengas en cuenta: los smart contracts no
-        son contratos en el sentido estricto de la palabra, y tampoco
-        son muy inteligentes $\Rightarrow$ https://estsjournal.org/article/download/107/61}
-	El concepto de \textit{smart contract} o contrato inteligente hace referencia a un acuerdo entre dos o más partes donde se define lo que se puede hacer, cómo se puede hacer, qué pasa si algo no se hace, etc. que es capaz de ejecutarse y hacerse cumplir por sí mismo, de manera autónoma, automática y sin intermediarios. Estos contratos aplicados a la \gls{blockchain-a} son programas informáticos escritos con algún lenguaje de programación que ejecutan acuerdos establecidos entre dos o más partes haciendo que ciertas acciones sucedan como resultado de que se cumplan una serie de condiciones específicas, implicando un avance al permitir mayor funcionalidad distribuida que la hasta entonces utilizada en \gls{blockchain-a}, pagos descentralizado. \\
+	
+	El concepto de \textit{smart contract} o contrato inteligente \cite{smart} hace referencia a un acuerdo entre dos o más partes donde se define lo que se puede hacer, cómo se puede hacer, qué pasa si algo no se hace, etc. que es capaz de ejecutarse y hacerse cumplir por sí mismo, de manera autónoma, automática y sin intermediarios. Estos contratos aplicados a la \gls{blockchain-a} son programas informáticos escritos con algún lenguaje de programación que ejecutan acuerdos establecidos entre dos o más partes haciendo que ciertas acciones sucedan como resultado de que se cumplan una serie de condiciones específicas, implicando un avance al permitir mayor funcionalidad distribuida que la hasta entonces utilizada en \gls{blockchain-a}, pagos descentralizado. \\
 	
 	Este concepto no es reciente si no que llevan desarrollándose desde el año 1996, cuando el famoso criptógrafo Nick Szabo acuñó el término por primera vez. Nick propuso este sistema de contratos por aquel entonces, sin embargo la infraestructura tecnológica del momento lo hacía inviable. El \textit{smart contract} se puede decir que vive en una atmósfera no controlada por ninguna de las partes implicadas en el contrato en un sistema descentralizado aunque esté almacenado en cada uno de ellos. Esto significa que:
 	
@@ -980,9 +933,7 @@ breaklines=true,
                   de carácter privado puesto que todo participante
                   conectado posee un identidad única y por tanto
                   pueden existir roles que diferencien quién puede
-                  desplegar \textit{smart contracts} o
-                  \textit{\glspl{chaincode}} \comments{no mencionaría
-                    los chaincodes hasta estar con hyperledger}, quién posee el privilegio de registrar transacciones \cite{hyperledgercomposer:acl} o quién puede participar en el proceso de minado \cite{multichain:permissions}.
+                  desplegar \textit{smart contracts}, quién posee el privilegio de registrar transacciones \cite{hyperledgercomposer:acl} o quién puede participar en el proceso de minado \cite{multichain:permissions}.
 		
 		\item Arquitectura de descentralización. Esta característica está directamente relacionada con la categorización en función del privilegio de acceso a la red puesto que las \gls{blockchain-a} públicas son completamente descentralizadas (el consenso es alcanzado por todos los nodos sin que haya una confianza plena entre ellos), mientras que las \gls{blockchain-a} híbridas y privadas son parcialmente centralizadas o centralizadas, respectivamente (el consenso es alcanzado únicamente por un grupo de nodos seleccionados confiando por tanto el resto de nodos en ese grupo seleccionado).
 		
@@ -1032,7 +983,7 @@ breaklines=true,
 	
 	El gran problema que presenta \gls{bitcoin}, a parte del gran
         gasto energético que requiere hoy en día debido al algoritmo
-        de consenso utilizado \comments{puedes poner esta referencia: https://www.journaltranscript.com/2018/06/bitcoin-mining-consumes-as-much-electricity-as-the-nation-of-ireland/}, es la limitación a ser utilizado como medio de pago o almacén de valor. \gls{ethereum} desarrollada por la fundación Ethereum con base en Suiza fue concebido originalmente como una versión mejorada de la criptomoneda \gls{bitcoin}, para superar las limitaciones de su lenguaje de programación, proporcionando características avanzadas tales como la creación y ejecucción de aplicaciones en la \gls{blockchain-a} y, lo que es más importante, establecer acuerdos o contratos inteligentes. Esta tecnología posee una \gls{blockchain-a} pública, permitiendo también la creación de privadas que utilizan el mismo protocolo y la misma base tecnológica. La red pública posee una criptomoneda nativa, el Ether, que es actualmente la segunda criptomoneda por capitalización en el mundo. Pero realmente no destaca por la moneda virtual en sí, si no por el potencial para aumentar sustancialmente la eficiencia de la industria computacional, y proporcionar un gran impulso a otros protocolos \gls{p2p-a} adicionando por primera vez una capa económica.
+        de consenso utilizado \cite{mining}, es la limitación a ser utilizado como medio de pago o almacén de valor. \gls{ethereum} desarrollada por la fundación Ethereum con base en Suiza fue concebido originalmente como una versión mejorada de la criptomoneda \gls{bitcoin}, para superar las limitaciones de su lenguaje de programación, proporcionando características avanzadas tales como la creación y ejecucción de aplicaciones en la \gls{blockchain-a} y, lo que es más importante, establecer acuerdos o contratos inteligentes. Esta tecnología posee una \gls{blockchain-a} pública, permitiendo también la creación de privadas que utilizan el mismo protocolo y la misma base tecnológica. La red pública posee una criptomoneda nativa, el Ether, que es actualmente la segunda criptomoneda por capitalización en el mundo. Pero realmente no destaca por la moneda virtual en sí, si no por el potencial para aumentar sustancialmente la eficiencia de la industria computacional, y proporcionar un gran impulso a otros protocolos \gls{p2p-a} adicionando por primera vez una capa económica.
 
 	% Section
 	\section{Blockchain orientado al entorno IoT}
@@ -1045,9 +996,7 @@ breaklines=true,
 	
 	\begin{itemize}
 		\item Mejora la seguridad al evitar información
-                  incosistente gracias al consenso de todos
-                  \modified{los nodos de la red que tienen una replica
-                    de la Blockchain}.
+                  incosistente gracias al consenso de todos los nodos de la red que tienen una réplica de la \gls{blockchain-a}.
 		\item Mejora la gestión de la identidad de los dispositivos.
 		\item Aporta transparencia y automatización de los procesos al poder ser trazables.
 		\item Reduce costes al fomentar la interacción digital y la colaboración.
@@ -1056,18 +1005,10 @@ breaklines=true,
 		
 	% Section
 	\section{Hyperledger}
-	\comments{Lo cierto es que las blockchain públicas no son tan
-          descentralizadas y transparentes como proclaman sus
-          creadores y defensores:
-          http://www0.cs.ucl.ac.uk/staff/S.Meiklejohn/files/bitcoin18b.pdf.
-        Además, los smart contracts de Ethereum tienen múltiples
-        problemas de seguridad:
-        \url{https://link.springer.com/chapter/10.1007\%2F978-3-662-54455-6_8}.
-      Por eso, y por la escabilidad y otros temas legales y
-      normativos, tiene sentido considerar otros modelos de
-      blockchain.}
-    
-	Hyperledger es un consorcio de carácter colaborativo y de código abierto (\textit{\gls{opensource}}) anunciado en diciembre del año 2015 por la fundación Linux -organización referente a nivel tecnológico sin ánimo de lucro creada a principios de 2010 para promover y acoger proyectos \textit{\gls{opensource}}- para investigar y evolucionar la tecnología \gls{dlt-a}, en concreto la \gls{blockchain-a} de uso privado y orientada al ámbito económico y empresarial donde gracias a la capacidad de ejecución de transacciones privadas y a la inclusión de novedosas características se reconducirá la forma en la cual los negocios y procesos comerciales tienen lugar. El objetivo de esta iniciativa, que trabaja de la mano con la \textit{Enterprise Ethereum Alliance} (EEA), es establecer los estándares para garantizar la interoperabilidad y estabilidad de los diferentes proyectos y así evitar  los riesgos asociados a un ecosistema fragmentado, junto con la idea de promover gran variedad de negocios basados en esta tecnología con un amplio abanico de soluciones y usos diferentes. \\
+	
+	Lo cierto es que las \gls{blockchain-a} públicas no son tan descentralizadas y transparentes como proclaman sus creadores y defensores \cite{governance}. Además, los \textit{smart contracts} de \gls{ethereum} tienen múltiples problemas de seguridad \cite{attacks:ethereum}. Por eso, y por la escalabilidad y otros temas legales y normativos, tiene sentido considerar otros modelos de \gls{blockchain-a} tal como los contenidos en \gls{hyperledger}. \\
+      
+	\Gls{hyperledger} es un consorcio de carácter colaborativo y de código abierto (\textit{\gls{opensource}}) anunciado en diciembre del año 2015 por la fundación Linux -organización referente a nivel tecnológico sin ánimo de lucro creada a principios de 2010 para promover y acoger proyectos \textit{\gls{opensource}}- para investigar y evolucionar la tecnología \gls{dlt-a}, en concreto la \gls{blockchain-a} de uso privado y orientada al ámbito económico y empresarial donde gracias a la capacidad de ejecución de transacciones privadas y a la inclusión de novedosas características se reconducirá la forma en la cual los negocios y procesos comerciales tienen lugar. El objetivo de esta iniciativa, que trabaja de la mano con la \textit{Enterprise Ethereum Alliance} (EEA), es establecer los estándares para garantizar la interoperabilidad y estabilidad de los diferentes proyectos y así evitar  los riesgos asociados a un ecosistema fragmentado, junto con la idea de promover gran variedad de negocios basados en esta tecnología con un amplio abanico de soluciones y usos diferentes. \\
 	 		
 	Esta línea de trabajo es posible al esfuerzo, conocimiento y a la dedicación por parte de numerosos socios y miembros, cuyo número cada vez es mayor, donde se incluyen compañías centradas en la \gls{blockchain-a} (Blockchain, R3, etc.), compañías tecnológicas (IBM, Intel, Red Hat, VMware, Cisco, etc.), compañías financieras (J.P. Morgan, SWIFT, etc.) y entidades bancarias (BBVA), entre otras. Treinta miembros iniciales fueron los originarios de comenzar con esta andadura con dos de los proyectos actualmente en desarrollo donde en numerosas ocasiones son los propios desarrolladores y compañías las que desean ceder el proyecto para su incubación con el propósito de ganar visibilidad y favorecer su impulso al generar una comunidad a su alrededor. Este es el caso de Monax Industries (Hyperledger Burrow) y Sovrin (Hyperledger Indy), dos de los proyectos actualmente en desarrollo. El primer proyecto en entrar en fase de incubación -fase de prueba, desarrollo y difusión- fue el introducido por la compañía tecnológica IBM, el cual recibió posteriormente el nombre de  \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}), y actualmente se encuentra en un estado activo, siendo también el primer proyecto en adquirir esta condición.	 \\
 	
@@ -1080,23 +1021,14 @@ breaklines=true,
 		\item Desarrollar comunidades técnicas que definan casos de uso y desarrollen \gls{poc-a}.	
 	\end{itemize}
 
-	Estos objetivos son alcanzados gracias al enfoque modular que proporciona Hyperledger donde se ubican todos los componentes que lo conforman actualmente, tal y como muestra la Figura \ref{fig:stateArt_hyperledger}, donde:
+	Estos objetivos son alcanzados gracias al enfoque modular que proporciona Hyperledger donde se ubican todos los componentes que lo conforman actualmente, donde:
 	
 	\begin{itemize}
 		\item En primer nivel se encuentra la infraestructura que hace referencia al ecosistema que difunde el aceleramiento del desarrollo abierto y la adopción comercial junto con la cobertura técnica, legal, \textit{marketing} y organizacional que se proporciona.
 		\item En segundo nivel se localizan los \textit{\glspl{framework}} que proporcionan los elementos necesarios (\textit{ledger}, algoritmo de consenso, contratos inteligentes, etc.) para el despliegue de la \gls{blockchain-a}.
 		\item En último nivel se ubican todas aquellas herramientas 	auxiliares que complementan a los \textit{\glspl{framework}} ya sea en el despliegue, mantenimiento o diseño y prototipado de las redes \gls{blockchain-a}. 
 	\end{itemize}
-	
-	 \begin{figure}[!ht]   
-		\caption{Proyectos de la iniciativa Hyperledger.} 
-		\begin{center} 
-			\includegraphics[width=16cm,height=7cm]{Images/stateArt/hyperledger} \\
-			\label{fig:stateArt_hyperledger} 
-			\textbf{Fuente:} \url{https://www.hyperledger.org/}
-		\end{center}  
-	\end{figure}
-	
+		
 	% Subsection
 	\subsection{Hyperledger Fabric}
 	
@@ -1144,17 +1076,8 @@ breaklines=true,
         \textit{orderer peers} donde se pueden usar múltiples
         elecciones como, Solo (para redes en pruebas), PBFT
         (\textit{Practical Byzantine Fault Tolerance}), SBFT
-        (\textit{Simplified Byzantine Fault Tolerance}, Kafka,
-        etc. algunos aún en desarrollo. Éste último \comments{te
-          refieres al Kafka ordering service, ¿no? Esta es una de las
-          grandes críticas a Hyperledger: finalmente el consenso que
-          construye no es tan distribuido. Según han anunciado, se
-          espera que en Hyperledger Fabric 1.4 esté PBTF. Lo
-          importante, eso sí, es Hyperledger persigue un sentido
-          agnóstico: puedes incorporar el modelo de consenso que
-          quieras, al menos ese es el objetivo. Esto también se
-          persigue con los smart contracts: se quiere que se puede
-          ejecutar cualquier tipo de contrato inteligente. } es el método empleado por defecto para redes en producción el cual se basa en la votación permisionada y ofrece tolerancias a fallas pero no tolerancia a fallas bizantinas el cual previene al sistema de alcanzar un acuerdo en caso de nodos maliciosos o defectuosos. Este proceso de consenso está formado por tres fases: validación de transacciones, fase de ordenación de transacciones válidas y validación de bloques y de la exactitud de los resultados. \\
+        (\textit{Simplified Byzantine Fault Tolerance}, Kafka ordering service,
+        etc. algunos aún en desarrollo. Éste último es el método empleado por defecto para redes en producción el cual se basa en la votación permisionada y ofrece tolerancias a fallas pero no tolerancia a fallas bizantinas el cual previene al sistema de alcanzar un acuerdo en caso de nodos maliciosos o defectuosos. Este proceso de consenso está formado por tres fases: validación de transacciones, fase de ordenación de transacciones válidas y validación de bloques y de la exactitud de los resultados. \\
 
 	A modo resumen, la Figura \ref{fig:stateArt_hfflow} muestra el flujo de ejecución de una transacción cuando es ejecutada por un cliente, donde:
 
@@ -1165,8 +1088,7 @@ breaklines=true,
 		\item Cliente envía la transacción aprobada al \textit{orderer peer} para que sea ordenada e incluida en un bloque junto a su escritura en el \textit{ledger}. Este bloque es emitido al resto \textit{anchor peers} de las organizaciones miembro de la red.
 		\item Los \textit{anchor peers} emiten el bloque al resto de \textit{peers} de la organización para que actualicen su \textit{ledger} con este último bloque de forma que la red está sincronizada.
 	\end{itemize}
-	
-	
+		
 	 \begin{figure}[!ht]   
 		\caption{Flujo de ejecución de transacción en Hyperledger Fabric.} 
 		\begin{center} 
@@ -1203,17 +1125,28 @@ breaklines=true,
 	\begin{figure}[!ht]   
 		\caption{Definición y despliegue de la red con Hyperledger Composer.} 
 		\begin{center} 
-			\includegraphics[width=17cm,height=8cm]{Images/stateArt/hc} \\
+			\includegraphics[width=17cm,height=7cm]{Images/stateArt/hc} \\
 			\label{fig:stateArt_hyperledgercomposer} 
 			\textbf{Fuente:} \url{https://hyperledger.github.io/composer/latest/index.html}
 		\end{center}  
 	\end{figure}
 	
+	% NEW PAGE
+	\newpage
+	
 	% Subsection
 	\subsection{Otro proyectos de Hyperledger}
 
-\comments{yo pondría aquí la figura con los proyectos}
-	Además de \gls{hyperledgerfabric-a} y \gls{hyperledgercomposer-a}, el consorcio Hyperledger mantiene actualmente otros ocho marcos de trabajo, descritos brevemente a continuación:
+	Además de \gls{hyperledgerfabric-a} y \gls{hyperledgercomposer-a}, el consorcio Hyperledger mantiene actualmente otros ocho marcos de trabajo (Figura \ref{fig:stateArt_hyperledger}), descritos brevemente a continuación:
+		 
+	 \begin{figure}[!ht]   
+		\caption{Proyectos de la iniciativa Hyperledger.} 
+		\begin{center} 
+			\includegraphics[width=16cm,height=6.5cm]{Images/stateArt/hyperledger} \\
+			\label{fig:stateArt_hyperledger} 
+			\textbf{Fuente:} \url{https://www.hyperledger.org/}
+		\end{center}  
+	\end{figure}
 	
 	\begin{enumerate}
 		\item Hyperledger Burrow: anteriormente Monax, fue impulsada por la \textit{startup} Monax Industries y co-patrocinada por Intel. Es una \gls{blockchain-a} privada basada en el código de \gls{ethereum} por lo que permite la ejecución de \textit{smart contracts} desarrollados en Solidity sobre la base de las especificaciones de la máquina virtual de esta tecnología (EVM).
@@ -3940,136 +3873,136 @@ breaklines=true,
 	\begin{itemize}
 		\item Diagrama de secuencia de análisis: Configurar dispositivo \gls{raspberry-a} (Figura \ref{fig:ds_configurarRPi1} - Parte 1 y Figura \ref{fig:ds_configurarRPi2} - Parte 2).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de análisis: Configurar dispositivo RPi - Parte 1.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=19.5cm]{Images/analysis/secuencia/secuencia_configurarRPi_parte1} \\
-%				\label{fig:ds_configurarRPi1} 
-%			\end{center}  
-%		\end{figure} 
-%		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de análisis: Configurar dispositivo RPi - Parte 2.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=21cm]{Images/analysis/secuencia/secuencia_configurarRPi_parte2} \\
-%				\label{fig:ds_configurarRPi2} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de análisis: Configurar dispositivo RPi - Parte 1.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=19.5cm]{Images/analysis/secuencia/secuencia_configurarRPi_parte1} \\
+				\label{fig:ds_configurarRPi1} 
+			\end{center}  
+		\end{figure} 
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de análisis: Configurar dispositivo RPi - Parte 2.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=21cm]{Images/analysis/secuencia/secuencia_configurarRPi_parte2} \\
+				\label{fig:ds_configurarRPi2} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		 
 		\item Diagrama de secuencia de análisis: Monitorizar sucesos del entorno (Figura \ref{fig:ds_monitorizarEntorno}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de análisis: Monitorizar sucesos del entorno.} 
-%			\begin{center} 
-%				\includegraphics[width=17cm,height=20.5cm]{Images/analysis/secuencia/secuencia_monitorizarEntorno} \\
-%				\label{fig:ds_monitorizarEntorno} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de análisis: Monitorizar sucesos del entorno.} 
+			\begin{center} 
+				\includegraphics[width=17cm,height=20.5cm]{Images/analysis/secuencia/secuencia_monitorizarEntorno} \\
+				\label{fig:ds_monitorizarEntorno} 
+			\end{center}  
+		\end{figure} 
 
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de secuencia de análisis: Desencriptar evidencia (Figura \ref{fig:ds_desencriptar}).
 
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de análisis: Desencriptar evidencia.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=20.5cm]{Images/analysis/secuencia/secuencia_desencriptarEvidencia} \\
-%				\label{fig:ds_desencriptar} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de análisis: Desencriptar evidencia.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=20.5cm]{Images/analysis/secuencia/secuencia_desencriptarEvidencia} \\
+				\label{fig:ds_desencriptar} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de secuencia de análisis: Iniciar sesión (Figura \ref{fig:ds_iniciarSesion}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de análisis: Iniciar sesión.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=20cm]{Images/analysis/secuencia/secuencia_iniciarSesion} \\
-%				\label{fig:ds_iniciarSesion} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de análisis: Iniciar sesión.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=20cm]{Images/analysis/secuencia/secuencia_iniciarSesion} \\
+				\label{fig:ds_iniciarSesion} 
+			\end{center}  
+		\end{figure} 
 
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de secuencia de análisis: Restablecer contraseña (Figura \ref{fig:ds_restablecerContraseña}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de análisis: Restablecer contraseña.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=20cm]{Images/analysis/secuencia/secuencia_restablecerContraseña} \\
-%				\label{fig:ds_restablecerContraseña} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de análisis: Restablecer contraseña.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=20cm]{Images/analysis/secuencia/secuencia_restablecerContraseña} \\
+				\label{fig:ds_restablecerContraseña} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de secuencia de análisis: Gestionar usuario administrador (Figura \ref{fig:ds_adminuser1} - Parte 1 y Figura \ref{fig:ds_adminuser2} - Parte 2)\footnote{El diagrama de secuencia de análisis para el caso de uso UC-0007: Gestionar usuario normal es similar al presente con la salvedad de adaptar a la entidad correspondiente.}.
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de análisis: Gestionar usuario administrador - Parte 1.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=18.5cm]{Images/analysis/secuencia/secuencia_gestionarUsuarioAdministrador_parte1} \\
-%				\label{fig:ds_adminuser1} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de análisis: Gestionar usuario administrador - Parte 1.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=18.5cm]{Images/analysis/secuencia/secuencia_gestionarUsuarioAdministrador_parte1} \\
+				\label{fig:ds_adminuser1} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE
 		\newpage
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de análisis: Gestionar usuario administrador - Parte 2.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=21cm]{Images/analysis/secuencia/secuencia_gestionarUsuarioAdministrador_parte2} \\
-%				\label{fig:ds_adminuser2} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de análisis: Gestionar usuario administrador - Parte 2.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=21cm]{Images/analysis/secuencia/secuencia_gestionarUsuarioAdministrador_parte2} \\
+				\label{fig:ds_adminuser2} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de secuencia de análisis: Consultar estadísticas globales (Figura \ref{fig:ds_estadisticas}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de análisis: Consultar estadísticas globales.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=13cm]{Images/analysis/secuencia/secuencia_consultarEstadisticas} \\
-%				\label{fig:ds_estadisticas} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de análisis: Consultar estadísticas globales.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=13cm]{Images/analysis/secuencia/secuencia_consultarEstadisticas} \\
+				\label{fig:ds_estadisticas} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de secuencia de análisis: Consultar o modificar perfil personal (Figura \ref{fig:ds_perfil}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de análisis: Consultar o modificar perfil personal.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=20cm]{Images/analysis/secuencia/secuencia_perfilPersonal} \\
-%				\label{fig:ds_perfil} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de análisis: Consultar o modificar perfil personal.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=20cm]{Images/analysis/secuencia/secuencia_perfilPersonal} \\
+				\label{fig:ds_perfil} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de secuencia de análisis: Consumir información sobre la trazabilidad del entorno (Figura \ref{fig:ds_consumirInfo}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de análisis: Consumir información sobre la trazabilidad del entorno.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17.5cm,height=13cm]{Images/analysis/secuencia/secuencia_consumirInformacion} \\
-%				\label{fig:ds_consumirInfo} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de análisis: Consumir información sobre la trazabilidad del entorno.} 
+			\begin{center} 
+	 			\includegraphics[width=17.5cm,height=13cm]{Images/analysis/secuencia/secuencia_consumirInformacion} \\
+				\label{fig:ds_consumirInfo} 
+			\end{center}  
+		\end{figure} 
 		
 	\end{itemize}
  				
@@ -4279,136 +4212,136 @@ breaklines=true,
 	\begin{itemize}
 		\item Diagrama de secuencia de diseño: Configurar dispositivo \gls{raspberry-a} (Figura \ref{fig:design_configurarRPi1} - Parte 1 y Figura \ref{fig:design_configurarRPi2} - Parte 2).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de diseño: Configurar dispositivo RPi - Parte 1.} 
-%			\begin{center} 
-%	 			\includegraphics[width=16cm,height=16.5cm]{Images/design/sequence/diseño_secuencia_configurarRPi_parte1} \\
-%				\label{fig:design_configurarRPi1} 
-%			\end{center}  
-%		\end{figure} 
-%		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de diseño: Configurar dispositivo RPi - Parte 2.} 
-%			\begin{center} 
-%				\includegraphics[width=17cm,height=21cm]{Images/design/sequence/diseño_secuencia_configurarRPi_parte2} \\
-%				\label{fig:design_configurarRPi2} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Configurar dispositivo RPi - Parte 1.} 
+			\begin{center} 
+	 			\includegraphics[width=16cm,height=16.5cm]{Images/design/sequence/diseño_secuencia_configurarRPi_parte1} \\
+				\label{fig:design_configurarRPi1} 
+			\end{center}  
+		\end{figure} 
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Configurar dispositivo RPi - Parte 2.} 
+			\begin{center} 
+				\includegraphics[width=17cm,height=21cm]{Images/design/sequence/diseño_secuencia_configurarRPi_parte2} \\
+				\label{fig:design_configurarRPi2} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		 
 		\item Diagrama de secuencia de diseño: Monitorizar sucesos del entorno (Figura \ref{fig:design_monitorizarEntorno}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de diseño: Monitorizar sucesos del entorno.} 
-%			\begin{center} 
-%				\includegraphics[width=18cm,height=20.5cm]{Images/design/sequence/diseño_secuencia_monitorizarEntorno} \\
-%				\label{fig:design_monitorizarEntorno} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Monitorizar sucesos del entorno.} 
+			\begin{center} 
+				\includegraphics[width=18cm,height=20.5cm]{Images/design/sequence/diseño_secuencia_monitorizarEntorno} \\
+				\label{fig:design_monitorizarEntorno} 
+			\end{center}  
+		\end{figure} 
 
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de secuencia de diseño: Desencriptar evidencia (Figura \ref{fig:design_desencriptar}).
 
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de diseño: Desencriptar evidencia.} 
-%			\begin{center} 
-%	 			\includegraphics[width=18cm,height=20.5cm]{Images/design/sequence/diseño_secuencia_desencriptarEvidencia} \\
-%				\label{fig:design_desencriptar} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Desencriptar evidencia.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=20.5cm]{Images/design/sequence/diseño_secuencia_desencriptarEvidencia} \\
+				\label{fig:design_desencriptar} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de secuencia de diseño: Iniciar sesión (Figura \ref{fig:design_iniciarSesion}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de diseño: Iniciar sesión.} 
-%			\begin{center} 
-%	 			\includegraphics[width=18cm,height=20.5cm]{Images/design/sequence/diseño_secuencia_iniciarSesion} \\
-%				\label{fig:design_iniciarSesion} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Iniciar sesión.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=20.5cm]{Images/design/sequence/diseño_secuencia_iniciarSesion} \\
+				\label{fig:design_iniciarSesion} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de secuencia de diseño: Restablecer contraseña (Figura \ref{fig:design_contraseña}).
 
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de diseño: Restablecer contraseña.} 
-%			\begin{center} 
-%	 			\includegraphics[width=18cm,height=20.5cm]{Images/design/sequence/diseño_secuencia_restablecerContraseña} \\
-%				\label{fig:design_contraseña} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Restablecer contraseña.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=20.5cm]{Images/design/sequence/diseño_secuencia_restablecerContraseña} \\
+				\label{fig:design_contraseña} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de secuencia de diseño: Gestionar usuario administrador (Figura \ref{fig:design_adminuser1} - Parte 1 y Figura \ref{fig:design_adminuser2} - Parte 2)\footnote{El diagrama de secuencia de diseño para el caso de uso UC-0007: Gestionar usuario normal es similar al presente con la salvedad de adaptar a la entidad correspondiente.}.
 		 
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de diseño: Gestionar usuario administrador - Parte 1.} 
-%			\begin{center} 
-%	 			\includegraphics[width=18cm,height=18.5cm]{Images/design/sequence/diseño_secuencia_gestionarUsuarioAdministrador_parte1} \\
-%				\label{fig:design_adminuser1} 
-%			\end{center}  
-%		\end{figure} 
-%		
-%		% NEW PAGE
-%		\newpage
-%		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de diseño: Gestionar usuario administrador - Parte 2.} 
-%			\begin{center} 
-%	 			\includegraphics[width=18cm,height=21cm]{Images/design/sequence/diseño_secuencia_gestionarUsuarioAdministrador_parte2} \\
-%				\label{fig:design_adminuser2} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Gestionar usuario administrador - Parte 1.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=18.5cm]{Images/design/sequence/diseño_secuencia_gestionarUsuarioAdministrador_parte1} \\
+				\label{fig:design_adminuser1} 
+			\end{center}  
+		\end{figure} 
+		
+		% NEW PAGE
+		\newpage
+		
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Gestionar usuario administrador - Parte 2.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=21cm]{Images/design/sequence/diseño_secuencia_gestionarUsuarioAdministrador_parte2} \\
+				\label{fig:design_adminuser2} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de secuencia de diseño: Consultar estadísticas globales (Figura \ref{fig:design_estadisticas}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de diseño: Consultar estadísticas globales.} 
-%			\begin{center} 
-%	 			\includegraphics[width=18cm,height=15cm]{Images/design/sequence/diseño_secuencia_consultarEstadisticas} \\
-%				\label{fig:design_estadisticas} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Consultar estadísticas globales.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=15cm]{Images/design/sequence/diseño_secuencia_consultarEstadisticas} \\
+				\label{fig:design_estadisticas} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de secuencia de diseño: Consultar o modificar perfil personal (Figura \ref{fig:design_perfil}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de diseño: Consultar o modificar perfil personal.} 
-%			\begin{center} 
-%	 			\includegraphics[width=18cm,height=20cm]{Images/design/sequence/diseño_secuencia_perfilPersonal} \\
-%				\label{fig:design_perfil} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Consultar o modificar perfil personal.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=20cm]{Images/design/sequence/diseño_secuencia_perfilPersonal} \\
+				\label{fig:design_perfil} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de secuencia de diseño: Consumir información sobre la trazabilidad del entorno (Figura \ref{fig:design_consumirInfo}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de secuencia de diseño: Consumir información sobre la trazabilidad del entorno.} 
-%			\begin{center} 
-%	 			\includegraphics[width=18cm,height=13cm]{Images/design/sequence/diseño_secuencia_consumirInfo} \\
-%				\label{fig:design_consumirInfo} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de secuencia de diseño: Consumir información sobre la trazabilidad del entorno.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=13cm]{Images/design/sequence/diseño_secuencia_consumirInfo} \\
+				\label{fig:design_consumirInfo} 
+			\end{center}  
+		\end{figure} 
 		
 	\end{itemize}
 	
@@ -4424,111 +4357,111 @@ breaklines=true,
 		
 		\item Diagrama de clases de diseño: Configurar dispositivo \gls{raspberry-a} (Figura \ref{fig:classes_configurarRPi1}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de clases de diseño: Configurar dispositivo RPi.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=9cm]{Images/design/classes/classes_configurarRPi} \\
-%				\label{fig:classes_configurarRPi1} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Configurar dispositivo RPi.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=9cm]{Images/design/classes/classes_configurarRPi} \\
+				\label{fig:classes_configurarRPi1} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		 
 		\item Diagrama de clases de diseño: Monitorizar sucesos del entorno (Figura \ref{fig:classes_monitorizarEntorno}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de clases de diseño: Monitorizar sucesos del entorno.} 
-%			\begin{center} 
-%				\includegraphics[width=18cm,height=12cm]{Images/design/classes/classes_monitorizarEntorno} \\
-%				\label{fig:classes_monitorizarEntorno} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Monitorizar sucesos del entorno.} 
+			\begin{center} 
+				\includegraphics[width=18cm,height=12cm]{Images/design/classes/classes_monitorizarEntorno} \\
+				\label{fig:classes_monitorizarEntorno} 
+			\end{center}  
+		\end{figure} 
 
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de clases de diseño: Desencriptar evidencia (Figura \ref{fig:design_desencriptar}).
 
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de clases de diseño: Desencriptar evidencia.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=9cm]{Images/design/classes/classes_desencriptarEvidencia} \\
-%				\label{fig:classes_desencriptar} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Desencriptar evidencia.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=9cm]{Images/design/classes/classes_desencriptarEvidencia} \\
+				\label{fig:classes_desencriptar} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de clases de diseño: Iniciar sesión (Figura \ref{fig:classes_iniciarSesion}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de clases de diseño: Iniciar sesión.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=6cm]{Images/design/classes/classes_iniciarSesion} \\
-%				\label{fig:classes_iniciarSesion} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Iniciar sesión.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=6cm]{Images/design/classes/classes_iniciarSesion} \\
+				\label{fig:classes_iniciarSesion} 
+			\end{center}  
+		\end{figure} 
 		
 		\item Diagrama de clases de diseño: Restablecer contraseña (Figura \ref{fig:classes_contraseña}).
 
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de clases de diseño: Restablecer contraseña.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=7cm]{Images/design/classes/classes_restablecerContraseña} \\
-%				\label{fig:classes_contraseña} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Restablecer contraseña.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=7cm]{Images/design/classes/classes_restablecerContraseña} \\
+				\label{fig:classes_contraseña} 
+			\end{center}  
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de clases de diseño: Gestionar usuario administrador (Figura \ref{fig:classes_adminuser1})\footnote{El diagrama de clases de diseño para el caso de uso UC-0007: Gestionar usuario normal es similar al presente con la salvedad de adaptar a la entidad correspondiente.}.
 		 
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de clases de diseño: Gestionar usuario administrador.} 
-%			\begin{center} 
-%	 			\includegraphics[width=18cm,height=13cm]{Images/design/classes/classes_gestionarUsuarioAdministrador} \\
-%				\label{fig:classes_adminuser1} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Gestionar usuario administrador.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=13cm]{Images/design/classes/classes_gestionarUsuarioAdministrador} \\
+				\label{fig:classes_adminuser1} 
+			\end{center}  
+		\end{figure} 
 				
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de clases de diseño: Consultar estadísticas globales (Figura \ref{fig:classes_estadisticas}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de clases de diseño: Consultar estadísticas globales.} 
-%			\begin{center} 
-%	 			\includegraphics[width=18cm,height=8cm]{Images/design/classes/classes_consultarEstadisticas} \\
-%				\label{fig:classes_estadisticas} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Consultar estadísticas globales.} 
+			\begin{center} 
+	 			\includegraphics[width=18cm,height=8cm]{Images/design/classes/classes_consultarEstadisticas} \\
+				\label{fig:classes_estadisticas} 
+			\end{center}  
+		\end{figure} 
 			
 		\item Diagrama de clases de diseño: Consultar o modificar perfil personal (Figura \ref{fig:classes_perfil}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de clases de diseño: Consultar o modificar perfil personal.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=5cm]{Images/design/classes/classes_perfilPersonal} \\
-%				\label{fig:classes_perfil} 
-%			\end{center}
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Consultar o modificar perfil personal.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=5cm]{Images/design/classes/classes_perfilPersonal} \\
+				\label{fig:classes_perfil} 
+			\end{center}
+		\end{figure} 
 		
 		% NEW PAGE 
 		\newpage
 		
 		\item Diagrama de clases de diseño: Consumir información sobre la trazabilidad del entorno (Figura \ref{fig:classes_consumirInfo}).
 		
-%		\begin{figure}[!ht]   
-%			\caption{Diagrama de clases de diseño: Consumir información sobre la trazabilidad del entorno.} 
-%			\begin{center} 
-%	 			\includegraphics[width=17cm,height=9cm]{Images/design/classes/classes_consumirInfo} \\
-%				\label{fig:classes_consumirInfo} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Diagrama de clases de diseño: Consumir información sobre la trazabilidad del entorno.} 
+			\begin{center} 
+	 			\includegraphics[width=17cm,height=9cm]{Images/design/classes/classes_consumirInfo} \\
+				\label{fig:classes_consumirInfo} 
+			\end{center}  
+		\end{figure} 
 		
 	\end{itemize}
 		
@@ -4540,13 +4473,13 @@ breaklines=true,
 	% NEW PAGE
 	\newpage
 	
-%	\begin{figure}[!ht]   
-%		\caption{Diagrama final de clases de diseño.} 
-%		\begin{center} 
-%	 		\includegraphics[width=18cm,height=22cm]{Images/design/classes/classes_final} \\
-%			\label{fig:classes_final} 
-%		\end{center}  
-%	\end{figure} 
+	\begin{figure}[!ht]   
+		\caption{Diagrama final de clases de diseño.} 
+		\begin{center} 
+	 		\includegraphics[width=18cm,height=22cm]{Images/design/classes/classes_final} \\
+			\label{fig:classes_final} 
+		\end{center}  
+	\end{figure} 
 					
 	% Implementation
 	\chapter{Implementación} \label{implementationChapter}
@@ -8458,36 +8391,36 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 	
 	Para la organización del proyecto y para mantener un registro del avance se ha empleado la herramienta Trello con el fin de establecer una planificación de tareas -estilo \gls{kanban}- tal y como muestra la Figura \ref{fig:annexe_trello_project} en un instante determinado del progreso. En ella, se distinguen las tareas principales clasificándolas en tres posibles grupos según estén pendiente de realizar, estén en progreso o se encuentren ya finalizadas. 
 	
-%	\begin{figure}[!ht]   
-%		\caption{Planificación de tareas con Trello.} 
-%		\begin{center} 
-%		 	\includegraphics[width=16cm,height=11cm]{Images/trello/trello} \\
-%			\label{fig:annexe_trello_project} 
-%		\end{center}  
-%	\end{figure} 
+	\begin{figure}[!ht]   
+		\caption{Planificación de tareas con Trello.} 
+		\begin{center} 
+		 	\includegraphics[width=16cm,height=11cm]{Images/trello/trello} \\
+			\label{fig:annexe_trello_project} 
+		\end{center}  
+	\end{figure} 
 		
 	A su vez cada tarea principal puede desglosarse en subtareas como muestra la Figura \ref{fig:annexe_trello_detail} que hace referencia a la definición de la red de negocio.
 
-%	\begin{figure}[!ht]   
-%		\caption{Detalle de una tarea en Trello.} 
-%		\begin{center} 
-%			\includegraphics[width=16cm,height=12cm]{Images/trello/trello_tarjeta} \\
-%			\label{fig:annexe_trello_detail} 
-%		\end{center}  
-%	\end{figure} 
+	\begin{figure}[!ht]   
+		\caption{Detalle de una tarea en Trello.} 
+		\begin{center} 
+			\includegraphics[width=16cm,height=12cm]{Images/trello/trello_tarjeta} \\
+			\label{fig:annexe_trello_detail} 
+		\end{center}  
+	\end{figure} 
 			
 	% Annexe B
 	\chapter{Prototipo de Hyot}\label{prototype}
 	
 	La Figura \ref{fig:annexe_prototype} muestra el esquema del \gls{prototipo} de Hyot utilizado por el componente de monitorización de sucesos del entorno.
 	
-%		\begin{figure}[!ht]   
-%			\caption{Esquema del prototipo de Hyot.} 
-%			\begin{center} 
-%		 		\includegraphics[width=17cm,height=13.2cm]{Images/prototype/prototype} \\
-%				\label{fig:annexe_prototype} 
-%			\end{center}  
-%		\end{figure}  
+		\begin{figure}[!ht]   
+			\caption{Esquema del prototipo de Hyot.} 
+			\begin{center} 
+		 		\includegraphics[width=17cm,height=13.2cm]{Images/prototype/prototype} \\
+				\label{fig:annexe_prototype} 
+			\end{center}  
+		\end{figure}  
 		
 	Este \gls{prototipo} está compuesto de diferentes dispositivos electrónicos donde es importante cerciorarse de una correcta conexión de todos ellos para el adecuado funcionamiento. Entre ellos:
 		
@@ -8505,26 +8438,26 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 	
 	La Figura \ref{fig:annexe_realprototype} muestra el \gls{prototipo} \textit{hardware} real de Hyot el cual contiene los mismos componentes que los citados previamente.
 	
-%		\begin{figure}[!ht]   
-%			\caption{Prototipo hardware real de Hyot.} 
-%			\begin{center} 
-%		 		\includegraphics[width=18cm,height=14cm]{Images/prototype/real_prototype} \\
-%				\label{fig:annexe_realprototype} 
-%			\end{center}  
-%		\end{figure}  
+		\begin{figure}[!ht]   
+			\caption{Prototipo hardware real de Hyot.} 
+			\begin{center} 
+		 		\includegraphics[width=18cm,height=14cm]{Images/prototype/real_prototype} \\
+				\label{fig:annexe_realprototype} 
+			\end{center}  
+		\end{figure}  
 		
 	% Annexe C
 	\chapter{Esquema de pines GPIO empleados en Hyot}\label{prototypeGPIO}
 	
 	La Figura \ref{fig:annexe_prototypeGPIO} muestra el esquema de los pines \gls{gpio-a} (\textit{\gls{gpio}}) de la \gls{raspberry} (\gls{raspberry-a}) en modo BCM \cite{pinout:rpi} empleados en el \gls{prototipo} de Hyot. Cabe decir, que se puede utilizar en todo momento otros pines siempre y cuando presenten la misma funcionalidad y/o se configure en el código de los componentes.
 	
-%		\begin{figure}[!ht]   
-%			\caption{Esquema de pines GPIO empleados en Hyot.} 
-%			\begin{center} 
-%		 		\includegraphics[width=9cm,height=22cm]{Images/prototype/prototypeGPIO} \\
-%				\label{fig:annexe_prototypeGPIO} 
-%			\end{center}  
-%		\end{figure} 
+		\begin{figure}[!ht]   
+			\caption{Esquema de pines GPIO empleados en Hyot.} 
+			\begin{center} 
+		 		\includegraphics[width=9cm,height=22cm]{Images/prototype/prototypeGPIO} \\
+				\label{fig:annexe_prototypeGPIO} 
+			\end{center}  
+		\end{figure} 
 		
 	% Annexe D
 	\chapter{Información mostrada por el prototipo hardware de Hyot}\label{hardware} 
@@ -8544,210 +8477,220 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 	
 	Cuando este componente se ejecuta, en primer lugar son efectuadas una serie de comprobaciones y configuraciones iniciales denotando tal estado por pantalla (Figura \ref{fig:hardware_intializing}). \\
 	
-%	\begin{figure}[!ht]		
-%		\caption{Prototipo hardware Hyot - Inicialización.}
-% 		\begin{subfigure}{0.5\textwidth}
-% 			\hbox{
-% 				\hspace{0cm}
-% 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_initializing} 
-% 			}
-%		\end{subfigure}
-%		\begin{subfigure}{0.5\textwidth}
-%			\hbox{
-% 				\hspace{1cm}
-%				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_initializing}
-%			}
-%		\end{subfigure}
-%		\label{fig:hardware_intializing}
-%	\end{figure}
+	\begin{figure}[!ht]		
+		\caption{Prototipo hardware Hyot - Inicialización.}
+ 		\begin{subfigure}{0.5\textwidth}
+ 			\hbox{
+ 				\hspace{0cm}
+ 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_initializing} 
+ 			}
+		\end{subfigure}
+		\begin{subfigure}{0.5\textwidth}
+			\hbox{
+ 				\hspace{1cm}
+				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_initializing}
+			}
+		\end{subfigure}
+		\label{fig:hardware_intializing}
+	\end{figure}
 	
 	Una vez finalizada esta primera etapa, se inicia la monitorización de sucesos del entorno con la medición continua de los valores de los eventos de los sensores. Antes de efectuar la medición, se informa al usuario que va a comenzar tal tarea (Figura \ref{fig:hardware_reading}) para posteriormente mostrar el \gls{sensor} asociado a cada \gls{lcd-a} (Figura \ref{fig:hardware_sensor}).
 	
-%	\begin{figure}[!ht]		
-%		\caption{Prototipo hardware Hyot - Comienzo de la medición.}
-% 		\begin{subfigure}{0.5\textwidth}
-% 			\hbox{
-% 				\hspace{0cm}
-% 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_reading} 
-% 			}
-%		\end{subfigure}
-%		\begin{subfigure}{0.5\textwidth}
-%			\hbox{
-% 				\hspace{1cm}
-%				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd2_reading}
-%			}
-%		\end{subfigure}
-%		\label{fig:hardware_reading}
-%	\end{figure}
-%	
-%	\begin{figure}[!ht]		
-%		\caption{Prototipo hardware Hyot - Información del sensor.}
-% 		\begin{subfigure}{0.5\textwidth}
-% 			\hbox{
-% 				\hspace{0cm}
-% 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_sensor} 
-% 			}
-%		\end{subfigure}
-%		\begin{subfigure}{0.5\textwidth}
-%			\hbox{
-% 				\hspace{1cm}
-%				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd2_sensor}
-%			}
-%		\end{subfigure}
-%		\label{fig:hardware_sensor}
-%	\end{figure}
+	\begin{figure}[!ht]		
+		\caption{Prototipo hardware Hyot - Comienzo de la medición.}
+ 		\begin{subfigure}{0.5\textwidth}
+ 			\hbox{
+ 				\hspace{0cm}
+ 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_reading} 
+ 			}
+		\end{subfigure}
+		\begin{subfigure}{0.5\textwidth}
+			\hbox{
+ 				\hspace{1cm}
+				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd2_reading}
+			}
+		\end{subfigure}
+		\label{fig:hardware_reading}
+	\end{figure}
+	
+	\begin{figure}[!ht]		
+		\caption{Prototipo hardware Hyot - Información del sensor.}
+ 		\begin{subfigure}{0.5\textwidth}
+ 			\hbox{
+ 				\hspace{0cm}
+ 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_sensor} 
+ 			}
+		\end{subfigure}
+		\begin{subfigure}{0.5\textwidth}
+			\hbox{
+ 				\hspace{1cm}
+				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd2_sensor}
+			}
+		\end{subfigure}
+		\label{fig:hardware_sensor}
+	\end{figure}
 	
 	En cada medición se toman tres valores: temperatura en grados centígrados ($^{\circ}$C), humedad en porcentaje (rango entre 0-100\%) y distancia en centímetros (rango entre 2-150cm\footnote{El rango de distancia máxima de medición definida en la especificación del \gls{sensor} es de 4 metros. Consultar \cite{hcsr04:datasheet} para obtener más información.}). Las Figuras \ref{fig:hardware_measurement} y \ref{fig:hardware_measurement2} muestran dos ejemplos de lectura de valores. \\
 	
-%	\begin{figure}[!ht]		
-%		\caption{Prototipo hardware Hyot - Ejemplo de medición.}
-% 		\begin{subfigure}{0.5\textwidth}
-% 			\hbox{
-% 				\hspace{0cm}
-% 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_measurement} 
-% 			}
-%		\end{subfigure}
-%		\begin{subfigure}{0.5\textwidth}
-%			\hbox{
-% 				\hspace{1cm}
-%				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd2_measurement}
-%			}
-%		\end{subfigure}
-%		\label{fig:hardware_measurement}
-%	\end{figure}
-%	
-%	\begin{figure}[!ht]		
-%		\caption{Prototipo hardware Hyot - Otro ejemplo de medición.}
-% 		\begin{subfigure}{0.5\textwidth}
-% 			\hbox{
-% 				\hspace{0cm}
-% 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_measurement2} 
-% 			}
-%		\end{subfigure}
-%		\begin{subfigure}{0.5\textwidth}
-%			\hbox{
-% 				\hspace{1cm}
-%				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd2_measurement2}
-%			}
-%		\end{subfigure}
-%		\label{fig:hardware_measurement2}
-%	\end{figure}
+	\begin{figure}[!ht]		
+		\caption{Prototipo hardware Hyot - Ejemplo de medición.}
+ 		\begin{subfigure}{0.5\textwidth}
+ 			\hbox{
+ 				\hspace{0cm}
+ 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_measurement} 
+ 			}
+		\end{subfigure}
+		\begin{subfigure}{0.5\textwidth}
+			\hbox{
+ 				\hspace{1cm}
+				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd2_measurement}
+			}
+		\end{subfigure}
+		\label{fig:hardware_measurement}
+	\end{figure}
+	
+	\begin{figure}[!ht]		
+		\caption{Prototipo hardware Hyot - Otro ejemplo de medición.}
+ 		\begin{subfigure}{0.5\textwidth}
+ 			\hbox{
+ 				\hspace{0cm}
+ 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_measurement2} 
+ 			}
+		\end{subfigure}
+		\begin{subfigure}{0.5\textwidth}
+			\hbox{
+ 				\hspace{1cm}
+				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd2_measurement2}
+			}
+		\end{subfigure}
+		\label{fig:hardware_measurement2}
+	\end{figure}
 	
 	En el caso de que se produzca un error de medición en alguno de los eventos por cualquier circunstancia y no se pueda obtener un valor, la pantalla se muestra vacía tal y como se presenta en la Figura \ref{fig:hardware_measurement_empty}.
 	
 	% NEW PAGE
 	\newpage
 	
-%	\begin{figure}[!ht]		
-%		\caption{Prototipo hardware Hyot - Ejemplo de medición errónea.}
-% 		\begin{subfigure}{0.5\textwidth}
-% 			\hbox{
-% 				\hspace{0cm}
-% 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_measurement_empty} 
-% 			}
-%		\end{subfigure}
-%		\begin{subfigure}{0.5\textwidth}
-%			\hbox{
-% 				\hspace{1cm}
-%				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd2_measurement_empty}
-%			}
-%		\end{subfigure}
-%		\label{fig:hardware_measurement_empty}
-%	\end{figure}
+	\begin{figure}[!ht]		
+		\caption{Prototipo hardware Hyot - Ejemplo de medición errónea.}
+ 		\begin{subfigure}{0.5\textwidth}
+ 			\hbox{
+ 				\hspace{0cm}
+ 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_measurement_empty} 
+ 			}
+		\end{subfigure}
+		\begin{subfigure}{0.5\textwidth}
+			\hbox{
+ 				\hspace{1cm}
+				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd2_measurement_empty}
+			}
+		\end{subfigure}
+		\label{fig:hardware_measurement_empty}
+	\end{figure}
 	
 	Cada medición realizada es analizada para determinar si presenta una lectura anómala y por tanto representa una incidencia en el entorno que hay que trazar mediante la activación del protocolo de alerta. En caso afirmativo, este protocolo se activa informando del evento que lo lanzó. La Figura \ref{fig:hardware_alert} muestra dos casos diferentes de activación de dicho procedimiento.
 	
-%	\begin{figure}[!ht]		
-%		\caption{Prototipo hardware Hyot - Protocolo de alerta activado por humedad y distancia.}
-% 		\begin{subfigure}{0.5\textwidth}
-% 			\hbox{
-% 				\hspace{0cm}
-% 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_alert} 
-% 			}
-%		\end{subfigure}
-%		\begin{subfigure}{0.5\textwidth}
-%			\hbox{
-% 				\hspace{1cm}
-%				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd2_alert}
-%			}
-%		\end{subfigure}
-%		\label{fig:hardware_alert}
-%	\end{figure}
+	\begin{figure}[!ht]		
+		\caption{Prototipo hardware Hyot - Protocolo de alerta activado por humedad y distancia.}
+ 		\begin{subfigure}{0.5\textwidth}
+ 			\hbox{
+ 				\hspace{0cm}
+ 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd1_alert} 
+ 			}
+		\end{subfigure}
+		\begin{subfigure}{0.5\textwidth}
+			\hbox{
+ 				\hspace{1cm}
+				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd2_alert}
+			}
+		\end{subfigure}
+		\label{fig:hardware_alert}
+	\end{figure}
 	
 	Cuando este protocolo es activado se indica su inicio y su finalización al usuario (Figura \ref{fig:hardware_protocol}) y el \gls{led-a} es activado (Figura \ref{fig:hardware_led}) hasta que todos las acciones del protocolo son ejecutadas.
 	
-%	\begin{figure}[!ht]		
-%		\caption{Prototipo hardware Hyot - Inicio y finalización del protocolo de alerta.}
-% 		\begin{subfigure}{0.5\textwidth}
-% 			\hbox{
-% 				\hspace{0cm}
-% 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd_protocol} 
-% 			}
-%		\end{subfigure}
-%		\begin{subfigure}{0.5\textwidth}
-%			\hbox{
-% 				\hspace{1cm}
-%				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd_protocol_finished}
-%			}
-%		\end{subfigure}
-%		\label{fig:hardware_protocol}
-%	\end{figure}
-%		
-%	\begin{figure}[!ht]   
-%		\caption{Prototipo hardware Hyot - Activación del \gls{led-a}.} 
-%		\begin{center} 
-%	 		\includegraphics[width=6cm,height=4.5cm]{Images/hardware/led_alert} \\
-%			\label{fig:hardware_led} 
-%		\end{center}  
-%	\end{figure}  
+	\begin{figure}[!ht]		
+		\caption{Prototipo hardware Hyot - Inicio y finalización del protocolo de alerta.}
+ 		\begin{subfigure}{0.5\textwidth}
+ 			\hbox{
+ 				\hspace{0cm}
+ 				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd_protocol} 
+ 			}
+		\end{subfigure}
+		\begin{subfigure}{0.5\textwidth}
+			\hbox{
+ 				\hspace{1cm}
+				\includegraphics[width=7cm, height=2.5cm]{Images/hardware/lcd_protocol_finished}
+			}
+		\end{subfigure}
+		\label{fig:hardware_protocol}
+	\end{figure}
+		
+	\begin{figure}[!ht]   
+		\caption{Prototipo hardware Hyot - Activación del \gls{led-a}.} 
+		\begin{center} 
+	 		\includegraphics[width=6cm,height=4.5cm]{Images/hardware/led_alert} \\
+			\label{fig:hardware_led} 
+		\end{center}  
+	\end{figure}  
 	
-	% Annexe E - TODO Completar
+	% Annexe E
 	\chapter{Manual de instalación y configuración}\label{install}
-	
-	\textbf{Resumen:} \textit{Todo proyecto requiere de un procedimiento de instalación y configuración previa para su puesta en marcha. Este manual expone el proceso para ejecutar Hyot así como los requerimientos necesarios para ello y las diferentes opciones de configuración.}
+				
+	Todo proyecto requiere de un procedimiento de instalación y configuración previo para su puesta en marcha. Este manual expone el proceso para ejecutar Hyot así como los requerimientos necesarios para ello y las diferentes opciones de configuración.
 		
 	% Section
 	\section{Introducción}
 	
-	La ejecución del proyecto Hyot conlleva la disposición de los siguientes entornos:
+	En este manual se documenta una guía que permite configurar y desplegar el proyecto Hyot en su totalidad, incluyendo los cinco componentes que lo conforman. Se debe tener en cuenta que el manual actual hace referencia a la configuración usada en el proyecto, siendo totalmente válido otras opciones que incluyan diferentes plataformas, servicios y/o cuentas de usuario aunque puede requerir la modificación de código. \\
 	
-	\begin{itemize}
-		\item Dispositivo \gls{raspberry}\footnote{Para el presente proyecto se ha utilizado la versión 3 de este tipo de computador de placa reducida (\textit{\gls{sbc}} -\gls{sbc-a}-).} (\gls{raspberry-a}) junto con los diferentes componentes electrónicos que conforman el prototipo\footnote{Ver el anexo \ref{prototype} para más información.}.
-		\item Computador con \gls{so} (\gls{so-a}) \gls{gnulinux} o \gls{macos-a} (\textit{\gls{macos}}) para desplegar determinados componentes de Hyot de forma local.
-		\item Cuenta de usuario en el servicio IBM Cloud\footnote{Si se posee el rol de estudiante puede adquirirse un código promocional de 6 meses en la siguiente \gls{url-a} (\textit{\gls{url}}): \url{https://ibm.onthehub.com/}} \cite{ibmcloud:url} para desplegar diferentes servicios de computación en la nube.
-	\end{itemize}
-	
-	\textbf{\color{red}Se debe tener en cuenta que dependiendo de la plataforma y/o sistema operativo, las rutas indicadas en este manual pueden variar. Además, todo el procedimiento a continuación expuesto hace referencia a la configuración usada en el proyecto actual.}
-	
+	Además, con el fin de evitar al lector del proceso de disposición de algunos de los requisitos generales, para la ejecución de prueba del proyecto se proporciona una configuración por defecto de los servicios a utilizar por lo que puede no ser necesario la creación de algunos requisitos mencionados a continuación.
+		
 	% Section
 	\section{Requisitos generales}
 	
-	Para desplegar Hyot es necesario y/o recomendable que determinadas tecnologías se encuentren ya instaladas en los diferentes entornos anteriormente mencionados:
+	La ejecución del proyecto en su totalidad conlleva la disposición de los siguientes entornos y servicios:
 	
 	\begin{itemize}
-		\item \textbf{Python 2.7}: lenguaje de programación de uso general, orientado a objetos e interpretado. Debe estar instalado en el dispositivo \gls{raspberry-a}. La última versión estable liberada a fecha de {\color{red}14/05/2018} es: 2.7.15. Disponible en: \url{https://www.python.org/downloads/release/python-2715/}
-		\item \textbf{\gls{docker}}: tecnología para la creación de contenedores y el despliegue de aplicaciones. Debe estar instalado en el computador donde se despliegue \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}). La última versión estable liberada para \gls{macos-a} a fecha de {\color{red}14/05/2018} es: 18.03.1-ce-mac65. Disponible en: \url{https://www.docker.com/community-edition}
+		\item Dispositivo \gls{raspberry}\footnote{Para el presente proyecto se ha utilizado la versión 3, siendo también válida cualquier versión anterior.} (\gls{raspberry-a}) junto con los diferentes componentes electrónicos que conforman el \gls{prototipo}.
+		
+		\item Cuenta de usuario en el servicio IBM Cloud\footnote{Si posee el rol de estudiante puede adquirir un código promocional de 6 meses en la dirección: \url{https://ibm.onthehub.com/}.} \cite{ibmcloud:url} para desplegar los siguientes servicios de computación en la nube: Cloudant, Compose for MySQL y Liberty for Java.
+		
+		\item Cuenta de usuario en el servicio Microsoft Azure\footnote{Si posee el rol de estudiante puede crear una cuenta de este tipo en la dirección: \url{https://azure.microsoft.com/es-es/free/students/}.} para desplegar una máquina virtual (\textit{\gls{vm}} -\gls{vm-a}-).
+		\item Cuenta de usuario en el servicio Gmail\footnote{Para el funcionamiento de la funcionalidad de notificaciones es necesario permitir el acceso de aplicaciones menos seguras.}.
+		\item Cuenta de usuario en el servicio Dropbox.
 	\end{itemize}
 	
+	Además, es necesario la instalación de determinadas tecnologías. Sin embargo, se proporcionan mecanismos automatizados para ello o se utiliza un despliegue en la nube que omite parte de la instalación y configuración de éstas. \\
+	
+	En el caso de desear configurar o modificar el componente que hace referencia al sistema web o incluso generar el artefacto \gls{war-a} (\textit{\gls{war}}), se requiere tener instalado en el sistema local:
+	
+	\begin{itemize}
+		\item Java JDK.
+		\item \textit{\Gls{framework}} Grails.
+	\end{itemize}
+		
 	% Section
 	\section{Repositorio del proyecto Hyot}
 	
 	El código del proyecto Hyot se puede encontrar en el servicio GitHub:
 	
 		\begin{itemize}
-			\item Clonar con el protocolo \gls{https-a} (\textit{\gls{https}}): \newline \texttt{https://github.com/jesusiglesias/Hyot.git}
-			\item Clonar con el protocolo \gls{ssh-a} (\textit{\gls{ssh}}): \newline \texttt{git@github.com:jesusiglesias/Hyot.git}
+			\item Clonar con el protocolo \gls{https-a} (\textit{\gls{https}}): \newline \url{https://github.com/jesusiglesias/Hyot.git}
+			\item Clonar con el protocolo \gls{ssh-a} (\textit{\gls{ssh}}): \newline \url{git@github.com:jesusiglesias/Hyot.git}
 		\end{itemize}
 	
 	% Section
 	\section{Configuración e instalación}
 	
-	A continuación, se expone el procedimiento para configurar cada entorno empleado. En el anexo \ref{userguide} puede encontrar la especificación de la funcionalidad y las opciones de configuración de cada \textit{\gls{script}} que componen Hyot.
+	En esta sección se expone el procedimiento para configurar cada componente del proyecto y así poner en marcha Hyot.
 	
 	% Subsection
-	\subsection{Raspberry Pi}
+	\subsection{Componente - Configuración del dispositivo Raspberry Pi}
 	
-	Para configurar el dispositivo \gls{raspberry-a} se debe ejecutar desde una consola o una \textit{\gls{shell} \gls{bash-a} (\textit{\gls{bash}})} con un usuario superprivilegiado el componente de configuración del proyecto Hyot, es decir, el \textit{\gls{script}}: \texttt{raspberrypi\_setup.sh}.  Es de obligatoriedad que el dispositivo se encuentre conectado a la red para un funcionamiento correcto. A continuación, se exponen los pasos realizados: 
+	En primer lugar, se debe configurar el dispositivo \gls{raspberry-a} para poder monitorizar los sucesos del entorno. Esta configuración se consigue ejecutando el componente de configuración del dispositivo \gls{raspberry-a} o en su defecto efectuar las acciones de forma manual. \\
+		
+	Para iniciar este componente, desarrollado en el lenguaje \gls{bash-a} (\textit{\gls{bash}}), basta con ejecutar el fichero \texttt{raspberrypi\_setup.sh} -ubicado en el directorio \texttt{Hyot/hyot\_raspberrypi/setup} según la jerarquía completa del proyecto- en la \gls{raspberry-a} desde un terminal con el comando \texttt{sudo bash}\footnote{El término sudo permite delegar autoridad a usuarios normales para brindarles la capacidad de ejecutar algunas órdenes (o la totalidad) como usuario superprivilegiado.} y seguir los pasos indicados. Es de obligatoriedad que el dispositivo se encuentre conectado a la red para un funcionamiento correcto. Las acciones que efectúa este componente son:
 	
 	\begin{enumerate}
 		\item Instalar y/o actualizar a la última versión los siguientes paquetes:
@@ -8757,9 +8700,9 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 			\item gnupg: encriptación, desencriptación y firmado -entre otras funcionalidades- de cadenas de texto y/o ficheros usando \gls{gpg-a} (\textit{\gls{gpg}}).
 			\item i2c-tools: conjunto de controladores para la conexión de dispositivos mediante el protocolo \gls{i2c-a} (\textit{\gls{i2c}}).
 			\item python2.7: lenguaje de programación de uso general, orientado a objetos e interpretado.
-			\item python-dev: contiene todo lo necesario para compilar módulos y extensiones Python.
-			\item python-pip: sistema de gestión de paquetes utilizado para instalar y administrar paquetes de \textit{software} escritos en Python.
-			\item python-smbus: enlace de Python para el acceso \gls{smbus-a} (\textit{\gls{smbus}}) de Linux a través de i2c-dev. Este paquete es requerido para el uso de dispositivos conectados con el protocolo \gls{i2c-a}.
+			\item python-dev: contiene todo lo necesario para compilar módulos y extensiones \gls{python}.
+			\item python-pip: sistema de gestión de paquetes utilizado para instalar y administrar paquetes de \textit{software} escritos en \gls{python}.
+			\item python-smbus: enlace de \gls{python} para el acceso \gls{smbus-a} (\textit{\gls{smbus}}) de Linux a través de 	\texttt{i2c-dev}. Este paquete es requerido para el uso de dispositivos conectados con el protocolo \gls{i2c-a}.
 			\item rng-tools: conjunto de utilidades para la generación aleatoria de números con el objetivo de facilitar la \gls{entropia}.
 		\end{itemize}
 		
@@ -8779,26 +8722,25 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 			\multicolumn{1}{|l|}{python-smbus} & \multicolumn{1}{c|}{3.1.2-3} \\ \hline
 			\multicolumn{1}{|l|}{rng-tools} & \multicolumn{1}{c|}{2-unofficial} \\ \hline
 					
-			\caption{Versiones empleadas de los paquetes a fecha 13/08/2018}
+			\caption{Versiones empleadas de paquetes a fecha 13/08/2018}
 		\end{longtable}
 		
-		\item Instalar y/o actualizar a la última versión las siguientes librerías de Python: 		
+		\item Instalar y/o actualizar a la última versión las siguientes librerías de \gls{python}: 		
 		\begin{itemize}
-			\item Adafruit\_DHT: gestión del sensor DHT-11.
+			\item Adafruit-DHT\footnote{La instalación de esta librería al instante de desarrollar el código se realizó de forma manual descargando y descomprimiendo el paquete e instalándolo debido a que no existía una versión actualizada publicada en el repositorio PyPi. Por ese motivo se generó un \textit{issue} en Github (\url{https://github.com/adafruit/Adafruit_Python_DHT/issues/77}). Posteriormente, este problema se solucionó y se modificó el código para realizar la instalación automática (\url{https://github.com/jesusiglesias/Hyot/commit/93353a618ec31187d75f0d7a0b0933d86e6c07be}).}: gestión del \gls{sensor} DHT-11.
 			\item cloudant: interacción con el servicio de base de datos (\gls{bbdd-a}) \gls{cloudant} de IBM Cloud.
 			\item colorama: modificación del color y estilo del texto y fondo de la consola.
 			\item dropbox: interacción con el servicio Dropbox.
 			\item gpiozero: interfaz simple para dispositivos \gls{gpio-a} con \gls{raspberry-a}.
-			\item ibmiotf: interacción con el servicio de Internet de la Cosas (\textit{\gls{iot}} -\gls{iot-a}-) de IBM Cloud.
 			\item picamera: interfaz para el módulo de cámara de la \gls{raspberry-a}.
 			\item psutil: obtención de información sobre el sistema (CPU, memoria, discos, red, etc.) y los procesos en ejecución.
-			\item pysha3: implementación del algoritmo de \glspl{hash} \gls{sha-a}3 (\textit{\gls{sha}}) para Python.
-			\item python-gnupg: encriptación, desencriptación y firmado de cadenas de texto y/o ficheros usando \gls{gpg-a} para Python.
-			\item PyYAML: parseador y analizador \gls{yaml-a} (\textit{\gls{yaml}}) para Python.
+			\item pysha3: implementación del algoritmo de \glspl{hash} \gls{sha-a}3 (\textit{\gls{sha}}) para \gls{python}.
+			\item python-gnupg: encriptación, desencriptación y firmado de cadenas de texto y/o ficheros usando \gls{gpg-a} para \gls{python}.
+			\item PyYAML: parseador y analizador \gls{yaml-a} (\textit{\gls{yaml}}) para \gls{python}.
 			\item qrcode: generador de \glspl{qr}.
 			\item RPi.GPIO: clase para controlar los pines de entrada/salida (\textit{\gls{gpio}} -\gls{gpio-a}-) en una \gls{raspberry-a}.
 			\item RPLCD: gestión de pantallas \gls{lcd-a} (\textit{\gls{lcd}}). 
-			\item requests: implementación de peticiones \gls{http-a} (\textit{\gls{http}}). 
+			\item requests: implementación de peticiones \gls{http-a} (\textit{\gls{http}}) y \gls{https-a} (\textit{\gls{https}}). 
 		\end{itemize}
 		
 		% Version - Python libraries
@@ -8814,7 +8756,6 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 			\multicolumn{1}{|l|}{colorama} & \multicolumn{1}{c|}{0.3.9} \\ \hline
 			\multicolumn{1}{|l|}{dropbox} & \multicolumn{1}{c|}{9.0.0} \\ \hline
 			\multicolumn{1}{|l|}{gpiozero} & \multicolumn{1}{c|}{1.4.1} \\ \hline
-			\multicolumn{1}{|l|}{ibmiotf} & \multicolumn{1}{c|}{0.3.4} \\ \hline
 			\multicolumn{1}{|l|}{picamera} & \multicolumn{1}{c|}{1.13} \\ \hline
 			\multicolumn{1}{|l|}{psutil} & \multicolumn{1}{c|}{5.4.6} \\ \hline
 			\multicolumn{1}{|l|}{pysha3} & \multicolumn{1}{c|}{1.0.2} \\ \hline
@@ -8825,7 +8766,7 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 			\multicolumn{1}{|l|}{RPi.GPIO} & \multicolumn{1}{c|}{0.6.3} \\ \hline
 			\multicolumn{1}{|l|}{RPLCD} & \multicolumn{1}{c|}{1.1.0} \\ \hline
 					
-			\caption{Versiones empleadas de las librerías Python a fecha 13/08/2018}
+			\caption{Versiones empleadas de librerías Python a fecha 13/08/2018}
 		\end{longtable}
 
 		\item Habilitar las siguientes interfaces:
@@ -8838,53 +8779,101 @@ La estructura de la información de cada petición para la red de negocio de Hyo
 	\end{enumerate}
 		
 	% Subsection
-	\subsection{Raspberry Pi - Fichero de configuración}
-		Para que el componente de monitorización de sucesos del proyecto Hyot funcione correctamente es necesario proporcionar determinada información 	de configuración de servicios y herramientas utilizadas. En concreto, es obligatorio ubicar un fichero en formato \gls{yaml-a} con nombre \texttt{hyot.yml} en un directorio llamado \texttt{conf} dentro del código de este componente, siendo la ruta completa \texttt{hyot\_raspberrypi/hyot/conf} para el caso de clonar el repositorio de código completo. \\
+	\subsection{Componente - Protocolo de registro de incidencias}
+	
+	Este componente hace referencia al mecanismo de persistencia \Gls{blockchain} (\gls{blockchain-a}) implementado a través de la tecnología \gls{hyperledgerfabric} (\gls{hyperledgerfabric-a}) y accedido a través de la utilidad \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a}). Para realizar el despliegue tan solo basta con desplegar ambas utilidades en una máquina ya sea local o virtual, en un contenedor como, por ejemplo Kubernetes Service \cite{ibmcloud:kubernetes} o incluso un despliegue como servicio (\textit{Blockchain as a Service} -BaaS- \cite{ibmcloud:blockchain}, \cite{azure:blockchain}). En el caso de realizar el despliegue en una máquina local, el servidor de \gls{hyperledgercomposer-a} debería ser expuesto a la red para poder realizar las peticiones. Para evitar esto, se puede utilizar la herramienta Ngrok para tunelizar la comunicación hacia este servidor\footnote{El código del componente de monitorización de sucesos del entorno está preparado para soportar direcciones Ngrok.}. \\ 
 
-	% TODO - Completar
-	Este fichero, que contiene la configuración de 6 utilidades\footnote{En el apartado TODO se detalla la configuración necesaria a realizar para cada servicio.} empleadas, no está bajo el control de versiones por lo que el usuario debe crear una copia con la estructura indicada a continuación y ubicarlo en la ruta citada anteriormente. Ambos aspectos son comprobados durante la ejecución mostrando un error al usuario en caso de fallo. \\
+	El despliegue de ambas herramientas requiere de la instalación de una serie de prerequisitos y herramientas de línea de comandos que se pueden encontrar en la referencia \cite{hyperledgercomposer:url}. Tras instalar las dependencias donde se incluye \gls{hyperledgerfabric-a}, el primer paso a realizar es iniciar esta \gls{blockchain-a} para generar una \textit{card}\footnote{La \textit{card} contiene el perfil de conexión el cual está compuesto de los detalles de identidad y los certificados y clave privada. Cada identidad es única y está asociada a un participante de la red existente, indicando a mayores la red a la que se puede conectar.} con nombre \texttt{PeerAdmin@hlfv1.card} la cual posee privilegios para desplegar la red de negocio y es utilizada para este fin. \\
+	
+	Posteriormente, utilizando esta \textit{card} y la red de negocio generada a partir del código fuente con el comando: \texttt{npm build}\footnote{La red de negocio resultante es un fichero \texttt{.bna} ubicado en el directorio \texttt{Hyot/hyot\_bnd/dist} donde el nombre incluye la versión actual especificada.} se procede a instalar y desplegar la red de negocio con los comandos: \\
+	
+\begin{lstlisting}[language=json, basicstyle=\ttfamily\footnotesize, numbers=none, escapechar=ß]
+composer network install --archiveFile [name]@[version].bna --card PeerAdmin@hlfv1
+
+composer network start --networkName [name] --networkVersion [version] --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw
+\end{lstlisting}
+
+	Por último, únicamente faltaría arrancar el servidor de \gls{hyperledgercomposer-a} para que exponga el punto de acceso que permite interactuar con la \gls{blockchain-a}. El comando utilizado configurando el uso de un certificado y \textit{api-key} es: 
+	
+\begin{lstlisting}[language=json, basicstyle=\ttfamily\footnotesize, numbers=none, escapechar=ß]
+composer-rest-server -c admin@hyot-network -n always -w true  -t -k [key] -e [certificate] -y [api-key]
+\end{lstlisting}
+		
+	% Subsection
+	\subsection{Componente - Monitorización de sucesos del entorno}
+	
+	Este componente del proyecto Hyot contiene la funcionalidad núcleo puesto que permite la monitorización del entorno \gls{iot-a} y la actuación ante situaciones anómalas con el fin de generar una prueba o evidencia veraz e irrefutable del hecho. Para que este componente funcione correctamente es necesario:
+	
+	\begin{itemize}
+		\item Haber ejecutado el componente de configuración del dispositivo \gls{raspberry-a} o en su defecto la ejecución manual de las acciones. Las librerías \gls{python} requeridas se encuentran definidas en un fichero de texto (\texttt{requirements.txt}) y pueden ser instaladas ejecutando el comando: \texttt{pip install -r requirements.txt} mientras que la habilitación de interfaces puede ser realizada con el comando \texttt{raspi-config}.
+		\item Disponer del \gls{prototipo} correctamente conectado.
+		\item Obtener las direcciones \gls{i2c-a} de los dos \glspl{lcd-a} (\textit{\gls{lcd}}) conectados a la \gls{raspberry-a} con el comando \texttt{i2cdetect} y en caso de diferir de las establecidas por defecto, deben ser indicadas en las opciones correspondientes a la hora de ejecutar el componente.
+		\item Disponer de conexión a la red en la \gls{raspberry-a}.
+		\item Proporcionar determinada información de configuración de servicios\footnote{En el caso de algunos servicios es necesario efectuar explícitamente una configuración desde la propia cuenta de usuario u obtener unas credenciales de acceso.} y herramientas utilizadas mediante un fichero en formato \gls{yaml-a} con nombre \texttt{hyot.yml} en un directorio llamado \texttt{conf} dentro del código de este componente, siendo la ruta completa \texttt{hyot\_raspberrypi/hyot/ conf} para la jerarquía completa del proyecto. Este fichero, que contiene la configuración de 5 utilidades empleadas, no está bajo el control de versiones por lo que el usuario debe crear una copia con la estructura indicada a continuación y ubicarlo en la ruta citada anteriormente. Ambos aspectos son comprobados durante la ejecución mostrando un error al usuario en caso de fallo. \\
 
 \begin{lstlisting}[language=json, basicstyle=\ttfamily\footnotesize, numbers=none, escapechar=ß]
-ß{\color{ballblue}| \textbf{ESTRUCTURA DEL FICHERO DE CONFIGURACIÓN EN FORMATO \gls{yaml-a}}}ß
+ß{\color{ballblue}| \textbf{ESTRUCTURA DEL FICHERO DE CONFIGURACIÓN EN FORMATO YAML}}ß
 ß{\color{ballblue}| -------------------------------------------------------}ß
 
-ß\textbf{{\color{maroon} \# Utilidad \gls{gpg-a} - Nombre e email para asociar a las claves generadas}}ß
+ß\textbf{{\color{maroon} \# Utilidad GPG - Nombre e email para asociar al par de claves generado}}ß
 gpg:
   name: [value]
   email: [value]
-ß\textbf{{\color{maroon} \# Servicio Gmail - Credenciales de acceso de la dirección de correo desde donde se envían \textit{emails}}}ß
+ß\textbf{{\color{maroon} \# Servicio Gmail - Credenciales de acceso de la dirección de correo origen}}ß
 email:
   from: [value]
-  password: [value]
-ß\textbf{{\color{maroon} \# Plataforma \gls{iot-a} de IBM Cloud – Identificador de organización, tipo de dispositivo e}}ß
-ß\textbf{{\color{maroon}\hspace{0.34cm}identificador, método de autenticación y \gls{token} de acceso}}ß
-iot:
-  orgid: [value]
-  devicetype: [value]
-  deviceid: [value]
-  authmethod: [value]
-  authtoken: "[value]"
-ß\textbf{{\color{maroon} \# Servicio \gls{cloudant} - Credenciales de acceso y \gls{url-a}}}ß
+  password: [value]ß\textbf{{\color{maroon} \# Servicio Cloudant NoSQL DB - Credenciales de acceso y URL}}ß
 cloudant:
   username: [value]
   password: [value]
   url: [value]
-ß\textbf{{\color{maroon} \# Servicio Drobpox - \Gls{token} de acceso a la cuenta de Dropbox}}ß
+ß\textbf{{\color{maroon} \# Servicio Drobpox - Token de acceso a la cuenta de Dropbox}}ß
 dropbox:
   token: [value]
-ß\textbf{{\color{maroon} \# \gls{hyperledgercomposer} (\gls{hyperledgercomposer-a}) - Dirección IP y puerto donde está desplegado el servidor \gls{rest-a} \gls{api-a}}}ß
-ß\textbf{{\color{maroon}\hspace{0.34cm}e indicación de si está securizado con un \gls{certautofirmado} o con un certificado cuya}}ß
-ß\textbf{{\color{maroon}\hspace{0.34cm}identidad ha sido validada por una autoridad certificadora (\textit{\gls{ca}} -\gls{ca-a}-)\footnote{Esta propiedad es especificada para saltar el paso de verificación del certificado en las peticiones \gls{https-a} ya que si se usa un \gls{certautofirmado} al no ser capaz de verificar la identidad, la petición es denegada. En caso de usar un certificado validado por una \gls{ca-a}, la verificación se habilita. Consultar \cite{python:requests} para obtener más información.}}}ß
+ß\textbf{{\color{maroon} \# Hyperledger Composer - Dirección IP y puerto donde está desplegado el servidor REST}}ß
+ß\textbf{{\color{maroon}\hspace{0.34cm}API\footnote{En el caso de securizar este servidor con un \textit{api-key} obtenido durante la inicialización de \gls{hyperledgercomposer-a} en este componente, este servidor debe ser arrancado posteriormente a la ejecución de este componente para poder indicar el valor. En caso contrario, el servidor \gls{hyperledgercomposer-a} puede ser arrancado con anterioridad.} e indicación de si está securizado con un certificado autofirmado o con un}}ß
+ß\textbf{{\color{maroon}\hspace{0.34cm}certificado cuya identidad ha sido validada por una autoridad certificadora\footnote{Esta propiedad es especificada para saltar el paso de verificación del certificado en las peticiones \gls{https-a} ya que si se usa un \gls{certautofirmado} al no ser capaz de verificar la identidad, la petición es denegada. En caso de usar un certificado validado por una \gls{ca-a}, la verificación se habilita. Consultar \cite{python:requests} para obtener más información.}}}ß
 hl:
   host: [value]
   port: [value]
   selfsignedcert: [True|False]
 \end{lstlisting}
+
+	\end{itemize}
+	
+	 Para iniciar este componente, desarrollado en el lenguaje Python, basta con ejecutar el fichero \texttt{hyot\_main.py} -ubicado en el directorio \texttt{Hyot/hyot\_raspberrypi/hyot} según la jerarquía completa del proyecto- en la \gls{raspberry-a} desde un terminal con el comando \texttt{sudo python} y seguir los pasos indicados. 
+	
+	% Subsection
+	\subsection{Componente - Desencriptación de evidencia}
+	
+	Este componente del proyecto Hyot permite efectuar la desencriptación, la verificación de firma y la comprobación de integridad de contenido de una evidencia previamente encriptada y firmada con la herramienta \gls{gpg-a} por lo que su ejecución se produce en último lugar. Para poder ejecutar este componente desarrollado en lenguaje \gls{python} basta con ejecutar el fichero \texttt{hyot\_decryption.py} -ubicado en el directorio \texttt{Hyot/hyot\_raspberrypi/hyot\_decryption} según la jerarquía completa del proyecto- en la \gls{raspberry-a} o en cualquier otro dispositivo electrónico –siempre y cuando disponga de las dependencias instaladas- desde un terminal con el comando \texttt{sudo python}. Las dependencias que requiere son:
+	
+	\begin{itemize}
+		\item Haber ejecutado el componente de configuración del dispositivo \gls{raspberry-a} o en su defecto la ejecución manual del proceso de instalación de paquete y librerías \gls{python}. Éstas últimas se encuentran definidas en un fichero de texto (\texttt{requirements.txt}) y pueden ser instaladas ejecutando el comando: \texttt{pip install -r requirements.txt}.
+		\item Disponer de la evidencia encriptada y firmada en el sistema local o en su defecto el enlace a Dropbox donde está almacenada.
+		\item Disponer del par de claves utilizado durante la encriptación y firmado o en su defecto la huella digital (\textit{fingerprint}) asociado al par de claves empleado.
+		\item Disponer del código \textit{hash} del contenido de la evidencia original, obtenible del mecanismo de persistencia de \gls{blockchain-a}.
+		\item Disponer de conexión a la red en la \gls{raspberry-a} en caso de querer descargar la evidencia desde el servicio de almacenamiento en la nube. 
+	\end{itemize}
+	
+	% Subsection
+	\subsection{Componente - Sistema web}
+	
+	La puesta en marcha del sistema web únicamente requiere, a partir del código fuente, de la generación del artefacto \gls{war-a} el cual debe ser desplegado posteriormente en un contenedor de aplicaciones como es Tomcat o JBoss, por ejemplo. Para ello, basta con ejecutar el comando de \gls{grails}: \texttt{grails war}. El artefacto generado por defecto lo hace con la configuración para el entorno de producción y se ubica en la ruta: \texttt{hyot\_app/build/libs}. \\
+	
+	Este sistema web puede requerir la modificación de determinadas configuraciones para su adaptación. En el fichero \texttt{hyot\_app/grails-app/conf/application.yml} se puede modificar, entre otros detalles:
+	
+	\begin{itemize}
+		\item Cuenta Gmail y credenciales. 
+		\item Dirección donde el servidor de \gls{hyperledgercomposer} expone la \gls{api-a}.
+		\item Dirección y credenciales del servicio \gls{cloudant}.
+		\item Dirección y credenciales de la \gls{bbdd-a} del sistema web.
+	\end{itemize}
 	
 	% Section
 	\section{Generación del par de claves y certificado SSL autofirmado}
 	
-	La securización de la comunicación entre diferentes partes donde se desconoce la confiabilidad de cada una de ellas y del medio de comunicación, provoca que sea indispensable la securización de ésta para que la información transmitida se encuentre en todo momento encriptada y por tanto protegida. En el proyecto Hyot, se ha habilitado \gls{https-a} y \gls{tls-a} (\textit{\gls{tls}}) tanto {\color{red} en el servidor \gls{rest-a} (\textit{\gls{rest}}) de \gls{hyperledger} (\gls{hyperledgercomposer-a}) como en el cliente web}. Para ello, es necesario generar en primer lugar un par de claves (clave pública y privada) y un \gls{certautofirmado}, por ejemplo desde una máquina local. \\
+	La securización de la comunicación entre diferentes partes donde se desconoce la confiabilidad de cada una de ellas y del medio de comunicación, provoca que sea indispensable la securización de ésta para que la información transmitida se encuentre en todo momento encriptada y por tanto protegida. En el proyecto Hyot, se ha habilitado \gls{https-a} y \gls{tls-a} (\textit{\gls{tls}}) tanto en el servidor de \gls{hyperledgercomposer-a} como en el sistema web. Para ello, es necesario generar en primer lugar un par de claves (clave pública y privada) y un \gls{certautofirmado}, por ejemplo desde una máquina local. \\
 	
 	Este procedimiento, descrito a continuación, se ha llevado a cabo con la herramienta OpenSSL la cual es un proyecto de \textit{software} libre que contiene un conjunto robusto de herramientas de administración y bibliotecas de propósito general relacionadas con la criptografía para los protocolos \gls{tls-a} y \gls{ssl-a} (\textit{\gls{ssl}}). 
 		
@@ -8893,7 +8882,7 @@ hl:
 		\item \textbf{Generación de la clave pública y privada (Figura \ref{fig:cert_keys}):} utilizando el algoritmo de \gls{criptoasim} \gls{rsa-a} (\textit{\gls{rsa}}) con una longitud de 2048 bits\footnote{Los estándares de seguridad indican que los \glspl{certssl} deben ser generados con un tamaño de clave de al menos 2048 bits para aumentar la dificultad de ser vulnerables ante un posible ataque.} y encriptada con el estándar de \gls{criptosim} \gls{aes-a} (\textit{\gls{aes}}) con longitud de clave 256 bits. Durante la generación se solicita una contraseña\footnote{Se aconseja la utilización de contraseñas robustas.} de protección para la clave privada. El fichero resultante: \texttt{hyot.pem} contiene el par de claves, es decir, tanto la clave privada como la clave pública, siendo la primera de ellas la base de toda confianza por lo que es muy importante su protección y no revelación a personas ajenas.
 				 
 			\begin{figure}[!ht]   
-				\caption{\Gls{certssl} - Generación del par de claves.} 
+				\caption{Certificado SSL - Generación del par de claves.} 
 				\begin{center} 
 	 				\includegraphics[width=15cm,height=2.5cm]{Images/installationManual/cert/keys} \\
 					\label{fig:cert_keys} 
@@ -8903,17 +8892,20 @@ hl:
 		\item \textbf{Extracción de la clave pública\footnote{Este paso no es necesario realizarlo aunque se indica para el conocimiento del lector.} (Figura \ref{fig:cert_publickey}):} al fichero \texttt{hyot\_public.pem}. Esta clave es aquella que se puede distribuir libremente ya sea para realizar el proceso de encriptación o firma digital. 
 		 
 			\begin{figure}[!ht]   
-				\caption{\Gls{certssl} - Extracción de la clave pública.} 
+				\caption{Certificado SSL - Extracción de la clave pública.} 
 				\begin{center} 
 	 				\includegraphics[width=18cm,height=1.2cm]{Images/installationManual/cert/key_public.png} \\
 					\label{fig:cert_publickey} 
 				\end{center}  
 			\end{figure}
 			
-		\item \textbf{Obtención de la clave privada sin protección de contraseña (Figura \ref{fig:cert_keynopassphrase}):} este paso solamente es necesario para securizar el servidor \gls{rest-a} de \gls{hyperledgercomposer-a} debido a que actualmente (v0.19.10 a fecha 22/06/2018) no acepta el uso de una clave privada protegida con contraseña\footnote{El siguiente \textit{issue} en GitHub hace referencia a esta cuestión. Link: \url{https://github.com/hyperledger/composer/issues/3132}}, sin embargo, en cualquier otra situación (p. ej. el servidor del cliente web) se aconseja introducir una contraseña para proteger dicha clave. El fichero \texttt{hyot\_nopassphrase.pem} contiene la clave privada pero sin protección de contraseña.
+		\item \textbf{Obtención de la clave privada sin protección de contraseña (Figura \ref{fig:cert_keynopassphrase}):} este paso solamente es necesario para securizar el servidor de \gls{hyperledgercomposer-a} debido a que actualmente (v0.19.10 a fecha 22/06/2018) no acepta el uso de una clave privada protegida con contraseña\footnote{El siguiente \textit{issue} en GitHub hace referencia a esta cuestión. Link: \url{https://github.com/hyperledger/composer/issues/3132}}. Sin embargo, en cualquier otra situación (p. ej. el servidor del cliente web) se aconseja introducir una contraseña para proteger dicha clave. El fichero \texttt{hyot\_nopassphrase.pem} contiene la clave privada pero sin protección de contraseña.
+		
+		% NEW PAGE		
+		\newpage
 				
 			\begin{figure}[!ht]   
-				\caption{\Gls{certssl} - Obtención de clave privada sin protección de contraseña.} 
+				\caption{Certificado SSL - Obtención de clave privada sin protección de contraseña.} 
 				\begin{center} 
 	 				\includegraphics[width=17cm,height=1.2cm]{Images/installationManual/cert/key_nopassphrase.png} \\
 					\label{fig:cert_keynopassphrase} 
@@ -8923,14 +8915,14 @@ hl:
 		\item \textbf{Generación de la solicitud de firma de certificado (\textit{\gls{csr}} -\gls{csr-a}-) (Figura \ref{fig:cert_csr}):} a partir de la clave privada. Se utiliza como algoritmo de firma la \gls{hash} recomendada (\gls{sha-a}-256) y no el de por defecto (\gls{sha-a}-1) ya que se detectaron colisiones y se considera inseguro \cite{madhuravani:CHF}. 
  		
 			\begin{figure}[!ht]   
-				\caption{\Gls{certssl} - Solicitud de firma de certificado.} 
+				\caption{Certificado SSL - Solicitud de firma de certificado.} 
 				\begin{center} 
 	 				\includegraphics[width=19cm,height=7cm]{Images/installationManual/cert/cert_csr.png} \\
 					\label{fig:cert_csr} 
 				\end{center}  
 			\end{figure}
 		
-		Durante la generación se solicitan una serie de datos\footnote{El ejemplo expuesto hace referencia a la generación de solicitud para el servidor \gls{rest-a} de \gls{hyperledgercomposer-a} desplegado en una máquina virtual (\textit{\gls{vm}} -\gls{vm-a}-) en el servicio Microsoft Azure por lo que el dato \textit{Common Name} debe adaptarse para otros casos como por ejemplo, el cliente web donde el dominio o dirección IP será diferente.} los cuales deben ser introducidos correctamente con especial énfasis el campo \textit{Common Name} que hace referencia al dominio o dirección IP del servidor para que a la hora de solicitar una petición \gls{https-a} al servidor el cual debe presentar el \gls{certssl} -a partir de ahora como certificado-, se evite la advertencia \textit{NET::ERR\_CERT\_COMMON\_NAME\_INVALID}. \\
+		Durante la generación se solicitan una serie de datos\footnote{El ejemplo expuesto hace referencia a la generación de solicitud para el servidor de \gls{hyperledgercomposer-a} desplegado en una máquina virtual (\textit{\gls{vm}} -\gls{vm-a}-) en el servicio Microsoft Azure por lo que el dato \textit{Common Name} debe adaptarse para otros casos como, por ejemplo el cliente web donde el dominio o dirección IP será diferente.} los cuales deben ser introducidos correctamente con especial énfasis el campo \textit{Common Name} que hace referencia al dominio o dirección IP del servidor para que a la hora de solicitar una petición \gls{https-a} al servidor el cual debe presentar el \gls{certssl} -a partir de ahora como certificado-, se evite la advertencia \textit{NET::ERR\_CERT\_COMMON\_NAME\_INVALID}. \\
 		
 		Recientemente, para los usuarios del navegador Google Chrome con una versión posterior a la 58, liberada en marzo de 2017, la advertencia anteriormente mencionada comenzó a aparecer en aquellos certificados válidos donde solamente se especificaba el campo \textit{Common Name}, el cual empezó a ser ignorado \cite{stackoverflow:SSLC}. Hasta dicha versión, el certificado con este campo correctamente definido no presentaba ningún problema. Para evitar esta situación, basta con definir valores en el campo \textit{Subject Alternative Name} en un fichero de configuración y cargarlo a la hora de generar la solicitud de firma y del posterior proceso de autofirmado \cite{croxton:SAN}. A continuación, se detalla la estructura del fichero de configuración \texttt{ssl.cnf} donde lo único que hay que introducir es el valor del campo \texttt{alt\_names} con la dirección IP del servidor. \\
 		
@@ -8977,7 +8969,7 @@ IP.1			    = [IP Server]
 		\item \textbf{Generación del \gls{certautofirmado}\footnote{Para generar un \gls{certautofirmado} no es necesario generar la solicitud de firma ya que puede generarse directamente a partir de la clave privada. Sin embargo, con el método expuesto se evita realizar todo el procedimiento de nuevo en el caso de necesitar un certificado firmado por una \gls{ca-a} ya que la solicitud de firma ya fue generada y puede ser enviada directamente a la entidad certificadora. Si aun así se desea generar directamente, se puede utilizar el comando: \texttt{openssl req -new -x509 -days 365 -key [hyot.pem] -out [hyot\_cert.pem] -config ssl.cnf}} (Figura \ref{fig:cert_selfsigned}):} con una validez de 1 año. Además, como se mencionó en el paso anterior a la hora de autofirmar el certificado también es necesario cargar la configuración del fichero \texttt{ssl.cnf}.
 	
 			\begin{figure}[!ht]   
-				\caption{\Gls{certssl} - Proceso de autofirmado.} 
+				\caption{Certificado SSL - Proceso de autofirmado.} 
 				\begin{center} 
 	 				\includegraphics[width=18cm,height=2.6cm]{Images/installationManual/cert/cert_selfsigned.png} \\
 					\label{fig:cert_selfsigned} 
@@ -8995,17 +8987,14 @@ IP.1			    = [IP Server]
 				\label{fig:cert_files} 
 			\end{center}  
 		\end{figure}
-		
-	% Section TODO
-	\section{Desplegar Hyperledger Fabric}	
-	
-	% Section TODO
-	\section{Desplegar el servidor REST API de Hyperledger Composer}	
+			
+	% Section
+	\section{Verificar conexión HTTPS}	
 						
-	Una vez desplegado el servidor con el protocolo \gls{https-a} se puede verificar de una forma sencilla que la comunicación es segura\footnote{Los pasos indicados hacen referencia al procedimiento seguido para el navegador Google Chrome en un \gls{so-a} \gls{macos-a}. Otros navegadores y/o plataformas pueden diferir en el procedimiento.} \footnote{El procedimiento a continuación descrito también es aplicable a cualquier servidor en general como el presente en el sistema web de Hyot.}. La primera vez que se accede al sitio web de este servidor, para la \gls{vm-a} desplegada en el servicio Microsoft Azure: \texttt{https://40.121.15.202:3000/}, el navegador muestra una alerta (Figura \ref{fig:https_intialWarning}) indicando la advertencia \textit{NET::ERR\_CERT\_AUTHORITY\_INVALID} la cual significa que el certificado no es de confianza ya que no se puede encontrar una identificación firmada por una \gls{ca-a}.
+	Una vez desplegado un servidor con el protocolo \gls{https-a} se puede verificar de una forma sencilla que la comunicación es segura\footnote{Los pasos indicados hacen referencia al procedimiento seguido para el navegador Google Chrome en un \gls{so-a} \gls{macos-a}. Otros navegadores y/o plataformas pueden diferir en el procedimiento.} \footnote{El procedimiento a continuación descrito también es aplicable a cualquier servidor en general como el presente en el sistema web de Hyot.}. La primera vez que se accede al sitio web del servidor, el navegador muestra una alerta (Figura \ref{fig:https_intialWarning}) indicando la advertencia \textit{NET::ERR\_CERT\_AUTHORITY\_ INVALID} la cual significa que el certificado no es de confianza ya que no se puede encontrar una identificación firmada por una \gls{ca-a}.
 				
 		\begin{figure}[!ht]   
-			\caption{Advertencia de conexión \gls{https-a} no confiable.} 
+			\caption{Advertencia de conexión HTTPS no confiable.} 
 			\begin{center} 
 				\includegraphics[width=15cm,height=8cm]{Images/installationManual/https/initialWarning.png} \\
 				\label{fig:https_intialWarning} 
@@ -9015,9 +9004,9 @@ IP.1			    = [IP Server]
 	Aceptando acceder aun con el mensaje de advertencia se puede observar como en la barra de direcciones aparece el símbolo \gls{https-a} tachado y en rojo (Figura \ref{fig:https_untrusted}), signo de lo indicado anteriormente. Sin embargo, esto no quiere decir que la comunicación se encuentre sobre una conexión insegura. \\
 		
 		\begin{figure}[!ht]   
-			\caption{Conexión \gls{https-a} no confiable.} 
+			\caption{Conexión HTTPS no confiable.} 
 			\begin{center} 
-				\includegraphics[width=12cm,height=2cm]{Images/installationManual/https/httpsUntrusted.png} \\
+				\includegraphics[width=11cm,height=1.8cm]{Images/installationManual/https/httpsUntrusted.png} \\
 				\label{fig:https_untrusted} 
 			\end{center}  
 		\end{figure}
@@ -9032,12 +9021,12 @@ IP.1			    = [IP Server]
 			\end{center}  
 		\end{figure}
 	
-	 Para hacer más elegante la navegación del usuario mostrando el símbolo \gls{https-a} en verde (signo de una total confianza), lo que se debe realizar es importar el \gls{certautofirmado} en el almacén de certificados del ordenador desde el cual se está navegando\footnote{Esta acción únicamente puede ser efectuada por usuarios que posean el certificado.} (Figura \ref{fig:https_importCert}). Este paso se omite cuando el certificado se encuentra firmado por una \gls{ca-a} ya que los ordenadores y navegadores traen preinstalados por defecto almacenes de certificados de diversas empresas. \\
+	 Para hacer más elegante la navegación del usuario mostrando el símbolo \gls{https-a} en verde (signo de una total confianza), lo que se debe realizar es importar el \gls{certautofirmado} en el almacén de certificados del ordenador desde el cual se está navegando\footnote{Esta acción únicamente puede ser efectuada por usuarios que posean el certificado.} (Figura \ref{fig:https_importCert}). Este paso se omite cuando el certificado se encuentra firmado por una \gls{ca-a} ya que los ordenadores y navegadores traen preinstalados por defecto almacenes de certificados de diversas empresas.
 		 
 		\begin{figure}[!ht]   
-			\caption{Instalación del \gls{certautofirmado} en el almacén de certificados del ordenador.} 
+			\caption{Instalación del certificado autofirmado en el almacén de certificados del ordenador.} 
 			\begin{center} 
-				\includegraphics[width=11cm,height=8cm]{Images/installationManual/https/importCert.png} \\
+				\includegraphics[width=11cm,height=6.5cm]{Images/installationManual/https/importCert.png} \\
 				\label{fig:https_importCert} 
 			\end{center}  
 		\end{figure}
@@ -9045,7 +9034,7 @@ IP.1			    = [IP Server]
 		Como se observa de la figura anterior, una vez que se instaló el certificado el sistema avisa que no es confiable ya que no fue verificado por una \gls{ca-a}. Para marcarlo como fiable para el usuario, se debe indicar explícitamente (Figura \ref{fig:https_certTrusting}).
 				
 		\begin{figure}[!ht]   
-			\caption{Confiando en el \gls{certautofirmado}.} 
+			\caption{Confiando en el certificado autofirmado.} 
 			\begin{center} 
 				\includegraphics[width=11cm,height=6cm]{Images/installationManual/https/certTrusting.png} \\
 				\label{fig:https_certTrusting} 
@@ -9055,7 +9044,7 @@ IP.1			    = [IP Server]
 		Con el certificado marcado como confiable ya no aparece ninguna advertencia (Figura \ref{fig:https_certTrustworthy}). 
 								
 		\begin{figure}[!ht]   
-			\caption{\Gls{certautofirmado} confiable.} 
+			\caption{Certificado autofirmado confiable.} 
 			\begin{center} 
 				\includegraphics[width=11cm,height=1.8cm]{Images/installationManual/https/certTrustworthy.png} \\
 				\label{fig:https_certTrustworthy} 
@@ -9065,7 +9054,7 @@ IP.1			    = [IP Server]
 		Si se accede de nuevo al sitio web se puede observa como ya aparece el símbolo \gls{https-a} en verde (Figura \ref{fig:https_httpsTrusted}) y ha desaparecido la advertencia \textit{NET::ERR\_CERT\_AUTHORITY\_INVALID} (Figura \ref{fig:https_overviewAfter}).
 				
 		\begin{figure}[!ht]   
-			\caption{Conexión \gls{https-a} confiable.} 
+			\caption{Conexión HTTPS confiable.} 
 			\begin{center} 
 	 			\includegraphics[width=12cm,height=2cm]{Images/installationManual/https/httpsTrusted.png} \\
 			\label{fig:https_httpsTrusted} 
@@ -9079,36 +9068,15 @@ IP.1			    = [IP Server]
 			\label{fig:https_overviewAfter} 
 			\end{center}  
 		\end{figure}
-		 	
+	
 	% Section
 	\section{Credenciales de acceso}\label{credenciales}
 	
-	A continuación, se indican las credenciales de acceso para los diferentes servicios utilizados en el proyecto. \\
-		
-	\textbf{Usuarios del cliente web:}
-	
+	A continuación se indica la credencial de acceso del usuario administrador creado por defecto para el sistema web:
+			
 	\begin{itemize}
-		\item Usuario administrador: jesus\_admin / hyot2018 / {\color{red}info.hyot@gmail.com}
-		\item Usuario normal: jesus\_user / hyot2018 / {\color{red}info.hyot@gmail.com}
-		\item Usuario normal (conmutación\footnote{\textbf{La existencia de este usuario es obligatoria}. El nombre de usuario debe permanecer invariante ya que en caso contrario la funcionalidad de conmutación desde el usuario administrador no funcionará. El resto de datos (nombre, apellidos, email, etc.) pueden modificarse.}): admin\_switch / hyot2018 / {\color{red}switch.hyot@gmail.com}
-	\end{itemize}
-	
-	\textbf{Email principal:} esta dirección de correo es utilizada para diversos fines, desde ser la cuenta de correo desde donde se envían las notificaciones de alerta hasta la dirección empleada para el registro en determinados servicios utilizados en Hyot.
-
-	\begin{itemize}
-		\item hyot.project@gmail.com / hyot2018
-	\end{itemize}
-	
-	\textbf{Cuenta Dropbox:} cuenta donde se almacenarán los diferentes archivos subidos por el \textit{\gls{script}}: \texttt{hyot\_main.py}.
-
-	\begin{itemize}
-		\item hyot.project@gmail.com / hyot2018
-	\end{itemize}
-	
-	\textbf{Cuenta IBM Cloud:} cuenta 
-
-	\begin{itemize}
-		\item {\color{red}hyot.project@gmail.com / hyot2018} 
+		\item Usuario: hyot\_admin / hyot.project@gmail.com
+		\item Contraseña: Qwerty321!
 	\end{itemize}
 	
 	% Section
@@ -9117,23 +9085,27 @@ IP.1			    = [IP Server]
 	Si desconoce cómo usar o configurar las herramientas anteriormente mencionadas o necesita información adicional, se recomienda consultar los siguientes recursos para la resolución de dudas y preguntas:
 	
 	\begin{itemize}
-		\item \textbf{Documentación de \gls{docker}:} 
+		\item \textbf{Documentación de Grails:} 
 			\begin{sloppypar}
-				\url{https://docs.docker.com/}
-			\end{sloppypar}	
+				\url{http://grails.org/documentation.html}
+			\end{sloppypar}
 		\item \textbf{Documentación de \gls{hyperledgercomposer}:} 
 			\begin{sloppypar}	
 				\url{https://hyperledger.github.io/composer/latest/}
 			\end{sloppypar}
 		\item \textbf{Documentación de \gls{hyperledgerfabric}:} 
 			\begin{sloppypar}
-				\url{https://hyperledger-fabric.readthedocs.io/en/release-1.1/}
+				\url{https://hyperledger-fabric.readthedocs.io/en/release-1.2/}
 			\end{sloppypar}
 		\item \textbf{Documentación de IBM Cloud:} 
 			\begin{sloppypar}
 				\url{https://console.bluemix.net/docs/}
+			\end{sloppypar}		
+		\item \textbf{Documentación de Microsoft Azure:} 
+			\begin{sloppypar}
+				\url{https://docs.microsoft.com/es-es/azure/}
 			\end{sloppypar}
-		\item \textbf{Documentación de Python 2.7:} 
+		\item \textbf{Documentación de \gls{python} 2.7:} 
 			\begin{sloppypar}	
 				\url{https://docs.python.org/2/index.html}
 			\end{sloppypar}
@@ -9148,8 +9120,8 @@ IP.1			    = [IP Server]
 	
 	Para cuestiones directamente relacionadas al proyecto \textbf{Hyot}, puede ponerse en contacto con el autor vía \textit{email} en la siguiente dirección: \href{mailto:jesusgiglesias@gmail.com}{\nolinkurl{jesusgiglesias@gmail.com}}. \\
 	
-	La versión actual del presente documento a fecha de \textsf{\color{red}XX de XX de 2018}: \textbf{1.0.0}.
-			
+	La versión actual del presente documento a fecha de 03 de septiembre de 2018: \textbf{1.0.0}.
+
 	% Annexe F
 	\chapter{Manual de usuario}\label{userguide}
 	
@@ -10867,6 +10839,3 @@ IP.1			    = [IP Server]
 	
 \end{document}
 	
-% Local Variables:
-% TeX-engine: xetex
-% End:
