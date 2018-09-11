@@ -157,7 +157,7 @@ cloudant:
     account: c4b5b3fa-375f-4b56-82fe-65330ce6e12c-bluemix
     username: c4b5b3fa-375f-4b56-82fe-65330ce6e12c-bluemix
     password: 5b8e21f4594080d89659fd4e03e876b1aaea464e0a4136dae7cfb6d565a4f4eb
-    database: hyot_measurements_2018-08
+    database: hyot_measurements_2018-09
 
 ---
 
