@@ -2,6 +2,7 @@
 
 > A blockchain (BC) solution for activity registration in the Internet of Things. Specifically, a permissioned blockchain is used to record anomalous occurrences associated with sensors located on a Raspberry Pi 3. Likewise, a web system is provided to consume the information collected in real time.
  
+@version: 1.0.0 
 @last-modified: 2019-04-09
 
 ## Description
